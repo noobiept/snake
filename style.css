@@ -1,0 +1,18 @@
+body
+    {
+    background-color: black;
+    }
+
+#mainCanvas, #debugCanvas
+    {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    }
+
+
+#debugCanvas
+    {
+    display: none;
+    }
