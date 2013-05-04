@@ -59,28 +59,46 @@ return this;
 
 
 /*
-    move in the canvas
+    position on the canvas
  */
 
-SnakeTail.prototype.move = function( x, y )
+SnakeTail.prototype.position = function( x, y )
 {
-if ( typeof x == 'undefined')
-    {
-    x = this.shape.x;
-    }
-
-if ( typeof y == 'undefined')
-    {
-    y = this.shape.y;
-    }
-
-this.shape.x = x;
-this.shape.y = y;
-
-this.body.SetPosition(  new b2Vec2( this.shape.x / SCALE, this.shape.y / SCALE ) );
+return this.move( x, y, 0, 0 );
 };
 
 
+/*
+    move in relation to the current position (or a position given)
+ */
+
+SnakeTail.prototype.move = function( x, y, startX, startY )
+{
+if ( typeof x == 'undefined' )
+    {
+    x = 0;
+    }
+
+if ( typeof y == 'undefined' )
+    {
+    y = 0;
+    }
+
+if ( typeof startX == 'undefined' )
+    {
+    startX = this.getX();
+    }
+
+if ( typeof startY == 'undefined' )
+    {
+    startY = this.getY();
+    }
+
+this.shape.x = startX + x;
+this.shape.y = startY + y;
+
+this.body.SetPosition(  new b2Vec2( this.shape.x / SCALE, this.shape.y / SCALE ) );
+};
 
 
 

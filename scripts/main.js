@@ -1,7 +1,6 @@
 /*
     to doo:
 
-        - be able to control with keyboard the snake
         - when goes out of the canvas appear at the other side
         - also have the option to just crash there?...
         - add obstacles, that are generated (keep appearing, to make it more dificult?...)
@@ -43,6 +42,8 @@ var DEBUG_MODE = true;
 var GAME_WIDTH = 800;
 var GAME_HEIGHT = 400;
 
+
+var SNAKE;
 
 
 window.onload = function()
@@ -90,22 +91,157 @@ if ( DEBUG_MODE )
 
 
 
-var snake = new SnakeTail( 50, 50 );
-
-window.setInterval( function()
-    {
-    snake.move( snake.getX() + 5 );
-
-    }, 500);
-
+SNAKE = new SnakeTail( 50, 50 );
 };
 
 
 
 
+    // keys being pressed/held
+var KEYS_HELD = {
+
+    left  : false,
+    right : false,
+    up    : false,
+    down  : false
+
+    };
+
+window.onkeydown = function( event )
+{
+if ( !event )
+    {
+    event = window.event;
+    }
+
+switch( event.keyCode )
+    {
+    case EVENT_KEY.a:
+    case EVENT_KEY.leftArrow:
+
+        KEYS_HELD.left = true;
+        return false;
+
+    case EVENT_KEY.d:
+    case EVENT_KEY.rightArrow:
+
+        KEYS_HELD.right = true;
+        return false;
+
+    case EVENT_KEY.w:
+    case EVENT_KEY.upArrow:
+
+        KEYS_HELD.up = true;
+        return false;
+
+    case EVENT_KEY.s:
+    case EVENT_KEY.downArrow:
+
+        KEYS_HELD.down = true;
+        return false;
+    }
+
+return true;
+};
+
+
+window.onkeyup = function( event )
+{
+if ( !event )
+    {
+    event = window.event;
+    }
+
+switch( event.keyCode )
+    {
+    case EVENT_KEY.a:
+    case EVENT_KEY.leftArrow:
+
+        KEYS_HELD.left = false;
+        return false;
+
+    case EVENT_KEY.d:
+    case EVENT_KEY.rightArrow:
+
+        KEYS_HELD.right = false;
+        return false;
+
+    case EVENT_KEY.w:
+    case EVENT_KEY.upArrow:
+
+        KEYS_HELD.up = false;
+        return false;
+
+    case EVENT_KEY.s:
+    case EVENT_KEY.downArrow:
+
+        KEYS_HELD.down = false;
+        return false;
+    }
+
+return true;
+};
+
+
+function movement_tick()
+{
+var speed = 5;
+
+    // when moving diagonally (45 degrees), we have to slow down the x and y
+    // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
+    // sin(angle) = opposite / hypotenuse
+    // cos(angle) = adjacent / hypotenuse
+
+    // x = cos( pi / 4 ) -> 0.707
+    // y = sin( pi / 4 ) -> 0.707
+
+if ( KEYS_HELD.left && KEYS_HELD.up )
+    {
+    SNAKE.move( -speed * 0.707 , -speed * 0.707 );
+    }
+
+else if ( KEYS_HELD.left && KEYS_HELD.down )
+    {
+    SNAKE.move( -speed * 0.707, speed * 0.707 );
+    }
+
+else if ( KEYS_HELD.right && KEYS_HELD.up )
+    {
+    SNAKE.move( speed * 0.707, -speed * 0.707 );
+    }
+
+else if ( KEYS_HELD.right && KEYS_HELD.down )
+    {
+    SNAKE.move( speed * 0.707, speed * 0.707 );
+    }
+
+    // here we're only moving through 'x' or 'y', so just need 'speed'
+else if ( KEYS_HELD.left )
+    {
+    SNAKE.move( -speed );
+    }
+
+else if ( KEYS_HELD.right )
+    {
+    SNAKE.move( speed );
+    }
+
+else if ( KEYS_HELD.up )
+    {
+    SNAKE.move( 0, -speed );
+    }
+
+else if ( KEYS_HELD.down )
+    {
+    SNAKE.move( 0, speed );
+    }
+}
+
 
 function tick()
 {
+movement_tick();
+
 WORLD.Step(
     1 / 60,     // frame-rate
     10,         // velocity iterations
