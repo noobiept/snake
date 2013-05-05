@@ -1,10 +1,14 @@
 /*
     to doo:
 
-        - when goes out of the canvas appear at the other side
-        - also have the option to just crash there?...
+        - have the option to have a 'frame' around the window, so that you can't pass to the other side (you die if touch it)
         - add obstacles, that are generated (keep appearing, to make it more dificult?...)
-        - appear the stuff that grows the snake tail
+        - appear the stuff that grows the snake tail (food, and possibly other items)
+        - can't hit its own tail, or the walls
+        - each times it eats a piece of food, it increases the snake's tail
+        - the snake is always on constant movement, and you can only change the direction of the movement
+        - can't reverse the movement (otherwise you go against your tail?..)
+        - to win a map, maybe get to a certain score? and have free maps too, where it doesnt end
  */
 
 
@@ -39,8 +43,8 @@ var CANVAS_DEBUG;
 var DEBUG_MODE = true;
 
 
-var GAME_WIDTH = 800;
-var GAME_HEIGHT = 400;
+var CANVAS_WIDTH = 800;
+var CANVAS_HEIGHT = 400;
 
 
 var SNAKE;
@@ -51,11 +55,11 @@ window.onload = function()
 CANVAS_MAIN = document.querySelector( '#mainCanvas' );
 CANVAS_DEBUG = document.querySelector( '#debugCanvas' );
 
-CANVAS_MAIN.width = GAME_WIDTH;
-CANVAS_MAIN.height = GAME_HEIGHT;
+CANVAS_MAIN.width = CANVAS_WIDTH;
+CANVAS_MAIN.height = CANVAS_HEIGHT;
 
-CANVAS_DEBUG.width = GAME_WIDTH;
-CANVAS_DEBUG.height = GAME_HEIGHT;
+CANVAS_DEBUG.width = CANVAS_WIDTH;
+CANVAS_DEBUG.height = CANVAS_HEIGHT;
 
 
     // :: createjs stuff :: //
@@ -95,147 +99,6 @@ SNAKE = new SnakeTail( 50, 50 );
 };
 
 
-
-
-    // keys being pressed/held
-var KEYS_HELD = {
-
-    left  : false,
-    right : false,
-    up    : false,
-    down  : false
-
-    };
-
-window.onkeydown = function( event )
-{
-if ( !event )
-    {
-    event = window.event;
-    }
-
-switch( event.keyCode )
-    {
-    case EVENT_KEY.a:
-    case EVENT_KEY.leftArrow:
-
-        KEYS_HELD.left = true;
-        return false;
-
-    case EVENT_KEY.d:
-    case EVENT_KEY.rightArrow:
-
-        KEYS_HELD.right = true;
-        return false;
-
-    case EVENT_KEY.w:
-    case EVENT_KEY.upArrow:
-
-        KEYS_HELD.up = true;
-        return false;
-
-    case EVENT_KEY.s:
-    case EVENT_KEY.downArrow:
-
-        KEYS_HELD.down = true;
-        return false;
-    }
-
-return true;
-};
-
-
-window.onkeyup = function( event )
-{
-if ( !event )
-    {
-    event = window.event;
-    }
-
-switch( event.keyCode )
-    {
-    case EVENT_KEY.a:
-    case EVENT_KEY.leftArrow:
-
-        KEYS_HELD.left = false;
-        return false;
-
-    case EVENT_KEY.d:
-    case EVENT_KEY.rightArrow:
-
-        KEYS_HELD.right = false;
-        return false;
-
-    case EVENT_KEY.w:
-    case EVENT_KEY.upArrow:
-
-        KEYS_HELD.up = false;
-        return false;
-
-    case EVENT_KEY.s:
-    case EVENT_KEY.downArrow:
-
-        KEYS_HELD.down = false;
-        return false;
-    }
-
-return true;
-};
-
-
-function movement_tick()
-{
-var speed = 5;
-
-    // when moving diagonally (45 degrees), we have to slow down the x and y
-    // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
-    // sin(angle) = opposite / hypotenuse
-    // cos(angle) = adjacent / hypotenuse
-
-    // x = cos( pi / 4 ) -> 0.707
-    // y = sin( pi / 4 ) -> 0.707
-
-if ( KEYS_HELD.left && KEYS_HELD.up )
-    {
-    SNAKE.move( -speed * 0.707 , -speed * 0.707 );
-    }
-
-else if ( KEYS_HELD.left && KEYS_HELD.down )
-    {
-    SNAKE.move( -speed * 0.707, speed * 0.707 );
-    }
-
-else if ( KEYS_HELD.right && KEYS_HELD.up )
-    {
-    SNAKE.move( speed * 0.707, -speed * 0.707 );
-    }
-
-else if ( KEYS_HELD.right && KEYS_HELD.down )
-    {
-    SNAKE.move( speed * 0.707, speed * 0.707 );
-    }
-
-    // here we're only moving through 'x' or 'y', so just need 'speed'
-else if ( KEYS_HELD.left )
-    {
-    SNAKE.move( -speed );
-    }
-
-else if ( KEYS_HELD.right )
-    {
-    SNAKE.move( speed );
-    }
-
-else if ( KEYS_HELD.up )
-    {
-    SNAKE.move( 0, -speed );
-    }
-
-else if ( KEYS_HELD.down )
-    {
-    SNAKE.move( 0, speed );
-    }
-}
 
 
 function tick()

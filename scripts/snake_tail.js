@@ -94,10 +94,36 @@ if ( typeof startY == 'undefined' )
     startY = this.getY();
     }
 
-this.shape.x = startX + x;
-this.shape.y = startY + y;
 
-this.body.SetPosition(  new b2Vec2( this.shape.x / SCALE, this.shape.y / SCALE ) );
+var nextX = startX + x;
+var nextY = startY + y;
+
+    // see if outside of canvas (if so, move to the other side)
+if ( nextX < 0 )
+    {
+    nextX = CANVAS_WIDTH;
+    }
+
+else if ( nextX > CANVAS_WIDTH )
+    {
+    nextX = 0;
+    }
+
+
+if ( nextY < 0 )
+    {
+    nextY = CANVAS_HEIGHT;
+    }
+
+else if ( nextY > CANVAS_HEIGHT )
+    {
+    nextY = 0;
+    }
+
+this.shape.x = nextX;
+this.shape.y = nextY;
+
+this.body.SetPosition(  new b2Vec2( nextX / SCALE, nextY / SCALE ) );
 };
 
 
