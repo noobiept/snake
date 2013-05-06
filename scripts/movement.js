@@ -1,5 +1,3 @@
-(function(window)
-{
 
     // keys being pressed/held
 var KEYS_HELD = {
@@ -24,6 +22,9 @@ var DIR = {
     };
 
 var CURRENT_DIRECTION = DIR.right;
+
+    // when a game starts, the direction the snake is going
+var STARTING_DIRECTION = DIR.right;
 
 
 window.onkeydown = function( event )
@@ -102,59 +103,8 @@ return true;
 };
 
 
-function move_snake()
-{
-var speed = 5;
 
-    // when moving diagonally (45 degrees), we have to slow down the x and y
-    // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
-    // sin(angle) = opposite / hypotenuse
-    // cos(angle) = adjacent / hypotenuse
 
-    // x = cos( pi / 4 ) -> 0.707
-    // y = sin( pi / 4 ) -> 0.707
-
-if ( CURRENT_DIRECTION == DIR.top_left )
-    {
-    SNAKE.move( -speed * 0.707 , -speed * 0.707 );
-    }
-
-else if ( CURRENT_DIRECTION == DIR.bottom_left )
-    {
-    SNAKE.move( -speed * 0.707, speed * 0.707 );
-    }
-
-else if ( CURRENT_DIRECTION == DIR.top_right )
-    {
-    SNAKE.move( speed * 0.707, -speed * 0.707 );
-    }
-
-else if ( CURRENT_DIRECTION == DIR.bottom_right )
-    {
-    SNAKE.move( speed * 0.707, speed * 0.707 );
-    }
-
-    // here we're only moving through 'x' or 'y', so just need 'speed'
-else if ( CURRENT_DIRECTION == DIR.left )
-    {
-    SNAKE.move( -speed );
-    }
-
-else if ( CURRENT_DIRECTION == DIR.right )
-    {
-    SNAKE.move( speed );
-    }
-
-else if ( CURRENT_DIRECTION == DIR.top )
-    {
-    SNAKE.move( 0, -speed );
-    }
-
-else if ( CURRENT_DIRECTION == DIR.bottom )
-    {
-    SNAKE.move( 0, speed );
-    }
-}
 
 
 
@@ -163,50 +113,58 @@ function movement_tick()
 if ( KEYS_HELD.left && KEYS_HELD.up )
     {
     CURRENT_DIRECTION = DIR.top_left;
+
+    SNAKE.changeDirection( DIR.top_left );
     }
 
 else if ( KEYS_HELD.left && KEYS_HELD.down )
     {
     CURRENT_DIRECTION = DIR.bottom_left;
+
+    SNAKE.changeDirection( DIR.bottom_left );
     }
 
 else if ( KEYS_HELD.right && KEYS_HELD.up )
     {
     CURRENT_DIRECTION = DIR.top_right;
+
+    SNAKE.changeDirection( DIR.top_right );
     }
 
 else if ( KEYS_HELD.right && KEYS_HELD.down )
     {
     CURRENT_DIRECTION = DIR.bottom_right;
+
+    SNAKE.changeDirection( DIR.bottom_right );
     }
 
 else if ( KEYS_HELD.left )
     {
     CURRENT_DIRECTION = DIR.left;
+
+    SNAKE.changeDirection( DIR.left );
     }
 
 else if ( KEYS_HELD.right )
     {
     CURRENT_DIRECTION = DIR.right;
+
+    SNAKE.changeDirection( DIR.right );
     }
 
 else if ( KEYS_HELD.up )
     {
     CURRENT_DIRECTION = DIR.top;
+
+    SNAKE.changeDirection( DIR.top );
     }
 
 else if ( KEYS_HELD.down )
     {
     CURRENT_DIRECTION = DIR.bottom;
+
+    SNAKE.changeDirection( DIR.bottom );
     }
-
-move_snake();
 }
-
-
-
-window.movement_tick = movement_tick;
-
-}(window));
 
 
