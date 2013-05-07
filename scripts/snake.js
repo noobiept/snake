@@ -2,19 +2,11 @@
 {
 function Snake( x, y )
 {
-var container = new createjs.Container();
-
-container.x = x;
-container.y = y;
-
-this.container = container;
-
 this.all_tails = [];
 
-STAGE.addChild( container );
 
     // add a starting tail
-this.addTail();
+this.first_tail = this.addTail();
 }
 
 
@@ -27,7 +19,27 @@ Snake.prototype.addTail = function()
 var tail = new Tail( this );
 
 this.all_tails.push( tail );
+
+return tail;
 };
+
+
+
+/*
+    Return the position of the first tail (so, of the snake)
+ */
+
+Snake.prototype.getX = function()
+{
+return this.first_tail.getX();
+};
+
+
+Snake.prototype.getY = function()
+{
+return this.first_tail.getY();
+};
+
 
 
 
@@ -37,10 +49,8 @@ this.all_tails.push( tail );
 
 Snake.prototype.changeDirection = function( newDirection )
 {
-var container = this.container;
-
-var x = container.x;
-var y = container.y;
+var x = this.getX();
+var y = this.getY();
 
 var numberOfTails = this.all_tails.length;
 var tail;

@@ -10,6 +10,7 @@
         - can't reverse the movement (otherwise you go against your tail?..)
         - to win a map, maybe get to a certain score? and have free maps too, where it doesnt end
         - each tail has to know the path it has to take, like at x,y move in this direction, then when gets to another x,y move to other direction... if the array is empty, just continue in whatever direction you are
+        - the tails are switching direction too soon, which makes them overlap
  */
 
 
@@ -98,7 +99,7 @@ if ( DEBUG_MODE )
 
 SNAKE = new Snake( 50, 50 );
 
-window.setTimeout( function()   //HERE testing
+window.setInterval( function()   //HERE testing
     {
     SNAKE.addTail();
     }, 1000);

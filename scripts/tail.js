@@ -8,8 +8,6 @@ function Tail( snakeObject )
 {
 this.snakeObject = snakeObject;
 
-    // calculate where to position the tail
-var container = snakeObject.container;
 
 var numberOfTails = snakeObject.getNumberOfTails();
 
@@ -121,9 +119,7 @@ var height = 10;
 g.beginFill( 'green' );
 g.drawRoundRect( 0, 0, width, height, 2 );
 
-
-var container = this.snakeObject.container;
-container.addChild( snakeTail );
+STAGE.addChild( snakeTail );
 
 
     // box2d physics
@@ -145,8 +141,8 @@ var bodyDef = new b2BodyDef;
 bodyDef.type = b2Body.b2_staticBody;
 
     // we need to add the container's position, since the 'x' 'y' is relative to the container (in the createjs Shape() above is not needed, since we're adding to the container, so its already relative)
-bodyDef.position.x = (container.x + x) / SCALE;
-bodyDef.position.y = (container.y + y) / SCALE;
+bodyDef.position.x = x / SCALE;
+bodyDef.position.y = y / SCALE;
 
 
 var body = WORLD.CreateBody( bodyDef );
@@ -231,9 +227,8 @@ else if ( nextY > CANVAS_HEIGHT )
 this.shape.x = nextX;
 this.shape.y = nextY;
 
-var container = this.snakeObject.container;
 
-this.body.SetPosition(  new b2Vec2( (container.x + nextX) / SCALE, (container.y + nextY) / SCALE ) );
+this.body.SetPosition(  new b2Vec2( nextX / SCALE, nextY / SCALE ) );
 };
 
 
@@ -253,8 +248,35 @@ return this.shape.y;
 
 Tail.prototype.tick = function()
 {
+    // have to check if this tail needs to change direction or not
 var direction = this.direction;
-var speed = 5;
+
+
+if ( this.path.length !== 0 )
+    {
+    var checkpoint = this.path[ 0 ];
+
+    var checkX = checkpoint.x;
+    var checkY = checkpoint.y;
+
+    var x = this.getX();
+    var y = this.getY();
+
+        // check if its on the right position
+    if ( (checkX == x) && (checkY == y) )
+        {
+            // new direction
+        direction = checkpoint.direction;
+
+        this.direction = direction;
+
+            // remove the path checkpoint
+        this.path.splice( 0, 1 );
+        }
+    }
+
+
+    var speed = 5;
 
     // when moving diagonally (45 degrees), we have to slow down the x and y
     // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)

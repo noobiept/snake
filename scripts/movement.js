@@ -21,7 +21,6 @@ var DIR = {
     bottom_right: 7
     };
 
-var CURRENT_DIRECTION = DIR.right;
 
     // when a game starts, the direction the snake is going
 var STARTING_DIRECTION = DIR.right;
@@ -106,63 +105,45 @@ return true;
 
 
 
-
-
 function movement_tick()
 {
 if ( KEYS_HELD.left && KEYS_HELD.up )
     {
-    CURRENT_DIRECTION = DIR.top_left;
-
     SNAKE.changeDirection( DIR.top_left );
     }
 
 else if ( KEYS_HELD.left && KEYS_HELD.down )
     {
-    CURRENT_DIRECTION = DIR.bottom_left;
-
     SNAKE.changeDirection( DIR.bottom_left );
     }
 
 else if ( KEYS_HELD.right && KEYS_HELD.up )
     {
-    CURRENT_DIRECTION = DIR.top_right;
-
     SNAKE.changeDirection( DIR.top_right );
     }
 
 else if ( KEYS_HELD.right && KEYS_HELD.down )
     {
-    CURRENT_DIRECTION = DIR.bottom_right;
-
     SNAKE.changeDirection( DIR.bottom_right );
     }
 
 else if ( KEYS_HELD.left )
     {
-    CURRENT_DIRECTION = DIR.left;
-
     SNAKE.changeDirection( DIR.left );
     }
 
 else if ( KEYS_HELD.right )
     {
-    CURRENT_DIRECTION = DIR.right;
-
     SNAKE.changeDirection( DIR.right );
     }
 
 else if ( KEYS_HELD.up )
     {
-    CURRENT_DIRECTION = DIR.top;
-
     SNAKE.changeDirection( DIR.top );
     }
 
 else if ( KEYS_HELD.down )
     {
-    CURRENT_DIRECTION = DIR.bottom;
-
     SNAKE.changeDirection( DIR.bottom );
     }
 }
