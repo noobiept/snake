@@ -7,6 +7,8 @@ this.all_tails = [];
 
     // add a starting tail
 this.first_tail = this.addTail();
+
+this.first_tail.position( x, y );
 }
 
 
@@ -49,11 +51,18 @@ return this.first_tail.getY();
 
 Snake.prototype.changeDirection = function( newDirection )
 {
+if ( this.getDirection() == newDirection )
+    {
+    return;
+    }
+
 var x = this.getX();
 var y = this.getY();
 
 var numberOfTails = this.all_tails.length;
 var tail;
+
+
 
 for (var i = 0 ; i < numberOfTails ; i++)
     {
@@ -86,6 +95,12 @@ if ( position < 0 || position >= this.all_tails.length )
 return this.all_tails[ position ];
 };
 
+
+
+Snake.prototype.getDirection = function()
+{
+return this.first_tail.direction;
+};
 
 
 

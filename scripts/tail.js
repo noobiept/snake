@@ -1,7 +1,7 @@
 (function(window)
 {
-var TAIL_WIDTH = 10;
-var TAIL_HEIGHT = 10;
+var TAIL_WIDTH = 10;    // width and height need to be the same value
+var TAIL_HEIGHT = TAIL_WIDTH;
 
 
 function Tail( snakeObject )
@@ -108,16 +108,17 @@ Tail.prototype.draw = function( x, y )
     // createjs
 var snakeTail = new createjs.Shape();
 
+snakeTail.regX = TAIL_WIDTH / 2;
+snakeTail.regY = TAIL_HEIGHT / 2;
+
 snakeTail.x = x;
 snakeTail.y = y;
 
 var g = snakeTail.graphics;
 
-var width = 10;
-var height = 10;
 
 g.beginFill( 'green' );
-g.drawRoundRect( 0, 0, width, height, 2 );
+g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
 
 STAGE.addChild( snakeTail );
 
@@ -130,11 +131,7 @@ fixDef.density = 1;
 fixDef.friction = 0.5;
 fixDef.restitution = 0;     // 'bounciness'
 fixDef.shape = new b2PolygonShape;
-fixDef.shape.SetAsOrientedBox(
-    width / 2 / SCALE,      // half-width
-    height / 2 / SCALE,     // half-height
-    new b2Vec2( width / 2 / SCALE, height / 2 / SCALE ) // origin of center
-    );
+fixDef.shape.SetAsBox( TAIL_WIDTH / 2 / SCALE, TAIL_HEIGHT / 2 / SCALE );
 
 var bodyDef = new b2BodyDef;
 
@@ -155,8 +152,8 @@ body.SetUserData( this );
 this.shape = snakeTail;
 this.body = body;
 
-this.width = width;
-this.height = height;
+this.width = TAIL_WIDTH;
+this.height = TAIL_HEIGHT;
 };
 
 
@@ -246,37 +243,15 @@ return this.shape.y;
 };
 
 
-Tail.prototype.tick = function()
+/*
+    Move in the current direction
+ */
+
+Tail.prototype.moveInDirection = function()
 {
-    // have to check if this tail needs to change direction or not
+    // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
+var speed = TAIL_WIDTH;
 var direction = this.direction;
-
-
-if ( this.path.length !== 0 )
-    {
-    var checkpoint = this.path[ 0 ];
-
-    var checkX = checkpoint.x;
-    var checkY = checkpoint.y;
-
-    var x = this.getX();
-    var y = this.getY();
-
-        // check if its on the right position
-    if ( (checkX == x) && (checkY == y) )
-        {
-            // new direction
-        direction = checkpoint.direction;
-
-        this.direction = direction;
-
-            // remove the path checkpoint
-        this.path.splice( 0, 1 );
-        }
-    }
-
-
-    var speed = 5;
 
     // when moving diagonally (45 degrees), we have to slow down the x and y
     // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
@@ -326,6 +301,40 @@ else if ( direction == DIR.bottom )
     {
     this.move( 0, speed );
     }
+};
+
+
+
+Tail.prototype.tick = function()
+{
+    // have to check if this tail needs to change direction or not
+var direction = this.direction;
+
+
+if ( this.path.length !== 0 )
+    {
+    var checkpoint = this.path[ 0 ];
+
+    var checkX = checkpoint.x;
+    var checkY = checkpoint.y;
+
+    var x = this.getX();
+    var y = this.getY();
+
+            // check if its on the right position
+    if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
+        {
+            // new direction
+        direction = checkpoint.direction;
+
+        this.direction = direction;
+
+            // remove the path checkpoint
+        this.path.splice( 0, 1 );
+        }
+    }
+
+this.moveInDirection();
 };
 
 

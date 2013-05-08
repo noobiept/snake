@@ -69,3 +69,28 @@ var EVENT_KEY = {
     f12 : 123
     
 };
+
+
+/*
+    Checks if a x/y position is within a range around other x/y position
+*/
+
+function isNextTo( x, y, targetX, targetY, range )
+{
+    // we make a 'box' with the target position and the range
+var boxLeft = targetX - range / 2;
+var boxRight = targetX + range / 2;
+
+var boxTop = targetY - range / 2;
+var boxBottom = targetY + range / 2;
+
+if ( x >= boxLeft && x <= boxRight && y >= boxTop && y <= boxBottom )
+    {
+    return true;
+    }
+
+else
+    {
+    return false;
+    }
+}

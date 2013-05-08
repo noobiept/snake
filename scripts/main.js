@@ -9,8 +9,7 @@
         - the snake is always on constant movement, and you can only change the direction of the movement
         - can't reverse the movement (otherwise you go against your tail?..)
         - to win a map, maybe get to a certain score? and have free maps too, where it doesnt end
-        - each tail has to know the path it has to take, like at x,y move in this direction, then when gets to another x,y move to other direction... if the array is empty, just continue in whatever direction you are
-        - the tails are switching direction too soon, which makes them overlap
+        - the speed has to be the same value has the snake's tails dimensions (width/height), so that it turns correctly
  */
 
 
@@ -68,7 +67,9 @@ CANVAS_DEBUG.height = CANVAS_HEIGHT;
 STAGE = new createjs.Stage( CANVAS_MAIN );
 
 
+createjs.Ticker.setInterval( 50 );  // 50ms -> 20 fps
 createjs.Ticker.addListener( tick );
+
 
 
     // :: box2d stuff :: //
