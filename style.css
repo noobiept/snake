@@ -3,16 +3,10 @@ body
     background-color: black;
     }
 
-#mainCanvas, #debugCanvas
+#mainCanvas
     {
     position: absolute;
 
     top: 0;
     left: 0;
-    }
-
-
-#debugCanvas
-    {
-    display: none;
     }

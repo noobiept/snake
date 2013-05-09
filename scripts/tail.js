@@ -31,31 +31,7 @@ else
     var lastDirection = lastTail.direction;
 
 
-    if ( lastDirection == DIR.top_left )    //HERE hmm would need to rotate the tails....
-        {
-        x = lastTail.getX() + TAIL_WIDTH * 0.707;
-        y = lastTail.getY() + TAIL_HEIGHT * 0.707;
-        }
-
-    else if ( lastDirection == DIR.bottom_left )
-        {
-        x = lastTail.getX() + TAIL_WIDTH * 0.707;
-        y = lastTail.getY() - TAIL_HEIGHT * 0.707;
-        }
-
-    else if ( lastDirection == DIR.top_right )
-        {
-        x = lastTail.getX() - TAIL_WIDTH * 0.707;
-        y = lastTail.getY() + TAIL_HEIGHT * 0.707;
-        }
-
-    else if ( lastDirection == DIR.bottom_right )
-        {
-        x = lastTail.getX() - TAIL_WIDTH * 0.707;
-        y = lastTail.getY() - TAIL_HEIGHT * 0.707;
-        }
-
-    else if ( lastDirection == DIR.left )
+    if ( lastDirection == DIR.left )
         {
         x = lastTail.getX() + TAIL_WIDTH;
         y = lastTail.getY();
@@ -124,35 +100,8 @@ g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
 STAGE.addChild( snakeTail );
 
 
-    // box2d physics
-
-var fixDef = new b2FixtureDef;
-
-fixDef.density = 1;
-fixDef.friction = 0.5;
-fixDef.restitution = 0;     // 'bounciness'
-fixDef.shape = new b2PolygonShape;
-fixDef.shape.SetAsBox( TAIL_WIDTH / 2 / SCALE, TAIL_HEIGHT / 2 / SCALE );
-
-var bodyDef = new b2BodyDef;
-
-//bodyDef.type = b2Body.b2_staticBody;
-bodyDef.type = b2Body.b2_dynamicBody;
-
-    // we need to add the container's position, since the 'x' 'y' is relative to the container (in the createjs Shape() above is not needed, since we're adding to the container, so its already relative)
-bodyDef.position.x = x / SCALE;
-bodyDef.position.y = y / SCALE;
-
-
-var body = WORLD.CreateBody( bodyDef );
-
-body.CreateFixture( fixDef );
-body.SetUserData( this );
-
-
     // set the properties to the object
 this.shape = snakeTail;
-this.body = body;
 
 this.width = TAIL_WIDTH;
 this.height = TAIL_HEIGHT;
@@ -225,9 +174,6 @@ else if ( nextY > CANVAS_HEIGHT )
 
 this.shape.x = nextX;
 this.shape.y = nextY;
-
-
-this.body.SetPosition(  new b2Vec2( nextX / SCALE, nextY / SCALE ) );
 };
 
 
@@ -267,7 +213,7 @@ return this.type;
     Move in the current direction
  */
 
-Tail.prototype.moveInDirection = function( changedDirection )
+Tail.prototype.moveInDirection = function()
 {
     // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
 var speed = TAIL_WIDTH;
@@ -281,93 +227,25 @@ var direction = this.direction;
     // x = cos( pi / 4 ) -> 0.707
     // y = sin( pi / 4 ) -> 0.707
 
-if ( direction == DIR.top_left )
-    {
-    this.move( -speed * 0.707 , -speed * 0.707 );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 135;
-        this.body.SetAngle( 135 * Math.PI / 180 );
-        }
-    }
-
-else if ( direction == DIR.bottom_left )
-    {
-    this.move( -speed * 0.707, speed * 0.707 );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 225;
-        this.body.SetAngle( 225 * Math.PI / 180 );
-        }
-    }
-
-else if ( direction == DIR.top_right )
-    {
-    this.move( speed * 0.707, -speed * 0.707 );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 45;
-        this.body.SetAngle( 45 * Math.PI / 180 );
-        }
-    }
-
-else if ( direction == DIR.bottom_right )
-    {
-    this.move( speed * 0.707, speed * 0.707 );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 315;
-        this.body.SetAngle( 315 * Math.PI / 180 );
-        }
-    }
-
     // here we're only moving through 'x' or 'y', so just need 'speed'
-else if ( direction == DIR.left )
+if ( direction == DIR.left )
     {
     this.move( -speed );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 180;
-        this.body.SetAngle( 180 * Math.PI / 180 );
-        }
     }
 
 else if ( direction == DIR.right )
     {
     this.move( speed );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 0;
-        this.body.SetAngle( 0 );
-        }
     }
 
 else if ( direction == DIR.top )
     {
     this.move( 0, -speed );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 90;
-        this.body.SetAngle( 90 * Math.PI / 180 );
-        }
     }
 
 else if ( direction == DIR.bottom )
     {
     this.move( 0, speed );
-
-    if ( changedDirection === true )
-        {
-        this.shape.rotation = 270;
-        this.body.SetAngle( 270 * Math.PI / 180 );
-        }
     }
 };
 
@@ -377,7 +255,6 @@ Tail.prototype.tick = function()
 {
     // have to check if this tail needs to change direction or not
 var direction = this.direction;
-var changedDirection = false;
 
 
 if ( this.path.length !== 0 )
@@ -400,12 +277,10 @@ if ( this.path.length !== 0 )
 
             // remove the path checkpoint
         this.path.splice( 0, 1 );
-
-        changedDirection = true;
         }
     }
 
-this.moveInDirection( changedDirection );
+this.moveInDirection();
 };
 
 

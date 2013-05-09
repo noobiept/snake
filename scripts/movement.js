@@ -14,11 +14,7 @@ var DIR = {
     left: 0,
     right: 1,
     top: 2,
-    bottom: 3,
-    top_left: 4,
-    top_right: 5,
-    bottom_left: 6,
-    bottom_right: 7
+    bottom: 3
     };
 
 
@@ -107,27 +103,7 @@ return true;
 
 function movement_tick()
 {
-if ( KEYS_HELD.left && KEYS_HELD.up )
-    {
-    SNAKE.changeDirection( DIR.top_left );
-    }
-
-else if ( KEYS_HELD.left && KEYS_HELD.down )
-    {
-    SNAKE.changeDirection( DIR.bottom_left );
-    }
-
-else if ( KEYS_HELD.right && KEYS_HELD.up )
-    {
-    SNAKE.changeDirection( DIR.top_right );
-    }
-
-else if ( KEYS_HELD.right && KEYS_HELD.down )
-    {
-    SNAKE.changeDirection( DIR.bottom_right );
-    }
-
-else if ( KEYS_HELD.left )
+if ( KEYS_HELD.left )
     {
     SNAKE.changeDirection( DIR.left );
     }
