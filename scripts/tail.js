@@ -247,7 +247,7 @@ return this.shape.y;
     Move in the current direction
  */
 
-Tail.prototype.moveInDirection = function()
+Tail.prototype.moveInDirection = function( changedDirection )
 {
     // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
 var speed = TAIL_WIDTH;
@@ -264,42 +264,90 @@ var direction = this.direction;
 if ( direction == DIR.top_left )
     {
     this.move( -speed * 0.707 , -speed * 0.707 );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 135;
+        this.body.SetAngle( 135 * Math.PI / 180 );
+        }
     }
 
 else if ( direction == DIR.bottom_left )
     {
     this.move( -speed * 0.707, speed * 0.707 );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 225;
+        this.body.SetAngle( 225 * Math.PI / 180 );
+        }
     }
 
 else if ( direction == DIR.top_right )
     {
     this.move( speed * 0.707, -speed * 0.707 );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 45;
+        this.body.SetAngle( 45 * Math.PI / 180 );
+        }
     }
 
 else if ( direction == DIR.bottom_right )
     {
     this.move( speed * 0.707, speed * 0.707 );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 315;
+        this.body.SetAngle( 315 * Math.PI / 180 );
+        }
     }
 
     // here we're only moving through 'x' or 'y', so just need 'speed'
 else if ( direction == DIR.left )
     {
     this.move( -speed );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 180;
+        this.body.SetAngle( 180 * Math.PI / 180 );
+        }
     }
 
 else if ( direction == DIR.right )
     {
     this.move( speed );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 0;
+        this.body.SetAngle( 0 );
+        }
     }
 
 else if ( direction == DIR.top )
     {
     this.move( 0, -speed );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 90;
+        this.body.SetAngle( 90 * Math.PI / 180 );
+        }
     }
 
 else if ( direction == DIR.bottom )
     {
     this.move( 0, speed );
+
+    if ( changedDirection === true )
+        {
+        this.shape.rotation = 270;
+        this.body.SetAngle( 270 * Math.PI / 180 );
+        }
     }
 };
 
@@ -309,6 +357,7 @@ Tail.prototype.tick = function()
 {
     // have to check if this tail needs to change direction or not
 var direction = this.direction;
+var changedDirection = false;
 
 
 if ( this.path.length !== 0 )
@@ -331,10 +380,12 @@ if ( this.path.length !== 0 )
 
             // remove the path checkpoint
         this.path.splice( 0, 1 );
+
+        changedDirection = true;
         }
     }
 
-this.moveInDirection();
+this.moveInDirection( changedDirection );
 };
 
 
