@@ -50,6 +50,13 @@ var CANVAS_HEIGHT = 400;
 
 var SNAKE;
 
+    // the elements type in the game (useful to identify objects, call .getType() )
+var ELEMENTS_TYPE = {
+    tail: 0,
+    snake: 1
+    };
+
+
 
 window.onload = function()
 {
@@ -75,7 +82,7 @@ createjs.Ticker.addListener( tick );
     // :: box2d stuff :: //
 
 WORLD = new b2World(
-    new b2Vec2( 0, 60 ),    // gravity
+    new b2Vec2( 0, 0 ),     // no gravity
     true                    // allow sleep
     );
 
@@ -97,6 +104,31 @@ if ( DEBUG_MODE )
 
 
 
+    // setup collision detection
+var listener = new b2ContactListener;
+
+    // you can't create/destroy box2d entities inside these callbacks
+listener.BeginContact = function( contact )
+    {
+    var objectA = contact.GetFixtureA().GetBody().GetUserData();
+    var objectB = contact.GetFixtureB().GetBody().GetUserData();
+
+    var typeA = objectA.getType();
+    var typeB = objectB.getType();
+
+//    console.log(typeA, typeB);
+
+
+    if ( (typeA == ELEMENTS_TYPE.snake && typeB == ELEMENTS_TYPE.tail) ||
+         (typeA == ELEMENTS_TYPE.tail && typeB == ELEMENTS_TYPE.snake) )
+        {
+        //console.log('end game');
+        }
+    };
+
+
+WORLD.SetContactListener( listener );
+
 
 SNAKE = new Snake( 50, 50 );
 
@@ -111,6 +143,8 @@ window.setInterval( function()   //HERE testing
 function tick()
 {
 movement_tick();
+
+SNAKE.tick();
 
 WORLD.Step(
     1 / 60,     // frame-rate

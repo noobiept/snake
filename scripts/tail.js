@@ -93,6 +93,7 @@ else
 this.draw( x, y );
 
 
+this.type = ELEMENTS_TYPE.tail;
 this.path = path;
 this.direction = direction;
 
@@ -135,7 +136,8 @@ fixDef.shape.SetAsBox( TAIL_WIDTH / 2 / SCALE, TAIL_HEIGHT / 2 / SCALE );
 
 var bodyDef = new b2BodyDef;
 
-bodyDef.type = b2Body.b2_staticBody;
+//bodyDef.type = b2Body.b2_staticBody;
+bodyDef.type = b2Body.b2_dynamicBody;
 
     // we need to add the container's position, since the 'x' 'y' is relative to the container (in the createjs Shape() above is not needed, since we're adding to the container, so its already relative)
 bodyDef.position.x = x / SCALE;
@@ -240,6 +242,24 @@ return this.shape.x;
 Tail.prototype.getY = function()
 {
 return this.shape.y;
+};
+
+
+Tail.prototype.getWidth = function()
+{
+return this.width;
+};
+
+
+Tail.prototype.getHeight = function()
+{
+return this.height;
+};
+
+
+Tail.prototype.getType = function()
+{
+return this.type;
 };
 
 

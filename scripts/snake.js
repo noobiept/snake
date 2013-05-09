@@ -9,6 +9,7 @@ this.all_tails = [];
 this.first_tail = this.addTail();
 
 this.first_tail.position( x, y );
+this.first_tail.type = ELEMENTS_TYPE.snake; // the first tail represents the head of the snake, so it has a different type
 }
 
 
@@ -100,6 +101,34 @@ return this.all_tails[ position ];
 Snake.prototype.getDirection = function()
 {
 return this.first_tail.direction;
+};
+
+
+
+
+Snake.prototype.tick = function()
+{
+var firstTail = this.first_tail;
+
+var firstX = firstTail.getX();
+var firstY = firstTail.getY();
+var firstWidth = firstTail.getWidth() / 2;
+var firstHeight = firstTail.getHeight() / 2;
+
+var tail;
+
+    // deal with the collision detection
+    // 'i' starts at 1, to not check the first tail (that's the one we're comparing with)
+for (var i = 1 ; i < this.all_tails.length ; i++)
+    {
+    tail = this.all_tails[ i ];
+
+
+    if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
+        {
+        console.log('collision');
+        }
+    }
 };
 
 

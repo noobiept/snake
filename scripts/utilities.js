@@ -94,3 +94,27 @@ else
     return false;
     }
 }
+
+
+function checkCollision( oneX, oneY, oneWidth, oneHeight, twoX, twoY, twoWidth, twoHeight )
+{
+    // calculate the position of the corners of the object (as a rectangle)
+    // the position origin of the objects is in the center
+var oneLeft = oneX - oneWidth / 2;
+var oneRight = oneX + oneWidth / 2;
+var oneTop = oneY - oneHeight / 2;
+var oneBottom = oneY + oneHeight / 2;
+
+var twoLeft = twoX - twoWidth / 2;
+var twoRight = twoX + twoWidth / 2;
+var twoTop = twoY - twoHeight / 2;
+var twoBottom = twoY + twoHeight / 2;
+
+
+if ( oneRight >= twoLeft && oneLeft <= twoRight && oneTop <= twoBottom && oneBottom >= twoTop )
+    {
+    return true;
+    }
+
+return false;
+}
