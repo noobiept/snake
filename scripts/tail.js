@@ -72,10 +72,6 @@ this.draw( x, y );
 this.type = ELEMENTS_TYPE.tail;
 this.path = path;
 this.direction = direction;
-
-
-    // it automatically calls the method .tick()
-createjs.Ticker.addListener( this );
 }
 
 
@@ -91,8 +87,8 @@ snakeTail.regY = TAIL_HEIGHT / 2;
 snakeTail.x = x;
 snakeTail.y = y;
 
-var g = snakeTail.graphics;
 
+var g = snakeTail.graphics;
 
 g.beginFill( 'green' );
 g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
@@ -247,40 +243,6 @@ else if ( direction == DIR.bottom )
     {
     this.move( 0, speed );
     }
-};
-
-
-
-Tail.prototype.tick = function()
-{
-    // have to check if this tail needs to change direction or not
-var direction = this.direction;
-
-
-if ( this.path.length !== 0 )
-    {
-    var checkpoint = this.path[ 0 ];
-
-    var checkX = checkpoint.x;
-    var checkY = checkpoint.y;
-
-    var x = this.getX();
-    var y = this.getY();
-
-            // check if its on the right position
-    if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
-        {
-            // new direction
-        direction = checkpoint.direction;
-
-        this.direction = direction;
-
-            // remove the path checkpoint
-        this.path.splice( 0, 1 );
-        }
-    }
-
-this.moveInDirection();
 };
 
 

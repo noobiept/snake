@@ -10,6 +10,8 @@
         - can't reverse the movement (otherwise you go against your tail?..)
         - to win a map, maybe get to a certain score? and have free maps too, where it doesnt end
         - the speed has to be the same value has the snake's tails dimensions (width/height), so that it turns correctly
+        - what to do when 2 keys being pressed (like top/right?..)
+        - the collision with the food is not aligned with the food's shape
  */
 
 
@@ -53,10 +55,16 @@ createjs.Ticker.addListener( tick );
 
 SNAKE = new Snake( 50, 50 );
 
-window.setInterval( function()   //HERE testing
+
+    // add food
+window.setInterval( function()
     {
-    SNAKE.addTail();
-    }, 1000);
+    var x = getRandomInt( 0, CANVAS_WIDTH );
+    var y = getRandomInt( 0, CANVAS_HEIGHT );
+
+    new Food( x, y );
+
+    }, 1000 );
 };
 
 

@@ -52,10 +52,25 @@ return this.first_tail.getY();
 
 Snake.prototype.changeDirection = function( newDirection )
 {
-if ( this.getDirection() == newDirection )
+var currentDirection = this.getDirection();
+
+    // already going that way
+if ( currentDirection == newDirection )
     {
     return;
     }
+
+    // don't allow to go to the opposing direction
+if ( (currentDirection == DIR.left && newDirection == DIR.right) ||
+     (currentDirection == DIR.right && newDirection == DIR.left) ||
+     (currentDirection == DIR.top && newDirection == DIR.bottom) ||
+     (currentDirection == DIR.bottom && newDirection == DIR.top) )
+    {
+    return;
+    }
+
+
+
 
 var x = this.getX();
 var y = this.getY();
@@ -116,12 +131,13 @@ var firstWidth = firstTail.getWidth() / 2;
 var firstHeight = firstTail.getHeight() / 2;
 
 var tail;
+var allTails = this.all_tails;
 
-    // deal with the collision detection
+    // :: deal with the collision detection between the snake and tails :: //
     // 'i' starts at 1, to not check the first tail (that's the one we're comparing with)
-for (var i = 1 ; i < this.all_tails.length ; i++)
+for (var i = 1 ; i < allTails.length ; i++)
     {
-    tail = this.all_tails[ i ];
+    tail = allTails[ i ];
 
 
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
@@ -129,6 +145,72 @@ for (var i = 1 ; i < this.all_tails.length ; i++)
         console.log('collision');
         }
     }
+
+
+var a, b;
+
+    // :: check collision between the snake's tails and the food :: //
+for (a = 0 ; a < ALL_FOOD.length ; a++)
+    {
+    var food = ALL_FOOD[ a ];
+    var foodX = food.getX();
+    var foodY = food.getY();
+    var radius = food.getRadius();
+
+    for (b = 0 ; b < allTails.length ; b++)
+        {
+        tail = allTails[ b ];
+
+        if ( checkCollision( foodX, foodY, radius * 2, radius * 2, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
+            {
+            SNAKE.addTail();
+
+            food.remove();
+            a--;
+            break;
+            }
+        }
+    }
+
+
+    // :: deal with the movement of the tails :: //
+
+for (i = 0 ; i < allTails.length ; i++)
+    {
+    tail = allTails[ i ];
+
+        // have to check if this tail needs to change direction or not
+    var direction = tail.direction;
+
+
+    if ( tail.path.length !== 0 )
+        {
+        var checkpoint = tail.path[ 0 ];
+
+        var checkX = checkpoint.x;
+        var checkY = checkpoint.y;
+
+        var x = tail.getX();
+        var y = tail.getY();
+
+            // check if its on the right position
+        if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
+            {
+                // new direction
+            direction = checkpoint.direction;
+
+            tail.direction = direction;
+
+                // remove the path checkpoint
+            tail.path.splice( 0, 1 );
+            }
+        }
+
+    tail.moveInDirection();
+    }
+
+
+
 };
 
 
