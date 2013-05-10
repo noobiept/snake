@@ -131,3 +131,25 @@ function getRandomFloat( min, max )
 {
 return Math.random() * (max - min) + min;
 }
+
+
+/*
+    If an x/y position is out of bounds, it overflows (goes to the other side of the canvas, the amount it overflows)
+ */
+
+function checkOverflowPosition( x_or_y, limit )
+{
+if ( x_or_y < 0 )
+    {
+    x_or_y = limit - -x_or_y;
+    }
+
+else if ( x_or_y > limit )
+    {
+    x_or_y -= limit;
+    }
+
+return x_or_y;
+}
+
+

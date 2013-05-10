@@ -12,6 +12,13 @@
         - the speed has to be the same value has the snake's tails dimensions (width/height), so that it turns correctly
         - what to do when 2 keys being pressed (like top/right?..)
         - the collision with the food is not aligned with the food's shape
+        - have highscore with number of tails
+        - have menu with highscore and options for snake speed, time takes to get food, obstacles..
+        - have special food which gives like 2 tails but increases speed momentarely as side effect
+        - the speed option have it in pixels/sec (can be calculated from the tick time and pixels it moves each tick)
+        - option to set the canvas width/height
+        - when game over, restart the game (fast game)
+        - when there's a collision (and the game ends), show where it happened (like change the color of the tail/wall)
  */
 
 
@@ -49,7 +56,7 @@ CANVAS.height = CANVAS_HEIGHT;
 STAGE = new createjs.Stage( CANVAS );
 
 
-createjs.Ticker.setInterval( 50 );  // 50ms -> 20 fps
+createjs.Ticker.setInterval( 100 );  // 50ms -> 20 fps
 createjs.Ticker.addListener( tick );
 
 
@@ -65,6 +72,50 @@ window.setInterval( function()
     new Food( x, y );
 
     }, 1000 );
+
+
+    // add walls
+window.setInterval( function()
+    {
+    var x = getRandomInt( 0, CANVAS_WIDTH );
+    var y = getRandomInt( 0, CANVAS_HEIGHT );
+
+    var width = getRandomInt( 40, 100 );
+    var height = getRandomInt( 10, 20 );
+
+    var verticalOrientation = getRandomInt( 0, 1 );
+
+        // switch the width/height
+    if ( verticalOrientation )
+        {
+        var temp = width;
+
+        width = height;
+        height = temp;
+        }
+
+        // we have to make sure it doesnt add on top of the snake
+        //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
+    var snakeX = SNAKE.getX();
+    var snakeY = SNAKE.getY();
+
+    var margin = 20;
+
+        // means the wall position is close to the snake
+    if ( snakeX > x - margin && snakeX < x + margin &&
+         snakeY > y - margin && snakeY < y + margin )
+        {
+        x += 100;
+        y += 100;
+
+            // to make sure it doesn't go out of bounds
+        x = checkOverflowPosition( x, CANVAS_WIDTH );
+        y = checkOverflowPosition( y, CANVAS_HEIGHT );
+        }
+
+    new Wall( x, y, width, height );
+
+    }, 2000 );
 };
 
 

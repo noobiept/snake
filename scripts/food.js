@@ -4,7 +4,8 @@ var ALL_FOOD = [];
 
 function Food( x, y )
 {
-this.radius = 5;
+this.width = 10;
+this.height = 10;
 
 
 this.draw( x, y );
@@ -15,12 +16,13 @@ ALL_FOOD.push( this );
 
 Food.prototype.draw = function( x, y )
 {
-var radius = this.radius;
+var width = this.width;
+var height = this.height;
 
 var food = new createjs.Shape();
 
-food.regX = radius;
-food.regY = radius;
+food.regX = width / 2;
+food.regY = height / 2;
 
 food.x = x;
 food.y = y;
@@ -29,7 +31,7 @@ food.y = y;
 var g = food.graphics;
 
 g.beginFill( 'red' );
-g.drawCircle( 0, 0, radius );
+g.drawRoundRect( 0, 0, width, height, 10 );
 
 STAGE.addChild( food );
 
@@ -49,9 +51,15 @@ return this.shape.y;
 };
 
 
-Food.prototype.getRadius = function()
+Food.prototype.getWidth = function()
 {
-return this.radius;
+return this.width;
+};
+
+
+Food.prototype.getHeight = function()
+{
+return this.height;
 };
 
 

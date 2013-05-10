@@ -142,7 +142,7 @@ for (var i = 1 ; i < allTails.length ; i++)
 
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
         {
-        console.log('collision');
+        console.log('collision snake/tails');
         }
     }
 
@@ -155,13 +155,14 @@ for (a = 0 ; a < ALL_FOOD.length ; a++)
     var food = ALL_FOOD[ a ];
     var foodX = food.getX();
     var foodY = food.getY();
-    var radius = food.getRadius();
+    var foodWidth = food.getWidth();
+    var foodHeight = food.getHeight();
 
     for (b = 0 ; b < allTails.length ; b++)
         {
         tail = allTails[ b ];
 
-        if ( checkCollision( foodX, foodY, radius * 2, radius * 2, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
+        if ( checkCollision( foodX, foodY, foodWidth, foodHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
             {
             SNAKE.addTail();
 
@@ -171,6 +172,22 @@ for (a = 0 ; a < ALL_FOOD.length ; a++)
             }
         }
     }
+
+
+    // :: check collision between the snake and the walls :: //
+
+var wall;
+
+for (i = 0 ; i < ALL_WALLS.length ; i++)
+    {
+    wall = ALL_WALLS[ i ];
+
+    if ( checkCollision( firstX, firstY, firstWidth, firstHeight, wall.getX(), wall.getY(), wall.getWidth(), wall.getHeight() ) )
+        {
+        console.log('collision snake/wall');
+        }
+    }
+
 
 
     // :: deal with the movement of the tails :: //
