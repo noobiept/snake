@@ -5,16 +5,27 @@ function MainMenu()
 
 }
 
+var MAIN_MENU;
+var OPTIONS;
+var HIGH_SCORE;
+
+MainMenu.init = function()
+{
+MAIN_MENU = document.querySelector( '#MainMenu' );
+OPTIONS = document.querySelector( '#Options' );
+HIGH_SCORE = document.querySelector( '#HighScore' );
+};
+
 
 MainMenu.open = function()
 {
 clearCanvas();
 
-var container = document.querySelector( '#MainMenu' );
 
-var startGame = container.querySelector( '#MainMenu-startGame' );
-var options = container.querySelector( '#MainMenu-options' );
-var highscore = container.querySelector( '#MainMenu-highscore' );
+
+var startGame = MAIN_MENU.querySelector( '#MainMenu-startGame' );
+var options = MAIN_MENU.querySelector( '#MainMenu-options' );
+var highScore = MAIN_MENU.querySelector( '#MainMenu-highScore' );
 
 
 startGame.onclick = function()
@@ -29,13 +40,14 @@ options.onclick = function()
     };
 
 
-highscore.onclick = function()
+highScore.onclick = function()
     {
-    MainMenu.highscore();
+    MainMenu.highScore();
     };
 
 
-$( container ).css( 'display', 'block' );
+$( MAIN_MENU ).css( 'display', 'block' );
+MainMenu.centerMenu( MAIN_MENU );
 };
 
 
@@ -111,10 +123,35 @@ clearCanvas();
 };
 
 
-MainMenu.highscore = function()
+MainMenu.highScore = function()
 {
 clearCanvas();
 
+};
+
+
+
+MainMenu.centerMenu = function( element )
+{
+    // the canvas may not be starting at 0,0 position, so we need to account for that
+var canvasPosition = $( CANVAS ).position();
+
+var left = CANVAS_WIDTH / 2 - $( element ).width() / 2 + canvasPosition.left;
+
+var top = CANVAS_HEIGHT / 2 - $( element ).height() / 2 + canvasPosition.top;
+
+$( element ).css({
+    top  : top  + 'px',
+    left : left + 'px'
+    });
+};
+
+
+MainMenu.clear = function()
+{
+$( MAIN_MENU  ).css( 'display', 'none' );
+$( OPTIONS    ).css( 'display', 'none' );
+$( HIGH_SCORE ).css( 'display', 'none' );
 };
 
 

@@ -1,6 +1,8 @@
 body
     {
     background-color: black;
+    color: white;
+    text-align: center;
     }
 
 #mainCanvas
@@ -9,16 +11,17 @@ body
 
     top: 0;
     left: 0;
+
+    border: 1px solid white;
     }
 
 
-#MainMenu, #Options, #Highscore
+#MainMenu, #Options, #HighScore
     {
     display: none;
+
     position: absolute;
 
     top: 0;
     left: 0;
-
-    color: white;
     }
