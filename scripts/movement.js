@@ -101,26 +101,26 @@ return true;
 
 
 
-function movement_tick()
+function movement_tick( snakeObject )
 {
 if ( KEYS_HELD.left )
     {
-    SNAKE.changeDirection( DIR.left );
+    snakeObject.changeDirection( DIR.left );
     }
 
 else if ( KEYS_HELD.right )
     {
-    SNAKE.changeDirection( DIR.right );
+    snakeObject.changeDirection( DIR.right );
     }
 
 else if ( KEYS_HELD.up )
     {
-    SNAKE.changeDirection( DIR.top );
+    snakeObject.changeDirection( DIR.top );
     }
 
 else if ( KEYS_HELD.down )
     {
-    SNAKE.changeDirection( DIR.bottom );
+    snakeObject.changeDirection( DIR.bottom );
     }
 }
 

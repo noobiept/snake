@@ -19,6 +19,7 @@
         - option to set the canvas width/height
         - when game over, restart the game (fast game)
         - when there's a collision (and the game ends), show where it happened (like change the color of the tail/wall)
+        - have 2 players mode (2 snakes on same map)
  */
 
 
@@ -34,7 +35,6 @@ var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 400;
 
 
-var SNAKE;
 
     // the elements type in the game (useful to identify objects, call .getType() )
 var ELEMENTS_TYPE = {
@@ -59,72 +59,40 @@ STAGE = new createjs.Stage( CANVAS );
 createjs.Ticker.setInterval( 100 );  // 50ms -> 20 fps
 createjs.Ticker.addListener( tick );
 
-
-SNAKE = new Snake( 50, 50 );
-
-
-    // add food
-window.setInterval( function()
-    {
-    var x = getRandomInt( 0, CANVAS_WIDTH );
-    var y = getRandomInt( 0, CANVAS_HEIGHT );
-
-    new Food( x, y );
-
-    }, 1000 );
-
-
-    // add walls
-window.setInterval( function()
-    {
-    var x = getRandomInt( 0, CANVAS_WIDTH );
-    var y = getRandomInt( 0, CANVAS_HEIGHT );
-
-    var width = getRandomInt( 40, 100 );
-    var height = getRandomInt( 10, 20 );
-
-    var verticalOrientation = getRandomInt( 0, 1 );
-
-        // switch the width/height
-    if ( verticalOrientation )
-        {
-        var temp = width;
-
-        width = height;
-        height = temp;
-        }
-
-        // we have to make sure it doesnt add on top of the snake
-        //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
-    var snakeX = SNAKE.getX();
-    var snakeY = SNAKE.getY();
-
-    var margin = 20;
-
-        // means the wall position is close to the snake
-    if ( snakeX > x - margin && snakeX < x + margin &&
-         snakeY > y - margin && snakeY < y + margin )
-        {
-        x += 100;
-        y += 100;
-
-            // to make sure it doesn't go out of bounds
-        x = checkOverflowPosition( x, CANVAS_WIDTH );
-        y = checkOverflowPosition( y, CANVAS_HEIGHT );
-        }
-
-    new Wall( x, y, width, height );
-
-    }, 2000 );
+MainMenu.open();
 };
+
+
+
+/*
+    Clears the canvas, resets stuff
+ */
+
+function clearCanvas()
+{
+$( '#MainMenu' ).css( 'display', 'none' );
+$( '#Options' ).css( 'display', 'none' );
+$( '#Highscore' ).css( 'display', 'none' );
+
+STAGE.removeAllChildren();
+}
+
+
 
 
 
 function tick()
 {
-movement_tick();
+var snakeObject;
 
-SNAKE.tick();
+for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+    {
+    snakeObject = ALL_SNAKES[ i ];
+
+    movement_tick( snakeObject );
+
+    snakeObject.tick();
+    }
 
 STAGE.update();
 }

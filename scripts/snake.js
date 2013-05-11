@@ -1,5 +1,7 @@
 (function(window)
 {
+var ALL_SNAKES = [];
+
 function Snake( x, y )
 {
 this.all_tails = [];
@@ -10,7 +12,37 @@ this.first_tail = this.addTail();
 
 this.first_tail.position( x, y );
 this.first_tail.type = ELEMENTS_TYPE.snake; // the first tail represents the head of the snake, so it has a different type
+
+ALL_SNAKES.push( this );
 }
+
+
+Snake.removeAll = function()
+{
+for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+    {
+    ALL_SNAKES[ i ].remove();
+    }
+};
+
+
+
+Snake.prototype.remove = function()
+{
+var position = ALL_SNAKES.indexOf( this );
+
+ALL_SNAKES.splice( position, 1 );
+
+var tail;
+
+for (var i = 0 ; i < this.all_tails.length ; i++)
+    {
+    tail = this.all_tails[ i ];
+
+    tail.remove();
+    }
+};
+
 
 
 /*
@@ -164,7 +196,7 @@ for (a = 0 ; a < ALL_FOOD.length ; a++)
 
         if ( checkCollision( foodX, foodY, foodWidth, foodHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
             {
-            SNAKE.addTail();
+            this.addTail();
 
             food.remove();
             a--;
@@ -225,13 +257,11 @@ for (i = 0 ; i < allTails.length ; i++)
 
     tail.moveInDirection();
     }
-
-
-
 };
 
 
 
 window.Snake = Snake;
+window.ALL_SNAKES = ALL_SNAKES;
 
 }(window));

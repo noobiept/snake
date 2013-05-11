@@ -105,6 +105,12 @@ this.height = TAIL_HEIGHT;
 
 
 
+Tail.prototype.remove = function()
+{
+STAGE.removeChild( this.shape );
+};
+
+
 
 /*
     position on the canvas
