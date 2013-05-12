@@ -25,3 +25,28 @@ body
     top: 0;
     left: 0;
     }
+
+
+#MainMenu-startGame, #MainMenu-options, #MainMenu-highScore
+    {
+    cursor: pointer;
+
+    text-shadow: rgba(0, 0, 255, 0.7) 2px 0 1px;
+
+    padding: 0 30px;
+    margin: 10px 0;
+    }
+
+#MainMenu-startGame:hover, #MainMenu-options:hover, #MainMenu-highScore:hover
+    {
+    text-shadow: blue 2px 0;
+    }
+
+
+#Message
+    {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    }

@@ -27,6 +27,7 @@
         - when game over, restart the game (fast game)
         - when there's a collision (and the game ends), show where it happened (like change the color of the tail/wall)
         - have 2 players mode (2 snakes on same map)
+        - better game over message (the styling, etc)
  */
 
 
@@ -82,6 +83,42 @@ MainMenu.clear();
 STAGE.removeAllChildren();
 }
 
+
+function pause()
+{
+createjs.Ticker.setPaused( true );
+}
+
+
+function resume()
+{
+createjs.Ticker.setPaused( false );
+}
+
+
+
+
+/*
+    When the snake hits its tails for example
+ */
+
+function gameOver()
+{
+var message = new Message( 'Game Over' );
+
+pause();
+
+window.setTimeout( function()
+    {
+    Game.clear();
+
+    message.remove();
+    MainMenu.open();
+
+    resume();
+
+    }, 2000 );
+}
 
 
 

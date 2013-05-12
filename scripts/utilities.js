@@ -153,3 +153,24 @@ return x_or_y;
 }
 
 
+
+/*
+    Centers an html element in the middle of the game canvas (assumes html element has its css position: absolute;
+ */
+
+function centerElement( element )
+{
+    // the canvas may not be starting at 0,0 position, so we need to account for that
+var canvasPosition = $( CANVAS ).position();
+
+var left = CANVAS_WIDTH / 2 - $( element ).width() / 2 + canvasPosition.left;
+
+var top = CANVAS_HEIGHT / 2 - $( element ).height() / 2 + canvasPosition.top;
+
+$( element ).css({
+    top  : top  + 'px',
+    left : left + 'px'
+    });
+}
+
+

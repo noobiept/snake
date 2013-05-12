@@ -174,7 +174,7 @@ for (var i = 1 ; i < allTails.length ; i++)
 
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
         {
-        console.log('collision snake/tails');
+        gameOver();
         }
     }
 
@@ -216,7 +216,7 @@ for (i = 0 ; i < ALL_WALLS.length ; i++)
 
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, wall.getX(), wall.getY(), wall.getWidth(), wall.getHeight() ) )
         {
-        console.log('collision snake/wall');
+        gameOver();
         }
     }
 
