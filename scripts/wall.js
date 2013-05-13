@@ -73,6 +73,16 @@ STAGE.removeChild( this.shape );
 };
 
 
+Wall.removeAll = function()
+{
+for (var i = 0 ; i < ALL_WALLS.length ; i++)
+    {
+    ALL_WALLS[ i ].remove();
+    i--;    // since we're messing around with the ALL_FOOD array
+    }
+};
+
+
 window.Wall = Wall;
 window.ALL_WALLS = ALL_WALLS;
 

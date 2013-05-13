@@ -89,6 +89,8 @@ for (var i = 0 ; i < INTERVALS.length ; i++)
 INTERVALS.length = 0;
 
 Snake.removeAll();
+Wall.removeAll();
+Food.removeAll();
 
 clearCanvas();
 };

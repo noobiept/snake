@@ -73,6 +73,16 @@ STAGE.removeChild( this.shape );
 };
 
 
+Food.removeAll = function()
+{
+for (var i = 0 ; i < ALL_FOOD.length ; i++)
+    {
+    ALL_FOOD[ i ].remove();
+    i--;    // since we're messing around with the ALL_FOOD array
+    }
+};
+
+
 window.Food = Food;
 window.ALL_FOOD = ALL_FOOD;
 

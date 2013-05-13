@@ -22,6 +22,7 @@ Snake.removeAll = function()
 for (var i = 0 ; i < ALL_SNAKES.length ; i++)
     {
     ALL_SNAKES[ i ].remove();
+    i--;    // we're removing from the array
     }
 };
 
@@ -153,6 +154,7 @@ return this.first_tail.direction;
 
 
 
+
 Snake.prototype.tick = function()
 {
 var firstTail = this.first_tail;
@@ -175,6 +177,7 @@ for (var i = 1 ; i < allTails.length ; i++)
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
         {
         gameOver();
+        return;
         }
     }
 
@@ -217,6 +220,7 @@ for (i = 0 ; i < ALL_WALLS.length ; i++)
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, wall.getX(), wall.getY(), wall.getWidth(), wall.getHeight() ) )
         {
         gameOver();
+        return;
         }
     }
 

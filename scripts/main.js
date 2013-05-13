@@ -66,8 +66,16 @@ createjs.Ticker.setInterval( 100 );  // 50ms -> 20 fps
 createjs.Ticker.addListener( tick );
 
 
+HighScore.load();
+
 MainMenu.init();
 MainMenu.open();
+};
+
+
+window.onunload = function()
+{
+HighScore.save();
 };
 
 
@@ -110,6 +118,12 @@ pause();
 
 window.setTimeout( function()
     {
+        //HERE distinguish the snakes (like player1, player2 ?..)
+    for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+        {
+        HighScore.add( ALL_SNAKES[ i ].getNumberOfTails() );
+        }
+
     Game.clear();
 
     message.remove();

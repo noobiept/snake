@@ -70,6 +70,62 @@ MainMenu.highScore = function()
 {
 clearCanvas();
 
+
+var table = HIGH_SCORE.querySelector( '#HighScore-table' );
+
+
+    // header
+var tableRow = document.createElement( 'tr' );
+
+var header = [ 'Position', 'Number Of Tails' ];
+var tableHeader;
+
+for (var i = 0 ; i < header.length ; i++)
+    {
+    tableHeader = document.createElement( 'th' );
+
+    tableHeader.innerText = header[ i ];
+    tableRow.appendChild( tableHeader );
+    }
+
+table.appendChild( tableRow );
+
+    // data
+var allScores = HighScore.getAll();
+
+
+var position;
+var numberOfTails;
+
+for (i = 0 ; i < allScores.length ; i++)
+    {
+    tableRow = document.createElement( 'tr' );
+    position = document.createElement( 'td' );
+    numberOfTails = document.createElement( 'td' );
+
+    position.innerText = (i + 1).toString();
+    numberOfTails.innerText = allScores[ i ];
+
+    tableRow.appendChild( position );
+    tableRow.appendChild( numberOfTails );
+    table.appendChild( tableRow );
+    }
+
+
+var back = HIGH_SCORE.querySelector( '#HighScore-back' );
+
+back.onclick = function()
+    {
+        // clean the table, otherwise if we return to the high-score page it will have repeated rows
+    $( table ).empty();
+
+    MainMenu.open();
+    };
+
+
+$( HIGH_SCORE ).css( 'display', 'block' );
+
+centerElement( HIGH_SCORE );
 };
 
 

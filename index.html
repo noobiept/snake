@@ -17,6 +17,7 @@
         <script type="text/javascript" src="scripts/game.js"></script>
         <script type="text/javascript" src="scripts/main_menu.js"></script>
         <script type="text/javascript" src="scripts/message.js"></script>
+        <script type="text/javascript" src="scripts/high_score.js"></script>
         <script type="text/javascript" src="scripts/utilities.js"></script>
         <script type="text/javascript" src="scripts/movement.js"></script>
 
@@ -32,9 +33,9 @@
     <canvas id="mainCanvas"></canvas>
 
     <div id="MainMenu">
-        <div id="MainMenu-startGame">Start Game</div>
-        <div id="MainMenu-options">Options</div>
-        <div id="MainMenu-highScore">High Score</div>
+        <div id="MainMenu-startGame" class="button">Start Game</div>
+        <div id="MainMenu-options" class="button">Options</div>
+        <div id="MainMenu-highScore" class="button">High Score</div>
     </div>
 
     <div id="Options">
@@ -42,7 +43,11 @@
     </div>
 
     <div id="HighScore">
+        <h2>High Score</h2>
 
+        <table id="HighScore-table"></table>
+
+        <div id="HighScore-back" class="button">Back</div>
     </div>
 
     <div id="Message"></div>

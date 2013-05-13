@@ -27,7 +27,7 @@ body
     }
 
 
-#MainMenu-startGame, #MainMenu-options, #MainMenu-highScore
+.button
     {
     cursor: pointer;
 
@@ -37,7 +37,7 @@ body
     margin: 10px 0;
     }
 
-#MainMenu-startGame:hover, #MainMenu-options:hover, #MainMenu-highScore:hover
+.button:hover
     {
     text-shadow: blue 2px 0;
     }
@@ -50,3 +50,4 @@ body
     left: 0;
     display: none;
     }
+
