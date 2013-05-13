@@ -16,7 +16,6 @@
 
         - have the option to have a 'frame' around the window, so that you can't pass to the other side (you die if touch it)
         - appear the stuff that grows the snake tail (food, and possibly other items)
-        - to win a map, maybe get to a certain score? and have free maps too, where it doesnt end
         - the speed has to be the same value has the snake's tails dimensions (width/height), so that it turns correctly
         - what to do when 2 keys being pressed (like top/right?..)
         - have highscore with number of tails (but it kind of depends on the options? the difficulty level)
@@ -24,7 +23,6 @@
         - have special food which gives like 2 tails but increases speed momentarily as side effect
         - the speed option have it in pixels/sec (can be calculated from the tick time and pixels it moves each tick)
         - option to set the canvas width/height
-        - when game over, restart the game (fast game)
         - when there's a collision (and the game ends), show where it happened (like change the color of the tail/wall)
         - have 2 players mode (2 snakes on same map)
         - better game over message (the styling, etc)

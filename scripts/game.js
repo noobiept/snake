@@ -31,6 +31,20 @@ var interval = window.setInterval( function()
 INTERVALS.push( interval );
 
 
+    // add double food
+interval = window.setInterval( function()
+    {
+    var x = getRandomInt( 0, CANVAS_WIDTH );
+    var y = getRandomInt( 0, CANVAS_HEIGHT );
+
+    new DoubleFood( x, y );
+
+    }, 2000 );
+
+
+INTERVALS.push( interval );
+
+
     // add walls
 interval = window.setInterval( function()
     {

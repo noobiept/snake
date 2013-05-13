@@ -39,6 +39,17 @@ this.shape = food;
 };
 
 
+/*
+    When there's a collision between the snake and the food, the food is 'eaten' (this applies the effects of that)
+ */
+
+Food.prototype.eat = function( snakeObject )
+{
+snakeObject.addTail();
+};
+
+
+
 Food.prototype.getX = function()
 {
 return this.shape.x;

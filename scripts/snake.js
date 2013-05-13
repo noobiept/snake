@@ -199,7 +199,7 @@ for (a = 0 ; a < ALL_FOOD.length ; a++)
 
         if ( checkCollision( foodX, foodY, foodWidth, foodHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
             {
-            this.addTail();
+            food.eat( this );
 
             food.remove();
             a--;
