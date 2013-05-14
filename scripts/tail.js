@@ -128,6 +128,9 @@ return this.move( x, y, 0, 0 );
 
 Tail.prototype.move = function( x, y, startX, startY )
 {
+var canvasWidth = Options.getCanvasWidth();
+var canvasHeight = Options.getCanvasHeight();
+
 if ( typeof x == 'undefined' )
     {
     x = 0;
@@ -155,10 +158,10 @@ var nextY = startY + y;
     // see if outside of canvas (if so, move to the other side)
 if ( nextX < 0 )
     {
-    nextX = CANVAS_WIDTH;
+    nextX = canvasWidth;
     }
 
-else if ( nextX > CANVAS_WIDTH )
+else if ( nextX > canvasWidth )
     {
     nextX = 0;
     }
@@ -166,10 +169,10 @@ else if ( nextX > CANVAS_WIDTH )
 
 if ( nextY < 0 )
     {
-    nextY = CANVAS_HEIGHT;
+    nextY = canvasHeight;
     }
 
-else if ( nextY > CANVAS_HEIGHT )
+else if ( nextY > canvasHeight )
     {
     nextY = 0;
     }

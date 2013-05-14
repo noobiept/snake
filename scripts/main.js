@@ -7,25 +7,24 @@
         - snake always on constant movement (you control the direction)
         - can't reverse the snake's direction
         - the obstacles and food are generated automatically (you can choose the timings in the options)
-
-        - options:
-
+        - have an option to have a frame around the canvas, to prevent the snake to go to the other side
+        - have an option to change the difficulty, which changes the food/wall spawning time, etc
+        - have an option to change the canvas width/height
 
 
     to doo:
 
-        - have the option to have a 'frame' around the window, so that you can't pass to the other side (you die if touch it)
         - appear the stuff that grows the snake tail (food, and possibly other items)
         - the speed has to be the same value has the snake's tails dimensions (width/height), so that it turns correctly
         - what to do when 2 keys being pressed (like top/right?..)
         - have highscore with number of tails (but it kind of depends on the options? the difficulty level)
         - have menu with highscore and options for snake speed, time takes to get food, obstacles..
         - have special food which gives like 2 tails but increases speed momentarily as side effect
-        - the speed option have it in pixels/sec (can be calculated from the tick time and pixels it moves each tick)
-        - option to set the canvas width/height
         - when there's a collision (and the game ends), show where it happened (like change the color of the tail/wall)
         - have 2 players mode (2 snakes on same map)
         - better game over message (the styling, etc)
+        - don't add food on top of the walls
+        - the high-score only shows the score for the current set of options (so that the values can be comparable)
  */
 
 
@@ -36,8 +35,6 @@ var STAGE;
     // program stuff
 var CANVAS;
 
-var CANVAS_WIDTH = 800;
-var CANVAS_HEIGHT = 400;
 
 
     // the elements type in the game (useful to identify objects, call .getType() )
@@ -48,19 +45,33 @@ var ELEMENTS_TYPE = {
 
 
 
+    // in milliseconds
+    // the order is according to the difficulty (so on normal mode, we get the first element, so 50ms)
+var TIME_BETWEEN_TICKS = [ 50, 30 ];
+
 window.onload = function()
 {
+Options.load();
+
+
+    // setup the canvas
 CANVAS = document.querySelector( '#mainCanvas' );
 
-CANVAS.width = CANVAS_WIDTH;
-CANVAS.height = CANVAS_HEIGHT;
+
+
+CANVAS.width = Options.getCanvasWidth();
+CANVAS.height = Options.getCanvasHeight();
+
+
+
 
 
     // :: createjs stuff :: //
 STAGE = new createjs.Stage( CANVAS );
 
+var difficulty = Options.getDifficulty();
 
-createjs.Ticker.setInterval( 100 );  // 50ms -> 20 fps
+createjs.Ticker.setInterval( TIME_BETWEEN_TICKS[ difficulty ] );
 createjs.Ticker.addListener( tick );
 
 
@@ -74,6 +85,7 @@ MainMenu.open();
 window.onunload = function()
 {
 HighScore.save();
+Options.save();
 };
 
 
