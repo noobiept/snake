@@ -231,3 +231,18 @@ function INHERIT_PROTOTYPE (derivedClass, baseClass)
 
     derivedClass.prototype = prototype;
 }
+
+
+
+function boolToOnOff( value )
+{
+if ( value == true )
+    {
+    return 'On';
+    }
+
+else
+    {
+    return 'Off';
+    }
+}

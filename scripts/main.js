@@ -25,6 +25,17 @@
         - better game over message (the styling, etc)
         - don't add food on top of the walls
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
+
+Dependencies:
+
+    - jquery -- 2.0
+    - jquery-ui -- 1.10
+
+        - slider
+        - blitzer theme
+
+    - easeljs -- 0.6.0
+
  */
 
 

@@ -5,6 +5,8 @@
 
         <!-- libraries -->
         <script type="text/javascript" src="libraries/jquery-2.0.0.min.js"></script>
+        <script type="text/javascript" src="libraries/jquery-ui-1.10.3.custom.min.js"></script>
+
         <script type="text/javascript" src="libraries/easeljs-0.6.0.min.js"></script>
 
 
@@ -26,6 +28,7 @@
         <!-- styling -->
         <style type="text/css">
 
+            @import url("libraries/css/blitzer/jquery-ui-1.10.3.custom.min.css");
             @import url("style.css");
 
         </style>
@@ -41,10 +44,10 @@
     </div>
 
     <div id="Options">
-        <div id="Options-width">Canvas Width</div>
-        <div id="Options-height">Canvas Height</div>
-        <div id="Options-frame">Frame<span>Off</span></div>
-        <div id="Options-difficulty">Difficulty: <span>Normal</span></div>
+        <div id="Options-width">Canvas Width: <span>800</span><div id="Options-width-slider"></div></div>
+        <div id="Options-height">Canvas Height: <span>400</span><div id="Options-height-slider"></div></div>
+        <div id="Options-frame" class="button">Frame: <span>Off</span></div>
+        <div id="Options-difficulty" class="button">Difficulty: <span>normal</span></div>
     </div>
 
     <div id="HighScore">

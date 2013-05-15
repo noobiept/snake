@@ -10,6 +10,8 @@ var DIFFICULTY = {
     hard: 1
     };
 
+var DIFFICULTY_STRING = [ 'normal', 'hard' ];
+
 
 var OPTIONS = {
 
@@ -19,11 +21,6 @@ var OPTIONS = {
     difficulty: DIFFICULTY.normal
 
     };
-
-
-
-
-var DIFFICULTY_VALUE = DIFFICULTY.normal;
 
 
 
@@ -47,13 +44,27 @@ localStorage.setObject( 'options', OPTIONS );
 
 Options.setDifficulty = function( difficulty )
 {
-DIFFICULTY_VALUE = difficulty;
+OPTIONS.difficulty = difficulty;
 };
 
 
 Options.getDifficulty = function()
 {
-return DIFFICULTY_VALUE;
+return OPTIONS.difficulty;
+};
+
+
+
+Options.setDifficultyString = function( stringValue )
+{
+Options.setDifficulty( DIFFICULTY_STRING.indexOf( stringValue ) );
+};
+
+
+
+Options.getDifficultyString = function()
+{
+return DIFFICULTY_STRING[ OPTIONS.difficulty ];
 };
 
 
@@ -68,7 +79,7 @@ return OPTIONS.canvas_width;
 };
 
 
-Options.setCanvasHeight = function( Height )
+Options.setCanvasHeight = function( height )
 {
 OPTIONS.canvas_height = height;
 };

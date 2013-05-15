@@ -51,3 +51,9 @@ body
     display: none;
     }
 
+
+#Options > *
+    {
+    display: inline-block;
+    margin: 20px;
+    }

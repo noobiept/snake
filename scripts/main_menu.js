@@ -63,6 +63,113 @@ MainMenu.options = function()
 {
 clearCanvas();
 
+    // :: Width :: //
+
+var width = OPTIONS.querySelector( '#Options-width' );
+var widthValue = width.querySelector( 'span' );
+
+var canvasWidth = Options.getCanvasWidth();
+
+widthValue.innerText = canvasWidth;
+
+var widthSlider = width.querySelector( '#Options-width-slider' );
+
+$( widthSlider ).slider({
+    min: 400,
+    max: 1000,
+    step: 100,
+    value: canvasWidth,
+    range: 'min',
+    slide: function( event, ui )
+        {
+        widthValue.innerText = ui.value;
+
+        Options.setCanvasWidth( ui.value );
+        }
+    });
+
+
+    // :: Height :: //
+
+var height = OPTIONS.querySelector( '#Options-height' );
+var heightValue = height.querySelector( 'span' );
+
+var canvasHeight = Options.getCanvasHeight();
+
+heightValue.innerText = canvasHeight;
+
+var heightSlider = height.querySelector( '#Options-height-slider' );
+
+$( heightSlider ).slider({
+    min: 400,
+    max: 1000,
+    step: 100,
+    value: canvasHeight,
+    range: 'min',
+    slide: function( event, ui )
+        {
+        heightValue.innerText = ui.value;
+
+        Options.setCanvasHeight( ui.value );
+        }
+    });
+
+
+    // :: frame :: //
+
+var frame = OPTIONS.querySelector( '#Options-frame' );
+var frameValue = frame.querySelector( 'span' );
+
+frameValue.innerText = boolToOnOff( Options.getFrame() );
+
+frame.onclick = function()
+    {
+    if ( frameValue.innerText == 'On' )
+        {
+        Options.setFrame( false );
+        }
+
+    else
+        {
+        Options.setFrame( true );
+        }
+
+    frameValue.innerText = boolToOnOff( Options.getFrame() );
+    };
+
+
+    // :: difficulty :: //
+
+var difficulty = OPTIONS.querySelector( '#Options-difficulty' );
+
+var difficultyValue = difficulty.querySelector( 'span' );
+
+
+difficultyValue.innerText = Options.getDifficultyString();
+
+difficulty.onclick = function()
+    {
+    if ( difficultyValue.innerText == 'normal' )
+        {
+        difficultyValue.innerText = 'hard';
+
+        Options.setDifficultyString( 'hard' );
+        }
+
+    else
+        {
+        difficultyValue.innerText = 'normal';
+
+        Options.setDifficultyString( 'normal' );
+        }
+    };
+
+
+
+
+$( OPTIONS ).css( 'display', 'block' );
+
+centerElement( OPTIONS );
 };
 
 
