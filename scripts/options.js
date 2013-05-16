@@ -71,6 +71,10 @@ return DIFFICULTY_STRING[ OPTIONS.difficulty ];
 Options.setCanvasWidth = function( width )
 {
 OPTIONS.canvas_width = width;
+
+CANVAS.width = width;
+
+centerCanvas();
 };
 
 Options.getCanvasWidth = function()
@@ -82,6 +86,10 @@ return OPTIONS.canvas_width;
 Options.setCanvasHeight = function( height )
 {
 OPTIONS.canvas_height = height;
+
+CANVAS.height = height;
+
+centerCanvas();
 };
 
 Options.getCanvasHeight = function()

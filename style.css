@@ -16,7 +16,7 @@ body
     }
 
 
-#MainMenu, #Options, #HighScore
+#MainMenu, #Options, #HighScore, #GameMenu
     {
     display: none;
 
@@ -52,7 +52,7 @@ body
     }
 
 
-#Options > *
+#Options-container > *
     {
     display: inline-block;
     margin: 20px;

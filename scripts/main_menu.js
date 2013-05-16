@@ -85,6 +85,8 @@ $( widthSlider ).slider({
         widthValue.innerText = ui.value;
 
         Options.setCanvasWidth( ui.value );
+
+        centerElement( OPTIONS );
         }
     });
 
@@ -111,6 +113,8 @@ $( heightSlider ).slider({
         heightValue.innerText = ui.value;
 
         Options.setCanvasHeight( ui.value );
+
+        centerElement( OPTIONS );
         }
     });
 
@@ -165,6 +169,15 @@ difficulty.onclick = function()
     };
 
 
+
+    // :: back :: //
+
+var back = OPTIONS.querySelector( '#Options-back' );
+
+back.onclick = function()
+    {
+    MainMenu.open();
+    };
 
 
 $( OPTIONS ).css( 'display', 'block' );

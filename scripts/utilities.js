@@ -209,13 +209,13 @@ return value && JSON.parse( value );
  * Used for 'class' inheritance (search prototypal inheritance)
  */
 
-function OBJECT (o)
+function OBJECT( o )
 {
-    function F(){}
+function F(){}
 
-    F.prototype = o;
+F.prototype = o;
 
-    return new F();
+return new F();
 }
 
 
@@ -223,13 +223,13 @@ function OBJECT (o)
  * Used for 'class' inheritance (search for parasitic combination inheritance)
  */
 
-function INHERIT_PROTOTYPE (derivedClass, baseClass)
+function INHERIT_PROTOTYPE( derivedClass, baseClass )
 {
-    var prototype = OBJECT( baseClass.prototype );
+var prototype = OBJECT( baseClass.prototype );
 
-    prototype.constructor = derivedClass;
+prototype.constructor = derivedClass;
 
-    derivedClass.prototype = prototype;
+derivedClass.prototype = prototype;
 }
 
 

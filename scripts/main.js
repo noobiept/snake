@@ -69,12 +69,10 @@ Options.load();
 CANVAS = document.querySelector( '#mainCanvas' );
 
 
-
 CANVAS.width = Options.getCanvasWidth();
 CANVAS.height = Options.getCanvasHeight();
 
-
-
+centerCanvas();
 
 
     // :: createjs stuff :: //
@@ -98,6 +96,20 @@ window.onunload = function()
 HighScore.save();
 Options.save();
 };
+
+
+/*
+    center the canvas in the middle of window
+ */
+
+function centerCanvas()
+{
+var left = $( window ).width() / 2 - CANVAS.width / 2;
+var top = $( window ).height() / 2 - CANVAS.height / 2;
+
+$( CANVAS ).css( 'left', left + 'px' );
+$( CANVAS ).css( 'top', top + 'px' );
+}
 
 
 

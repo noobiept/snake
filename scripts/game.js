@@ -114,7 +114,38 @@ interval = window.setInterval( function()
 
 
 INTERVALS.push( interval );
+
+Game.initMenu();
 };
+
+
+Game.initMenu = function()
+{
+var gameMenu = document.querySelector( '#GameMenu' );
+
+var quit = gameMenu.querySelector( '#GameMenu-quit' );
+
+quit.onclick = function()
+    {
+    Game.clear();
+
+    MainMenu.open();
+    };
+
+
+    // position the menu on the bottom right of the canvas
+var canvasPosition = $( CANVAS ).position();
+
+var left = canvasPosition.left + Options.getCanvasWidth() - $( gameMenu ).width();
+var top = canvasPosition.top + Options.getCanvasHeight();
+
+$( gameMenu ).css( 'top', top + 'px' );
+$( gameMenu ).css( 'left', left + 'px' );
+
+
+$( gameMenu ).css( 'display', 'block' );
+};
+
 
 
 Game.clear = function()
@@ -129,6 +160,8 @@ INTERVALS.length = 0;
 Snake.removeAll();
 Wall.removeAll();
 Food.removeAll();
+
+$( '#GameMenu' ).css( 'display', 'none' );
 
 clearCanvas();
 };
