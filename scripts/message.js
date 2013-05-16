@@ -1,21 +1,37 @@
 (function(window)
 {
-function Message( text, x, y )
+/*
+    Argument:
+        {
+            text: string,
+            x: number,
+            y: number,
+            cssClass: string
+        }
+ */
+
+function Message( stuff )
 {
 var message = document.querySelector( '#Message' );
 
-message.innerText = text;
+message.innerText = stuff.text;
 
 
-if ( typeof x == 'undefined' )
+if ( typeof stuff.x == 'undefined' )
     {
     centerElement( message );
     }
 
 else
     {
-    $( message ).css( 'left', x + 'px' );
-    $( message ).css( 'top', y + 'px' );
+    $( message ).css( 'left', stuff.x + 'px' );
+    $( message ).css( 'top', stuff.y + 'px' );
+    }
+
+
+if ( typeof stuff.cssClass != 'undefined' )
+    {
+    $( message ).addClass( stuff.cssClass );
     }
 
 
@@ -28,7 +44,9 @@ this.message = message;
 Message.prototype.remove = function()
 {
 $( this.message ).css( 'display', 'none' );
-}
+
+$( this.message ).removeClass();
+};
 
 
 

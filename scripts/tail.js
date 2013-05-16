@@ -104,6 +104,19 @@ this.height = TAIL_HEIGHT;
 };
 
 
+/*
+    Change the shape's color to red, to signal that the tail as been hit
+ */
+
+Tail.prototype.asBeenHit = function()
+{
+var g = this.shape.graphics;
+
+g.beginFill( 'red' );
+g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
+};
+
+
 
 Tail.prototype.remove = function()
 {

@@ -12,7 +12,7 @@ body
     top: 0;
     left: 0;
 
-    border: 1px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
 
@@ -52,8 +52,18 @@ body
     }
 
 
+.Message-gameOver
+    {
+    font-size: 1.4em;
+    text-shadow: blue 2px 0;
+    }
+
+
+
 #Options-container > *
     {
     display: inline-block;
+    width: 160px;
+    padding: 0;
     margin: 20px;
     }

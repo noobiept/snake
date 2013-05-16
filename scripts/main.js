@@ -6,7 +6,7 @@
         - snake can't hit its own tail or the obstacles
         - snake always on constant movement (you control the direction)
         - can't reverse the snake's direction
-        - the obstacles and food are generated automatically (you can choose the timings in the options)
+        - the obstacles and food are generated automatically
         - have an option to have a frame around the canvas, to prevent the snake to go to the other side
         - have an option to change the difficulty, which changes the food/wall spawning time, etc
         - have an option to change the canvas width/height
@@ -14,17 +14,13 @@
 
     to doo:
 
-        - appear the stuff that grows the snake tail (food, and possibly other items)
-        - the speed has to be the same value has the snake's tails dimensions (width/height), so that it turns correctly
         - what to do when 2 keys being pressed (like top/right?..)
-        - have highscore with number of tails (but it kind of depends on the options? the difficulty level)
-        - have menu with highscore and options for snake speed, time takes to get food, obstacles..
+        - have high-score with number of tails (but it kind of depends on the options? the difficulty level)
         - have special food which gives like 2 tails but increases speed momentarily as side effect
-        - when there's a collision (and the game ends), show where it happened (like change the color of the tail/wall)
         - have 2 players mode (2 snakes on same map)
-        - better game over message (the styling, etc)
         - don't add food on top of the walls
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
+        - improve the style of the messages/menus/game elements
 
 Dependencies:
 
@@ -145,7 +141,10 @@ createjs.Ticker.setPaused( false );
 
 function gameOver()
 {
-var message = new Message( 'Game Over' );
+var message = new Message({
+    text: 'Game Over',
+    cssClass: 'Message-gameOver'
+    });
 
 pause();
 

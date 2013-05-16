@@ -39,6 +39,19 @@ this.shape = wall;
 };
 
 
+/*
+    Change the shape's color to red, to signal that the wall as been hit
+ */
+
+Wall.prototype.asBeenHit = function()
+{
+var g = this.shape.graphics;
+
+g.beginFill( 'red' );
+g.drawRoundRect( 0, 0, this.width, this.height, 2 );
+};
+
+
 Wall.prototype.getX = function()
 {
 return this.shape.x;
