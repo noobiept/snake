@@ -21,6 +21,8 @@ var WALL_TIMINGS = [ 4000, 2000 ];
 var TIME_BETWEEN_TICKS = [ 50, 30 ];
 
 
+var TIMER;
+
 Game.start = function()
 {
 clearCanvas();
@@ -197,6 +199,12 @@ quit.onclick = function()
     };
 
 
+var timer = gameMenu.querySelector( '#GameMenu-timer' );
+
+
+TIMER = new Timer( timer );
+
+
     // position the menu on the bottom right of the canvas
 var canvasPosition = $( CANVAS ).position();
 
@@ -222,6 +230,9 @@ var message = new Message({
     cssClass: 'Message-gameOver'
     });
 
+
+TIMER.stop();
+
 pause();
 
     // prevent from clicking on the game menu, while the interval is set
@@ -232,9 +243,10 @@ quit.onclick = null;
 window.setTimeout( function()
     {
         //HERE distinguish the snakes (like player1, player2 ?..)
+        // the high-score would be only added to the player who won?..
     for (var i = 0 ; i < ALL_SNAKES.length ; i++)
         {
-        HighScore.add( ALL_SNAKES[ i ].getNumberOfTails() );
+        HighScore.add( ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
         }
 
     Game.clear();
@@ -256,6 +268,8 @@ for (var i = 0 ; i < INTERVALS.length ; i++)
     }
 
 INTERVALS.length = 0;
+
+TIMER.stop();
 
 Snake.removeAll();
 Wall.removeAll();

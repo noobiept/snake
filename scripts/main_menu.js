@@ -208,7 +208,7 @@ else
         // header
     var tableRow = document.createElement( 'tr' );
 
-    var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Canvas Width', 'Canvas Height' ];
+    var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Canvas Width', 'Canvas Height', 'Time' ];
     var tableHeader;
 
     for (var i = 0 ; i < header.length ; i++)
@@ -229,6 +229,7 @@ else
     var frame;
     var canvasWidthData;
     var canvasHeightData;
+    var time;
 
     for (i = 0 ; i < allScores.length ; i++)
         {
@@ -241,6 +242,7 @@ else
         frame = document.createElement( 'td' );
         canvasWidthData = document.createElement( 'td' );
         canvasHeightData = document.createElement( 'td' );
+        time = document.createElement( 'td' );
 
         position.innerText = (i + 1).toString();
         numberOfTails.innerText = score.numberOfTails;
@@ -248,6 +250,7 @@ else
         frame.innerText = score.frame;
         canvasWidthData.innerText = score.canvasWidth;
         canvasHeightData.innerText = score.canvasHeight;
+        time.innerText = score.time;
 
         tableRow.appendChild( position );
         tableRow.appendChild( numberOfTails );
@@ -255,6 +258,7 @@ else
         tableRow.appendChild( frame );
         tableRow.appendChild( canvasWidthData );
         tableRow.appendChild( canvasHeightData );
+        tableRow.appendChild( time );
         table.appendChild( tableRow );
         }
     }

@@ -38,14 +38,15 @@ localStorage.setObject( 'high_score', HIGH_SCORE );
 
 
 
-HighScore.add = function( numberOfTails )
+HighScore.add = function( numberOfTails, time )
 {
 HIGH_SCORE.push({
     numberOfTails: numberOfTails,
     difficulty: Options.getDifficultyString(),
     frame: boolToOnOff( Options.getFrame() ),
     canvasWidth: Options.getCanvasWidth(),
-    canvasHeight: Options.getCanvasHeight()
+    canvasHeight: Options.getCanvasHeight(),
+    time: time
     });
 
 HIGH_SCORE.sort( function(a, b)

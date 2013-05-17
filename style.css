@@ -67,3 +67,10 @@ body
     padding: 0;
     margin: 20px;
     }
+
+
+#GameMenu > *
+    {
+    display: inline-block;
+    width: 50px;
+    }
