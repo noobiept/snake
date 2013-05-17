@@ -7,6 +7,7 @@ function Game()
 
 var INTERVALS = [];
 
+
     // the time until we add a new food/wall/etc
     // depends on the difficulty level
     // the order matters (get the difficulty from Options, which will be the position in this)
@@ -14,6 +15,10 @@ var FOOD_TIMINGS = [ 1000, 3000 ];
 var DOUBLE_FOOD_TIMINGS = [ 5000, 10000 ];
 var WALL_TIMINGS = [ 4000, 2000 ];
 
+
+    // in milliseconds
+    // the order is according to the difficulty (so on normal mode, we get the first element, so 50ms)
+var TIME_BETWEEN_TICKS = [ 50, 30 ];
 
 
 Game.start = function()
@@ -28,6 +33,8 @@ var canvasHeight = Options.getCanvasHeight();
 
 var snakeObject = new Snake( 50, 50 );
 
+
+createjs.Ticker.setInterval( TIME_BETWEEN_TICKS[ difficulty ] );
 
     // add a wall around the canvas (so that you can't pass through from one side to the other)
 if ( Options.getFrame() )

@@ -52,10 +52,6 @@ var ELEMENTS_TYPE = {
 
 
 
-    // in milliseconds
-    // the order is according to the difficulty (so on normal mode, we get the first element, so 50ms)
-var TIME_BETWEEN_TICKS = [ 50, 30 ];
-
 window.onload = function()
 {
 Options.load();
@@ -76,7 +72,7 @@ STAGE = new createjs.Stage( CANVAS );
 
 var difficulty = Options.getDifficulty();
 
-createjs.Ticker.setInterval( TIME_BETWEEN_TICKS[ difficulty ] );
+createjs.Ticker.setInterval( 50 );
 createjs.Ticker.addListener( tick );
 
 

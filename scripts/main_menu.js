@@ -194,42 +194,71 @@ clearCanvas();
 var table = HIGH_SCORE.querySelector( '#HighScore-table' );
 
 
-    // header
-var tableRow = document.createElement( 'tr' );
 
-var header = [ 'Position', 'Number Of Tails' ];
-var tableHeader;
-
-for (var i = 0 ; i < header.length ; i++)
-    {
-    tableHeader = document.createElement( 'th' );
-
-    tableHeader.innerText = header[ i ];
-    tableRow.appendChild( tableHeader );
-    }
-
-table.appendChild( tableRow );
-
-    // data
+        // data
 var allScores = HighScore.getAll();
 
-
-var position;
-var numberOfTails;
-
-for (i = 0 ; i < allScores.length ; i++)
+if ( allScores.length == 0 )
     {
-    tableRow = document.createElement( 'tr' );
-    position = document.createElement( 'td' );
-    numberOfTails = document.createElement( 'td' );
-
-    position.innerText = (i + 1).toString();
-    numberOfTails.innerText = allScores[ i ];
-
-    tableRow.appendChild( position );
-    tableRow.appendChild( numberOfTails );
-    table.appendChild( tableRow );
+    table.innerHTML = 'No score yet.';
     }
+
+else
+    {
+        // header
+    var tableRow = document.createElement( 'tr' );
+
+    var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Canvas Width', 'Canvas Height' ];
+    var tableHeader;
+
+    for (var i = 0 ; i < header.length ; i++)
+        {
+        tableHeader = document.createElement( 'th' );
+
+        tableHeader.innerText = header[ i ];
+        tableRow.appendChild( tableHeader );
+        }
+
+    table.appendChild( tableRow );
+
+
+    var score;
+    var position;
+    var numberOfTails;
+    var difficulty;
+    var frame;
+    var canvasWidthData;
+    var canvasHeightData;
+
+    for (i = 0 ; i < allScores.length ; i++)
+        {
+        score = allScores[ i ];
+
+        tableRow = document.createElement( 'tr' );
+        position = document.createElement( 'td' );
+        numberOfTails = document.createElement( 'td' );
+        difficulty = document.createElement( 'td' );
+        frame = document.createElement( 'td' );
+        canvasWidthData = document.createElement( 'td' );
+        canvasHeightData = document.createElement( 'td' );
+
+        position.innerText = (i + 1).toString();
+        numberOfTails.innerText = score.numberOfTails;
+        difficulty.innerText = score.difficulty;
+        frame.innerText = score.frame;
+        canvasWidthData.innerText = score.canvasWidth;
+        canvasHeightData.innerText = score.canvasHeight;
+
+        tableRow.appendChild( position );
+        tableRow.appendChild( numberOfTails );
+        tableRow.appendChild( difficulty );
+        tableRow.appendChild( frame );
+        tableRow.appendChild( canvasWidthData );
+        tableRow.appendChild( canvasHeightData );
+        table.appendChild( tableRow );
+        }
+    }
+
 
 
 var back = HIGH_SCORE.querySelector( '#HighScore-back' );

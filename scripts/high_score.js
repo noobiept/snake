@@ -38,13 +38,19 @@ localStorage.setObject( 'high_score', HIGH_SCORE );
 
 
 
-HighScore.add = function( newScore )
+HighScore.add = function( numberOfTails )
 {
-HIGH_SCORE.push( newScore );
+HIGH_SCORE.push({
+    numberOfTails: numberOfTails,
+    difficulty: Options.getDifficultyString(),
+    frame: boolToOnOff( Options.getFrame() ),
+    canvasWidth: Options.getCanvasWidth(),
+    canvasHeight: Options.getCanvasHeight()
+    });
 
 HIGH_SCORE.sort( function(a, b)
     {
-    return b - a;
+    return b.numberOfTails - a.numberOfTails;
     });
 
 
@@ -70,6 +76,14 @@ if ( position < 0 || position >= HIGH_SCORE.length )
     }
 
 return HIGH_SCORE[ position ];
+};
+
+
+HighScore.removeAll = function()
+{
+HIGH_SCORE.length = 0;
+
+localStorage.removeItem( 'high_score' );
 };
 
 
