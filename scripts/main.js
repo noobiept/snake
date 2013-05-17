@@ -18,7 +18,6 @@
         - have high-score with number of tails (but it kind of depends on the options? the difficulty level)
         - have special food which gives like 2 tails but increases speed momentarily as side effect
         - have 2 players mode (2 snakes on same map)
-        - don't add food on top of the walls
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
         - improve the style of the messages/menus/game elements
 
@@ -126,40 +125,6 @@ createjs.Ticker.setPaused( true );
 function resume()
 {
 createjs.Ticker.setPaused( false );
-}
-
-
-
-
-/*
-    When the snake hits its tails for example
- */
-
-function gameOver()
-{
-var message = new Message({
-    text: 'Game Over',
-    cssClass: 'Message-gameOver'
-    });
-
-pause();
-
-window.setTimeout( function()
-    {
-        //HERE distinguish the snakes (like player1, player2 ?..)
-    for (var i = 0 ; i < ALL_SNAKES.length ; i++)
-        {
-        HighScore.add( ALL_SNAKES[ i ].getNumberOfTails() );
-        }
-
-    Game.clear();
-
-    message.remove();
-    MainMenu.open();
-
-    resume();
-
-    }, 2000 );
 }
 
 

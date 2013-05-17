@@ -47,11 +47,42 @@ if ( Options.getFrame() )
 
 
 
+    // check if a food/wall position is colliding with any of the  walls/foods
+var check = function( x, y, width, height, elementsArray )
+    {
+    for (var i = 0 ; i < elementsArray.length ; i++)
+        {
+        var element = elementsArray[ i ];
+
+        if ( checkCollision( x, y, width, height, element.getX(), element.getY(), element.getWidth(), element.getHeight() ) )
+            {
+            return true;
+            }
+        }
+
+    return false;
+    };
+
+
+
+
     // add food
 var interval = window.setInterval( function()
     {
-    var x = getRandomInt( 0, canvasWidth );
-    var y = getRandomInt( 0, canvasHeight );
+    var x, y;
+
+        // don't add food on top of the walls (otherwise its impossible to get it)
+        // try 5 times, otherwise just use whatever position
+    for (var i = 0 ; i < 5 ; i++)
+        {
+        x = getRandomInt( 0, canvasWidth );
+        y = getRandomInt( 0, canvasHeight );
+
+        if ( !check( x, y, FOOD_WIDTH, FOOD_HEIGHT, ALL_WALLS ) )
+            {
+            break;
+            }
+        }
 
     new Food( x, y );
 
@@ -65,8 +96,20 @@ INTERVALS.push( interval );
     // add double food
 interval = window.setInterval( function()
     {
-    var x = getRandomInt( 0, canvasWidth );
-    var y = getRandomInt( 0, canvasHeight );
+    var x, y;
+
+        // don't add food on top of the walls (otherwise its impossible to get it)
+        // try 5 times, otherwise just use whatever position
+    for (var i = 0 ; i < 5 ; i++)
+        {
+        x = getRandomInt( 0, canvasWidth );
+        y = getRandomInt( 0, canvasHeight );
+
+        if ( !check( x, y, FOOD_WIDTH, FOOD_HEIGHT, ALL_WALLS ) )
+            {
+            break;
+            }
+        }
 
     new DoubleFood( x, y );
 
@@ -79,29 +122,43 @@ INTERVALS.push( interval );
     // add walls
 interval = window.setInterval( function()
     {
-    var x = getRandomInt( 0, canvasWidth );
-    var y = getRandomInt( 0, canvasHeight );
+    var x, y, width, height, verticalOrientation;
 
-    var width = getRandomInt( 40, 100 );
-    var height = getRandomInt( 10, 20 );
-
-    var verticalOrientation = getRandomInt( 0, 1 );
-
-        // switch the width/height
-    if ( verticalOrientation )
+        // don't add walls on top of the food (otherwise its impossible to get it)
+        // try 5 times, otherwise just use whatever position
+    for (var i = 0 ; i < 5 ; i++)
         {
-        var temp = width;
+        x = getRandomInt( 0, canvasWidth );
+        y = getRandomInt( 0, canvasHeight );
 
-        width = height;
-        height = temp;
+        width = getRandomInt( 40, 100 );
+        height = getRandomInt( 10, 20 );
+
+        verticalOrientation = getRandomInt( 0, 1 );
+
+            // switch the width/height
+        if ( verticalOrientation )
+            {
+            var temp = width;
+
+            width = height;
+            height = temp;
+            }
+
+        if ( !check( x, y, width, height, ALL_FOOD ) )
+            {
+            break;
+            }
         }
+
 
         // we have to make sure it doesnt add on top of the snake
         //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
+        // also we could add the wall on top of food (since we're changing the values we checked above)
     var snakeX = snakeObject.getX();
     var snakeY = snakeObject.getY();
 
-    var margin = 20;
+    var margin = 40;
 
         // means the wall position is close to the snake
     if ( snakeX > x - margin && snakeX < x + margin &&
@@ -153,6 +210,42 @@ $( gameMenu ).css( 'left', left + 'px' );
 $( gameMenu ).css( 'display', 'block' );
 };
 
+
+/*
+    When the snake hits its tails for example
+ */
+
+Game.over = function()
+{
+var message = new Message({
+    text: 'Game Over',
+    cssClass: 'Message-gameOver'
+    });
+
+pause();
+
+    // prevent from clicking on the game menu, while the interval is set
+var quit = document.querySelector( '#GameMenu-quit' );
+
+quit.onclick = null;
+
+window.setTimeout( function()
+    {
+        //HERE distinguish the snakes (like player1, player2 ?..)
+    for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+        {
+        HighScore.add( ALL_SNAKES[ i ].getNumberOfTails() );
+        }
+
+    Game.clear();
+
+    message.remove();
+    MainMenu.open();
+
+    resume();
+
+    }, 2000 );
+};
 
 
 Game.clear = function()

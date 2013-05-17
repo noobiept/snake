@@ -2,10 +2,13 @@
 {
 var ALL_FOOD = [];
 
+var FOOD_WIDTH = 10;
+var FOOD_HEIGHT = 10;
+
 function Food( x, y )
 {
-this.width = 10;
-this.height = 10;
+this.width = FOOD_WIDTH;
+this.height = FOOD_HEIGHT;
 
 
 this.draw( x, y );
@@ -93,6 +96,9 @@ for (var i = 0 ; i < ALL_FOOD.length ; i++)
     }
 };
 
+
+window.FOOD_WIDTH = FOOD_WIDTH;
+window.FOOD_HEIGHT = FOOD_HEIGHT;
 
 window.Food = Food;
 window.ALL_FOOD = ALL_FOOD;

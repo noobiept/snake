@@ -178,7 +178,7 @@ for (var i = 1 ; i < allTails.length ; i++)
         {
         tail.asBeenHit();
 
-        gameOver();
+        Game.over();
         return;
         }
     }
@@ -223,7 +223,7 @@ for (i = 0 ; i < ALL_WALLS.length ; i++)
         {
         wall.asBeenHit();
 
-        gameOver();
+        Game.over();
         return;
         }
     }
