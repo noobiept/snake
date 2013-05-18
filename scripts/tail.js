@@ -20,7 +20,7 @@ if ( numberOfTails == 0 )
     {
     x = 0;
     y = 0;
-    direction = STARTING_DIRECTION;
+    direction = snakeObject.starting_direction;
     }
 
     // we position after the last tail, and it depends on what direction it is going

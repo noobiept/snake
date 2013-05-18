@@ -23,8 +23,18 @@ var TIME_BETWEEN_TICKS = [ 50, 30 ];
 
 var TIMER;
 
-Game.start = function()
+
+
+Game.start = function( twoPlayersMode )
 {
+if ( typeof twoPlayersMode == 'undefined')
+    {
+    twoPlayersMode = false;
+    }
+
+Game.twoPlayersMode = twoPlayersMode;
+
+
 clearCanvas();
 
 
@@ -33,7 +43,41 @@ var canvasWidth = Options.getCanvasWidth();
 var canvasHeight = Options.getCanvasHeight();
 
 
-var snakeObject = new Snake( 50, 50 );
+    // the Snake objects (depends if 1 player mode or 2)
+var snakeObjects = [];
+
+    // 1 player (on left side of canvas, moving to the right)
+snakeObjects.push(
+    new Snake(
+        50,
+        canvasHeight / 2,
+        DIR.right,
+        {
+            left  : EVENT_KEY.a,
+            right : EVENT_KEY.d,
+            up    : EVENT_KEY.w,
+            down  : EVENT_KEY.s
+        }
+    ));
+
+
+if ( twoPlayersMode )
+    {
+        // 2 player (on right side of canvas, moving to the left)
+    snakeObjects.push(
+        new Snake(
+            canvasWidth - 50,
+            canvasHeight / 2,
+            DIR.left,
+            {
+                left  : EVENT_KEY.leftArrow,
+                right : EVENT_KEY.rightArrow,
+                up    : EVENT_KEY.upArrow,
+                down  : EVENT_KEY.downArrow
+            }
+        ));
+    }
+
 
 
 createjs.Ticker.setInterval( TIME_BETWEEN_TICKS[ difficulty ] );
@@ -157,22 +201,27 @@ interval = window.setInterval( function()
         // we have to make sure it doesnt add on top of the snake
         //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
         // also we could add the wall on top of food (since we're changing the values we checked above)
-    var snakeX = snakeObject.getX();
-    var snakeY = snakeObject.getY();
-
-    var margin = 40;
-
-        // means the wall position is close to the snake
-    if ( snakeX > x - margin && snakeX < x + margin &&
-         snakeY > y - margin && snakeY < y + margin )
+    for ( i = 0 ; i < snakeObjects.length ; i++ )
         {
-        x += 100;
-        y += 100;
+        var snakeX = snakeObjects[ i ].getX();
+        var snakeY = snakeObjects[ i ].getY();
 
-            // to make sure it doesn't go out of bounds
-        x = checkOverflowPosition( x, canvasWidth );
-        y = checkOverflowPosition( y, canvasHeight );
+        var margin = 40;
+
+            // means the wall position is close to the snake
+        if ( snakeX > x - margin && snakeX < x + margin &&
+         snakeY > y - margin && snakeY < y + margin )
+            {
+            x += 100;
+            y += 100;
+
+                // to make sure it doesn't go out of bounds
+            x = checkOverflowPosition( x, canvasWidth );
+            y = checkOverflowPosition( y, canvasHeight );
+            }
         }
+
+
 
     new Wall( x, y, width, height );
 
@@ -279,6 +328,13 @@ $( '#GameMenu' ).css( 'display', 'none' );
 
 clearCanvas();
 };
+
+
+Game.isTwoPlayersMode = function()
+{
+return Game.twoPlayersMode;
+};
+
 
 
 window.Game = Game;

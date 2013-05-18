@@ -24,6 +24,7 @@ clearCanvas();
 
 
 var startGame = MAIN_MENU.querySelector( '#MainMenu-startGame' );
+var startGame_2players = MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
 var options = MAIN_MENU.querySelector( '#MainMenu-options' );
 var highScore = MAIN_MENU.querySelector( '#MainMenu-highScore' );
 
@@ -32,6 +33,13 @@ startGame.onclick = function()
     {
     MainMenu.startGame();
     };
+
+
+startGame_2players.onclick = function()
+    {
+    MainMenu.startGame( true );
+    };
+
 
 
 options.onclick = function()
@@ -53,9 +61,9 @@ centerElement( MAIN_MENU );
 
 
 
-MainMenu.startGame = function()
+MainMenu.startGame = function( twoPlayers )
 {
-Game.start();
+Game.start( twoPlayers );
 };
 
 

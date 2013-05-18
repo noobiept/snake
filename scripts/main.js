@@ -15,11 +15,12 @@
     to doo:
 
         - what to do when 2 keys being pressed (like top/right?..)
-        - have high-score with number of tails (but it kind of depends on the options? the difficulty level)
         - have special food which gives like 2 tails but increases speed momentarily as side effect
         - have 2 players mode (2 snakes on same map)
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
         - improve the style of the messages/menus/game elements
+        - add collision detection between the 2 snakes
+        - have a different color for each snake's tails
 
 Dependencies:
 
@@ -49,6 +50,13 @@ var ELEMENTS_TYPE = {
     snake: 1
     };
 
+
+var DIR = {
+    left: 0,
+    right: 1,
+    top: 2,
+    bottom: 3
+    };
 
 
 window.onload = function()
@@ -89,6 +97,61 @@ Options.save();
 };
 
 
+
+
+
+window.onkeydown = function( event )
+{
+if ( !event )
+    {
+    event = window.event;
+    }
+
+
+var returnValue;
+
+for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+    {
+    returnValue = ALL_SNAKES[ i ].onKeyDown( event.keyCode );
+
+    if ( !returnValue )
+        {
+        return returnValue;
+        }
+    }
+
+
+return true;
+};
+
+
+window.onkeyup = function( event )
+{
+if ( !event )
+    {
+    event = window.event;
+    }
+
+
+var returnValue;
+
+for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+    {
+    returnValue = ALL_SNAKES[ i ].onKeyUp( event.keyCode );
+
+    if ( !returnValue )
+        {
+        return returnValue;
+        }
+    }
+
+return true;
+};
+
+
+
+
+
 /*
     center the canvas in the middle of window
  */
@@ -126,6 +189,36 @@ function resume()
 {
 createjs.Ticker.setPaused( false );
 }
+
+
+
+
+function movement_tick( snakeObject )
+{
+var keysHeld = snakeObject.keys_held;
+
+if ( keysHeld.left )
+    {
+    snakeObject.changeDirection( DIR.left );
+    }
+
+else if ( keysHeld.right )
+    {
+    snakeObject.changeDirection( DIR.right );
+    }
+
+else if ( keysHeld.up )
+    {
+    snakeObject.changeDirection( DIR.top );
+    }
+
+else if ( keysHeld.down )
+    {
+    snakeObject.changeDirection( DIR.bottom );
+    }
+}
+
+
 
 
 

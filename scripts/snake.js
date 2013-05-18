@@ -2,9 +2,24 @@
 {
 var ALL_SNAKES = [];
 
-function Snake( x, y )
+function Snake( x, y, startingDirection, keyboardMapping )
 {
 this.all_tails = [];
+this.starting_direction = startingDirection;
+
+
+    // keys being pressed/held
+this.keys_held = {
+    left  : false,
+    right : false,
+    up    : false,
+    down  : false
+    };
+
+
+    // tells what key represent the up key held, the down etc (each player will have a different set of keys)
+    // for example: { left: EVENT_KEY.a, right: EVENT_KEY.d, (...) }
+this.keyboard_mapping = keyboardMapping;
 
 
     // add a starting tail
@@ -149,6 +164,71 @@ return this.all_tails[ position ];
 Snake.prototype.getDirection = function()
 {
 return this.first_tail.direction;
+};
+
+
+
+Snake.prototype.onKeyDown = function( keyCode )
+{
+var keysHeld = this.keys_held;
+var keyboardMapping = this.keyboard_mapping;
+
+switch( keyCode )
+    {
+    case keyboardMapping.left:
+
+        keysHeld.left = true;
+        return false;
+
+    case keyboardMapping.right:
+
+        keysHeld.right = true;
+        return false;
+
+    case keyboardMapping.up:
+
+        keysHeld.up = true;
+        return false;
+
+    case keyboardMapping.down:
+
+        keysHeld.down = true;
+        return false;
+    }
+
+return true;
+};
+
+
+Snake.prototype.onKeyUp = function( keyCode )
+{
+var keysHeld = this.keys_held;
+var keyboardMapping = this.keyboard_mapping;
+
+switch( keyCode )
+    {
+    case keyboardMapping.left:
+
+        keysHeld.left = false;
+        return false;
+
+    case keyboardMapping.right:
+
+        keysHeld.right = false;
+        return false;
+
+    case keyboardMapping.up:
+
+        keysHeld.up = false;
+        return false;
+
+    case keyboardMapping.down:
+
+        keysHeld.down = false;
+        return false;
+    }
+
+return true;
 };
 
 
