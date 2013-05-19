@@ -69,8 +69,35 @@ body
     }
 
 
-#GameMenu > *
+#GameMenu-left
+    {
+    float: left;
+    }
+
+#GameMenu-right
+    {
+    float: right;
+    }
+
+
+#GameMenu-left > *
     {
     display: inline-block;
-    width: 50px;
+    width: 80px;
+    padding: 0;
+    margin: 10px 0;
+    }
+
+#GameMenu-right > *
+    {
+    display: inline-block;
+    width: 120px;
+    padding: 0;
+    margin: 10px 10px;
+    }
+
+
+#GameMenu-player2-score
+    {
+    display: none;
     }

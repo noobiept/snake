@@ -81,6 +81,13 @@ var tail = new Tail( this );
 
 this.all_tails.push( tail );
 
+
+if ( this.score_element )
+    {
+    this.score_element.innerText = this.all_tails.length;
+    }
+
+
 return tail;
 };
 
@@ -175,6 +182,19 @@ Snake.prototype.getDirection = function()
 {
 return this.first_tail.direction;
 };
+
+
+/*
+    To display the number of tails, associate an html element, where we're changing the .innerText whenever a tail is added
+ */
+
+Snake.prototype.setScoreElement = function( scoreElement )
+{
+this.score_element = scoreElement;
+
+this.score_element.innerText = this.all_tails.length;
+};
+
 
 
 

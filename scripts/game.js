@@ -232,13 +232,35 @@ interval = new Interval( function()
 
 INTERVALS.push( interval );
 
-Game.initMenu();
+
+Game.initMenu( snakeObjects );
 };
 
 
-Game.initMenu = function()
+Game.initMenu = function( snakeObjects )
 {
 var gameMenu = document.querySelector( '#GameMenu' );
+
+
+    // :: score :: //
+
+var player1_score = gameMenu.querySelector( '#GameMenu-player1-score' );
+var player1_score_span = player1_score.querySelector( 'span' );
+
+snakeObjects[ 0 ].setScoreElement( player1_score_span );
+
+
+if  ( Game.twoPlayersMode )
+    {
+    var player2_score = gameMenu.querySelector( '#GameMenu-player2-score' );
+    var player2_score_span = player2_score.querySelector( 'span' );
+
+    snakeObjects[ 1 ].setScoreElement( player2_score_span );
+
+    $( player2_score ).css( 'display', 'inline-block' );
+    }
+
+
 
 
     // :: Timer :: //
@@ -311,11 +333,15 @@ quit.onclick = function()
     // position the menu on the bottom right of the canvas
 var canvasPosition = $( CANVAS ).position();
 
-var left = canvasPosition.left + Options.getCanvasWidth() - $( gameMenu ).width();
+var canvasWidth = Options.getCanvasWidth();
+
+//var left = canvasPosition.left + Options.getCanvasWidth() - $( gameMenu ).width();
+var left = canvasPosition.left;
 var top = canvasPosition.top + Options.getCanvasHeight();
 
 $( gameMenu ).css( 'top', top + 'px' );
 $( gameMenu ).css( 'left', left + 'px' );
+$( gameMenu ).css( 'width', canvasWidth + 'px' );   // have to set the menu's width, so that the left/right sub-menus really go to their position
 
 
 $( gameMenu ).css( 'display', 'block' );
@@ -379,6 +405,7 @@ Wall.removeAll();
 Food.removeAll();
 
 $( '#GameMenu' ).css( 'display', 'none' );
+$( '#GameMenu-player2-score' ).css( 'display', 'none' );
 
 clearCanvas();
 };
