@@ -48,34 +48,36 @@ var snakeObjects = [];
 
     // 1 player (on left side of canvas, moving to the right)
 snakeObjects.push(
-    new Snake(
-        50,
-        canvasHeight / 2,
-        DIR.right,
-        {
+    new Snake({
+        x : 50,
+        y : canvasHeight / 2,
+        startingDirection: DIR.right,
+        color : 'green',
+        keyboardMapping : {
             left  : EVENT_KEY.a,
             right : EVENT_KEY.d,
             up    : EVENT_KEY.w,
             down  : EVENT_KEY.s
         }
-    ));
+    }));
 
 
 if ( twoPlayersMode )
     {
         // 2 player (on right side of canvas, moving to the left)
     snakeObjects.push(
-        new Snake(
-            canvasWidth - 50,
-            canvasHeight / 2,
-            DIR.left,
-            {
+        new Snake({
+            x : canvasWidth - 50,
+            y : canvasHeight / 2,
+            startingDirection : DIR.left,
+            color : 'dodgerblue',
+            keyboardMapping : {
                 left  : EVENT_KEY.leftArrow,
                 right : EVENT_KEY.rightArrow,
                 up    : EVENT_KEY.upArrow,
                 down  : EVENT_KEY.downArrow
             }
-        ));
+        }));
     }
 
 
@@ -113,7 +115,7 @@ var check = function( x, y, width, height, elementsArray )
 
 
     // add food
-var interval = window.setInterval( function()
+var interval = new Interval( function()
     {
     var x, y;
 
@@ -140,7 +142,7 @@ INTERVALS.push( interval );
 
 
     // add double food
-interval = window.setInterval( function()
+interval = new Interval( function()
     {
     var x, y;
 
@@ -166,7 +168,7 @@ INTERVALS.push( interval );
 
 
     // add walls
-interval = window.setInterval( function()
+interval = new Interval( function()
     {
     var x, y, width, height, verticalOrientation;
 
@@ -238,20 +240,72 @@ Game.initMenu = function()
 {
 var gameMenu = document.querySelector( '#GameMenu' );
 
-var quit = gameMenu.querySelector( '#GameMenu-quit' );
 
-quit.onclick = function()
-    {
-    Game.clear();
-
-    MainMenu.open();
-    };
-
+    // :: Timer :: //
 
 var timer = gameMenu.querySelector( '#GameMenu-timer' );
 
 
 TIMER = new Timer( timer );
+
+
+    // :: Pause / Resume :: //
+
+var pauseResume = gameMenu.querySelector( '#GameMenu-pauseResume' );
+
+var isPaused = false;
+var i = 0;
+
+pauseResume.onclick = function()
+    {
+    if ( isPaused )
+        {
+        isPaused = false;
+        pauseResume.innerText = 'Pause';
+
+        TIMER.start();
+
+        for (i = 0 ; i < INTERVALS.length ; i++)
+            {
+            INTERVALS[ i ].start();
+            }
+
+        resume();
+        }
+
+    else
+        {
+        isPaused = true;
+        pauseResume.innerText = 'Resume';
+
+        TIMER.stop();
+
+        for (i = 0 ; i < INTERVALS.length ; i++)
+            {
+            INTERVALS[ i ].stop();
+            }
+
+        pause();
+        }
+    };
+
+
+    // :: Quit :: //
+
+var quit = gameMenu.querySelector( '#GameMenu-quit' );
+
+quit.onclick = function()
+    {
+    if ( isPaused )
+        {
+        resume();
+        }
+
+    Game.clear();
+
+    MainMenu.open();
+    };
+
 
 
     // position the menu on the bottom right of the canvas
@@ -313,7 +367,7 @@ Game.clear = function()
 {
 for (var i = 0 ; i < INTERVALS.length ; i++)
     {
-    window.clearInterval( INTERVALS[ i ] );
+    INTERVALS[ i ].stop();
     }
 
 INTERVALS.length = 0;

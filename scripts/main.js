@@ -19,8 +19,8 @@
         - have 2 players mode (2 snakes on same map)
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
         - improve the style of the messages/menus/game elements
-        - add collision detection between the 2 snakes
-        - have a different color for each snake's tails
+        - add collision detection between the 2 snakes (should I?.. if there's collision then one player can just gain an advantage in the score and then force the end of the game by going against the opponent... but I guess the same is true by going against the walls...)
+        - appear the current score in the game
 
 Dependencies:
 

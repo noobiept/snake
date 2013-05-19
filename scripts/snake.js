@@ -2,11 +2,21 @@
 {
 var ALL_SNAKES = [];
 
-function Snake( x, y, startingDirection, keyboardMapping )
+/*
+    Arguments (and object with):
+
+        x
+        y
+        startingDirection
+        color
+        keyboardMapping
+ */
+
+function Snake( args )
 {
 this.all_tails = [];
-this.starting_direction = startingDirection;
-
+this.starting_direction = args.startingDirection;
+this.color = args.color;
 
     // keys being pressed/held
 this.keys_held = {
@@ -19,13 +29,13 @@ this.keys_held = {
 
     // tells what key represent the up key held, the down etc (each player will have a different set of keys)
     // for example: { left: EVENT_KEY.a, right: EVENT_KEY.d, (...) }
-this.keyboard_mapping = keyboardMapping;
+this.keyboard_mapping = args.keyboardMapping;
 
 
     // add a starting tail
 this.first_tail = this.addTail();
 
-this.first_tail.position( x, y );
+this.first_tail.position( args.x, args.y );
 this.first_tail.type = ELEMENTS_TYPE.snake; // the first tail represents the head of the snake, so it has a different type
 
 ALL_SNAKES.push( this );

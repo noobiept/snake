@@ -8,11 +8,12 @@ this.count = 0;
 
 htmlElement.innerText = '0.0s';
 
-this.interval = window.setInterval( function()
+
+this.interval = new Interval( function()
     {
     timerObject.count += 100;
 
-    htmlElement.innerText = ( timerObject.count / 1000 ).toFixed( 1 ) + 's';
+    timerObject.htmlElement.innerText = ( timerObject.count / 1000 ).toFixed( 1 ) + 's';
 
     }, 100 );
 
@@ -20,10 +21,20 @@ this.htmlElement = htmlElement;
 }
 
 
+
+Timer.prototype.start = function()
+{
+this.interval.start();
+};
+
+
+
 Timer.prototype.stop = function()
 {
-window.clearInterval( this.interval );
+this.interval.stop();
 };
+
+
 
 
 Timer.prototype.getString = function()

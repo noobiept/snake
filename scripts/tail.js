@@ -90,7 +90,7 @@ snakeTail.y = y;
 
 var g = snakeTail.graphics;
 
-g.beginFill( 'green' );
+g.beginFill( this.snakeObject.color );
 g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
 
 STAGE.addChild( snakeTail );
