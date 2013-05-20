@@ -16,10 +16,9 @@
 
         - what to do when 2 keys being pressed (like top/right?..)
         - have special food which gives like 2 tails but increases speed momentarily as side effect
-        - have 2 players mode (2 snakes on same map)
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
         - improve the style of the messages/menus/game elements
-        - add collision detection between the 2 snakes (should I?.. if there's collision then one player can just gain an advantage in the score and then force the end of the game by going against the opponent... but I guess the same is true by going against the walls...)
+        - add a documentation somewhere explaining the keys of each player / the elements on the game / etc
 
 Dependencies:
 
@@ -234,6 +233,10 @@ for (var i = 0 ; i < ALL_SNAKES.length ; i++)
 
     snakeObject.tick();
     }
+
+
+Snake.checkCollision();
+
 
 STAGE.update();
 }

@@ -265,6 +265,7 @@ return true;
 
 
 
+
 Snake.prototype.tick = function()
 {
 var firstTail = this.first_tail;
@@ -375,6 +376,75 @@ for (i = 0 ; i < allTails.length ; i++)
 
     tail.moveInDirection();
     }
+};
+
+
+/*
+    Check if a collision happened between any of the snakes
+ */
+
+Snake.checkCollision = function()
+{
+var a = 0;
+var b = 0;
+var snake1;
+var snake2;
+
+for ( a = 0 ; a < ALL_SNAKES.length - 1 ; a++ )
+    {
+    snake1 = ALL_SNAKES[ a ];
+
+    for ( b = a + 1 ; b < ALL_SNAKES.length ; b++ )
+        {
+        snake2 = ALL_SNAKES[ b ];
+
+
+        var tail_1 = snake1.first_tail;
+        var tail_2 = snake2.first_tail;
+
+
+        var all_tails_1 = snake1.all_tails;
+        var all_tails_2 =  snake2.all_tails;
+
+
+
+        var check = function( x, y, width, height, all_tails )
+            {
+            var tail;
+
+                // deal with the collision detection between a snake and the tails from the other snake
+            for (var i = 0 ; i < all_tails.length ; i++)
+                {
+                tail = all_tails[ i ];
+
+
+                if ( checkCollision( x, y, width, height, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
+                    {
+                    tail.asBeenHit();
+
+                    Game.over();
+                    return true;
+                    }
+                }
+
+            return false;
+            };
+
+        if ( check( tail_1.getX(), tail_1.getY(), tail_1.getWidth(), tail_1.getHeight(), all_tails_2 ) == true )
+            {
+            return true;
+            }
+
+
+        if ( check( tail_2.getX(), tail_2.getY(), tail_2.getWidth(), tail_2.getHeight(), all_tails_1 ) == true )
+            {
+            return true;
+            }
+        }
+    }
+
+
+return false;
 };
 
 

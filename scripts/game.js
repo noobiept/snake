@@ -371,8 +371,7 @@ quit.onclick = null;
 
 window.setTimeout( function()
     {
-        //HERE distinguish the snakes (like player1, player2 ?..)
-        // the high-score would be only added to the player who won?..
+        // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
     for (var i = 0 ; i < ALL_SNAKES.length ; i++)
         {
         HighScore.add( ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
