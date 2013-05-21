@@ -8,6 +8,7 @@ function MainMenu()
 var MAIN_MENU;
 var OPTIONS;
 var HIGH_SCORE;
+var HELP;
 
 
 MainMenu.init = function()
@@ -15,6 +16,7 @@ MainMenu.init = function()
 MAIN_MENU = document.querySelector( '#MainMenu' );
 OPTIONS = document.querySelector( '#Options' );
 HIGH_SCORE = document.querySelector( '#HighScore' );
+HELP = document.querySelector( '#Help' );
 };
 
 
@@ -27,6 +29,7 @@ var startGame = MAIN_MENU.querySelector( '#MainMenu-startGame' );
 var startGame_2players = MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
 var options = MAIN_MENU.querySelector( '#MainMenu-options' );
 var highScore = MAIN_MENU.querySelector( '#MainMenu-highScore' );
+var help = MAIN_MENU.querySelector( '#MainMenu-help' );
 
 
 startGame.onclick = function()
@@ -51,6 +54,12 @@ options.onclick = function()
 highScore.onclick = function()
     {
     MainMenu.highScore();
+    };
+
+
+help.onclick = function()
+    {
+    MainMenu.help();
     };
 
 
@@ -291,6 +300,64 @@ centerElement( HIGH_SCORE );
 
 
 
+MainMenu.help = function()
+{
+clearCanvas();
+
+    // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
+$( HELP ).css( 'display', 'block' );
+
+centerElement( HELP );
+
+
+    // show the game element next to its description
+var foodHelp = HELP.querySelector( '#Help-food' );
+var doubleFoodHelp = HELP.querySelector( '#Help-doubleFood' );
+var wallHelp = HELP.querySelector( '#Help-wall' );
+
+
+    // need to get the position of the html element (offset is relative  to the document)
+var canvasPosition = $( CANVAS ).offset();
+var foodPosition = $ ( foodHelp ).offset();
+var doubleFoodPosition = $( doubleFoodHelp ).offset();
+var wallPosition = $( wallHelp ).offset();
+
+    // distance away from the description
+var xDistance = 50;
+
+    // determine where to position the elements
+var x = foodPosition.left - canvasPosition.left - xDistance;
+var y = foodPosition.top - canvasPosition.top + FOOD_HEIGHT;
+
+var food = new Food( x, y );
+
+x = doubleFoodPosition.left - canvasPosition.left - xDistance;
+y = doubleFoodPosition.top - canvasPosition.top + FOOD_HEIGHT;
+
+var double_food = new DoubleFood( x, y );
+
+x = wallPosition.left - canvasPosition.left - xDistance;
+y = wallPosition.top - canvasPosition.top + 10;
+
+var wall = new Wall( x, y, 20, 7 );
+
+
+var back = HELP.querySelector( '#Help-back' );
+
+back.onclick = function()
+    {
+        // don't forget to remove everything
+    food.remove();
+    double_food.remove();
+    wall.remove();
+
+    MainMenu.open();
+    };
+};
+
+
+
+
 
 
 MainMenu.clear = function()
@@ -298,6 +365,7 @@ MainMenu.clear = function()
 $( MAIN_MENU  ).css( 'display', 'none' );
 $( OPTIONS    ).css( 'display', 'none' );
 $( HIGH_SCORE ).css( 'display', 'none' );
+$( HELP       ).css( 'display', 'none' );
 };
 
 
