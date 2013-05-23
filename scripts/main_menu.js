@@ -93,7 +93,7 @@ var widthSlider = width.querySelector( '#Options-width-slider' );
 
 $( widthSlider ).slider({
     min: 400,
-    max: 1000,
+    max: 1800,
     step: 100,
     value: canvasWidth,
     range: 'min',

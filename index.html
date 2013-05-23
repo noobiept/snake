@@ -68,33 +68,44 @@
     <div id="Help">
         <h2>Help</h2>
 
-        <p id="Help-elements">
-            <em id="Help-food">Food</em> : adds a tail to the snake.<br />
-            <em id="Help-doubleFood">Double Food</em> : adds two tails to the snake.<br />
-            <em id="Help-wall">Wall</em> : You can't go through it.
-        </p>
+        <!-- have 2 help blocks per 'line' -->
+        <div id="Help-blocks">
+            <div class="Help-block">
+                <p id="Help-elements">
+                    <em id="Help-food">Food</em> : adds a tail to the snake.<br />
+                    <em id="Help-doubleFood">Double Food</em> : adds two tails to the snake.<br />
+                    <em id="Help-wall">Wall</em> : You can't go through it.
+                </p>
 
-        <div id="Help-keyboard">
-            <div>
-                <h4>Player 1 keyboard</h4>
-                <ul>
-                    <li>up : <em>w</em></li>
-                    <li>down : <em>s</em></li>
-                    <li>left : <em>a</em></li>
-                    <li>right : <em>d</em></li>
-                </ul>
+                <p id="Help-2player-winningConditions">
+                    In two player mode, wins the player<br />
+                    which has more tails, or if the other<br />
+                     player collides against your snake.
+                </p>
             </div>
 
-            <div>
-                <h4>Player 2 keyboard</h4>
-                <ul>
-                    <li>up : <em>up arrow</em></li>
-                    <li>down : <em>down arrow</em></li>
-                    <li>left : <em>left arrow</em></li>
-                    <li>right : <em>right arrow</em></li>
-                </ul>
-            </div>
+            <div class="Help-block">
+                <div>
+                    <h4>Player 1 keyboard</h4>
+                    <ul>
+                        <li>up : <em>w</em></li>
+                        <li>down : <em>s</em></li>
+                        <li>left : <em>a</em></li>
+                        <li>right : <em>d</em></li>
+                    </ul>
+                </div>
 
+                <div>
+                    <h4>Player 2 keyboard</h4>
+                    <ul>
+                        <li>up : <em>up arrow</em></li>
+                        <li>down : <em>down arrow</em></li>
+                        <li>left : <em>left arrow</em></li>
+                        <li>right : <em>right arrow</em></li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
 
         <div id="Help-back" class="button">Back</div>

@@ -350,12 +350,54 @@ $( gameMenu ).css( 'display', 'block' );
 
 /*
     When the snake hits its tails for example
+
+    arguments:
+
+        whoWon : if provided, tells which player (1 or 2) won, otherwise check the number of tails (for 2 players only)
+
  */
 
-Game.over = function()
+Game.over = function( whoWon )
 {
+var text = 'Game Over\n';
+
+if ( Game.twoPlayersMode )
+    {
+    if ( typeof whoWon != 'undefined' )
+        {
+        text += 'Player ' + whoWon + ' Won!';
+        }
+
+    else
+        {
+        var player1_score = ALL_SNAKES[ 0 ].getNumberOfTails();
+        var player2_score = ALL_SNAKES[ 1 ].getNumberOfTails();
+
+        if ( player1_score > player2_score )
+            {
+            text += 'Player 1 Won!';
+            }
+
+        else if ( player2_score > player1_score )
+            {
+            text += 'Player 2 Won!';
+            }
+
+        else
+            {
+            text += 'Draw!';
+            }
+        }
+    }
+
+else
+    {
+    text = 'Game Over\nScore: ' + ALL_SNAKES[ 0 ].getNumberOfTails();
+    }
+
+
 var message = new Message({
-    text: 'Game Over',
+    text: text,
     cssClass: 'Message-gameOver'
     });
 

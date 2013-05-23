@@ -422,7 +422,6 @@ for ( a = 0 ; a < ALL_SNAKES.length - 1 ; a++ )
                     {
                     tail.asBeenHit();
 
-                    Game.over();
                     return true;
                     }
                 }
@@ -432,12 +431,18 @@ for ( a = 0 ; a < ALL_SNAKES.length - 1 ; a++ )
 
         if ( check( tail_1.getX(), tail_1.getY(), tail_1.getWidth(), tail_1.getHeight(), all_tails_2 ) == true )
             {
+                // player 2 won (player1 collided with player2)
+            Game.over( 2 );
+
             return true;
             }
 
 
         if ( check( tail_2.getX(), tail_2.getY(), tail_2.getWidth(), tail_2.getHeight(), all_tails_1 ) == true )
             {
+                // player 1 won
+            Game.over( 1 );
+
             return true;
             }
         }
