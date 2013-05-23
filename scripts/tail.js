@@ -43,13 +43,13 @@ else
         y = lastTail.getY();
         }
 
-    else if ( lastDirection == DIR.top )
+    else if ( lastDirection == DIR.up )
         {
         x = lastTail.getX();
         y = lastTail.getY() + TAIL_HEIGHT;
         }
 
-    else if ( lastDirection == DIR.bottom )
+    else if ( lastDirection == DIR.down )
         {
         x = lastTail.getX();
         y = lastTail.getY() - TAIL_HEIGHT;
@@ -256,12 +256,12 @@ else if ( direction == DIR.right )
     this.move( speed );
     }
 
-else if ( direction == DIR.top )
+else if ( direction == DIR.up )
     {
     this.move( 0, -speed );
     }
 
-else if ( direction == DIR.bottom )
+else if ( direction == DIR.down )
     {
     this.move( 0, speed );
     }

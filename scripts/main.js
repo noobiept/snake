@@ -14,11 +14,11 @@
 
     to doo:
 
-        - what to do when 2 keys being pressed (like top/right?..)
         - have special food which gives like 2 tails but increases speed momentarily as side effect
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
         - improve the style of the messages/menus/game elements
-
+        - add an icon
+        
 
 Dependencies:
 
@@ -52,8 +52,8 @@ var ELEMENTS_TYPE = {
 var DIR = {
     left: 0,
     right: 1,
-    top: 2,
-    bottom: 3
+    up: 2,
+    down: 3
     };
 
 
@@ -195,24 +195,85 @@ function movement_tick( snakeObject )
 {
 var keysHeld = snakeObject.keys_held;
 
+var direction = snakeObject.getDirection();
+
+
 if ( keysHeld.left )
     {
-    snakeObject.changeDirection( DIR.left );
+    if ( keysHeld.down )
+        {
+        if ( direction == DIR.left || direction == DIR.right )
+            {
+            snakeObject.changeDirection( DIR.down );
+            }
+
+        else if ( direction == DIR.down || direction == DIR.up )
+            {
+            snakeObject.changeDirection( DIR.left );
+            }
+        }
+
+    else if ( keysHeld.up )
+        {
+        if ( direction == DIR.left || direction == DIR.right )
+            {
+            snakeObject.changeDirection( DIR.up );
+            }
+
+        else if ( direction == DIR.up || direction == DIR.down )
+            {
+            snakeObject.changeDirection( DIR.left );
+            }
+        }
+
+    else
+        {
+        snakeObject.changeDirection( DIR.left );
+        }
     }
 
 else if ( keysHeld.right )
     {
-    snakeObject.changeDirection( DIR.right );
+    if ( keysHeld.down )
+        {
+        if ( direction == DIR.right || direction == DIR.left )
+            {
+            snakeObject.changeDirection( DIR.down );
+            }
+
+        else if ( direction == DIR.down || direction == DIR.up )
+            {
+            snakeObject.changeDirection( DIR.right );
+            }
+        }
+
+    else if ( keysHeld.up )
+        {
+        if ( direction == DIR.right || direction == DIR.left )
+            {
+            snakeObject.changeDirection( DIR.up );
+            }
+
+        else if ( direction == DIR.up || direction == DIR.down )
+            {
+            snakeObject.changeDirection( DIR.right );
+            }
+        }
+
+    else
+        {
+        snakeObject.changeDirection( DIR.right );
+        }
     }
 
 else if ( keysHeld.up )
     {
-    snakeObject.changeDirection( DIR.top );
+    snakeObject.changeDirection( DIR.up );
     }
 
 else if ( keysHeld.down )
     {
-    snakeObject.changeDirection( DIR.bottom );
+    snakeObject.changeDirection( DIR.down );
     }
 }
 

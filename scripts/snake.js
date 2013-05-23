@@ -128,8 +128,8 @@ if ( currentDirection == newDirection )
     // don't allow to go to the opposing direction
 if ( (currentDirection == DIR.left && newDirection == DIR.right) ||
      (currentDirection == DIR.right && newDirection == DIR.left) ||
-     (currentDirection == DIR.top && newDirection == DIR.bottom) ||
-     (currentDirection == DIR.bottom && newDirection == DIR.top) )
+     (currentDirection == DIR.up && newDirection == DIR.down) ||
+     (currentDirection == DIR.down && newDirection == DIR.up) )
     {
     return;
     }
