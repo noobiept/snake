@@ -18,19 +18,13 @@ DoubleFood.prototype.draw = function( x, y )
 var width = this.width;
 var height = this.height;
 
-var food = new createjs.Shape();
+var food = new createjs.Bitmap( 'images/orange_10px.png' );
 
 food.regX = width / 2;
 food.regY = height / 2;
 
 food.x = x;
 food.y = y;
-
-
-var g = food.graphics;
-
-g.beginFill( 'purple' );
-g.drawRoundRect( 0, 0, width, height, 10 );
 
 STAGE.addChild( food );
 
