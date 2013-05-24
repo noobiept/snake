@@ -17,7 +17,6 @@
         - have special food which gives like 2 tails but increases speed momentarily as side effect
         - the high-score only shows the score for the current set of options (so that the values can be comparable)
         - improve the style of the messages/menus/game elements
-        - add an icon
         
 
 Dependencies:

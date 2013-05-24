@@ -1,0 +1,18 @@
+{
+    "resultingFolder": "snake",
+    "basePath": "..",
+    "files":
+        [
+            "images/snake16.png",
+            "images/snake128.png",
+            "images/red_apple_10px.png",
+            "images/orange_10px.png",
+
+            "libraries/",
+            
+            "index.html",
+            "manifest.json",
+            
+            "style.css"
+        ]
+}
