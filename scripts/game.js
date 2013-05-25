@@ -348,6 +348,16 @@ $( gameMenu ).css( 'display', 'block' );
 };
 
 
+Game.resetMenu = function()
+{
+$( '#GameMenu-pauseResume' ).text( 'Pause' );
+
+$( '#GameMenu' ).css( 'display', 'none' );
+$( '#GameMenu-player2-score' ).css( 'display', 'none' );
+};
+
+
+
 /*
     When the snake hits its tails for example
 
@@ -445,8 +455,8 @@ Snake.removeAll();
 Wall.removeAll();
 Food.removeAll();
 
-$( '#GameMenu' ).css( 'display', 'none' );
-$( '#GameMenu-player2-score' ).css( 'display', 'none' );
+
+Game.resetMenu();
 
 clearCanvas();
 };
