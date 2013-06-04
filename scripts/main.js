@@ -57,6 +57,10 @@ var DIR = {
     };
 
 
+    // in the server template, we'll change this to the static path plus the game name (otherwise any static content won't load (wrong url)). something like /static/snake/
+var BASE_URL = '';
+
+
 window.onload = function()
 {
 Options.load();
@@ -156,8 +160,8 @@ return true;
 
 function centerCanvas()
 {
-var left = $( window ).width() / 2 - CANVAS.width / 2;
-var top = $( window ).height() / 2 - CANVAS.height / 2;
+var left = window.innerWidth / 2 - CANVAS.width / 2;
+var top = window.innerHeight / 2 - CANVAS.height / 2;
 
 $( CANVAS ).css( 'left', left + 'px' );
 $( CANVAS ).css( 'top', top + 'px' );

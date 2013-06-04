@@ -18,7 +18,7 @@ DoubleFood.prototype.draw = function( x, y )
 var width = this.width;
 var height = this.height;
 
-var food = new createjs.Bitmap( 'images/orange_10px.png' );
+var food = new createjs.Bitmap( BASE_URL + 'images/orange_10px.png' );
 
 food.regX = width / 2;
 food.regY = height / 2;
