@@ -12,13 +12,12 @@ INHERIT_PROTOTYPE( DoubleFood, Food );
 
 
 
-
 DoubleFood.prototype.draw = function( x, y )
 {
 var width = this.width;
 var height = this.height;
 
-var food = new createjs.Bitmap( BASE_URL + 'images/orange_10px.png' );
+var food = new createjs.Bitmap( PRELOAD.getResult( 'orange' ) );
 
 food.regX = width / 2;
 food.regY = height / 2;

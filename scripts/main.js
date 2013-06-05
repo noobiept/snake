@@ -61,6 +61,10 @@ var DIR = {
 var BASE_URL = '';
 
 
+    // used to access preloaded assets (images/etc)
+var PRELOAD;
+
+
 window.onload = function()
 {
 Options.load();
@@ -88,8 +92,18 @@ createjs.Ticker.addListener( tick );
 HighScore.load();
 
 MainMenu.init();
-MainMenu.open();
+
+    // preload the images/etc used in the program
+PRELOAD = new createjs.LoadQueue( true );
+
+PRELOAD.loadManifest([
+    { id: 'orange', src: BASE_URL + 'images/orange_10px.png' },
+    { id: 'apple', src: BASE_URL + 'images/red_apple_10px.png' }
+    ]);
+
+PRELOAD.addEventListener( 'complete', MainMenu.open );
 };
+
 
 
 window.onunload = function()
