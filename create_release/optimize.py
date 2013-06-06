@@ -17,7 +17,6 @@ def css( pathToFile ):
     
 
     
-    
     with open( pathToFile, 'w', encoding="utf-8") as f:
         f.write( code ) 
     

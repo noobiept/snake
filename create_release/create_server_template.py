@@ -14,8 +14,16 @@ from bs4 import BeautifulSoup
 
 
 
+default_indexPath = '../index.html'
+default_appName = 'snake'
+default_copyToPath = '../../../website/templates/{}/'.format( default_appName )
 
-def createTemplate( indexPath, appName, copyToPath, templateName= None ):
+
+def createTemplate( indexPath= default_indexPath, appName= default_appName, copyToPath= default_copyToPath, templateName= None ):
+
+    indexPath = os.path.join( os.path.dirname(__file__), indexPath )
+    copyToPath = os.path.join( os.path.dirname(__file__), copyToPath )
+
 
     with open( indexPath, 'r' ) as f:
         content = f.read()
@@ -50,7 +58,7 @@ def createTemplate( indexPath, appName, copyToPath, templateName= None ):
 
 
         # create the new file
-    if templateName == None:
+    if not templateName:
         fileName = os.path.basename( indexPath )
         
     else:
@@ -63,13 +71,15 @@ def createTemplate( indexPath, appName, copyToPath, templateName= None ):
 
 
 
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser( description='Create the server template.' )
 
-    parser.add_argument( 'indexPath', nargs= '?', default= '../index.html' )
-    parser.add_argument( 'appName', nargs= '?', default= 'snake' )
-    parser.add_argument( 'copyToPath', nargs= '?', default= '../../../website/templates/snake/' )
+    parser.add_argument( 'indexPath', nargs= '?', default= default_indexPath )
+    parser.add_argument( 'appName', nargs= '?', default= default_appName )
+    parser.add_argument( 'copyToPath', nargs= '?', default= default_copyToPath )
 
     args = parser.parse_args()
 

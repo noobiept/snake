@@ -17,14 +17,26 @@ import concatenate_files
 import optimize
 
 
+default_htmlFile = '../index.html'
+default_copyFilesConfig = 'copy_files_config.txt'
+default_concatenateConfig = 'concatenate_config.txt'
 
-def go( htmlFile, copyFilesConfig, concatenateConfig ):
+
+def go( htmlFile= default_htmlFile,
+        copyFilesConfig= default_copyFilesConfig,
+        concatenateConfig= default_concatenateConfig ):
     """
         Arguments:
           copyFilesConfig (str) : path to the config file with the files to copy
     """
 
-    resultingFolder = 'snake'
+        # to guarantee that the paths are relative to the current file's path (and not the working directory)
+    htmlFile = os.path.join( os.path.dirname(__file__), htmlFile )
+    copyFilesConfig = os.path.join( os.path.dirname(__file__), copyFilesConfig )
+    concatenateConfig = os.path.join( os.path.dirname(__file__), concatenateConfig )
+    resultingFolder = os.path.join( os.path.dirname(__file__), 'snake' )
+
+
 
     cleanPreviousRun( resultingFolder )
 
@@ -48,13 +60,13 @@ def go( htmlFile, copyFilesConfig, concatenateConfig ):
     optimize.js( concatenatedFilePath )
     
        
-    
     createNewIndex( htmlFile, concatenatedFileName, os.path.join( resultingFolder, "index.html" ) )
     
 
         # zip the folder
     compressFolder( resultingFolder )
     
+
     
 
     
@@ -80,9 +92,7 @@ def cleanPreviousRun( resultingFolder ):
 
 
 
-            
 
-    
 def compressFolder( resultingFolder ):
 
     """
@@ -178,11 +188,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser( description='Generate the release files of the program.' )
 
     
-    parser.add_argument( 'htmlFile', help='Path to the index.html.', nargs='?', default='../index.html' )
+    parser.add_argument( 'htmlFile', help='Path to the index.html.', nargs='?', default= default_htmlFile )
 
-    parser.add_argument( 'copyFilesConfig', help='Path to the config file with the files to copy', nargs='?', default='copy_files_config.txt' )
+    parser.add_argument( 'copyFilesConfig', help='Path to the config file with the files to copy', nargs='?', default= default_copyFilesConfig )
 
-    parser.add_argument( 'concatenateConfig', help='Path to the configuration file to tell which files to concatenate (and the order).', nargs='?', default='concatenate_config.txt' )
+    parser.add_argument( 'concatenateConfig', help='Path to the configuration file to tell which files to concatenate (and the order).', nargs='?', default= default_concatenateConfig )
 
     args = parser.parse_args()
 

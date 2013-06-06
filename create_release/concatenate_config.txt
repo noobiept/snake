@@ -1,5 +1,5 @@
 {
-    "..": [
+    "C:\\Users\\drk\\Dropbox\\projects\\snake\\create_release\\..": [
         "scripts/utilities.js", 
         "scripts/main.js", 
         "scripts/snake.js", 
