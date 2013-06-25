@@ -6,14 +6,14 @@ var timerObject = this;
 
 this.count = 0;
 
-htmlElement.innerText = '0.0s';
+$( htmlElement ).text( '0.0s' );
 
 
 this.interval = new Interval( function()
     {
     timerObject.count += 100;
 
-    timerObject.htmlElement.innerText = ( timerObject.count / 1000 ).toFixed( 1 ) + 's';
+    $( timerObject.htmlElement ).text( ( timerObject.count / 1000 ).toFixed( 1 ) + 's' );
 
     }, 100 );
 

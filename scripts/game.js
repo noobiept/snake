@@ -283,7 +283,7 @@ pauseResume.onclick = function()
     if ( isPaused )
         {
         isPaused = false;
-        pauseResume.innerText = 'Pause';
+        $( pauseResume ).text( 'Pause' );
 
         TIMER.start();
 
@@ -298,7 +298,7 @@ pauseResume.onclick = function()
     else
         {
         isPaused = true;
-        pauseResume.innerText = 'Resume';
+        $( pauseResume ).text( 'Resume' );
 
         TIMER.stop();
 

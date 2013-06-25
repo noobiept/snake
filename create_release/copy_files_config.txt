@@ -9,10 +9,9 @@
             "images/orange_10px.png",
 
             "libraries/",
-            
+            "css/",
+
             "index.html",
-            "manifest.json",
-            
-            "style.css"
+            "manifest.json"
         ]
 }

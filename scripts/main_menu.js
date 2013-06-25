@@ -87,7 +87,7 @@ var widthValue = width.querySelector( 'span' );
 
 var canvasWidth = Options.getCanvasWidth();
 
-widthValue.innerText = canvasWidth;
+$( widthValue ).text( canvasWidth );
 
 var widthSlider = width.querySelector( '#Options-width-slider' );
 
@@ -99,7 +99,7 @@ $( widthSlider ).slider({
     range: 'min',
     slide: function( event, ui )
         {
-        widthValue.innerText = ui.value;
+        $( widthValue ).text( ui.value );
 
         Options.setCanvasWidth( ui.value );
 
@@ -115,7 +115,7 @@ var heightValue = height.querySelector( 'span' );
 
 var canvasHeight = Options.getCanvasHeight();
 
-heightValue.innerText = canvasHeight;
+$( heightValue ).text( canvasHeight );
 
 var heightSlider = height.querySelector( '#Options-height-slider' );
 
@@ -127,7 +127,7 @@ $( heightSlider ).slider({
     range: 'min',
     slide: function( event, ui )
         {
-        heightValue.innerText = ui.value;
+        $( heightValue ).text( ui.value );
 
         Options.setCanvasHeight( ui.value );
 
@@ -141,11 +141,11 @@ $( heightSlider ).slider({
 var frame = OPTIONS.querySelector( '#Options-frame' );
 var frameValue = frame.querySelector( 'span' );
 
-frameValue.innerText = boolToOnOff( Options.getFrame() );
+$( frameValue ).text( boolToOnOff( Options.getFrame() ) );
 
 frame.onclick = function()
     {
-    if ( frameValue.innerText == 'On' )
+    if ( $( frameValue ).text() == 'On' )
         {
         Options.setFrame( false );
         }
@@ -155,7 +155,7 @@ frame.onclick = function()
         Options.setFrame( true );
         }
 
-    frameValue.innerText = boolToOnOff( Options.getFrame() );
+    $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
     };
 
 
@@ -166,20 +166,20 @@ var difficulty = OPTIONS.querySelector( '#Options-difficulty' );
 var difficultyValue = difficulty.querySelector( 'span' );
 
 
-difficultyValue.innerText = Options.getDifficultyString();
+$( difficultyValue ).text( Options.getDifficultyString() );
 
 difficulty.onclick = function()
     {
-    if ( difficultyValue.innerText == 'normal' )
+    if ( $( difficultyValue ).text() == 'normal' )
         {
-        difficultyValue.innerText = 'hard';
+        $( difficultyValue ).text( 'hard' );
 
         Options.setDifficultyString( 'hard' );
         }
 
     else
         {
-        difficultyValue.innerText = 'normal';
+        $( difficultyValue ).text( 'normal' );
 
         Options.setDifficultyString( 'normal' );
         }
@@ -232,7 +232,7 @@ else
         {
         tableHeader = document.createElement( 'th' );
 
-        tableHeader.innerText = header[ i ];
+        $( tableHeader ).text( header[ i ] );
         tableRow.appendChild( tableHeader );
         }
 
@@ -261,13 +261,13 @@ else
         canvasHeightData = document.createElement( 'td' );
         time = document.createElement( 'td' );
 
-        position.innerText = (i + 1).toString();
-        numberOfTails.innerText = score.numberOfTails;
-        difficulty.innerText = score.difficulty;
-        frame.innerText = score.frame;
-        canvasWidthData.innerText = score.canvasWidth;
-        canvasHeightData.innerText = score.canvasHeight;
-        time.innerText = score.time;
+        $( position ).text( (i + 1).toString() );
+        $( numberOfTails ).text( score.numberOfTails );
+        $( difficulty ).text( score.difficulty );
+        $( frame ).text( score.frame );
+        $( canvasWidthData ).text( score.canvasWidth );
+        $( canvasHeightData ).text( score.canvasHeight );
+        $( time ).text( score.time );
 
         tableRow.appendChild( position );
         tableRow.appendChild( numberOfTails );

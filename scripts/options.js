@@ -30,7 +30,25 @@ var options = localStorage.getObject( 'options' );
 
 if ( options !== null )
     {
-    OPTIONS = options;
+    if ( options.canvas_width )
+        {
+        OPTIONS.canvas_width = options.canvas_width;
+        }
+
+    if ( options.canvas_height )
+        {
+        OPTIONS.canvas_height = options.canvas_height;
+        }
+
+    if ( options.frameOn )
+        {
+        OPTIONS.frameOn = options.frameOn;
+        }
+
+    if ( options.difficulty )
+        {
+        OPTIONS.difficulty = options.difficulty;
+        }
     }
 };
 
