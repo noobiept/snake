@@ -14,7 +14,7 @@ function Message( stuff )
 {
 var message = document.querySelector( '#Message' );
 
-$( message ).text( stuff.text );
+$( message ).html( stuff.text );
 
 
 if ( typeof stuff.x == 'undefined' )

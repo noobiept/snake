@@ -369,7 +369,7 @@ $( '#GameMenu-player2-score' ).css( 'display', 'none' );
 
 Game.over = function( whoWon )
 {
-var text = 'Game Over\n';
+var text = 'Game Over<br />';
 
 if ( Game.twoPlayersMode )
     {
@@ -402,7 +402,7 @@ if ( Game.twoPlayersMode )
 
 else
     {
-    text = 'Game Over\nScore: ' + ALL_SNAKES[ 0 ].getNumberOfTails();
+    text = 'Game Over<br />Score: ' + ALL_SNAKES[ 0 ].getNumberOfTails();
     }
 
 
