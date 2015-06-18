@@ -1,41 +1,5 @@
-/*
-    brief description:
-
-        - have obstacles (walls)
-        - have food (grows tail)
-        - snake can't hit its own tail or the obstacles
-        - snake always on constant movement (you control the direction)
-        - can't reverse the snake's direction
-        - the obstacles and food are generated automatically
-        - have an option to have a frame around the canvas, to prevent the snake to go to the other side
-        - have an option to change the difficulty, which changes the food/wall spawning time, etc
-        - have an option to change the canvas width/height
-
-
-    to doo:
-
-        - have special food which gives like 2 tails but increases speed momentarily as side effect
-        - the high-score only shows the score for the current set of options (so that the values can be comparable)
-        - improve the style of the messages/menus/game elements
-        - add keyboard shortcuts in the main menu
-        
-
-Dependencies:
-
-    - jquery -- 2.0
-    - jquery-ui -- 1.10
-
-        - slider
-        - blitzer theme
-
-    - easeljs -- 0.6.0
-
- */
-
-
     // createjs
 var STAGE;
-
 
     // program stuff
 var CANVAS;
@@ -83,7 +47,6 @@ centerCanvas();
     // :: createjs stuff :: //
 STAGE = new createjs.Stage( CANVAS );
 
-var difficulty = Options.getDifficulty();
 
 createjs.Ticker.setInterval( 50 );
 createjs.Ticker.addListener( tick );

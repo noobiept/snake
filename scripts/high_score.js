@@ -17,7 +17,7 @@ var HIGH_SCORE_LENGTH = 5;
 
 HighScore.load = function()
 {
-var score = localStorage.getObject( 'high_score' );
+var score = localStorage.getObject( 'snake_high_score' );
 
 if ( score !== null )
     {
@@ -32,7 +32,7 @@ if ( score !== null )
 
 HighScore.save = function()
 {
-localStorage.setObject( 'high_score', HIGH_SCORE );
+localStorage.setObject( 'snake_high_score', HIGH_SCORE );
 };
 
 
@@ -84,7 +84,7 @@ HighScore.removeAll = function()
 {
 HIGH_SCORE.length = 0;
 
-localStorage.removeItem( 'high_score' );
+localStorage.removeItem( 'snake_high_score' );
 };
 
 
