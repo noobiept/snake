@@ -3,6 +3,7 @@ body
     background-color: black;
     color: white;
     text-align: center;
+    font-size: 24px;
     }
 
 #mainCanvas
@@ -14,8 +15,6 @@ body
 
     border: 1px solid rgba(255, 255, 255, 0.2);
     }
-
-
 
 .button
     {
@@ -32,7 +31,6 @@ body
     text-shadow: blue 2px 0;
     }
 
-
 #Message
     {
     position: absolute;
@@ -41,13 +39,11 @@ body
     display: none;
     }
 
-
 .Message-gameOver
     {
     font-size: 1.4em;
     text-shadow: blue 2px 0;
     }
-
 
 em
     {
@@ -67,7 +63,6 @@ em
     left: 0;
     }
 
-
 #Options-container > *
     {
     display: inline-block;
@@ -76,12 +71,10 @@ em
     margin: 20px;
     }
 
-
 #HighScore-table td:nth-child(even), #HighScore-table th:nth-child(even)
     {
     background-color: rgb(50, 50, 50);
     }
-
 
 #Help ul
     {
@@ -93,7 +86,6 @@ em
     {
     text-align: left;
     }
-
 
 .Help-block > *
     {
@@ -114,7 +106,6 @@ em
     float: right;
     }
 
-
 #GameMenu-left > *
     {
     display: inline-block;
@@ -131,10 +122,7 @@ em
     margin: 10px 10px;
     }
 
-
 #GameMenu-player2-score
     {
     display: none;
     }
-
-

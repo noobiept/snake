@@ -26,7 +26,7 @@ var OPTIONS = {
 
 Options.load = function()
 {
-var options = localStorage.getObject( 'options' );
+var options = localStorage.getObject( 'snake_options' );
 
 if ( options !== null )
     {
@@ -56,7 +56,7 @@ if ( options !== null )
 
 Options.save = function()
 {
-localStorage.setObject( 'options', OPTIONS );
+localStorage.setObject( 'snake_options', OPTIONS );
 };
 
 
