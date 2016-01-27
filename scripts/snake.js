@@ -181,21 +181,25 @@ var keyboardMapping = this.keyboard_mapping;
 switch( keyCode )
     {
     case keyboardMapping.left:
+    case keyboardMapping.left2:
 
         keysHeld.left = true;
         return false;
 
     case keyboardMapping.right:
+    case keyboardMapping.right2:
 
         keysHeld.right = true;
         return false;
 
     case keyboardMapping.up:
+    case keyboardMapping.up2:
 
         keysHeld.up = true;
         return false;
 
     case keyboardMapping.down:
+    case keyboardMapping.down2:
 
         keysHeld.down = true;
         return false;
@@ -213,21 +217,25 @@ var keyboardMapping = this.keyboard_mapping;
 switch( keyCode )
     {
     case keyboardMapping.left:
+    case keyboardMapping.left2:
 
         keysHeld.left = false;
         return false;
 
     case keyboardMapping.right:
+    case keyboardMapping.right2:
 
         keysHeld.right = false;
         return false;
 
     case keyboardMapping.up:
+    case keyboardMapping.up2:
 
         keysHeld.up = false;
         return false;
 
     case keyboardMapping.down:
+    case keyboardMapping.down2:
 
         keysHeld.down = false;
         return false;

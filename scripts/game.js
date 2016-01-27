@@ -35,23 +35,25 @@ var canvasHeight = Options.getCanvasHeight();
     // the Snake objects (depends if 1 player mode or 2)
 var snakeObjects = [];
 
-    // 1 player (on left side of canvas, moving to the right)
-snakeObjects.push(
-    new Snake({
-        x : 50,
-        y : canvasHeight / 2,
-        startingDirection: DIR.right,
-        color : 'green',
-        keyboardMapping : {
-            left  : EVENT_KEY.a,
-            right : EVENT_KEY.d,
-            up    : EVENT_KEY.w,
-            down  : EVENT_KEY.s
-        }
-    }));
-
+    // player 1 : wasd
+    // player 2 : arrow keys
 if ( twoPlayersMode )
     {
+        // 1 player (on left side of canvas, moving to the right)
+    snakeObjects.push(
+        new Snake({
+            x : 50,
+            y : canvasHeight / 2,
+            startingDirection: DIR.right,
+            color : 'green',
+            keyboardMapping : {
+                left  : EVENT_KEY.a,
+                right : EVENT_KEY.d,
+                up    : EVENT_KEY.w,
+                down  : EVENT_KEY.s
+            }
+        }));
+
         // 2 player (on right side of canvas, moving to the left)
     snakeObjects.push(
         new Snake({
@@ -64,6 +66,29 @@ if ( twoPlayersMode )
                 right : EVENT_KEY.rightArrow,
                 up    : EVENT_KEY.upArrow,
                 down  : EVENT_KEY.downArrow
+            }
+        }));
+    }
+
+    // player 1 : wasd or arrow keys
+else
+    {
+        // 1 player (on left side of canvas, moving to the right)
+    snakeObjects.push(
+        new Snake({
+            x : 50,
+            y : canvasHeight / 2,
+            startingDirection: DIR.right,
+            color : 'green',
+            keyboardMapping : {
+                left   : EVENT_KEY.a,
+                left2  : EVENT_KEY.leftArrow,
+                right  : EVENT_KEY.d,
+                right2 : EVENT_KEY.rightArrow,
+                up     : EVENT_KEY.w,
+                up2    : EVENT_KEY.upArrow,
+                down   : EVENT_KEY.s,
+                down2  : EVENT_KEY.downArrow
             }
         }));
     }
