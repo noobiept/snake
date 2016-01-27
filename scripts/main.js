@@ -4,14 +4,11 @@ var STAGE;
     // program stuff
 var CANVAS;
 
-
-
     // the elements type in the game (useful to identify objects, call .getType() )
 var ELEMENTS_TYPE = {
     tail: 0,
     snake: 1
     };
-
 
 var DIR = {
     left: 0,
@@ -20,10 +17,8 @@ var DIR = {
     down: 3
     };
 
-
     // in the server template, we'll change this to the static path plus the game name (otherwise any static content won't load (wrong url)). something like /static/snake/
 var BASE_URL = '';
-
 
     // used to access preloaded assets (images/etc)
 var PRELOAD;
@@ -33,27 +28,20 @@ window.onload = function()
 {
 Options.load();
 
-
     // setup the canvas
 CANVAS = document.querySelector( '#mainCanvas' );
-
-
 CANVAS.width = Options.getCanvasWidth();
 CANVAS.height = Options.getCanvasHeight();
 
 centerCanvas();
 
-
     // :: createjs stuff :: //
 STAGE = new createjs.Stage( CANVAS );
-
 
 createjs.Ticker.setInterval( 50 );
 createjs.Ticker.addListener( tick );
 
-
 HighScore.load();
-
 MainMenu.init();
 
     // preload the images/etc used in the program
@@ -138,7 +126,6 @@ return true;
 /*
     center the canvas in the middle of window
  */
-
 function centerCanvas()
 {
 var left = window.innerWidth / 2 - CANVAS.width / 2;

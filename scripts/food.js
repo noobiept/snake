@@ -5,6 +5,7 @@ var ALL_FOOD = [];
 var FOOD_WIDTH = 10;
 var FOOD_HEIGHT = 10;
 
+
 function Food( x, y )
 {
 this.width = FOOD_WIDTH;
@@ -39,12 +40,10 @@ this.shape = food;
 /*
     When there's a collision between the snake and the food, the food is 'eaten' (this applies the effects of that)
  */
-
 Food.prototype.eat = function( snakeObject )
 {
 snakeObject.addTail();
 };
-
 
 
 Food.prototype.getX = function()

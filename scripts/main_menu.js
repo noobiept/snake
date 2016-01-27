@@ -1,9 +1,5 @@
-(function(window)
-{
-function MainMenu()
-{
-
-}
+var MainMenu;
+(function (MainMenu) {
 
 var MAIN_MENU;
 var OPTIONS;
@@ -23,7 +19,6 @@ HELP = document.querySelector( '#Help' );
 MainMenu.open = function()
 {
 clearCanvas();
-
 
 var startGame = MAIN_MENU.querySelector( '#MainMenu-startGame' );
 var startGame_2players = MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
@@ -99,7 +94,6 @@ $( widthSlider ).slider({
         }
     });
 
-
     // :: Height :: //
 
 var height = OPTIONS.querySelector( '#Options-height' );
@@ -127,7 +121,6 @@ $( heightSlider ).slider({
         }
     });
 
-
     // :: frame :: //
 
 var frame = OPTIONS.querySelector( '#Options-frame' );
@@ -150,13 +143,10 @@ frame.onclick = function()
     $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
     };
 
-
     // :: difficulty :: //
 
 var difficulty = OPTIONS.querySelector( '#Options-difficulty' );
-
 var difficultyValue = difficulty.querySelector( 'span' );
-
 
 $( difficultyValue ).text( Options.getDifficultyString() );
 
@@ -177,8 +167,6 @@ difficulty.onclick = function()
         }
     };
 
-
-
     // :: back :: //
 
 var back = OPTIONS.querySelector( '#Options-back' );
@@ -188,9 +176,7 @@ back.onclick = function()
     MainMenu.open();
     };
 
-
 $( OPTIONS ).css( 'display', 'block' );
-
 centerElement( OPTIONS );
 };
 
@@ -199,10 +185,7 @@ MainMenu.highScore = function()
 {
 clearCanvas();
 
-
 var table = HIGH_SCORE.querySelector( '#HighScore-table' );
-
-
 
         // data
 var allScores = HighScore.getAll();
@@ -229,7 +212,6 @@ else
         }
 
     table.appendChild( tableRow );
-
 
     var score;
     var position;
@@ -272,8 +254,6 @@ else
         }
     }
 
-
-
 var back = HIGH_SCORE.querySelector( '#HighScore-back' );
 
 back.onclick = function()
@@ -284,12 +264,9 @@ back.onclick = function()
     MainMenu.open();
     };
 
-
 $( HIGH_SCORE ).css( 'display', 'block' );
-
 centerElement( HIGH_SCORE );
 };
-
 
 
 MainMenu.help = function()
@@ -301,12 +278,10 @@ $( HELP ).css( 'display', 'block' );
 
 centerElement( HELP );
 
-
     // show the game element next to its description
 var foodHelp = HELP.querySelector( '#Help-food' );
 var doubleFoodHelp = HELP.querySelector( '#Help-doubleFood' );
 var wallHelp = HELP.querySelector( '#Help-wall' );
-
 
     // need to get the position of the html element (offset is relative  to the document)
 var canvasPosition = $( CANVAS ).offset();
@@ -332,8 +307,6 @@ x = wallPosition.left - canvasPosition.left - xDistance;
 y = wallPosition.top - canvasPosition.top + 10;
 
 var wall = new Wall( x, y, 20, 7 );
-
-
 var back = HELP.querySelector( '#Help-back' );
 
 back.onclick = function()
@@ -348,10 +321,6 @@ back.onclick = function()
 };
 
 
-
-
-
-
 MainMenu.clear = function()
 {
 $( MAIN_MENU  ).css( 'display', 'none' );
@@ -361,7 +330,4 @@ $( HELP       ).css( 'display', 'none' );
 };
 
 
-
-window.MainMenu = MainMenu;
-
-}(window));
+})(MainMenu || (MainMenu = {}));

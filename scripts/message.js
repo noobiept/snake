@@ -13,9 +13,7 @@
 function Message( stuff )
 {
 var message = document.querySelector( '#Message' );
-
 $( message ).html( stuff.text );
-
 
 if ( typeof stuff.x == 'undefined' )
     {
@@ -28,12 +26,10 @@ else
     $( message ).css( 'top', stuff.y + 'px' );
     }
 
-
 if ( typeof stuff.cssClass != 'undefined' )
     {
     $( message ).addClass( stuff.cssClass );
     }
-
 
 $( message ).css( 'display', 'block' );
 
@@ -44,14 +40,9 @@ this.message = message;
 Message.prototype.remove = function()
 {
 $( this.message ).css( 'display', 'none' );
-
 $( this.message ).removeClass();
 };
 
 
-
 window.Message = Message;
-
-
-
 }(window));

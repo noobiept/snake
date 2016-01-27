@@ -33,5 +33,4 @@ return this.is_on;
 
 
 window.Interval = Interval;
-
 }(window));

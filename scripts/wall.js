@@ -3,10 +3,6 @@
 var ALL_WALLS = [];
 
 
-/*
-
- */
-
 function Wall( x, y, width, height )
 {
 this.width = width;
@@ -42,7 +38,6 @@ this.shape = wall;
 /*
     Change the shape's color to red, to signal that the wall as been hit
  */
-
 Wall.prototype.asBeenHit = function()
 {
 var g = this.shape.graphics;

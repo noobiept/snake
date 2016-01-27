@@ -8,9 +8,7 @@ function Tail( snakeObject )
 {
 this.snakeObject = snakeObject;
 
-
 var numberOfTails = snakeObject.getNumberOfTails();
-
 var x, y;
 var path = [];
 var direction;
@@ -27,9 +25,7 @@ if ( numberOfTails == 0 )
 else
     {
     var lastTail = snakeObject.getTail( numberOfTails - 1 );
-
     var lastDirection = lastTail.direction;
-
 
     if ( lastDirection == DIR.left )
         {
@@ -55,8 +51,6 @@ else
         y = lastTail.getY() - TAIL_HEIGHT;
         }
 
-
-
         // this tail continues the same path as the previous last one
         // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
     var pathJson = JSON.stringify( lastTail.path );
@@ -68,12 +62,10 @@ else
     // draw it, and setup the physics body
 this.draw( x, y );
 
-
 this.type = ELEMENTS_TYPE.tail;
 this.path = path;
 this.direction = direction;
 }
-
 
 
 Tail.prototype.draw = function( x, y )
@@ -87,14 +79,12 @@ snakeTail.regY = TAIL_HEIGHT / 2;
 snakeTail.x = x;
 snakeTail.y = y;
 
-
 var g = snakeTail.graphics;
 
 g.beginFill( this.snakeObject.color );
 g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
 
 STAGE.addChild( snakeTail );
-
 
     // set the properties to the object
 this.shape = snakeTail;
@@ -107,7 +97,6 @@ this.height = TAIL_HEIGHT;
 /*
     Change the shape's color to red, to signal that the tail as been hit
  */
-
 Tail.prototype.asBeenHit = function()
 {
 var g = this.shape.graphics;
@@ -117,18 +106,15 @@ g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
 };
 
 
-
 Tail.prototype.remove = function()
 {
 STAGE.removeChild( this.shape );
 };
 
 
-
 /*
     position on the canvas
  */
-
 Tail.prototype.position = function( x, y )
 {
 return this.move( x, y, 0, 0 );
@@ -138,7 +124,6 @@ return this.move( x, y, 0, 0 );
 /*
     move in relation to the current position (or a position given)
  */
-
 Tail.prototype.move = function( x, y, startX, startY )
 {
 var canvasWidth = Options.getCanvasWidth();
@@ -163,7 +148,6 @@ if ( typeof startY == 'undefined' )
     {
     startY = this.getY();
     }
-
 
 var nextX = startX + x;
 var nextY = startY + y;
@@ -193,8 +177,6 @@ else if ( nextY > canvasHeight )
 this.shape.x = nextX;
 this.shape.y = nextY;
 };
-
-
 
 
 Tail.prototype.getX = function()
@@ -230,7 +212,6 @@ return this.type;
 /*
     Move in the current direction
  */
-
 Tail.prototype.moveInDirection = function()
 {
     // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
@@ -268,7 +249,5 @@ else if ( direction == DIR.down )
 };
 
 
-
 window.Tail = Tail;
-
 }(window));

@@ -74,7 +74,6 @@ var EVENT_KEY = {
 /*
     Checks if a x/y position is within a range around other x/y position
 */
-
 function isNextTo( x, y, targetX, targetY, range )
 {
     // we make a 'box' with the target position and the range
@@ -110,7 +109,6 @@ var twoRight = twoX + twoWidth / 2;
 var twoTop = twoY - twoHeight / 2;
 var twoBottom = twoY + twoHeight / 2;
 
-
 if ( oneRight >= twoLeft && oneLeft <= twoRight && oneTop <= twoBottom && oneBottom >= twoTop )
     {
     return true;
@@ -118,7 +116,6 @@ if ( oneRight >= twoLeft && oneLeft <= twoRight && oneTop <= twoBottom && oneBot
 
 return false;
 }
-
 
 
 function getRandomInt( min, max )
@@ -136,7 +133,6 @@ return Math.random() * (max - min) + min;
 /*
     If an x/y position is out of bounds, it overflows (goes to the other side of the canvas, the amount it overflows)
  */
-
 function checkOverflowPosition( x_or_y, limit )
 {
 if ( x_or_y < 0 )
@@ -153,11 +149,9 @@ return x_or_y;
 }
 
 
-
 /*
     Centers an html element in the middle of the game canvas (assumes html element has its css position: absolute;
  */
-
 function centerElement( element )
 {
 var canvasWidth = Options.getCanvasWidth();
@@ -177,15 +171,12 @@ $( element ).css({
 }
 
 
-
-
 /*
  * Converts an object to string, and saves it in storage
  *
  * usage:
  *      localStorage.setObject( "...", { ... } );
  */
-
 Storage.prototype.setObject = function( key, value )
 {
 this.setItem( key, JSON.stringify( value ) );
@@ -195,7 +186,6 @@ this.setItem( key, JSON.stringify( value ) );
 /*
  * Returns null if it doesn't find, otherwise returns the string correspondent
  */
-
 Storage.prototype.getObject = function( key )
 {
 var value = this.getItem( key );
@@ -204,11 +194,9 @@ return value && JSON.parse( value );
 };
 
 
-
 /*
  * Used for 'class' inheritance (search prototypal inheritance)
  */
-
 function OBJECT( o )
 {
 function F(){}
@@ -222,7 +210,6 @@ return new F();
 /*
  * Used for 'class' inheritance (search for parasitic combination inheritance)
  */
-
 function INHERIT_PROTOTYPE( derivedClass, baseClass )
 {
 var prototype = OBJECT( baseClass.prototype );
@@ -231,7 +218,6 @@ prototype.constructor = derivedClass;
 
 derivedClass.prototype = prototype;
 }
-
 
 
 function boolToOnOff( value )
@@ -246,5 +232,3 @@ else
     return 'Off';
     }
 }
-
-

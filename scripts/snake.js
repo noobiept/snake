@@ -11,7 +11,6 @@ var ALL_SNAKES = [];
         color
         keyboardMapping
  */
-
 function Snake( args )
 {
 this.all_tails = [];
@@ -26,11 +25,9 @@ this.keys_held = {
     down  : false
     };
 
-
     // tells what key represent the up key held, the down etc (each player will have a different set of keys)
     // for example: { left: EVENT_KEY.a, right: EVENT_KEY.d, (...) }
 this.keyboard_mapping = args.keyboardMapping;
-
 
     // add a starting tail
 this.first_tail = this.addTail();
@@ -52,7 +49,6 @@ for (var i = 0 ; i < ALL_SNAKES.length ; i++)
 };
 
 
-
 Snake.prototype.remove = function()
 {
 var position = ALL_SNAKES.indexOf( this );
@@ -64,39 +60,31 @@ var tail;
 for (var i = 0 ; i < this.all_tails.length ; i++)
     {
     tail = this.all_tails[ i ];
-
     tail.remove();
     }
 };
 
 
-
 /*
     Add a new tail at the end
  */
-
 Snake.prototype.addTail = function()
 {
 var tail = new Tail( this );
-
 this.all_tails.push( tail );
-
 
 if ( this.score_element )
     {
     $( this.score_element ).text( this.all_tails.length );
     }
 
-
 return tail;
 };
-
 
 
 /*
     Return the position of the first tail (so, of the snake)
  */
-
 Snake.prototype.getX = function()
 {
 return this.first_tail.getX();
@@ -109,12 +97,9 @@ return this.first_tail.getY();
 };
 
 
-
-
 /*
     newDirection (of the DIR variable)
  */
-
 Snake.prototype.changeDirection = function( newDirection )
 {
 var currentDirection = this.getDirection();
@@ -134,16 +119,11 @@ if ( (currentDirection == DIR.left && newDirection == DIR.right) ||
     return;
     }
 
-
-
-
 var x = this.getX();
 var y = this.getY();
 
 var numberOfTails = this.all_tails.length;
 var tail;
-
-
 
 for (var i = 0 ; i < numberOfTails ; i++)
     {
@@ -157,7 +137,6 @@ for (var i = 0 ; i < numberOfTails ; i++)
         });
     }
 };
-
 
 
 Snake.prototype.getNumberOfTails = function()
@@ -177,7 +156,6 @@ return this.all_tails[ position ];
 };
 
 
-
 Snake.prototype.getDirection = function()
 {
 return this.first_tail.direction;
@@ -187,15 +165,12 @@ return this.first_tail.direction;
 /*
     To display the number of tails, associate an html element, where we're changing the .text() whenever a tail is added
  */
-
 Snake.prototype.setScoreElement = function( scoreElement )
 {
 this.score_element = scoreElement;
 
 $( this.score_element ).text( this.all_tails.length );
 };
-
-
 
 
 Snake.prototype.onKeyDown = function( keyCode )
@@ -262,10 +237,6 @@ return true;
 };
 
 
-
-
-
-
 Snake.prototype.tick = function()
 {
 var firstTail = this.first_tail;
@@ -284,7 +255,6 @@ for (var i = 1 ; i < allTails.length ; i++)
     {
     tail = allTails[ i ];
 
-
     if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true )
         {
         tail.asBeenHit();
@@ -293,7 +263,6 @@ for (var i = 1 ; i < allTails.length ; i++)
         return;
         }
     }
-
 
 var a, b;
 
@@ -321,7 +290,6 @@ for (a = 0 ; a < ALL_FOOD.length ; a++)
         }
     }
 
-
     // :: check collision between the snake and the walls :: //
 
 var wall;
@@ -338,8 +306,6 @@ for (i = 0 ; i < ALL_WALLS.length ; i++)
         return;
         }
     }
-
-
 
     // :: deal with the movement of the tails :: //
 
@@ -382,7 +348,6 @@ for (i = 0 ; i < allTails.length ; i++)
 /*
     Check if a collision happened between any of the snakes
  */
-
 Snake.checkCollision = function()
 {
 var a = 0;
@@ -405,8 +370,6 @@ for ( a = 0 ; a < ALL_SNAKES.length - 1 ; a++ )
 
         var all_tails_1 = snake1.all_tails;
         var all_tails_2 =  snake2.all_tails;
-
-
 
         var check = function( x, y, width, height, all_tails )
             {
@@ -437,7 +400,6 @@ for ( a = 0 ; a < ALL_SNAKES.length - 1 ; a++ )
             return true;
             }
 
-
         if ( check( tail_2.getX(), tail_2.getY(), tail_2.getWidth(), tail_2.getHeight(), all_tails_1 ) == true )
             {
                 // player 1 won
@@ -448,10 +410,8 @@ for ( a = 0 ; a < ALL_SNAKES.length - 1 ; a++ )
         }
     }
 
-
 return false;
 };
-
 
 
 window.Snake = Snake;

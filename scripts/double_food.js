@@ -6,10 +6,8 @@ function DoubleFood( x, y )
 Food.call( this, x, y );
 }
 
-
     // inherit the member functions
 INHERIT_PROTOTYPE( DoubleFood, Food );
-
 
 
 DoubleFood.prototype.draw = function( x, y )
@@ -40,8 +38,5 @@ snakeObject.addTail();
 };
 
 
-
-
 window.DoubleFood = DoubleFood;
-
 }(window));
