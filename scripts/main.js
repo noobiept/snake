@@ -64,9 +64,22 @@ PRELOAD.loadManifest([
     { id: 'apple', src: BASE_URL + 'images/red_apple_10px.png' }
     ]);
 
-PRELOAD.addEventListener( 'complete', MainMenu.open );
-};
+var callback;
 
+    // on the first run of the program, show the help page
+if ( !localStorage.getItem( 'snake_has_run_before' ) )
+    {
+    localStorage.setItem( 'snake_has_run_before', true );
+    callback = MainMenu.help;
+    }
+
+else
+    {
+    callback = MainMenu.open;
+    }
+
+PRELOAD.addEventListener( 'complete', callback );
+};
 
 
 window.onunload = function()
@@ -76,16 +89,12 @@ Options.save();
 };
 
 
-
-
-
 window.onkeydown = function( event )
 {
 if ( !event )
     {
     event = window.event;
     }
-
 
 var returnValue;
 
@@ -99,7 +108,6 @@ for (var i = 0 ; i < ALL_SNAKES.length ; i++)
         }
     }
 
-
 return true;
 };
 
@@ -110,7 +118,6 @@ if ( !event )
     {
     event = window.event;
     }
-
 
 var returnValue;
 
@@ -128,9 +135,6 @@ return true;
 };
 
 
-
-
-
 /*
     center the canvas in the middle of window
  */
@@ -145,11 +149,9 @@ $( CANVAS ).css( 'top', top + 'px' );
 }
 
 
-
 /*
     Clears the canvas, resets stuff
  */
-
 function clearCanvas()
 {
 MainMenu.clear();
@@ -170,14 +172,10 @@ createjs.Ticker.setPaused( false );
 }
 
 
-
-
 function movement_tick( snakeObject )
 {
 var keysHeld = snakeObject.keys_held;
-
 var direction = snakeObject.getDirection();
-
 
 if ( keysHeld.left )
     {
@@ -259,10 +257,6 @@ else if ( keysHeld.down )
 }
 
 
-
-
-
-
 function tick()
 {
 var snakeObject;
@@ -276,9 +270,6 @@ for (var i = 0 ; i < ALL_SNAKES.length ; i++)
     snakeObject.tick();
     }
 
-
 Snake.checkCollision();
-
-
 STAGE.update();
 }

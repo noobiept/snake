@@ -37,37 +37,29 @@ startGame.onclick = function()
     MainMenu.startGame();
     };
 
-
 startGame_2players.onclick = function()
     {
     MainMenu.startGame( true );
     };
-
-
 
 options.onclick = function()
     {
     MainMenu.options();
     };
 
-
 highScore.onclick = function()
     {
     MainMenu.highScore();
     };
-
 
 help.onclick = function()
     {
     MainMenu.help();
     };
 
-
 $( MAIN_MENU ).css( 'display', 'block' );
-
 centerElement( MAIN_MENU );
 };
-
 
 
 MainMenu.startGame = function( twoPlayers )

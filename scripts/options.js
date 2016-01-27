@@ -1,9 +1,6 @@
-(function(window)
-{
-function Options()
-{
+var Options;
+(function (Options) {
 
-}
 
 var DIFFICULTY = {
     normal: 0,
@@ -12,16 +9,12 @@ var DIFFICULTY = {
 
 var DIFFICULTY_STRING = [ 'normal', 'hard' ];
 
-
 var OPTIONS = {
-
     canvas_width: 800,
     canvas_height: 400,
     frameOn: false,
     difficulty: DIFFICULTY.normal
-
     };
-
 
 
 Options.load = function()
@@ -53,7 +46,6 @@ if ( options !== null )
 };
 
 
-
 Options.save = function()
 {
 localStorage.setObject( 'snake_options', OPTIONS );
@@ -72,12 +64,10 @@ return OPTIONS.difficulty;
 };
 
 
-
 Options.setDifficultyString = function( stringValue )
 {
 Options.setDifficulty( DIFFICULTY_STRING.indexOf( stringValue ) );
 };
-
 
 
 Options.getDifficultyString = function()
@@ -95,6 +85,7 @@ CANVAS.width = width;
 centerCanvas();
 };
 
+
 Options.getCanvasWidth = function()
 {
 return OPTIONS.canvas_width;
@@ -110,11 +101,11 @@ CANVAS.height = height;
 centerCanvas();
 };
 
+
 Options.getCanvasHeight = function()
 {
 return OPTIONS.canvas_height;
 };
-
 
 
 Options.setFrame = function( yesNo )
@@ -129,9 +120,4 @@ return OPTIONS.frameOn;
 };
 
 
-
-
-window.Options = Options;
-
-
-}(window));
+})(Options || (Options = {}));
