@@ -177,6 +177,12 @@ INTERVALS.push( interval );
 interval = new Interval( function()
     {
     var x, y, width, height, verticalOrientation;
+    var canvasWidth = Options.getCanvasWidth();
+    var canvasHeight = Options.getCanvasHeight();
+    var maxWallWidth = canvasWidth * 0.3;
+    var minWallWidth = canvasWidth * 0.2;
+    var maxWallHeight = canvasHeight * 0.3;
+    var minWallHeight = canvasHeight * 0.2;
 
         // don't add walls on top of the food (otherwise its impossible to get it)
         // try 5 times, otherwise just use whatever position
@@ -184,19 +190,18 @@ interval = new Interval( function()
         {
         x = getRandomInt( 0, canvasWidth );
         y = getRandomInt( 0, canvasHeight );
-
-        width = getRandomInt( 40, 100 );
-        height = getRandomInt( 10, 20 );
-
         verticalOrientation = getRandomInt( 0, 1 );
 
-            // switch the width/height
         if ( verticalOrientation )
             {
-            var temp = width;
+            width = 10;
+            height = getRandomInt( minWallHeight, maxWallHeight );
+            }
 
-            width = height;
-            height = temp;
+        else
+            {
+            width = getRandomInt( minWallWidth, maxWallWidth );
+            height = 10;
             }
 
         if ( !check( x, y, width, height, ALL_FOOD ) )
