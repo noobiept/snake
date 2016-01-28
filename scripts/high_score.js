@@ -15,7 +15,14 @@ HighScore.load = function()
 {
 var score = localStorage.getObject( 'snake_high_score' );
 
-if ( score !== null )
+    // try the old name (v1.0.0)
+if ( !score )
+    {
+    score = localStorage.getObject( 'high_score' );
+    localStorage.removeItem( 'high_score' );
+    }
+
+if ( score )
     {
     HIGH_SCORE = score;
     }

@@ -21,7 +21,14 @@ Options.load = function()
 {
 var options = localStorage.getObject( 'snake_options' );
 
-if ( options !== null )
+    // try the old name (v1.0.0)
+if ( !options )
+    {
+    options = localStorage.getObject( 'options' );
+    localStorage.removeItem( 'options' );
+    }
+
+if ( options )
     {
     if ( $.isNumeric( options.canvas_width ) )
         {
