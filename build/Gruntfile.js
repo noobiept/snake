@@ -25,6 +25,8 @@ grunt.initConfig({
                 src: [
                     'images/orange_10px.png',
                     'images/red_apple_10px.png',
+                    'images/snake16.png',
+                    'images/snake128.png',
                     'libraries/**',
                     'manifest.json'
                 ],
