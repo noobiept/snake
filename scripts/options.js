@@ -56,6 +56,11 @@ if ( options )
 Options.save = function()
 {
 localStorage.setObject( 'snake_options', OPTIONS );
+
+if ( window.chrome && window.chrome.storage )
+    {
+    chrome.storage.local.set({ snake_options: OPTIONS });
+    }
 };
 
 

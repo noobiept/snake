@@ -1,8 +1,9 @@
 {
     "name": "Snake Game",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Snake Game",
     "icons": { "16": "images/snake16.png", "128": "images/snake128.png" },
     "app": { "launch": { "local_path": "index.html" } },
-    "manifest_version": 2
+    "manifest_version": 2,
+    "permissions": [ "storage" ]
 }

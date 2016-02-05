@@ -35,6 +35,11 @@ if ( score )
 HighScore.save = function()
 {
 localStorage.setObject( 'snake_high_score', HIGH_SCORE );
+
+if ( window.chrome && window.chrome.storage )
+    {
+    chrome.storage.local.set({ snake_high_score: HIGH_SCORE });
+    }
 };
 
 
