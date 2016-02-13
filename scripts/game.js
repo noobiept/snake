@@ -418,6 +418,7 @@ window.setTimeout( function()
         HighScore.add( ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
         }
 
+    HighScore.save();
     Game.clear();
 
     message.remove();

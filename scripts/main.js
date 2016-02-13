@@ -76,13 +76,6 @@ PRELOAD.addEventListener( 'complete', callback );
 }
 
 
-window.onunload = function()
-{
-HighScore.save();
-Options.save();
-};
-
-
 window.onkeydown = function( event )
 {
 if ( !event )

@@ -173,6 +173,7 @@ var back = OPTIONS.querySelector( '#Options-back' );
 
 back.onclick = function()
     {
+    Options.save();
     MainMenu.open();
     };
 
