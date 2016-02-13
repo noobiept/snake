@@ -76,6 +76,14 @@ PRELOAD.addEventListener( 'complete', callback );
 }
 
 
+window.onresize = function()
+{
+centerCanvas();
+MainMenu.reCenter();
+Game.reCenterGameMenu();
+};
+
+
 window.onkeydown = function( event )
 {
 if ( !event )

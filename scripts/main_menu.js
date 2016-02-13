@@ -5,6 +5,7 @@ var MAIN_MENU;
 var OPTIONS;
 var HIGH_SCORE;
 var HELP;
+var SELECTED = null;
 
 
 MainMenu.init = function()
@@ -53,7 +54,9 @@ help.onclick = function()
     };
 
 $( MAIN_MENU ).css( 'display', 'block' );
-centerElement( MAIN_MENU );
+
+SELECTED = MAIN_MENU;
+MainMenu.reCenter();
 };
 
 
@@ -90,7 +93,7 @@ $( widthSlider ).slider({
 
         Options.setCanvasWidth( ui.value );
 
-        centerElement( OPTIONS );
+        MainMenu.reCenter();
         }
     });
 
@@ -117,7 +120,7 @@ $( heightSlider ).slider({
 
         Options.setCanvasHeight( ui.value );
 
-        centerElement( OPTIONS );
+        MainMenu.reCenter();
         }
     });
 
@@ -178,7 +181,9 @@ back.onclick = function()
     };
 
 $( OPTIONS ).css( 'display', 'block' );
-centerElement( OPTIONS );
+
+SELECTED = OPTIONS;
+MainMenu.reCenter();
 };
 
 
@@ -266,7 +271,9 @@ back.onclick = function()
     };
 
 $( HIGH_SCORE ).css( 'display', 'block' );
-centerElement( HIGH_SCORE );
+
+SELECTED = HIGH_SCORE;
+MainMenu.reCenter();
 };
 
 
@@ -277,7 +284,8 @@ clearCanvas();
     // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
 $( HELP ).css( 'display', 'block' );
 
-centerElement( HELP );
+SELECTED = HELP;
+MainMenu.reCenter();
 
     // show the game element next to its description
 var foodHelp = HELP.querySelector( '#Help-food' );
@@ -328,6 +336,15 @@ $( MAIN_MENU  ).css( 'display', 'none' );
 $( OPTIONS    ).css( 'display', 'none' );
 $( HIGH_SCORE ).css( 'display', 'none' );
 $( HELP       ).css( 'display', 'none' );
+};
+
+
+MainMenu.reCenter = function()
+{
+if ( SELECTED )
+    {
+    centerElement( SELECTED );
+    }
 };
 
 

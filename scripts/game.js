@@ -324,18 +324,7 @@ quit.onclick = function()
     MainMenu.open();
     };
 
-    // position the menu on the bottom right of the canvas
-var canvasPosition = $( CANVAS ).position();
-
-var canvasWidth = Options.getCanvasWidth();
-
-//var left = canvasPosition.left + Options.getCanvasWidth() - $( gameMenu ).width();
-var left = canvasPosition.left;
-var top = canvasPosition.top + Options.getCanvasHeight();
-
-$( gameMenu ).css( 'top', top + 'px' );
-$( gameMenu ).css( 'left', left + 'px' );
-$( gameMenu ).css( 'width', canvasWidth + 'px' );   // have to set the menu's width, so that the left/right sub-menus really go to their position
+Game.reCenterGameMenu();
 
 $( gameMenu ).css( 'display', 'block' );
 };
@@ -452,6 +441,25 @@ clearCanvas();
 Game.isTwoPlayersMode = function()
 {
 return Game.twoPlayersMode;
+};
+
+
+Game.reCenterGameMenu = function()
+{
+var gameMenu = document.getElementById( 'GameMenu' );
+
+    // position the menu on the bottom right of the canvas
+var canvasPosition = $( CANVAS ).position();
+
+var canvasWidth = Options.getCanvasWidth();
+
+//var left = canvasPosition.left + Options.getCanvasWidth() - $( gameMenu ).width();
+var left = canvasPosition.left;
+var top = canvasPosition.top + Options.getCanvasHeight();
+
+$( gameMenu ).css( 'top', top + 'px' );
+$( gameMenu ).css( 'left', left + 'px' );
+$( gameMenu ).css( 'width', canvasWidth + 'px' );   // have to set the menu's width, so that the left/right sub-menus really go to their position
 };
 
 
