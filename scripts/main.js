@@ -26,7 +26,13 @@ var PRELOAD;
 
 window.onload = function()
 {
-Options.load();
+AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before' ], initApp );
+};
+
+
+function initApp( data )
+{
+Options.load( data[ 'snake_options' ] );
 
     // setup the canvas
 CANVAS = document.querySelector( '#mainCanvas' );
@@ -41,7 +47,7 @@ STAGE = new createjs.Stage( CANVAS );
 createjs.Ticker.setInterval( 50 );
 createjs.Ticker.addListener( tick );
 
-HighScore.load();
+HighScore.load( data[ 'snake_high_score' ] );
 MainMenu.init();
 
     // preload the images/etc used in the program
@@ -55,9 +61,9 @@ PRELOAD.loadManifest([
 var callback;
 
     // on the first run of the program, show the help page
-if ( !localStorage.getItem( 'snake_has_run_before' ) )
+if ( !data[ 'snake_has_run_before' ] )
     {
-    localStorage.setItem( 'snake_has_run_before', true );
+    AppStorage.setData({ snake_has_run_before: true });
     callback = MainMenu.help;
     }
 
@@ -67,7 +73,7 @@ else
     }
 
 PRELOAD.addEventListener( 'complete', callback );
-};
+}
 
 
 window.onunload = function()

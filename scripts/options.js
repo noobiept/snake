@@ -17,17 +17,8 @@ var OPTIONS = {
     };
 
 
-Options.load = function()
+Options.load = function( options )
 {
-var options = localStorage.getObject( 'snake_options' );
-
-    // try the old name (v1.0.0)
-if ( !options )
-    {
-    options = localStorage.getObject( 'options' );
-    localStorage.removeItem( 'options' );
-    }
-
 if ( options )
     {
     if ( $.isNumeric( options.canvas_width ) )
@@ -55,12 +46,7 @@ if ( options )
 
 Options.save = function()
 {
-localStorage.setObject( 'snake_options', OPTIONS );
-
-if ( window.chrome && window.chrome.storage )
-    {
-    chrome.storage.local.set({ snake_options: OPTIONS });
-    }
+AppStorage.setData({ snake_options: OPTIONS });
 };
 
 

@@ -9,19 +9,10 @@ var HIGH_SCORE_LENGTH = 5;
 
 
 /*
-    Load from localStorage
+    Load from local storage
  */
-HighScore.load = function()
+HighScore.load = function( score )
 {
-var score = localStorage.getObject( 'snake_high_score' );
-
-    // try the old name (v1.0.0)
-if ( !score )
-    {
-    score = localStorage.getObject( 'high_score' );
-    localStorage.removeItem( 'high_score' );
-    }
-
 if ( score )
     {
     HIGH_SCORE = score;
@@ -30,16 +21,11 @@ if ( score )
 
 
 /*
-    Save to localStorage
+    Save to local storage
  */
 HighScore.save = function()
 {
-localStorage.setObject( 'snake_high_score', HIGH_SCORE );
-
-if ( window.chrome && window.chrome.storage )
-    {
-    chrome.storage.local.set({ snake_high_score: HIGH_SCORE });
-    }
+AppStorage.setData({ snake_high_score: HIGH_SCORE });
 };
 
 
@@ -81,14 +67,6 @@ if ( position < 0 || position >= HIGH_SCORE.length )
     }
 
 return HIGH_SCORE[ position ];
-};
-
-
-HighScore.removeAll = function()
-{
-HIGH_SCORE.length = 0;
-
-localStorage.removeItem( 'snake_high_score' );
 };
 
 
