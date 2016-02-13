@@ -45,7 +45,7 @@ centerCanvas();
 STAGE = new createjs.Stage( CANVAS );
 
 createjs.Ticker.setInterval( 50 );
-createjs.Ticker.addListener( tick );
+createjs.Ticker.on( 'tick', tick );
 
 HighScore.load( data[ 'snake_high_score' ] );
 MainMenu.init();
@@ -250,8 +250,13 @@ else if ( keysHeld.down )
 }
 
 
-function tick()
+function tick( event )
 {
+if ( event.paused )
+    {
+    return;
+    }
+
 var snakeObject;
 
 for (var i = 0 ; i < ALL_SNAKES.length ; i++)

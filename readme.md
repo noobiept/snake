@@ -21,10 +21,10 @@ In the options menu, you can change the difficulty of the game by changing some 
 Libraries
 =========
 
-- jquery -- 2.1
+- jquery -- 2.2
 - jquery-ui -- 1.11
     - slider
     - blitzer theme
 - createjs
-    - easeljs -- 0.6
-    - preloadjs -- 0.3
+    - easeljs -- 0.8
+    - preloadjs -- 0.6
