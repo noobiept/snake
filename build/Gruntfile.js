@@ -1,7 +1,6 @@
-var PATH = require( 'path' );
-
 module.exports = function( grunt )
 {
+var root = '../';
 var dest = '../release/<%= pkg.name %> <%= pkg.version %>/';
 
 grunt.initConfig({
@@ -21,41 +20,33 @@ grunt.initConfig({
         copy: {
             release: {
                 expand: true,
-                cwd: '../',
+                cwd: root,
                 src: [
                     'images/orange_10px.png',
                     'images/red_apple_10px.png',
                     'images/snake16.png',
                     'images/snake128.png',
                     'libraries/**',
+                    'background.js',
                     'manifest.json'
                 ],
                 dest: dest
             }
         },
 
+            // minimize the javascript
         uglify: {
             release: {
-                files: {
-                    '../release/<%= pkg.name %> <%= pkg.version %>/min.js': [
+                files: [{
+                    src: [
                             // the order matters, since some classes inherit from others, so the base ones need to be defined first
-                            // this is based on the order in index.html
-                        '../scripts/utilities.js',
-                        '../scripts/main.js',
-                        '../scripts/snake.js',
-                        '../scripts/tail.js',
-                        '../scripts/food.js',
-                        '../scripts/double_food.js',
-                        '../scripts/wall.js',
-                        '../scripts/game.js',
-                        '../scripts/main_menu.js',
-                        '../scripts/options.js',
-                        '../scripts/timer.js',
-                        '../scripts/interval.js',
-                        '../scripts/message.js',
-                        '../scripts/high_score.js'
-                    ]
-                }
+                        root + 'scripts/utilities.js',
+                        root + 'scripts/food.js',
+
+                        root + 'scripts/*.js'
+                    ],
+                    dest: dest + 'min.js'
+                }]
             }
         },
 
@@ -63,10 +54,13 @@ grunt.initConfig({
             release: {
                 files: [{
                     expand: true,
-                    cwd: '../css/',
-                    src: 'style.css',
-                    dest: PATH.join( dest, 'css' )
+                    cwd: root + 'css/',
+                    src: '*.css',
+                    dest: dest + 'css/'
                 }]
+            },
+            options: {
+                advanced: false
             }
         },
 
@@ -74,7 +68,7 @@ grunt.initConfig({
             release: {
                 files: [{
                     expand: true,
-                    cwd: '../',
+                    cwd: root,
                     src: 'index.html',
                     dest: dest
                 }]
