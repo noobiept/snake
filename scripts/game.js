@@ -7,13 +7,13 @@ var INTERVALS = [];
     // the time until we add a new food/wall/etc
     // depends on the difficulty level
     // the order matters (get the difficulty from Options, which will be the position in this)
-var FOOD_TIMINGS = [ 1000, 3000 ];
-var DOUBLE_FOOD_TIMINGS = [ 5000, 10000 ];
-var WALL_TIMINGS = [ 4000, 2000 ];
+var FOOD_TIMINGS = [ 1000, 2500 ];
+var DOUBLE_FOOD_TIMINGS = [ 5000, 8000 ];
+var WALL_TIMINGS = [ 4000, 3000 ];
 
     // in milliseconds
     // the order is according to the difficulty (so on normal mode, we get the first element, so 50ms)
-var TIME_BETWEEN_TICKS = [ 50, 30 ];
+var TIME_BETWEEN_TICKS = [ 50, 35 ];
 var TIMER;
 
 
@@ -179,10 +179,10 @@ interval = new Interval( function()
     var x, y, width, height, verticalOrientation;
     var canvasWidth = Options.getCanvasWidth();
     var canvasHeight = Options.getCanvasHeight();
-    var maxWallWidth = canvasWidth * 0.3;
-    var minWallWidth = canvasWidth * 0.2;
-    var maxWallHeight = canvasHeight * 0.3;
-    var minWallHeight = canvasHeight * 0.2;
+    var maxWallWidth = canvasWidth * 0.2;
+    var minWallWidth = canvasWidth * 0.1;
+    var maxWallHeight = canvasHeight * 0.2;
+    var minWallHeight = canvasHeight * 0.1;
 
         // don't add walls on top of the food (otherwise its impossible to get it)
         // try 5 times, otherwise just use whatever position
@@ -218,7 +218,7 @@ interval = new Interval( function()
         var snakeX = snakeObjects[ i ].getX();
         var snakeY = snakeObjects[ i ].getY();
 
-        var margin = 40;
+        var margin = 60;
 
             // means the wall position is close to the snake
         if ( snakeX > x - margin && snakeX < x + margin &&
