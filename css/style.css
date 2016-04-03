@@ -19,8 +19,8 @@ body
 .button
     {
     cursor: pointer;
-
-    text-shadow: rgba(0, 0, 255, 0.7) 2px 0 1px;
+    color: white;
+    text-shadow: rgba(0, 0, 255, 0.7) 3px 0 2px;
 
     padding: 0 30px;
     margin: 10px 0;
@@ -28,7 +28,7 @@ body
 
 .button:hover
     {
-    text-shadow: blue 2px 0;
+    text-shadow: blue 3px 0;
     }
 
 #Message
@@ -93,6 +93,11 @@ em
     margin: 10px;
     }
 
+#MainMenu-donate
+    {
+    display: block;
+    text-decoration: none;
+    }
 
     /* Game Menu */
 
