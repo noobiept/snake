@@ -1,0 +1,12 @@
+{
+    "env": {
+        "browser": true,
+        "jquery": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "linebreak-style": [ "error", "windows" ],
+        "semi": [ "error", "always" ],
+        "no-unused-vars": [ "error", { "args": "none" } ]
+    }
+}

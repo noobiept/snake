@@ -1,3 +1,6 @@
+/*global AppStorage, Options, createjs, HighScore, MainMenu, Game, ALL_SNAKES, Snake*/
+/*exported STAGE, CANVAS, ELEMENTS_TYPE, DIR, BASE_URL, PRELOAD, clearCanvas, pause, resume*/
+
     // createjs
 var STAGE;
 

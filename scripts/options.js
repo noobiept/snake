@@ -1,3 +1,5 @@
+/*global AppStorage, CANVAS, centerCanvas*/
+
 var Options;
 (function (Options) {
 

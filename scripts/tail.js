@@ -1,3 +1,5 @@
+/*global DIR, ELEMENTS_TYPE, createjs, STAGE, Options*/
+
 (function(window)
 {
 var TAIL_WIDTH = 10;    // width and height need to be the same value

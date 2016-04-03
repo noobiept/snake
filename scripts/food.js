@@ -1,3 +1,5 @@
+/*global createjs, PRELOAD, STAGE*/
+
 (function(window)
 {
 var ALL_FOOD = [];

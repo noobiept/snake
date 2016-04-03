@@ -1,3 +1,5 @@
+/*global Food, INHERIT_PROTOTYPE, createjs, PRELOAD, STAGE*/
+
 (function(window)
 {
 function DoubleFood( x, y )

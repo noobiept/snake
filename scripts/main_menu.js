@@ -1,3 +1,5 @@
+/*global clearCanvas, Game, Options, boolToOnOff, HighScore, CANVAS, Food, FOOD_HEIGHT, DoubleFood, Wall, centerElement*/
+
 var MainMenu;
 (function (MainMenu) {
 

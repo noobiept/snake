@@ -1,3 +1,5 @@
+/*global Interval*/
+
 (function(window)
 {
 function Timer( htmlElement )

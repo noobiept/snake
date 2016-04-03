@@ -1,3 +1,5 @@
+/*global ELEMENTS_TYPE, Tail, DIR, checkCollision, Game, ALL_FOOD, ALL_WALLS, isNextTo*/
+
 (function(window)
 {
 var ALL_SNAKES = [];

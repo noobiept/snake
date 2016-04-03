@@ -1,3 +1,5 @@
+/*global AppStorage, Options, boolToOnOff*/
+
 var HighScore;
 (function (HighScore) {
 

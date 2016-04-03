@@ -1,3 +1,5 @@
+/*global clearCanvas, Options, Snake, EVENT_KEY, DIR, createjs, Wall, checkCollision, getRandomInt, FOOD_WIDTH, FOOD_HEIGHT, Interval, ALL_WALLS, Food, DoubleFood, ALL_FOOD, checkOverflowPosition, Timer, resume, pause, MainMenu, ALL_SNAKES, Message, HighScore, CANVAS*/
+
 var Game;
 (function (Game) {
 

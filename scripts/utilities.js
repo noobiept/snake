@@ -1,3 +1,6 @@
+/*global Options, CANVAS*/
+/*exported EVENT_KEY, isNextTo, checkCollision, getRandomInt, getRandomFloat, checkOverflowPosition, centerElement, INHERIT_PROTOTYPE, boolToOnOff*/
+
 /*
  * Keys code for the keyboard events
  */
@@ -16,7 +19,7 @@ var EVENT_KEY = {
     rightArrow : 39,
     downArrow  : 40,
     del        : 46,
-   
+
     "0" : 48,
     "1" : 49,
     "2" : 50,
@@ -27,7 +30,7 @@ var EVENT_KEY = {
     "7" : 55,
     "8" : 56,
     "9" : 57,
-    
+
     a : 65,
     b : 66,
     c : 67,
@@ -67,7 +70,7 @@ var EVENT_KEY = {
     f10 : 121,
     f11 : 122,
     f12 : 123
-    
+
 };
 
 

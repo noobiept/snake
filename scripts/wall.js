@@ -1,3 +1,5 @@
+/*global createjs, STAGE*/
+
 (function(window)
 {
 var ALL_WALLS = [];
