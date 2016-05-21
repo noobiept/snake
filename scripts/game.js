@@ -235,6 +235,50 @@ if ( mapName === 'random' )
 
     INTERVALS.push( interval );
     }
+
+else if ( mapName === 'stairs' )
+    {
+    var canvasWidth = Options.getCanvasWidth();
+    var canvasHeight = Options.getCanvasHeight();
+    var width = canvasWidth * 0.1;
+    var widthThickness = canvasWidth * 0.01;
+    var height = canvasHeight * 0.06;
+    var heightThickness = canvasHeight * 0.01;
+    var steps = 4;
+    var xOffset = canvasWidth / (steps + 1);
+    var yOffset = canvasHeight / (steps + 1);
+
+    for (var a = 0 ; a < steps ; a++)
+        {
+        var x = (a + 1) * xOffset;
+        var y = (a + 1) * yOffset;
+
+        new Wall( x, y, width, widthThickness );
+        new Wall( x + width / 2, y + height / 2, heightThickness, height );
+        }
+    }
+
+else if ( mapName === 'lines' )
+    {
+    var lines = 4;
+    var canvasWidth = Options.getCanvasWidth();
+    var canvasHeight = Options.getCanvasHeight();
+    var x1 = canvasWidth * 0.15;
+    var x2 = canvasWidth * 0.5;
+    var x3 = canvasWidth * 0.85;
+    var yDiff = canvasHeight / (lines + 1);
+    var width = canvasWidth * 0.2;
+    var height = canvasHeight * 0.01;
+
+    for (var a = 0 ; a < lines ; a++)
+        {
+        var y = yDiff * (a + 1);
+
+        new Wall( x1, y, width, height );
+        new Wall( x2, y, width, height );
+        new Wall( x3, y, width, height );
+        }
+    }
 }
 
 
