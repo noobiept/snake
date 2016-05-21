@@ -34,16 +34,12 @@ var difficulty = Options.getDifficulty();
 var canvasWidth = Options.getCanvasWidth();
 var canvasHeight = Options.getCanvasHeight();
 
-    // the Snake objects (depends if 1 player mode or 2)
-var snakeObjects = [];
-
     // player 1 : wasd
     // player 2 : arrow keys
 if ( twoPlayersMode )
     {
         // 1 player (on left side of canvas, moving to the right)
-    snakeObjects.push(
-        new Snake({
+    new Snake({
             x : 50,
             y : canvasHeight / 2,
             startingDirection: DIR.right,
@@ -54,11 +50,10 @@ if ( twoPlayersMode )
                 up    : EVENT_KEY.w,
                 down  : EVENT_KEY.s
             }
-        }));
+        });
 
         // 2 player (on right side of canvas, moving to the left)
-    snakeObjects.push(
-        new Snake({
+    new Snake({
             x : canvasWidth - 50,
             y : canvasHeight / 2,
             startingDirection : DIR.left,
@@ -69,15 +64,14 @@ if ( twoPlayersMode )
                 up    : EVENT_KEY.upArrow,
                 down  : EVENT_KEY.downArrow
             }
-        }));
+        });
     }
 
     // player 1 : wasd or arrow keys
 else
     {
         // 1 player (on left side of canvas, moving to the right)
-    snakeObjects.push(
-        new Snake({
+    new Snake({
             x : 50,
             y : canvasHeight / 2,
             startingDirection: DIR.right,
@@ -92,7 +86,7 @@ else
                 down   : EVENT_KEY.s,
                 down2  : EVENT_KEY.downArrow
             }
-        }));
+        });
     }
 
 createjs.Ticker.setInterval( TIME_BETWEEN_TICKS[ difficulty ] );
@@ -106,24 +100,6 @@ if ( Options.getFrame() )
     new Wall( canvasWidth / 2, canvasHeight, canvasWidth, 5 ); //bottom
     }
 
-
-    // check if a food/wall position is colliding with any of the  walls/foods
-var check = function( x, y, width, height, elementsArray )
-    {
-    for (var i = 0 ; i < elementsArray.length ; i++)
-        {
-        var element = elementsArray[ i ];
-
-        if ( checkCollision( x, y, width, height, element.getX(), element.getY(), element.getWidth(), element.getHeight() ) )
-            {
-            return true;
-            }
-        }
-
-    return false;
-    };
-
-
     // add food
 var interval = new Interval( function()
     {
@@ -136,7 +112,7 @@ var interval = new Interval( function()
         x = getRandomInt( 0, canvasWidth );
         y = getRandomInt( 0, canvasHeight );
 
-        if ( !check( x, y, FOOD_WIDTH, FOOD_HEIGHT, ALL_WALLS ) )
+        if ( !elementCollision( x, y, FOOD_WIDTH, FOOD_HEIGHT, ALL_WALLS ) )
             {
             break;
             }
@@ -162,7 +138,7 @@ interval = new Interval( function()
         x = getRandomInt( 0, canvasWidth );
         y = getRandomInt( 0, canvasHeight );
 
-        if ( !check( x, y, FOOD_WIDTH, FOOD_HEIGHT, ALL_WALLS ) )
+        if ( !elementCollision( x, y, FOOD_WIDTH, FOOD_HEIGHT, ALL_WALLS ) )
             {
             break;
             }
@@ -176,75 +152,115 @@ interval = new Interval( function()
 INTERVALS.push( interval );
 
     // add walls
-interval = new Interval( function()
-    {
-    var x, y, width, height, verticalOrientation;
-    var canvasWidth = Options.getCanvasWidth();
-    var canvasHeight = Options.getCanvasHeight();
-    var maxWallWidth = canvasWidth * 0.2;
-    var minWallWidth = canvasWidth * 0.1;
-    var maxWallHeight = canvasHeight * 0.2;
-    var minWallHeight = canvasHeight * 0.1;
+setupWalls( mapName );
 
-        // don't add walls on top of the food (otherwise its impossible to get it)
-        // try 5 times, otherwise just use whatever position
-    for (var i = 0 ; i < 5 ; i++)
-        {
-        x = getRandomInt( 0, canvasWidth );
-        y = getRandomInt( 0, canvasHeight );
-        verticalOrientation = getRandomInt( 0, 1 );
-
-        if ( verticalOrientation )
-            {
-            width = 10;
-            height = getRandomInt( minWallHeight, maxWallHeight );
-            }
-
-        else
-            {
-            width = getRandomInt( minWallWidth, maxWallWidth );
-            height = 10;
-            }
-
-        if ( !check( x, y, width, height, ALL_FOOD ) )
-            {
-            break;
-            }
-        }
-
-        // we have to make sure it doesnt add on top of the snake
-        //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
-        // also we could add the wall on top of food (since we're changing the values we checked above)
-    for ( i = 0 ; i < snakeObjects.length ; i++ )
-        {
-        var snakeX = snakeObjects[ i ].getX();
-        var snakeY = snakeObjects[ i ].getY();
-
-        var margin = 60;
-
-            // means the wall position is close to the snake
-        if ( snakeX > x - margin && snakeX < x + margin &&
-         snakeY > y - margin && snakeY < y + margin )
-            {
-            x += 100;
-            y += 100;
-
-                // to make sure it doesn't go out of bounds
-            x = checkOverflowPosition( x, canvasWidth );
-            y = checkOverflowPosition( y, canvasHeight );
-            }
-        }
-
-    new Wall( x, y, width, height );
-
-    }, WALL_TIMINGS[ difficulty ] );
-
-INTERVALS.push( interval );
-Game.initMenu( snakeObjects );
+Game.initMenu();
 };
 
 
-Game.initMenu = function( snakeObjects )
+/**
+ * Setup the map walls (depends on the map type).
+ * - `random` : Adds walls randomly in the map.
+ * - `empty`  : No walls added.
+ */
+function setupWalls( mapName )
+{
+var difficulty = Options.getDifficulty();
+
+    // randomly add walls in the map
+if ( mapName === 'random' )
+    {
+    var interval = new Interval( function()
+        {
+        var x, y, width, height, verticalOrientation;
+        var canvasWidth = Options.getCanvasWidth();
+        var canvasHeight = Options.getCanvasHeight();
+        var maxWallWidth = canvasWidth * 0.2;
+        var minWallWidth = canvasWidth * 0.1;
+        var maxWallHeight = canvasHeight * 0.2;
+        var minWallHeight = canvasHeight * 0.1;
+
+            // don't add walls on top of the food (otherwise its impossible to get it)
+            // try 5 times, otherwise just use whatever position
+        for (var i = 0 ; i < 5 ; i++)
+            {
+            x = getRandomInt( 0, canvasWidth );
+            y = getRandomInt( 0, canvasHeight );
+            verticalOrientation = getRandomInt( 0, 1 );
+
+            if ( verticalOrientation )
+                {
+                width = 10;
+                height = getRandomInt( minWallHeight, maxWallHeight );
+                }
+
+            else
+                {
+                width = getRandomInt( minWallWidth, maxWallWidth );
+                height = 10;
+                }
+
+            if ( !elementCollision( x, y, width, height, ALL_FOOD ) )
+                {
+                break;
+                }
+            }
+
+            // we have to make sure it doesnt add on top of the snake
+            //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
+            // also we could add the wall on top of food (since we're changing the values we checked above)
+        for ( i = 0 ; i < ALL_SNAKES.length ; i++ )
+            {
+            var snakeX = ALL_SNAKES[ i ].getX();
+            var snakeY = ALL_SNAKES[ i ].getY();
+
+            var margin = 60;
+
+                // means the wall position is close to the snake
+            if ( snakeX > x - margin && snakeX < x + margin &&
+            snakeY > y - margin && snakeY < y + margin )
+                {
+                x += 100;
+                y += 100;
+
+                    // to make sure it doesn't go out of bounds
+                x = checkOverflowPosition( x, canvasWidth );
+                y = checkOverflowPosition( y, canvasHeight );
+                }
+            }
+
+        new Wall( x, y, width, height );
+
+        }, WALL_TIMINGS[ difficulty ] );
+
+    INTERVALS.push( interval );
+    }
+}
+
+
+/**
+ * Check if a food/wall position is colliding with any of the  walls/foods.
+ */
+function elementCollision( x, y, width, height, elementsArray )
+{
+for (var i = 0 ; i < elementsArray.length ; i++)
+    {
+    var element = elementsArray[ i ];
+
+    if ( checkCollision( x, y, width, height, element.getX(), element.getY(), element.getWidth(), element.getHeight() ) )
+        {
+        return true;
+        }
+    }
+
+return false;
+}
+
+
+/**
+ * Initialize the game menu.
+ */
+Game.initMenu = function()
 {
 var gameMenu = document.querySelector( '#GameMenu' );
 
@@ -253,14 +269,14 @@ var gameMenu = document.querySelector( '#GameMenu' );
 var player1_score = gameMenu.querySelector( '#GameMenu-player1-score' );
 var player1_score_span = player1_score.querySelector( 'span' );
 
-snakeObjects[ 0 ].setScoreElement( player1_score_span );
+ALL_SNAKES[ 0 ].setScoreElement( player1_score_span );
 
 if  ( Game.twoPlayersMode )
     {
     var player2_score = gameMenu.querySelector( '#GameMenu-player2-score' );
     var player2_score_span = player2_score.querySelector( 'span' );
 
-    snakeObjects[ 1 ].setScoreElement( player2_score_span );
+    ALL_SNAKES[ 1 ].setScoreElement( player2_score_span );
 
     $( player2_score ).css( 'display', 'inline-block' );
     }
