@@ -63,6 +63,23 @@ em
     left: 0;
     }
 
+#MainMenu-selectMap
+    {
+    padding: 0;
+    }
+
+.mapSelected
+    {
+    background-color: white;
+    color: black;
+    }
+
+#MainMenu-selectMap li
+    {
+    display: inline-block;
+    cursor: pointer;
+    }
+
 #Options-container > *
     {
     display: inline-block;

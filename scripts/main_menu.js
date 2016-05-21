@@ -8,6 +8,7 @@ var OPTIONS;
 var HIGH_SCORE;
 var HELP;
 var SELECTED = null;
+var MAP_SELECTED = null;
 
 
 MainMenu.init = function()
@@ -16,29 +17,42 @@ MAIN_MENU = document.querySelector( '#MainMenu' );
 OPTIONS = document.querySelector( '#Options' );
 HIGH_SCORE = document.querySelector( '#HighScore' );
 HELP = document.querySelector( '#Help' );
-};
 
-
-MainMenu.open = function()
-{
-clearCanvas();
-
+    // initialize the main menu elements
 var startGame = MAIN_MENU.querySelector( '#MainMenu-startGame' );
 var startGame_2players = MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
+var selectMap = document.getElementById( 'MainMenu-selectMap' );
 var options = MAIN_MENU.querySelector( '#MainMenu-options' );
 var highScore = MAIN_MENU.querySelector( '#MainMenu-highScore' );
 var help = MAIN_MENU.querySelector( '#MainMenu-help' );
 
-
 startGame.onclick = function()
     {
-    MainMenu.startGame();
+    Game.start( MAP_SELECTED.getAttribute( 'data-map' ), false );
     };
 
 startGame_2players.onclick = function()
     {
-    MainMenu.startGame( true );
+    Game.start( MAP_SELECTED.getAttribute( 'data-map' ), true );
     };
+
+var selectMapListener = function( event )
+    {
+    var element = event.srcElement;
+
+        // remove previous selection
+    if ( MAP_SELECTED )
+        {
+        MAP_SELECTED.classList.remove( 'mapSelected' );
+        }
+
+    element.classList.add( 'mapSelected' );
+    MAP_SELECTED = element;
+    };
+selectMap.onclick = selectMapListener;
+
+    // start with the first element selected
+selectMapListener({ srcElement: selectMap.firstElementChild });
 
 options.onclick = function()
     {
@@ -54,17 +68,17 @@ help.onclick = function()
     {
     MainMenu.help();
     };
+};
+
+
+MainMenu.open = function()
+{
+clearCanvas();
 
 $( MAIN_MENU ).css( 'display', 'block' );
 
 SELECTED = MAIN_MENU;
 MainMenu.reCenter();
-};
-
-
-MainMenu.startGame = function( twoPlayers )
-{
-Game.start( twoPlayers );
 };
 
 

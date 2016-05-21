@@ -19,9 +19,9 @@ var TIME_BETWEEN_TICKS = [ 50, 35 ];
 var TIMER;
 
 
-Game.start = function( twoPlayersMode )
+Game.start = function( mapName, twoPlayersMode )
 {
-if ( typeof twoPlayersMode == 'undefined')
+if ( typeof twoPlayersMode == 'undefined' )
     {
     twoPlayersMode = false;
     }
