@@ -5,6 +5,7 @@
     "exclude": [
         "build",
         "libraries",
-        "release"
+        "release",
+        "typings"
     ]
 }

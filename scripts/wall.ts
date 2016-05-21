@@ -1,99 +1,96 @@
-/*global createjs, STAGE*/
-
-(function(window)
+class Wall
 {
-var ALL_WALLS = [];
+static ALL_WALLS = [];
+
+width: number;
+height: number;
+shape: createjs.Shape;
 
 
-function Wall( x, y, width, height )
-{
-this.width = width;
-this.height = height;
+constructor( x: number, y: number, width: number, height: number )
+    {
+    this.width = width;
+    this.height = height;
 
-this.draw( x, y, width, height );
+    this.draw( x, y, width, height );
 
-ALL_WALLS.push( this );
-}
+    Wall.ALL_WALLS.push( this );
+    }
 
 
-Wall.prototype.draw = function( x, y, width, height )
-{
-var wall = new createjs.Shape();
+draw( x: number, y: number, width: number, height: number )
+    {
+    var wall = new createjs.Shape();
 
-wall.regX = width / 2;
-wall.regY = height / 2;
+    wall.regX = width / 2;
+    wall.regY = height / 2;
 
-wall.x = x;
-wall.y = y;
+    wall.x = x;
+    wall.y = y;
 
-var g = wall.graphics;
+    var g = wall.graphics;
 
-g.beginFill( 'white' );
-g.drawRoundRect( 0, 0, width, height, 2 );
+    g.beginFill( 'white' );
+    g.drawRoundRect( 0, 0, width, height, 2 );
 
-STAGE.addChild( wall );
+    STAGE.addChild( wall );
 
-this.shape = wall;
-};
+    this.shape = wall;
+    }
 
 
 /*
     Change the shape's color to red, to signal that the wall as been hit
  */
-Wall.prototype.asBeenHit = function()
-{
-var g = this.shape.graphics;
-
-g.beginFill( 'red' );
-g.drawRoundRect( 0, 0, this.width, this.height, 2 );
-};
-
-
-Wall.prototype.getX = function()
-{
-return this.shape.x;
-};
-
-
-Wall.prototype.getY = function()
-{
-return this.shape.y;
-};
-
-
-Wall.prototype.getWidth = function()
-{
-return this.width;
-};
-
-
-Wall.prototype.getHeight = function()
-{
-return this.height;
-};
-
-
-Wall.prototype.remove = function()
-{
-var position = ALL_WALLS.indexOf( this );
-
-ALL_WALLS.splice( position, 1 );
-
-STAGE.removeChild( this.shape );
-};
-
-
-Wall.removeAll = function()
-{
-for (var i = 0 ; i < ALL_WALLS.length ; i++)
+asBeenHit()
     {
-    ALL_WALLS[ i ].remove();
-    i--;    // since we're messing around with the ALL_FOOD array
+    var g = this.shape.graphics;
+
+    g.beginFill( 'red' );
+    g.drawRoundRect( 0, 0, this.width, this.height, 2 );
     }
-};
 
 
-window.Wall = Wall;
-window.ALL_WALLS = ALL_WALLS;
+getX()
+    {
+    return this.shape.x;
+    }
 
-}(window));
+
+getY()
+    {
+    return this.shape.y;
+    }
+
+
+getWidth()
+    {
+    return this.width;
+    }
+
+
+getHeight()
+    {
+    return this.height;
+    }
+
+
+remove()
+    {
+    var position = Wall.ALL_WALLS.indexOf( this );
+
+    Wall.ALL_WALLS.splice( position, 1 );
+
+    STAGE.removeChild( this.shape );
+    }
+
+
+static removeAll()
+    {
+    for (var i = 0 ; i < Wall.ALL_WALLS.length ; i++)
+        {
+        Wall.ALL_WALLS[ i ].remove();
+        i--;    // since we're messing around with the ALL_FOOD array
+        }
+    }
+}

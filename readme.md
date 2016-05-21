@@ -18,8 +18,11 @@ You can only control the next direction to turn, can't reverse the snake's direc
 In the options menu, you can change the difficulty of the game by changing some parameters, like the canvas width/height, whether there's a frame around the canvas, and the the spawn timings.
 
 
-Libraries
-=========
+Dependencies
+============
+
+- typescript -- 1.8
+- typings -- 1.0
 
 - jquery -- 2.2
 - jquery-ui -- 1.11

@@ -1,36 +1,39 @@
-(function(window)
+class Interval
 {
-function Interval( what_to_call, interval_time )
-{
-this.what_to_call = what_to_call;
-this.interval_time = interval_time;
-this.is_on = false;
+private what_to_call: () => any;
+private interval_time: number;
+private is_on: boolean;
+private interval_id: number;
 
-this.start();
+
+constructor( what_to_call: () => any, interval_time: number )
+    {
+    this.what_to_call = what_to_call;
+    this.interval_time = interval_time;
+    this.is_on = false;
+
+    this.start();
+    }
+
+
+start()
+    {
+    this.interval_id = window.setInterval( this.what_to_call, this.interval_time );
+
+    this.is_on = true;
+    }
+
+
+stop()
+    {
+    window.clearInterval( this.interval_id );
+
+    this.is_on = false;
+    }
+
+
+isOn()
+    {
+    return this.is_on;
+    }
 }
-
-
-Interval.prototype.start = function()
-{
-this.interval_id = window.setInterval( this.what_to_call, this.interval_time );
-
-this.is_on = true;
-};
-
-
-Interval.prototype.stop = function()
-{
-window.clearInterval( this.interval_id );
-
-this.is_on = false;
-};
-
-
-Interval.prototype.isOn = function()
-{
-return this.is_on;
-};
-
-
-window.Interval = Interval;
-}(window));

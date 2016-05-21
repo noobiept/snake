@@ -1,50 +1,51 @@
-/*global centerElement*/
+interface MessageArgs
+    {
+    text: string;
+    x?: number;
+    y?: number;
+    cssClass: string;
+    }
 
-(function(window)
+
+class Message
 {
-/*
-    Argument:
+message: HTMLDivElement;
+
+
+constructor( stuff: MessageArgs )
+    {
+    var message = <HTMLDivElement> document.querySelector( '#Message' );
+    $( message ).html( stuff.text );
+
+    if ( typeof stuff.x == 'undefined' )
         {
-            text: string,
-            x: number,
-            y: number,
-            cssClass: string
+        centerElement( message );
         }
- */
 
-function Message( stuff )
-{
-var message = document.querySelector( '#Message' );
-$( message ).html( stuff.text );
+    else
+        {
+        $( message ).css( 'left', stuff.x + 'px' );
+        $( message ).css( 'top', stuff.y + 'px' );
+        }
 
-if ( typeof stuff.x == 'undefined' )
-    {
-    centerElement( message );
+    if ( typeof stuff.cssClass != 'undefined' )
+        {
+        $( message ).addClass( stuff.cssClass );
+        }
+
+    $( message ).css( 'display', 'block' );
+
+    this.message = message;
     }
 
-else
+
+remove()
     {
-    $( message ).css( 'left', stuff.x + 'px' );
-    $( message ).css( 'top', stuff.y + 'px' );
+    $( this.message ).css( 'display', 'none' );
+    $( this.message ).removeClass();
     }
-
-if ( typeof stuff.cssClass != 'undefined' )
-    {
-    $( message ).addClass( stuff.cssClass );
-    }
-
-$( message ).css( 'display', 'block' );
-
-this.message = message;
 }
 
 
-Message.prototype.remove = function()
-{
-$( this.message ).css( 'display', 'none' );
-$( this.message ).removeClass();
-};
 
 
-window.Message = Message;
-}(window));

@@ -88,16 +88,11 @@ Game.reCenterGameMenu();
 
 window.onkeydown = function( event )
 {
-if ( !event )
-    {
-    event = window.event;
-    }
-
 var returnValue;
 
-for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
     {
-    returnValue = ALL_SNAKES[ i ].onKeyDown( event.keyCode );
+    returnValue = Snake.ALL_SNAKES[ i ].onKeyDown( event.keyCode );
 
     if ( !returnValue )
         {
@@ -111,16 +106,11 @@ return true;
 
 window.onkeyup = function( event )
 {
-if ( !event )
-    {
-    event = window.event;
-    }
-
 var returnValue;
 
-for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
     {
-    returnValue = ALL_SNAKES[ i ].onKeyUp( event.keyCode );
+    returnValue = Snake.ALL_SNAKES[ i ].onKeyUp( event.keyCode );
 
     if ( !returnValue )
         {
@@ -262,9 +252,9 @@ if ( event.paused )
 
 var snakeObject;
 
-for (var i = 0 ; i < ALL_SNAKES.length ; i++)
+for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
     {
-    snakeObject = ALL_SNAKES[ i ];
+    snakeObject = Snake.ALL_SNAKES[ i ];
 
     movement_tick( snakeObject );
 

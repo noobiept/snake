@@ -1,9 +1,5 @@
-/*global AppStorage, CANVAS, centerCanvas*/
-
-var Options;
-(function (Options) {
-
-
+module Options
+{
 var DIFFICULTY = {
     normal: 0,
     hard: 1
@@ -19,105 +15,103 @@ var OPTIONS = {
     };
 
 
-Options.load = function( options )
-{
-if ( options )
+export function load( options )
     {
-    if ( $.isNumeric( options.canvas_width ) )
+    if ( options )
         {
-        OPTIONS.canvas_width = options.canvas_width;
-        }
+        if ( $.isNumeric( options.canvas_width ) )
+            {
+            OPTIONS.canvas_width = options.canvas_width;
+            }
 
-    if ( $.isNumeric( options.canvas_height ) )
-        {
-        OPTIONS.canvas_height = options.canvas_height;
-        }
+        if ( $.isNumeric( options.canvas_height ) )
+            {
+            OPTIONS.canvas_height = options.canvas_height;
+            }
 
-    if ( typeof options.frameOn !== 'undefined' )
-        {
-        OPTIONS.frameOn = options.frameOn;
-        }
+        if ( typeof options.frameOn !== 'undefined' )
+            {
+            OPTIONS.frameOn = options.frameOn;
+            }
 
-    if ( typeof options.difficulty !== 'undefined' )
-        {
-        OPTIONS.difficulty = options.difficulty;
+        if ( typeof options.difficulty !== 'undefined' )
+            {
+            OPTIONS.difficulty = options.difficulty;
+            }
         }
     }
-};
 
 
-Options.save = function()
-{
-AppStorage.setData({ snake_options: OPTIONS });
-};
+export function save()
+    {
+    AppStorage.setData({ snake_options: OPTIONS });
+    }
 
 
-Options.setDifficulty = function( difficulty )
-{
-OPTIONS.difficulty = difficulty;
-};
+export function setDifficulty( difficulty )
+    {
+    OPTIONS.difficulty = difficulty;
+    }
 
 
-Options.getDifficulty = function()
-{
-return OPTIONS.difficulty;
-};
+export function getDifficulty()
+    {
+    return OPTIONS.difficulty;
+    }
 
 
-Options.setDifficultyString = function( stringValue )
-{
-Options.setDifficulty( DIFFICULTY_STRING.indexOf( stringValue ) );
-};
+export function setDifficultyString( stringValue )
+    {
+    Options.setDifficulty( DIFFICULTY_STRING.indexOf( stringValue ) );
+    }
 
 
-Options.getDifficultyString = function()
-{
-return DIFFICULTY_STRING[ OPTIONS.difficulty ];
-};
+export function getDifficultyString()
+    {
+    return DIFFICULTY_STRING[ OPTIONS.difficulty ];
+    }
 
 
-Options.setCanvasWidth = function( width )
-{
-OPTIONS.canvas_width = width;
+export function setCanvasWidth( width: number )
+    {
+    OPTIONS.canvas_width = width;
 
-CANVAS.width = width;
+    CANVAS.width = width;
 
-centerCanvas();
-};
-
-
-Options.getCanvasWidth = function()
-{
-return OPTIONS.canvas_width;
-};
+    centerCanvas();
+    }
 
 
-Options.setCanvasHeight = function( height )
-{
-OPTIONS.canvas_height = height;
-
-CANVAS.height = height;
-
-centerCanvas();
-};
+export function getCanvasWidth()
+    {
+    return OPTIONS.canvas_width;
+    }
 
 
-Options.getCanvasHeight = function()
-{
-return OPTIONS.canvas_height;
-};
+export function setCanvasHeight( height: number )
+    {
+    OPTIONS.canvas_height = height;
+
+    CANVAS.height = height;
+
+    centerCanvas();
+    }
 
 
-Options.setFrame = function( yesNo )
-{
-OPTIONS.frameOn = yesNo;
-};
+export function getCanvasHeight()
+    {
+    return OPTIONS.canvas_height;
+    }
 
 
-Options.getFrame = function()
-{
-return OPTIONS.frameOn;
-};
+export function setFrame( yesNo: boolean )
+    {
+    OPTIONS.frameOn = yesNo;
+    }
 
 
-})(Options || (Options = {}));
+export function getFrame()
+    {
+    return OPTIONS.frameOn;
+    }
+}

@@ -1,10 +1,6 @@
-/*global Options, CANVAS*/
-/*exported EVENT_KEY, isNextTo, checkCollision, getRandomInt, getRandomFloat, checkOverflowPosition, centerElement, INHERIT_PROTOTYPE, boolToOnOff*/
-
 /*
  * Keys code for the keyboard events
  */
-
 var EVENT_KEY = {
 
     backspace  : 8,
@@ -171,32 +167,6 @@ $( element ).css({
     top  : top  + 'px',
     left : left + 'px'
     });
-}
-
-
-/*
- * Used for 'class' inheritance (search prototypal inheritance)
- */
-function OBJECT( o )
-{
-function F(){}
-
-F.prototype = o;
-
-return new F();
-}
-
-
-/*
- * Used for 'class' inheritance (search for parasitic combination inheritance)
- */
-function INHERIT_PROTOTYPE( derivedClass, baseClass )
-{
-var prototype = OBJECT( baseClass.prototype );
-
-prototype.constructor = derivedClass;
-
-derivedClass.prototype = prototype;
 }
 
 

@@ -1,255 +1,258 @@
-/*global DIR, ELEMENTS_TYPE, createjs, STAGE, Options*/
-
-(function(window)
+class Tail
 {
-var TAIL_WIDTH = 10;    // width and height need to be the same value
-var TAIL_HEIGHT = TAIL_WIDTH;
+static TAIL_WIDTH = 10;    // width and height need to be the same value
+static TAIL_HEIGHT = Tail.TAIL_WIDTH;
+
+snakeObject: Snake;
+type;//HERE
+path;//HERE
+direction;//HERE
+shape: createjs.Shape;
+width: number;
+height: number;
 
 
-function Tail( snakeObject )
-{
-this.snakeObject = snakeObject;
-
-var numberOfTails = snakeObject.getNumberOfTails();
-var x, y;
-var path = [];
-var direction;
-
-    // first tail being added, add at the same position as the container (the x/y of the tail is relative to the snake)
-if ( numberOfTails == 0 )
+constructor( snakeObject: Snake )
     {
-    x = 0;
-    y = 0;
-    direction = snakeObject.starting_direction;
+    this.snakeObject = snakeObject;
+
+    var numberOfTails = snakeObject.getNumberOfTails();
+    var x, y;
+    var path = [];
+    var direction;
+
+        // first tail being added, add at the same position as the container (the x/y of the tail is relative to the snake)
+    if ( numberOfTails == 0 )
+        {
+        x = 0;
+        y = 0;
+        direction = snakeObject.starting_direction;
+        }
+
+        // we position after the last tail, and it depends on what direction it is going
+    else
+        {
+        var lastTail = snakeObject.getTail( numberOfTails - 1 );
+        var lastDirection = lastTail.direction;
+
+        if ( lastDirection == DIR.left )
+            {
+            x = lastTail.getX() + Tail.TAIL_WIDTH;
+            y = lastTail.getY();
+            }
+
+        else if ( lastDirection == DIR.right )
+            {
+            x = lastTail.getX() - Tail.TAIL_WIDTH;
+            y = lastTail.getY();
+            }
+
+        else if ( lastDirection == DIR.up )
+            {
+            x = lastTail.getX();
+            y = lastTail.getY() + Tail.TAIL_HEIGHT;
+            }
+
+        else if ( lastDirection == DIR.down )
+            {
+            x = lastTail.getX();
+            y = lastTail.getY() - Tail.TAIL_HEIGHT;
+            }
+
+            // this tail continues the same path as the previous last one
+            // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
+        var pathJson = JSON.stringify( lastTail.path );
+        path = JSON.parse( pathJson );
+
+        direction = lastTail.direction;
+        }
+
+        // draw it, and setup the physics body
+    this.draw( x, y );
+
+    this.type = ELEMENTS_TYPE.tail;
+    this.path = path;
+    this.direction = direction;
     }
 
-    // we position after the last tail, and it depends on what direction it is going
-else
+
+draw( x: number, y: number )
     {
-    var lastTail = snakeObject.getTail( numberOfTails - 1 );
-    var lastDirection = lastTail.direction;
+        // createjs
+    var snakeTail = new createjs.Shape();
 
-    if ( lastDirection == DIR.left )
-        {
-        x = lastTail.getX() + TAIL_WIDTH;
-        y = lastTail.getY();
-        }
+    snakeTail.regX = Tail.TAIL_WIDTH / 2;
+    snakeTail.regY = Tail.TAIL_HEIGHT / 2;
 
-    else if ( lastDirection == DIR.right )
-        {
-        x = lastTail.getX() - TAIL_WIDTH;
-        y = lastTail.getY();
-        }
+    snakeTail.x = x;
+    snakeTail.y = y;
 
-    else if ( lastDirection == DIR.up )
-        {
-        x = lastTail.getX();
-        y = lastTail.getY() + TAIL_HEIGHT;
-        }
+    var g = snakeTail.graphics;
 
-    else if ( lastDirection == DIR.down )
-        {
-        x = lastTail.getX();
-        y = lastTail.getY() - TAIL_HEIGHT;
-        }
+    g.beginFill( this.snakeObject.color );
+    g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
 
-        // this tail continues the same path as the previous last one
-        // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
-    var pathJson = JSON.stringify( lastTail.path );
-    path = JSON.parse( pathJson );
+    STAGE.addChild( snakeTail );
 
-    direction = lastTail.direction;
+        // set the properties to the object
+    this.shape = snakeTail;
+
+    this.width = Tail.TAIL_WIDTH;
+    this.height = Tail.TAIL_HEIGHT;
     }
-
-    // draw it, and setup the physics body
-this.draw( x, y );
-
-this.type = ELEMENTS_TYPE.tail;
-this.path = path;
-this.direction = direction;
-}
-
-
-Tail.prototype.draw = function( x, y )
-{
-    // createjs
-var snakeTail = new createjs.Shape();
-
-snakeTail.regX = TAIL_WIDTH / 2;
-snakeTail.regY = TAIL_HEIGHT / 2;
-
-snakeTail.x = x;
-snakeTail.y = y;
-
-var g = snakeTail.graphics;
-
-g.beginFill( this.snakeObject.color );
-g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
-
-STAGE.addChild( snakeTail );
-
-    // set the properties to the object
-this.shape = snakeTail;
-
-this.width = TAIL_WIDTH;
-this.height = TAIL_HEIGHT;
-};
 
 
 /*
     Change the shape's color to red, to signal that the tail as been hit
  */
-Tail.prototype.asBeenHit = function()
-{
-var g = this.shape.graphics;
+asBeenHit()
+    {
+    var g = this.shape.graphics;
 
-g.beginFill( 'red' );
-g.drawRoundRect( 0, 0, TAIL_WIDTH, TAIL_HEIGHT, 2 );
-};
+    g.beginFill( 'red' );
+    g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
+    }
 
 
-Tail.prototype.remove = function()
-{
-STAGE.removeChild( this.shape );
-};
+remove()
+    {
+    STAGE.removeChild( this.shape );
+    }
 
 
 /*
     position on the canvas
  */
-Tail.prototype.position = function( x, y )
-{
-return this.move( x, y, 0, 0 );
-};
+position( x: number, y: number )
+    {
+    return this.move( x, y, 0, 0 );
+    }
 
 
 /*
     move in relation to the current position (or a position given)
  */
-Tail.prototype.move = function( x, y, startX, startY )
-{
-var canvasWidth = Options.getCanvasWidth();
-var canvasHeight = Options.getCanvasHeight();
-
-if ( typeof x == 'undefined' )
+move( x: number, y?: number, startX?: number, startY?: number )
     {
-    x = 0;
+    var canvasWidth = Options.getCanvasWidth();
+    var canvasHeight = Options.getCanvasHeight();
+
+    if ( typeof x == 'undefined' )
+        {
+        x = 0;
+        }
+
+    if ( typeof y == 'undefined' )
+        {
+        y = 0;
+        }
+
+    if ( typeof startX == 'undefined' )
+        {
+        startX = this.getX();
+        }
+
+    if ( typeof startY == 'undefined' )
+        {
+        startY = this.getY();
+        }
+
+    var nextX = startX + x;
+    var nextY = startY + y;
+
+        // see if outside of canvas (if so, move to the other side)
+    if ( nextX < 0 )
+        {
+        nextX = canvasWidth;
+        }
+
+    else if ( nextX > canvasWidth )
+        {
+        nextX = 0;
+        }
+
+
+    if ( nextY < 0 )
+        {
+        nextY = canvasHeight;
+        }
+
+    else if ( nextY > canvasHeight )
+        {
+        nextY = 0;
+        }
+
+    this.shape.x = nextX;
+    this.shape.y = nextY;
     }
 
-if ( typeof y == 'undefined' )
-    {
-    y = 0;
-    }
 
-if ( typeof startX == 'undefined' )
+getX()
     {
-    startX = this.getX();
-    }
-
-if ( typeof startY == 'undefined' )
-    {
-    startY = this.getY();
-    }
-
-var nextX = startX + x;
-var nextY = startY + y;
-
-    // see if outside of canvas (if so, move to the other side)
-if ( nextX < 0 )
-    {
-    nextX = canvasWidth;
-    }
-
-else if ( nextX > canvasWidth )
-    {
-    nextX = 0;
+    return this.shape.x;
     }
 
 
-if ( nextY < 0 )
+getY()
     {
-    nextY = canvasHeight;
+    return this.shape.y;
     }
 
-else if ( nextY > canvasHeight )
+
+getWidth()
     {
-    nextY = 0;
+    return this.width;
     }
 
-this.shape.x = nextX;
-this.shape.y = nextY;
-};
+
+getHeight()
+    {
+    return this.height;
+    }
 
 
-Tail.prototype.getX = function()
-{
-return this.shape.x;
-};
-
-
-Tail.prototype.getY = function()
-{
-return this.shape.y;
-};
-
-
-Tail.prototype.getWidth = function()
-{
-return this.width;
-};
-
-
-Tail.prototype.getHeight = function()
-{
-return this.height;
-};
-
-
-Tail.prototype.getType = function()
-{
-return this.type;
-};
+getType()
+    {
+    return this.type;
+    }
 
 
 /*
     Move in the current direction
  */
-Tail.prototype.moveInDirection = function()
-{
-    // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
-var speed = TAIL_WIDTH;
-var direction = this.direction;
-
-    // when moving diagonally (45 degrees), we have to slow down the x and y
-    // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
-    // sin(angle) = opposite / hypotenuse
-    // cos(angle) = adjacent / hypotenuse
-
-    // x = cos( pi / 4 ) -> 0.707
-    // y = sin( pi / 4 ) -> 0.707
-
-    // here we're only moving through 'x' or 'y', so just need 'speed'
-if ( direction == DIR.left )
+moveInDirection()
     {
-    this.move( -speed );
+        // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
+    var speed = Tail.TAIL_WIDTH;
+    var direction = this.direction;
+
+        // when moving diagonally (45 degrees), we have to slow down the x and y
+        // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
+        // sin(angle) = opposite / hypotenuse
+        // cos(angle) = adjacent / hypotenuse
+
+        // x = cos( pi / 4 ) -> 0.707
+        // y = sin( pi / 4 ) -> 0.707
+
+        // here we're only moving through 'x' or 'y', so just need 'speed'
+    if ( direction == DIR.left )
+        {
+        this.move( -speed );
+        }
+
+    else if ( direction == DIR.right )
+        {
+        this.move( speed );
+        }
+
+    else if ( direction == DIR.up )
+        {
+        this.move( 0, -speed );
+        }
+
+    else if ( direction == DIR.down )
+        {
+        this.move( 0, speed );
+        }
     }
-
-else if ( direction == DIR.right )
-    {
-    this.move( speed );
-    }
-
-else if ( direction == DIR.up )
-    {
-    this.move( 0, -speed );
-    }
-
-else if ( direction == DIR.down )
-    {
-    this.move( 0, speed );
-    }
-};
-
-
-window.Tail = Tail;
-}(window));
+}
