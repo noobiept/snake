@@ -1,0 +1,8 @@
+{
+  "globalDependencies": {
+    "easeljs": "registry:dt/easeljs#0.8.0+20160326124359",
+    "jquery": "registry:dt/jquery#1.10.0+20160417213236",
+    "jqueryui": "registry:dt/jqueryui#1.9.0+20160509160024",
+    "preloadjs": "registry:dt/preloadjs#0.6.0+20160317120654"
+  }
+}
