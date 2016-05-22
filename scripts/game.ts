@@ -14,6 +14,7 @@ var WALL_TIMINGS = [ 4000, 3000 ];
 var TIME_BETWEEN_TICKS = [ 50, 35 ];
 var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
+var MAP_NAME: MapName;
 
 
 export function start( mapName: MapName, twoPlayersMode?: boolean )
@@ -24,6 +25,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean )
         }
 
     TWO_PLAYER_MODE = twoPlayersMode;
+    MAP_NAME = mapName;
 
     clearCanvas();
 
@@ -469,7 +471,7 @@ export function over( whoWon?: number )
         clear();
 
         message.remove();
-        MainMenu.open();
+        start( MAP_NAME, TWO_PLAYER_MODE );
         resume();
 
         }, 2000 );

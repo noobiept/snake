@@ -12,11 +12,13 @@ var Game;
     var TIME_BETWEEN_TICKS = [50, 35];
     var TIMER;
     var TWO_PLAYER_MODE = false;
+    var MAP_NAME;
     function start(mapName, twoPlayersMode) {
         if (typeof twoPlayersMode == 'undefined') {
             twoPlayersMode = false;
         }
         TWO_PLAYER_MODE = twoPlayersMode;
+        MAP_NAME = mapName;
         clearCanvas();
         var difficulty = Options.getDifficulty();
         var canvasWidth = Options.getCanvasWidth();
@@ -325,7 +327,7 @@ var Game;
             HighScore.save();
             clear();
             message.remove();
-            MainMenu.open();
+            start(MAP_NAME, TWO_PLAYER_MODE);
             resume();
         }, 2000);
     }
