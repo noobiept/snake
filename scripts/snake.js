@@ -26,7 +26,7 @@ var Snake = (function () {
         // add a starting tail
         this.first_tail = this.addTail();
         this.first_tail.position(args.x, args.y);
-        this.first_tail.type = ELEMENTS_TYPE.snake; // the first tail represents the head of the snake, so it has a different type
+        this.first_tail.type = ElementsType.snake; // the first tail represents the head of the snake, so it has a different type
         Snake.ALL_SNAKES.push(this);
     }
     Snake.removeAll = function () {
@@ -71,10 +71,10 @@ var Snake = (function () {
             return;
         }
         // don't allow to go to the opposing direction
-        if ((currentDirection == DIR.left && newDirection == DIR.right) ||
-            (currentDirection == DIR.right && newDirection == DIR.left) ||
-            (currentDirection == DIR.up && newDirection == DIR.down) ||
-            (currentDirection == DIR.down && newDirection == DIR.up)) {
+        if ((currentDirection == Direction.left && newDirection == Direction.right) ||
+            (currentDirection == Direction.right && newDirection == Direction.left) ||
+            (currentDirection == Direction.up && newDirection == Direction.down) ||
+            (currentDirection == Direction.down && newDirection == Direction.up)) {
             return;
         }
         var x = this.getX();

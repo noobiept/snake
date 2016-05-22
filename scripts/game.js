@@ -28,7 +28,7 @@ var Game;
             new Snake({
                 x: 50,
                 y: canvasHeight / 2,
-                startingDirection: DIR.right,
+                startingDirection: Direction.right,
                 color: 'green',
                 keyboardMapping: {
                     left: EVENT_KEY.a,
@@ -41,7 +41,7 @@ var Game;
             new Snake({
                 x: canvasWidth - 50,
                 y: canvasHeight / 2,
-                startingDirection: DIR.left,
+                startingDirection: Direction.left,
                 color: 'dodgerblue',
                 keyboardMapping: {
                     left: EVENT_KEY.leftArrow,
@@ -56,7 +56,7 @@ var Game;
             new Snake({
                 x: 50,
                 y: canvasHeight / 2,
-                startingDirection: DIR.right,
+                startingDirection: Direction.right,
                 color: 'green',
                 keyboardMapping: {
                     left: EVENT_KEY.a,

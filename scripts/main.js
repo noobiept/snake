@@ -4,16 +4,18 @@ var STAGE;
 // program stuff
 var CANVAS;
 // the elements type in the game (useful to identify objects, call .getType() )
-var ELEMENTS_TYPE = {
-    tail: 0,
-    snake: 1
-};
-var DIR = {
-    left: 0,
-    right: 1,
-    up: 2,
-    down: 3
-};
+var ElementsType;
+(function (ElementsType) {
+    ElementsType[ElementsType["tail"] = 0] = "tail";
+    ElementsType[ElementsType["snake"] = 1] = "snake";
+})(ElementsType || (ElementsType = {}));
+var Direction;
+(function (Direction) {
+    Direction[Direction["left"] = 0] = "left";
+    Direction[Direction["right"] = 1] = "right";
+    Direction[Direction["up"] = 2] = "up";
+    Direction[Direction["down"] = 3] = "down";
+})(Direction || (Direction = {}));
 // in the server template, we'll change this to the static path plus the game name (otherwise any static content won't load (wrong url)). something like /static/snake/
 var BASE_URL = '';
 // used to access preloaded assets (images/etc)
@@ -103,51 +105,51 @@ function movement_tick(snakeObject) {
     var direction = snakeObject.getDirection();
     if (keysHeld.left) {
         if (keysHeld.down) {
-            if (direction == DIR.left || direction == DIR.right) {
-                snakeObject.changeDirection(DIR.down);
+            if (direction == Direction.left || direction == Direction.right) {
+                snakeObject.changeDirection(Direction.down);
             }
-            else if (direction == DIR.down || direction == DIR.up) {
-                snakeObject.changeDirection(DIR.left);
+            else if (direction == Direction.down || direction == Direction.up) {
+                snakeObject.changeDirection(Direction.left);
             }
         }
         else if (keysHeld.up) {
-            if (direction == DIR.left || direction == DIR.right) {
-                snakeObject.changeDirection(DIR.up);
+            if (direction == Direction.left || direction == Direction.right) {
+                snakeObject.changeDirection(Direction.up);
             }
-            else if (direction == DIR.up || direction == DIR.down) {
-                snakeObject.changeDirection(DIR.left);
+            else if (direction == Direction.up || direction == Direction.down) {
+                snakeObject.changeDirection(Direction.left);
             }
         }
         else {
-            snakeObject.changeDirection(DIR.left);
+            snakeObject.changeDirection(Direction.left);
         }
     }
     else if (keysHeld.right) {
         if (keysHeld.down) {
-            if (direction == DIR.right || direction == DIR.left) {
-                snakeObject.changeDirection(DIR.down);
+            if (direction == Direction.right || direction == Direction.left) {
+                snakeObject.changeDirection(Direction.down);
             }
-            else if (direction == DIR.down || direction == DIR.up) {
-                snakeObject.changeDirection(DIR.right);
+            else if (direction == Direction.down || direction == Direction.up) {
+                snakeObject.changeDirection(Direction.right);
             }
         }
         else if (keysHeld.up) {
-            if (direction == DIR.right || direction == DIR.left) {
-                snakeObject.changeDirection(DIR.up);
+            if (direction == Direction.right || direction == Direction.left) {
+                snakeObject.changeDirection(Direction.up);
             }
-            else if (direction == DIR.up || direction == DIR.down) {
-                snakeObject.changeDirection(DIR.right);
+            else if (direction == Direction.up || direction == Direction.down) {
+                snakeObject.changeDirection(Direction.right);
             }
         }
         else {
-            snakeObject.changeDirection(DIR.right);
+            snakeObject.changeDirection(Direction.right);
         }
     }
     else if (keysHeld.up) {
-        snakeObject.changeDirection(DIR.up);
+        snakeObject.changeDirection(Direction.up);
     }
     else if (keysHeld.down) {
-        snakeObject.changeDirection(DIR.down);
+        snakeObject.changeDirection(Direction.down);
     }
 }
 function tick(event) {

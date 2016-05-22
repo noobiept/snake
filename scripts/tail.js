@@ -14,19 +14,19 @@ var Tail = (function () {
         else {
             var lastTail = snakeObject.getTail(numberOfTails - 1);
             var lastDirection = lastTail.direction;
-            if (lastDirection == DIR.left) {
+            if (lastDirection == Direction.left) {
                 x = lastTail.getX() + Tail.TAIL_WIDTH;
                 y = lastTail.getY();
             }
-            else if (lastDirection == DIR.right) {
+            else if (lastDirection == Direction.right) {
                 x = lastTail.getX() - Tail.TAIL_WIDTH;
                 y = lastTail.getY();
             }
-            else if (lastDirection == DIR.up) {
+            else if (lastDirection == Direction.up) {
                 x = lastTail.getX();
                 y = lastTail.getY() + Tail.TAIL_HEIGHT;
             }
-            else if (lastDirection == DIR.down) {
+            else if (lastDirection == Direction.down) {
                 x = lastTail.getX();
                 y = lastTail.getY() - Tail.TAIL_HEIGHT;
             }
@@ -38,7 +38,7 @@ var Tail = (function () {
         }
         // draw it, and setup the physics body
         this.draw(x, y);
-        this.type = ELEMENTS_TYPE.tail;
+        this.type = ElementsType.tail;
         this.path = path;
         this.direction = direction;
     }
@@ -140,16 +140,16 @@ var Tail = (function () {
         // x = cos( pi / 4 ) -> 0.707
         // y = sin( pi / 4 ) -> 0.707
         // here we're only moving through 'x' or 'y', so just need 'speed'
-        if (direction == DIR.left) {
+        if (direction == Direction.left) {
             this.move(-speed);
         }
-        else if (direction == DIR.right) {
+        else if (direction == Direction.right) {
             this.move(speed);
         }
-        else if (direction == DIR.up) {
+        else if (direction == Direction.up) {
             this.move(0, -speed);
         }
-        else if (direction == DIR.down) {
+        else if (direction == Direction.down) {
             this.move(0, speed);
         }
     };

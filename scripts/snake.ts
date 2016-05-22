@@ -2,9 +2,9 @@ interface SnakeArgs
     {
     x: number;
     y: number;
-    startingDirection; //HERE
-    color; //HERE
-    keyboardMapping; //HERE
+    startingDirection: Direction;
+    color: string;
+    keyboardMapping: KeyboardMapping;
     }
 
 
@@ -12,13 +12,13 @@ class Snake
 {
 static ALL_SNAKES = [];
 
-all_tails;  //HERE
-starting_direction; //HERE
-color; //HERE
+all_tails: Tail[];
+starting_direction: Direction;
+color: string;
 keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
-keyboard_mapping; //HERE
-first_tail; //HERE
-score_element; //HERE
+keyboard_mapping: KeyboardMapping;
+first_tail: Tail;
+score_element: HTMLElement;
 
 
 constructor( args: SnakeArgs )
@@ -43,7 +43,7 @@ constructor( args: SnakeArgs )
     this.first_tail = this.addTail();
 
     this.first_tail.position( args.x, args.y );
-    this.first_tail.type = ELEMENTS_TYPE.snake; // the first tail represents the head of the snake, so it has a different type
+    this.first_tail.type = ElementsType.snake; // the first tail represents the head of the snake, so it has a different type
 
     Snake.ALL_SNAKES.push( this );
     }
@@ -121,10 +121,10 @@ changeDirection( newDirection )
         }
 
         // don't allow to go to the opposing direction
-    if ( (currentDirection == DIR.left && newDirection == DIR.right) ||
-        (currentDirection == DIR.right && newDirection == DIR.left) ||
-        (currentDirection == DIR.up && newDirection == DIR.down) ||
-        (currentDirection == DIR.down && newDirection == DIR.up) )
+    if ( (currentDirection == Direction.left && newDirection == Direction.right) ||
+        (currentDirection == Direction.right && newDirection == Direction.left) ||
+        (currentDirection == Direction.up && newDirection == Direction.down) ||
+        (currentDirection == Direction.down && newDirection == Direction.up) )
         {
         return;
         }
@@ -175,7 +175,7 @@ getDirection()
 /*
     To display the number of tails, associate an html element, where we're changing the .text() whenever a tail is added
  */
-setScoreElement = function( scoreElement )
+setScoreElement = function( scoreElement: HTMLElement )
     {
     this.score_element = scoreElement;
 

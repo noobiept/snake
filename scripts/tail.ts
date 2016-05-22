@@ -4,9 +4,9 @@ static TAIL_WIDTH = 10;    // width and height need to be the same value
 static TAIL_HEIGHT = Tail.TAIL_WIDTH;
 
 snakeObject: Snake;
-type;//HERE
-path;//HERE
-direction;//HERE
+type: ElementsType;
+path: Path[];
+direction: Direction;
 shape: createjs.Shape;
 width: number;
 height: number;
@@ -35,25 +35,25 @@ constructor( snakeObject: Snake )
         var lastTail = snakeObject.getTail( numberOfTails - 1 );
         var lastDirection = lastTail.direction;
 
-        if ( lastDirection == DIR.left )
+        if ( lastDirection == Direction.left )
             {
             x = lastTail.getX() + Tail.TAIL_WIDTH;
             y = lastTail.getY();
             }
 
-        else if ( lastDirection == DIR.right )
+        else if ( lastDirection == Direction.right )
             {
             x = lastTail.getX() - Tail.TAIL_WIDTH;
             y = lastTail.getY();
             }
 
-        else if ( lastDirection == DIR.up )
+        else if ( lastDirection == Direction.up )
             {
             x = lastTail.getX();
             y = lastTail.getY() + Tail.TAIL_HEIGHT;
             }
 
-        else if ( lastDirection == DIR.down )
+        else if ( lastDirection == Direction.down )
             {
             x = lastTail.getX();
             y = lastTail.getY() - Tail.TAIL_HEIGHT;
@@ -70,7 +70,7 @@ constructor( snakeObject: Snake )
         // draw it, and setup the physics body
     this.draw( x, y );
 
-    this.type = ELEMENTS_TYPE.tail;
+    this.type = ElementsType.tail;
     this.path = path;
     this.direction = direction;
     }
@@ -235,22 +235,22 @@ moveInDirection()
         // y = sin( pi / 4 ) -> 0.707
 
         // here we're only moving through 'x' or 'y', so just need 'speed'
-    if ( direction == DIR.left )
+    if ( direction == Direction.left )
         {
         this.move( -speed );
         }
 
-    else if ( direction == DIR.right )
+    else if ( direction == Direction.right )
         {
         this.move( speed );
         }
 
-    else if ( direction == DIR.up )
+    else if ( direction == Direction.up )
         {
         this.move( 0, -speed );
         }
 
-    else if ( direction == DIR.down )
+    else if ( direction == Direction.down )
         {
         this.move( 0, speed );
         }

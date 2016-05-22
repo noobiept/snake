@@ -39,7 +39,7 @@ export function start( mapName: string, twoPlayersMode?: boolean )
         new Snake({
                 x : 50,
                 y : canvasHeight / 2,
-                startingDirection: DIR.right,
+                startingDirection: Direction.right,
                 color : 'green',
                 keyboardMapping : {
                     left  : EVENT_KEY.a,
@@ -53,7 +53,7 @@ export function start( mapName: string, twoPlayersMode?: boolean )
         new Snake({
                 x : canvasWidth - 50,
                 y : canvasHeight / 2,
-                startingDirection : DIR.left,
+                startingDirection : Direction.left,
                 color : 'dodgerblue',
                 keyboardMapping : {
                     left  : EVENT_KEY.leftArrow,
@@ -71,7 +71,7 @@ export function start( mapName: string, twoPlayersMode?: boolean )
         new Snake({
                 x : 50,
                 y : canvasHeight / 2,
-                startingDirection: DIR.right,
+                startingDirection: Direction.right,
                 color : 'green',
                 keyboardMapping : {
                     left   : EVENT_KEY.a,

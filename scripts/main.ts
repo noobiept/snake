@@ -7,17 +7,34 @@ var STAGE;
 var CANVAS;
 
     // the elements type in the game (useful to identify objects, call .getType() )
-var ELEMENTS_TYPE = {
-    tail: 0,
-    snake: 1
-    };
+enum ElementsType {
+    tail,
+    snake
+}
 
-var DIR = {
-    left: 0,
-    right: 1,
-    up: 2,
-    down: 3
-    };
+enum Direction {
+    left,
+    right,
+    up,
+    down
+}
+
+interface Path {
+    x: number;
+    y: number;
+    direction: Direction;
+}
+
+interface KeyboardMapping {
+    left: number;
+    left2?: number;
+    right: number;
+    right2?: number;
+    up: number;
+    up2?: number;
+    down: number;
+    down2?: number;
+}
 
     // in the server template, we'll change this to the static path plus the game name (otherwise any static content won't load (wrong url)). something like /static/snake/
 var BASE_URL = '';
@@ -167,33 +184,33 @@ if ( keysHeld.left )
     {
     if ( keysHeld.down )
         {
-        if ( direction == DIR.left || direction == DIR.right )
+        if ( direction == Direction.left || direction == Direction.right )
             {
-            snakeObject.changeDirection( DIR.down );
+            snakeObject.changeDirection( Direction.down );
             }
 
-        else if ( direction == DIR.down || direction == DIR.up )
+        else if ( direction == Direction.down || direction == Direction.up )
             {
-            snakeObject.changeDirection( DIR.left );
+            snakeObject.changeDirection( Direction.left );
             }
         }
 
     else if ( keysHeld.up )
         {
-        if ( direction == DIR.left || direction == DIR.right )
+        if ( direction == Direction.left || direction == Direction.right )
             {
-            snakeObject.changeDirection( DIR.up );
+            snakeObject.changeDirection( Direction.up );
             }
 
-        else if ( direction == DIR.up || direction == DIR.down )
+        else if ( direction == Direction.up || direction == Direction.down )
             {
-            snakeObject.changeDirection( DIR.left );
+            snakeObject.changeDirection( Direction.left );
             }
         }
 
     else
         {
-        snakeObject.changeDirection( DIR.left );
+        snakeObject.changeDirection( Direction.left );
         }
     }
 
@@ -201,44 +218,44 @@ else if ( keysHeld.right )
     {
     if ( keysHeld.down )
         {
-        if ( direction == DIR.right || direction == DIR.left )
+        if ( direction == Direction.right || direction == Direction.left )
             {
-            snakeObject.changeDirection( DIR.down );
+            snakeObject.changeDirection( Direction.down );
             }
 
-        else if ( direction == DIR.down || direction == DIR.up )
+        else if ( direction == Direction.down || direction == Direction.up )
             {
-            snakeObject.changeDirection( DIR.right );
+            snakeObject.changeDirection( Direction.right );
             }
         }
 
     else if ( keysHeld.up )
         {
-        if ( direction == DIR.right || direction == DIR.left )
+        if ( direction == Direction.right || direction == Direction.left )
             {
-            snakeObject.changeDirection( DIR.up );
+            snakeObject.changeDirection( Direction.up );
             }
 
-        else if ( direction == DIR.up || direction == DIR.down )
+        else if ( direction == Direction.up || direction == Direction.down )
             {
-            snakeObject.changeDirection( DIR.right );
+            snakeObject.changeDirection( Direction.right );
             }
         }
 
     else
         {
-        snakeObject.changeDirection( DIR.right );
+        snakeObject.changeDirection( Direction.right );
         }
     }
 
 else if ( keysHeld.up )
     {
-    snakeObject.changeDirection( DIR.up );
+    snakeObject.changeDirection( Direction.up );
     }
 
 else if ( keysHeld.down )
     {
-    snakeObject.changeDirection( DIR.down );
+    snakeObject.changeDirection( Direction.down );
     }
 }
 
