@@ -1,27 +1,27 @@
 module MainMenu
 {
-var MAIN_MENU;
-var OPTIONS;
-var HIGH_SCORE;
-var HELP;
-var SELECTED = null;
-var MAP_SELECTED = null;
+var MAIN_MENU: HTMLElement;
+var OPTIONS: HTMLElement;
+var HIGH_SCORE: HTMLElement;
+var HELP: HTMLElement;
+var SELECTED: HTMLElement = null;
+var MAP_SELECTED: HTMLElement = null;
 
 
 export function init()
     {
-    MAIN_MENU = document.querySelector( '#MainMenu' );
-    OPTIONS = document.querySelector( '#Options' );
-    HIGH_SCORE = document.querySelector( '#HighScore' );
-    HELP = document.querySelector( '#Help' );
+    MAIN_MENU = <HTMLElement> document.querySelector( '#MainMenu' );
+    OPTIONS = <HTMLElement> document.querySelector( '#Options' );
+    HIGH_SCORE = <HTMLElement> document.querySelector( '#HighScore' );
+    HELP = <HTMLElement> document.querySelector( '#Help' );
 
         // initialize the main menu elements
-    var startGame = MAIN_MENU.querySelector( '#MainMenu-startGame' );
-    var startGame_2players = MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
-    var selectMap = document.getElementById( 'MainMenu-selectMap' );
-    var options = MAIN_MENU.querySelector( '#MainMenu-options' );
-    var highScore = MAIN_MENU.querySelector( '#MainMenu-highScore' );
-    var help = MAIN_MENU.querySelector( '#MainMenu-help' );
+    var startGame = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-startGame' );
+    var startGame_2players = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
+    var selectMap = <HTMLElement> document.getElementById( 'MainMenu-selectMap' );
+    var options = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-options' );
+    var highScore = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-highScore' );
+    var help = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-help' );
 
     startGame.onclick = function()
         {
@@ -139,7 +139,7 @@ export function options()
 
         // :: frame :: //
 
-    var frame = OPTIONS.querySelector( '#Options-frame' );
+    var frame = <HTMLElement> OPTIONS.querySelector( '#Options-frame' );
     var frameValue = frame.querySelector( 'span' );
 
     $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
@@ -161,7 +161,7 @@ export function options()
 
         // :: difficulty :: //
 
-    var difficulty = OPTIONS.querySelector( '#Options-difficulty' );
+    var difficulty = <HTMLElement> OPTIONS.querySelector( '#Options-difficulty' );
     var difficultyValue = difficulty.querySelector( 'span' );
 
     $( difficultyValue ).text( Options.getDifficultyString() );
@@ -185,7 +185,7 @@ export function options()
 
         // :: back :: //
 
-    var back = OPTIONS.querySelector( '#Options-back' );
+    var back = <HTMLElement> OPTIONS.querySelector( '#Options-back' );
 
     back.onclick = function()
         {
@@ -273,7 +273,7 @@ export function highScore()
             }
         }
 
-    var back = HIGH_SCORE.querySelector( '#HighScore-back' );
+    var back = <HTMLElement> HIGH_SCORE.querySelector( '#HighScore-back' );
 
     back.onclick = function()
         {
@@ -329,7 +329,7 @@ export function help()
     y = wallPosition.top - canvasPosition.top + 10;
 
     var wall = new Wall( x, y, 20, 7 );
-    var back = HELP.querySelector( '#Help-back' );
+    var back = <HTMLElement> HELP.querySelector( '#Help-back' );
 
     back.onclick = function()
         {

@@ -13,7 +13,7 @@ draw( x: number, y: number )
     var width = this.width;
     var height = this.height;
 
-    var food = new createjs.Bitmap( PRELOAD.getResult( 'orange' ) );
+    var food = new createjs.Bitmap( <HTMLImageElement> PRELOAD.getResult( 'orange' ) );
 
     food.regX = width / 2;
     food.regY = height / 2;

@@ -16,8 +16,6 @@ var Direction;
     Direction[Direction["up"] = 2] = "up";
     Direction[Direction["down"] = 3] = "down";
 })(Direction || (Direction = {}));
-// in the server template, we'll change this to the static path plus the game name (otherwise any static content won't load (wrong url)). something like /static/snake/
-var BASE_URL = '';
 // used to access preloaded assets (images/etc)
 var PRELOAD;
 window.onload = function () {
@@ -39,8 +37,8 @@ function initApp(data) {
     // preload the images/etc used in the program
     PRELOAD = new createjs.LoadQueue(true);
     PRELOAD.loadManifest([
-        { id: 'orange', src: BASE_URL + 'images/orange_10px.png' },
-        { id: 'apple', src: BASE_URL + 'images/red_apple_10px.png' }
+        { id: 'orange', src: 'images/orange_10px.png' },
+        { id: 'apple', src: 'images/red_apple_10px.png' }
     ]);
     var callback;
     // on the first run of the program, show the help page

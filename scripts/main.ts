@@ -1,10 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 
     // createjs
-var STAGE;
+var STAGE: createjs.Stage;
 
     // program stuff
-var CANVAS;
+var CANVAS: HTMLCanvasElement;
 
     // the elements type in the game (useful to identify objects, call .getType() )
 enum ElementsType {
@@ -36,11 +36,8 @@ interface KeyboardMapping {
     down2?: number;
 }
 
-    // in the server template, we'll change this to the static path plus the game name (otherwise any static content won't load (wrong url)). something like /static/snake/
-var BASE_URL = '';
-
     // used to access preloaded assets (images/etc)
-var PRELOAD;
+var PRELOAD: createjs.LoadQueue;
 
 
 window.onload = function()
@@ -54,7 +51,7 @@ function initApp( data )
 Options.load( data[ 'snake_options' ] );
 
     // setup the canvas
-CANVAS = document.querySelector( '#mainCanvas' );
+CANVAS = <HTMLCanvasElement> document.querySelector( '#mainCanvas' );
 CANVAS.width = Options.getCanvasWidth();
 CANVAS.height = Options.getCanvasHeight();
 
@@ -73,8 +70,8 @@ MainMenu.init();
 PRELOAD = new createjs.LoadQueue( true );
 
 PRELOAD.loadManifest([
-    { id: 'orange', src: BASE_URL + 'images/orange_10px.png' },
-    { id: 'apple', src: BASE_URL + 'images/red_apple_10px.png' }
+    { id: 'orange', src: 'images/orange_10px.png' },
+    { id: 'apple', src: 'images/red_apple_10px.png' }
     ]);
 
 var callback;

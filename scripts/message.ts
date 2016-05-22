@@ -9,7 +9,7 @@ interface MessageArgs
 
 class Message
 {
-message: HTMLDivElement;
+private message: HTMLDivElement;
 
 
 constructor( stuff: MessageArgs )

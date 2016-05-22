@@ -1,10 +1,10 @@
 class Wall
 {
-static ALL_WALLS = [];
+static ALL_WALLS: Wall[] = [];
 
-width: number;
-height: number;
-shape: createjs.Shape;
+private width: number;
+private height: number;
+private shape: createjs.Shape;
 
 
 constructor( x: number, y: number, width: number, height: number )

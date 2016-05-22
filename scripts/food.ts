@@ -1,12 +1,12 @@
 class Food
 {
-static ALL_FOOD = [];
+static ALL_FOOD: Food[] = [];
 static FOOD_WIDTH = 10;
 static FOOD_HEIGHT = 10;
 
-width: number;
-height: number;
-shape: createjs.Bitmap;
+protected width: number;
+protected height: number;
+protected shape: createjs.Bitmap;
 
 
 constructor( x: number, y: number )
@@ -25,7 +25,7 @@ draw( x: number, y: number )
     var width = this.width;
     var height = this.height;
 
-    var food = new createjs.Bitmap( PRELOAD.getResult( 'apple' ) );
+    var food = new createjs.Bitmap( <HTMLImageElement> PRELOAD.getResult( 'apple' ) );
 
     food.regX = width / 2;
     food.regY = height / 2;

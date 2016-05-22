@@ -10,15 +10,16 @@ interface SnakeArgs
 
 class Snake
 {
-static ALL_SNAKES = [];
+static ALL_SNAKES: Snake[] = [];
 
-all_tails: Tail[];
 starting_direction: Direction;
 color: string;
-keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
-keyboard_mapping: KeyboardMapping;
-first_tail: Tail;
-score_element: HTMLElement;
+
+private all_tails: Tail[];
+private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
+private keyboard_mapping: KeyboardMapping;
+private first_tail: Tail;
+private score_element: HTMLElement;
 
 
 constructor( args: SnakeArgs )

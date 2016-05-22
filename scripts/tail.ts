@@ -3,13 +3,14 @@ class Tail
 static TAIL_WIDTH = 10;    // width and height need to be the same value
 static TAIL_HEIGHT = Tail.TAIL_WIDTH;
 
-snakeObject: Snake;
 type: ElementsType;
-path: Path[];
 direction: Direction;
-shape: createjs.Shape;
-width: number;
-height: number;
+
+private snakeObject: Snake;
+private path: Path[];
+private shape: createjs.Shape;
+private width: number;
+private height: number;
 
 
 constructor( snakeObject: Snake )

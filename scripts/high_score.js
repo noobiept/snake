@@ -1,4 +1,3 @@
-/*global AppStorage, Options, boolToOnOff*/
 var HighScore;
 (function (HighScore) {
     // has all the scores sorted descending order
@@ -8,18 +7,20 @@ var HighScore;
     /*
         Load from local storage
      */
-    HighScore.load = function (score) {
+    function load(score) {
         if (score) {
             HIGH_SCORE = score;
         }
-    };
+    }
+    HighScore.load = load;
     /*
         Save to local storage
      */
-    HighScore.save = function () {
+    function save() {
         AppStorage.setData({ snake_high_score: HIGH_SCORE });
-    };
-    HighScore.add = function (numberOfTails, time) {
+    }
+    HighScore.save = save;
+    function add(numberOfTails, time) {
         HIGH_SCORE.push({
             numberOfTails: numberOfTails,
             difficulty: Options.getDifficultyString(),
@@ -35,14 +36,17 @@ var HighScore;
         if (HIGH_SCORE.length > HIGH_SCORE_LENGTH) {
             HIGH_SCORE.pop();
         }
-    };
-    HighScore.getAll = function () {
+    }
+    HighScore.add = add;
+    function getAll() {
         return HIGH_SCORE;
-    };
-    HighScore.get = function (position) {
+    }
+    HighScore.getAll = getAll;
+    function get(position) {
         if (position < 0 || position >= HIGH_SCORE.length) {
             return null;
         }
         return HIGH_SCORE[position];
-    };
+    }
+    HighScore.get = get;
 })(HighScore || (HighScore = {}));

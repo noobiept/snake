@@ -1,6 +1,6 @@
 module Game
 {
-var INTERVALS = [];
+var INTERVALS: Interval[] = [];
 
     // the time until we add a new food/wall/etc
     // depends on the difficulty level
@@ -12,7 +12,7 @@ var WALL_TIMINGS = [ 4000, 3000 ];
     // in milliseconds
     // the order is according to the difficulty (so on normal mode, we get the first element, so 50ms)
 var TIME_BETWEEN_TICKS = [ 50, 35 ];
-var TIMER;
+var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
 
 
@@ -308,14 +308,14 @@ function initMenu()
         // :: score :: //
 
     var player1_score = gameMenu.querySelector( '#GameMenu-player1-score' );
-    var player1_score_span = player1_score.querySelector( 'span' );
+    var player1_score_span = <HTMLSpanElement> player1_score.querySelector( 'span' );
 
     Snake.ALL_SNAKES[ 0 ].setScoreElement( player1_score_span );
 
     if  ( TWO_PLAYER_MODE )
         {
         var player2_score = gameMenu.querySelector( '#GameMenu-player2-score' );
-        var player2_score_span = player2_score.querySelector( 'span' );
+        var player2_score_span = <HTMLSpanElement> player2_score.querySelector( 'span' );
 
         Snake.ALL_SNAKES[ 1 ].setScoreElement( player2_score_span );
 
