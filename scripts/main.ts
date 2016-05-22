@@ -36,13 +36,15 @@ interface KeyboardMapping {
     down2?: number;
 }
 
+type MapName = 'random' | 'stairs' | 'lines' | 'empty';
+
     // used to access preloaded assets (images/etc)
 var PRELOAD: createjs.LoadQueue;
 
 
 window.onload = function()
 {
-AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before' ], initApp );
+AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map' ], initApp );
 };
 
 
@@ -64,7 +66,7 @@ createjs.Ticker.setInterval( 50 );
 createjs.Ticker.on( 'tick', tick );
 
 HighScore.load( data[ 'snake_high_score' ] );
-MainMenu.init();
+MainMenu.init( data[ 'snake_selected_map' ] );
 
     // preload the images/etc used in the program
 PRELOAD = new createjs.LoadQueue( true );

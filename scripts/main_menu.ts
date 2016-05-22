@@ -8,7 +8,7 @@ var SELECTED: HTMLElement = null;
 var MAP_SELECTED: HTMLElement = null;
 
 
-export function init()
+export function init( mapName?: string )
     {
     MAIN_MENU = <HTMLElement> document.querySelector( '#MainMenu' );
     OPTIONS = <HTMLElement> document.querySelector( '#Options' );
@@ -25,31 +25,29 @@ export function init()
 
     startGame.onclick = function()
         {
-        Game.start( MAP_SELECTED.getAttribute( 'data-map' ), false );
+        Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), false );
         };
 
     startGame_2players.onclick = function()
         {
-        Game.start( MAP_SELECTED.getAttribute( 'data-map' ), true );
+        Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), true );
         };
 
-    var selectMapListener = function( event )
+    selectMap.onclick = function( event )
         {
-        var element = event.srcElement;
-
-            // remove previous selection
-        if ( MAP_SELECTED )
-            {
-            MAP_SELECTED.classList.remove( 'mapSelected' );
-            }
-
-        element.classList.add( 'mapSelected' );
-        MAP_SELECTED = element;
+        changeMap( <HTMLElement> event.srcElement );
         };
-    selectMap.onclick = selectMapListener;
+
+    if ( mapName )
+        {
+        changeMap( <HTMLElement> selectMap.querySelector( 'li[data-map="' + mapName + '"]' ), false );
+        }
 
         // start with the first element selected
-    selectMapListener({ srcElement: selectMap.firstElementChild });
+    else
+        {
+        changeMap( <HTMLElement> selectMap.firstElementChild, false );
+        }
 
     options.onclick = function()
         {
@@ -76,6 +74,24 @@ export function open()
 
     SELECTED = MAIN_MENU;
     MainMenu.reCenter();
+    }
+
+
+function changeMap( element: HTMLElement, save= true )
+    {
+        // remove previous selection
+    if ( MAP_SELECTED )
+        {
+        MAP_SELECTED.classList.remove( 'mapSelected' );
+        }
+
+    if ( save !== false )
+        {
+        AppStorage.setData({ 'snake_selected_map': element.getAttribute( 'data-map' ) });
+        }
+
+    element.classList.add( 'mapSelected' );
+    MAP_SELECTED = element;
     }
 
 

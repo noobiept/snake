@@ -19,7 +19,7 @@ var Direction;
 // used to access preloaded assets (images/etc)
 var PRELOAD;
 window.onload = function () {
-    AppStorage.getData(['snake_high_score', 'snake_options', 'snake_has_run_before'], initApp);
+    AppStorage.getData(['snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map'], initApp);
 };
 function initApp(data) {
     Options.load(data['snake_options']);
@@ -33,7 +33,7 @@ function initApp(data) {
     createjs.Ticker.setInterval(50);
     createjs.Ticker.on('tick', tick);
     HighScore.load(data['snake_high_score']);
-    MainMenu.init();
+    MainMenu.init(data['snake_selected_map']);
     // preload the images/etc used in the program
     PRELOAD = new createjs.LoadQueue(true);
     PRELOAD.loadManifest([

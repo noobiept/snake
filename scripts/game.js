@@ -109,7 +109,6 @@ var Game;
             new DoubleFood(x, y);
         }, DOUBLE_FOOD_TIMINGS[difficulty]);
         INTERVALS.push(interval);
-        // add walls
         setupWalls(mapName);
         initMenu();
     }
@@ -117,6 +116,8 @@ var Game;
     /**
      * Setup the map walls (depends on the map type).
      * - `random` : Adds walls randomly in the map.
+     * - `stairs` : Stair like walls.
+     * - `lines`  : Horizontal lines walls.
      * - `empty`  : No walls added.
      */
     function setupWalls(mapName) {
