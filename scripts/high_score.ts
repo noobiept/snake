@@ -37,6 +37,8 @@ export function load( score: MapScores )
             HIGH_SCORE = {
                     'random': randomScores
                 }
+
+            save();
             }
 
         else

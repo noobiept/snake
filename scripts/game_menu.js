@@ -22,8 +22,7 @@ var GameMenu;
             if (Game.isGameOver()) {
                 return;
             }
-            Game.clear();
-            MainMenu.open();
+            Game.quit();
         };
         GameMenu.reCenterGameMenu();
     }

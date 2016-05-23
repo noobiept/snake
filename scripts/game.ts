@@ -363,17 +363,8 @@ export function over( whoWon?: number )
         cssClass: 'Message-gameOver'
         });
 
-    TIMER.stop();
     pause();
-
-
-        // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
-    for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
-        {
-        HighScore.add( MAP_NAME, Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
-        }
-
-    HighScore.save();
+    addScores();
 
     window.setTimeout( function()
         {
@@ -383,6 +374,36 @@ export function over( whoWon?: number )
 
         }, 2000 );
     };
+
+
+/**
+ * Add the current scores of both players to the high-score (score will be considered if its higher than the current ones).
+ */
+function addScores()
+    {
+    TIMER.stop();
+
+        // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
+    for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
+        {
+        HighScore.add( MAP_NAME, Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
+        }
+
+    HighScore.save();
+    }
+
+
+/**
+ * Exit the game immediately.
+ * The scores are still saved.
+ */
+export function quit()
+    {
+    addScores();
+
+    Game.clear();
+    MainMenu.open();
+    }
 
 
 export function clear()

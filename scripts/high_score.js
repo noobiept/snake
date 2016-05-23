@@ -16,6 +16,7 @@ var HighScore;
                 HIGH_SCORE = {
                     'random': randomScores
                 };
+                save();
             }
             else {
                 HIGH_SCORE = score;

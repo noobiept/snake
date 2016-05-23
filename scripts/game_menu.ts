@@ -32,8 +32,7 @@ export function init()
             return;
             }
 
-        Game.clear();
-        MainMenu.open();
+        Game.quit();
         };
 
     GameMenu.reCenterGameMenu();
