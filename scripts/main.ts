@@ -153,17 +153,6 @@ $( CANVAS ).css( 'top', top + 'px' );
 }
 
 
-/*
-    Clears the canvas, resets stuff
- */
-function clearCanvas()
-{
-MainMenu.clear();
-
-STAGE.removeAllChildren();
-}
-
-
 function pause()
 {
 createjs.Ticker.setPaused( true );

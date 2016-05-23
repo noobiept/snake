@@ -19,9 +19,11 @@ var MainMenu;
         var highScore = MAIN_MENU.querySelector('#MainMenu-highScore');
         var help = MAIN_MENU.querySelector('#MainMenu-help');
         startGame.onclick = function () {
+            clear();
             Game.start(MAP_SELECTED.getAttribute('data-map'), false);
         };
         startGame_2players.onclick = function () {
+            clear();
             Game.start(MAP_SELECTED.getAttribute('data-map'), true);
         };
         // set the click event on all the map elements (to change to that map)
@@ -53,7 +55,7 @@ var MainMenu;
     }
     MainMenu.init = init;
     function open() {
-        clearCanvas();
+        clear();
         $(MAIN_MENU).css('display', 'block');
         SELECTED = MAIN_MENU;
         MainMenu.reCenter();
@@ -72,7 +74,7 @@ var MainMenu;
         MAP_SELECTED = element;
     }
     function options() {
-        clearCanvas();
+        clear();
         // :: Width :: //
         var width = OPTIONS.querySelector('#Options-width');
         var widthValue = width.querySelector('span');
@@ -148,7 +150,7 @@ var MainMenu;
     }
     MainMenu.options = options;
     function highScore(mapName) {
-        clearCanvas();
+        clear();
         var title = document.getElementById('HighScoreTitle');
         var table = HIGH_SCORE.querySelector('#HighScore-table');
         title.innerHTML = 'High score -- ' + mapName;
@@ -215,7 +217,7 @@ var MainMenu;
     }
     MainMenu.highScore = highScore;
     function help() {
-        clearCanvas();
+        clear();
         // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
         $(HELP).css('display', 'block');
         SELECTED = HELP;
@@ -232,7 +234,6 @@ var MainMenu;
         $(HIGH_SCORE).css('display', 'none');
         $(HELP).css('display', 'none');
     }
-    MainMenu.clear = clear;
     function reCenter() {
         if (SELECTED) {
             centerElement(SELECTED);

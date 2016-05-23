@@ -38,8 +38,6 @@ export function start( mapName: MapName, twoPlayersMode?: boolean )
     TIMER.restart();
     GameMenu.updateTimer( TIMER );
 
-    clearCanvas();
-
     var difficulty = Options.getDifficulty();
     var canvasWidth = Options.getCanvasWidth();
     var canvasHeight = Options.getCanvasHeight();
@@ -422,7 +420,6 @@ export function clear()
     Food.removeAll();
 
     GameMenu.clear();
-    clearCanvas();
     resume();
     }
 

@@ -25,11 +25,13 @@ export function init( mapName?: string )
 
     startGame.onclick = function()
         {
+        clear();
         Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), false );
         };
 
     startGame_2players.onclick = function()
         {
+        clear();
         Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), true );
         };
 
@@ -75,7 +77,7 @@ export function init( mapName?: string )
 
 export function open()
     {
-    clearCanvas();
+    clear();
 
     $( MAIN_MENU ).css( 'display', 'block' );
 
@@ -104,7 +106,7 @@ function changeMap( element: HTMLElement, save= true )
 
 export function options()
     {
-    clearCanvas();
+    clear();
 
         // :: Width :: //
 
@@ -225,7 +227,7 @@ export function options()
 
 export function highScore( mapName: MapName )
     {
-    clearCanvas();
+    clear();
 
     var title = document.getElementById( 'HighScoreTitle' );
     var table = HIGH_SCORE.querySelector( '#HighScore-table' );
@@ -318,7 +320,7 @@ export function highScore( mapName: MapName )
 
 export function help()
     {
-    clearCanvas();
+    clear();
 
         // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
     $( HELP ).css( 'display', 'block' );
@@ -335,7 +337,7 @@ export function help()
     }
 
 
-export function clear()
+function clear()
     {
     $( MAIN_MENU  ).css( 'display', 'none' );
     $( OPTIONS    ).css( 'display', 'none' );

@@ -27,7 +27,6 @@ var Game;
         MAP_NAME = mapName;
         TIMER.restart();
         GameMenu.updateTimer(TIMER);
-        clearCanvas();
         var difficulty = Options.getDifficulty();
         var canvasWidth = Options.getCanvasWidth();
         var canvasHeight = Options.getCanvasHeight();
@@ -305,7 +304,6 @@ var Game;
         Wall.removeAll();
         Food.removeAll();
         GameMenu.clear();
-        clearCanvas();
         resume();
     }
     Game.clear = clear;
