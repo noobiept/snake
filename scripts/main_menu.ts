@@ -33,11 +33,18 @@ export function init( mapName?: string )
         Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), true );
         };
 
-    selectMap.onclick = function( event )
+        // set the click event on all the map elements (to change to that map)
+    for (let a = 0 ; a < selectMap.children.length ; a++)
         {
-        changeMap( <HTMLElement> event.srcElement );
-        };
+        let map = <HTMLElement> selectMap.children[ a ];
 
+         map.onclick = function( event )
+            {
+            changeMap( map );
+            };
+        }
+
+        // start with the given map selected
     if ( mapName )
         {
         changeMap( <HTMLElement> selectMap.querySelector( 'li[data-map="' + mapName + '"]' ), false );

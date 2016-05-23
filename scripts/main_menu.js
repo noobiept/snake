@@ -24,9 +24,17 @@ var MainMenu;
         startGame_2players.onclick = function () {
             Game.start(MAP_SELECTED.getAttribute('data-map'), true);
         };
-        selectMap.onclick = function (event) {
-            changeMap(event.srcElement);
+        // set the click event on all the map elements (to change to that map)
+        var _loop_1 = function(a) {
+            var map = selectMap.children[a];
+            map.onclick = function (event) {
+                changeMap(map);
+            };
         };
+        for (var a = 0; a < selectMap.children.length; a++) {
+            _loop_1(a);
+        }
+        // start with the given map selected
         if (mapName) {
             changeMap(selectMap.querySelector('li[data-map="' + mapName + '"]'), false);
         }

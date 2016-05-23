@@ -116,6 +116,11 @@ em
     text-decoration: none;
     }
 
+figure
+    {
+    margin: 2px;
+    }
+
     /* Game Menu */
 
 #GameMenu-left
