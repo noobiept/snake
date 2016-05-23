@@ -326,44 +326,10 @@ export function help()
     SELECTED = HELP;
     MainMenu.reCenter();
 
-        // show the game element next to its description
-    var foodHelp = HELP.querySelector( '#Help-food' );
-    var doubleFoodHelp = HELP.querySelector( '#Help-doubleFood' );
-    var wallHelp = HELP.querySelector( '#Help-wall' );
-
-        // need to get the position of the html element (offset is relative  to the document)
-    var canvasPosition = $( CANVAS ).offset();
-    var foodPosition = $ ( foodHelp ).offset();
-    var doubleFoodPosition = $( doubleFoodHelp ).offset();
-    var wallPosition = $( wallHelp ).offset();
-
-        // distance away from the description
-    var xDistance = 50;
-
-        // determine where to position the elements
-    var x = foodPosition.left - canvasPosition.left - xDistance;
-    var y = foodPosition.top - canvasPosition.top + Food.FOOD_HEIGHT;
-
-    var food = new Food( x, y );
-
-    x = doubleFoodPosition.left - canvasPosition.left - xDistance;
-    y = doubleFoodPosition.top - canvasPosition.top + Food.FOOD_HEIGHT;
-
-    var double_food = new DoubleFood( x, y );
-
-    x = wallPosition.left - canvasPosition.left - xDistance;
-    y = wallPosition.top - canvasPosition.top + 10;
-
-    var wall = new Wall( x, y, 20, 7 );
     var back = <HTMLElement> HELP.querySelector( '#Help-back' );
 
     back.onclick = function()
         {
-            // don't forget to remove everything
-        food.remove();
-        double_food.remove();
-        wall.remove();
-
         MainMenu.open();
         };
     }
