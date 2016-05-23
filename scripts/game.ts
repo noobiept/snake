@@ -370,7 +370,7 @@ export function over( whoWon?: number )
         // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
     for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
         {
-        HighScore.add( Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
+        HighScore.add( MAP_NAME, Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
         }
 
     HighScore.save();

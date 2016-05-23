@@ -45,7 +45,7 @@ var MainMenu;
             MainMenu.options();
         };
         highScore.onclick = function () {
-            MainMenu.highScore();
+            MainMenu.highScore(MAP_SELECTED.getAttribute('data-map'));
         };
         help.onclick = function () {
             MainMenu.help();
@@ -147,12 +147,14 @@ var MainMenu;
         MainMenu.reCenter();
     }
     MainMenu.options = options;
-    function highScore() {
+    function highScore(mapName) {
         clearCanvas();
+        var title = document.getElementById('HighScoreTitle');
         var table = HIGH_SCORE.querySelector('#HighScore-table');
+        title.innerHTML = 'High score -- ' + mapName;
         // data
-        var allScores = HighScore.getAll();
-        if (allScores.length == 0) {
+        var allScores = HighScore.getMapScores(mapName);
+        if (!allScores || allScores.length === 0) {
             table.innerHTML = 'No score yet.';
         }
         else {

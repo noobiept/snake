@@ -9,8 +9,13 @@ interface Score {
     time: string;
 }
 
+    // dictionary where the key is the map name and the value is an array of scores
     // has all the scores sorted descending order
-var HIGH_SCORE: Score[] = [];
+interface MapScores {
+    [mapName: string]: Score[];
+}
+
+var HIGH_SCORE: MapScores = {};
 
    // number of scores to save (just save the best ones)
 var HIGH_SCORE_LENGTH = 5;
@@ -19,11 +24,25 @@ var HIGH_SCORE_LENGTH = 5;
 /*
     Load from local storage
  */
-export function load( score: Score[] )
+export function load( score: MapScores )
     {
     if ( score )
         {
-        HIGH_SCORE = score;
+            // previous high-score data was an array with the scores
+            // need to migrate the data to the current structure
+            // the previous high-score were all on the 'random' map type (since that was the only map available)
+        if ( Array.isArray( score ) )
+            {
+            var randomScores = <any> score;
+            HIGH_SCORE = {
+                    'random': randomScores
+                }
+            }
+
+        else
+            {
+            HIGH_SCORE = score;
+            }
         }
     }
 
@@ -37,9 +56,17 @@ export function save()
     }
 
 
-export function add( numberOfTails: number, time: string )
+export function add( mapName: MapName, numberOfTails: number, time: string )
     {
-    HIGH_SCORE.push({
+    var scoreArray = HIGH_SCORE[ mapName ];
+
+    if ( typeof scoreArray === 'undefined' )
+        {
+        scoreArray = [];
+        HIGH_SCORE[ mapName ] = scoreArray;
+        }
+
+    scoreArray.push({
         numberOfTails: numberOfTails,
         difficulty: Options.getDifficultyString(),
         frame: boolToOnOff( Options.getFrame() ),
@@ -48,32 +75,21 @@ export function add( numberOfTails: number, time: string )
         time: time
         });
 
-    HIGH_SCORE.sort( function(a, b)
+    scoreArray.sort( function(a, b)
         {
         return b.numberOfTails - a.numberOfTails;
         });
 
         // if we passed the limit, remove the last one (the lesser score)
-    if ( HIGH_SCORE.length > HIGH_SCORE_LENGTH )
+    if ( scoreArray.length > HIGH_SCORE_LENGTH )
         {
-        HIGH_SCORE.pop();
+        scoreArray.pop();
         }
     }
 
 
-export function getAll()
+export function getMapScores( mapName: MapName )
     {
-    return HIGH_SCORE;
-    }
-
-
-export function get( position: number )
-    {
-    if ( position < 0 || position >= HIGH_SCORE.length )
-        {
-        return null;
-        }
-
-    return HIGH_SCORE[ position ];
+    return HIGH_SCORE[ mapName ];
     }
 }

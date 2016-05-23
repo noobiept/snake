@@ -63,7 +63,7 @@ export function init( mapName?: string )
 
     highScore.onclick = function()
         {
-        MainMenu.highScore();
+        MainMenu.highScore( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
         };
 
     help.onclick = function()
@@ -223,16 +223,19 @@ export function options()
     }
 
 
-export function highScore()
+export function highScore( mapName: MapName )
     {
     clearCanvas();
 
+    var title = document.getElementById( 'HighScoreTitle' );
     var table = HIGH_SCORE.querySelector( '#HighScore-table' );
 
-            // data
-    var allScores = HighScore.getAll();
+    title.innerHTML = 'High score -- ' + mapName;
 
-    if ( allScores.length == 0 )
+            // data
+    var allScores = HighScore.getMapScores( mapName );
+
+    if ( !allScores || allScores.length === 0 )
         {
         table.innerHTML = 'No score yet.';
         }

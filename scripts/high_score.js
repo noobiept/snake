@@ -1,7 +1,6 @@
 var HighScore;
 (function (HighScore) {
-    // has all the scores sorted descending order
-    var HIGH_SCORE = [];
+    var HIGH_SCORE = {};
     // number of scores to save (just save the best ones)
     var HIGH_SCORE_LENGTH = 5;
     /*
@@ -9,7 +8,18 @@ var HighScore;
      */
     function load(score) {
         if (score) {
-            HIGH_SCORE = score;
+            // previous high-score data was an array with the scores
+            // need to migrate the data to the current structure
+            // the previous high-score were all on the 'random' map type (since that was the only map available)
+            if (Array.isArray(score)) {
+                var randomScores = score;
+                HIGH_SCORE = {
+                    'random': randomScores
+                };
+            }
+            else {
+                HIGH_SCORE = score;
+            }
         }
     }
     HighScore.load = load;
@@ -20,8 +30,13 @@ var HighScore;
         AppStorage.setData({ snake_high_score: HIGH_SCORE });
     }
     HighScore.save = save;
-    function add(numberOfTails, time) {
-        HIGH_SCORE.push({
+    function add(mapName, numberOfTails, time) {
+        var scoreArray = HIGH_SCORE[mapName];
+        if (typeof scoreArray === 'undefined') {
+            scoreArray = [];
+            HIGH_SCORE[mapName] = scoreArray;
+        }
+        scoreArray.push({
             numberOfTails: numberOfTails,
             difficulty: Options.getDifficultyString(),
             frame: boolToOnOff(Options.getFrame()),
@@ -29,24 +44,17 @@ var HighScore;
             canvasHeight: Options.getCanvasHeight(),
             time: time
         });
-        HIGH_SCORE.sort(function (a, b) {
+        scoreArray.sort(function (a, b) {
             return b.numberOfTails - a.numberOfTails;
         });
         // if we passed the limit, remove the last one (the lesser score)
-        if (HIGH_SCORE.length > HIGH_SCORE_LENGTH) {
-            HIGH_SCORE.pop();
+        if (scoreArray.length > HIGH_SCORE_LENGTH) {
+            scoreArray.pop();
         }
     }
     HighScore.add = add;
-    function getAll() {
-        return HIGH_SCORE;
+    function getMapScores(mapName) {
+        return HIGH_SCORE[mapName];
     }
-    HighScore.getAll = getAll;
-    function get(position) {
-        if (position < 0 || position >= HIGH_SCORE.length) {
-            return null;
-        }
-        return HIGH_SCORE[position];
-    }
-    HighScore.get = get;
+    HighScore.getMapScores = getMapScores;
 })(HighScore || (HighScore = {}));
