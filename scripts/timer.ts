@@ -36,6 +36,14 @@ getCount()
     }
 
 
+restart()
+    {
+    this.stop();
+    this.count = 0;
+    this.start();
+    }
+
+
 getString()
     {
     return (this.count / 1000) + 's';

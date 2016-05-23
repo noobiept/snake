@@ -3,6 +3,7 @@ var GameMenu;
     var GAME_MENU;
     var PLAYERS_SCORE = [];
     var TIMER_ELEMENT;
+    var IS_PAUSED = false;
     /**
      * Initialize the game menu.
      */
@@ -12,24 +13,14 @@ var GameMenu;
         PLAYERS_SCORE[1] = document.getElementById('GameMenu-player2-score');
         TIMER_ELEMENT = document.getElementById('GameMenu-timer');
         // :: Pause / Resume :: //
-        var isPaused = false;
         var pauseResume = document.getElementById('GameMenu-pauseResume');
-        pauseResume.onclick = function () {
-            if (isPaused) {
-                isPaused = false;
-                $(pauseResume).text('Pause');
-            }
-            else {
-                isPaused = true;
-                $(pauseResume).text('Resume');
-            }
-            Game.pauseResume(isPaused);
-        };
+        pauseResume.onclick = togglePause;
         // :: Quit :: //
         var quit = document.getElementById('GameMenu-quit');
         quit.onclick = function () {
-            if (isPaused) {
-                resume();
+            // don't allow to mess with the menu when game is over
+            if (Game.isGameOver()) {
+                return;
             }
             Game.clear();
             MainMenu.open();
@@ -48,12 +39,13 @@ var GameMenu;
         $(GAME_MENU).css('display', 'block');
     }
     GameMenu.show = show;
-    function hide() {
+    function clear() {
         $('#GameMenu-pauseResume').text('Pause');
+        IS_PAUSED = false;
         $('#GameMenu').css('display', 'none');
         $('#GameMenu-player2-score').css('display', 'none');
     }
-    GameMenu.hide = hide;
+    GameMenu.clear = clear;
     function reCenterGameMenu() {
         var gameMenu = document.getElementById('GameMenu');
         // position the menu on the bottom right of the canvas
@@ -75,4 +67,20 @@ var GameMenu;
         $(TIMER_ELEMENT).text((timer.getCount() / 1000).toFixed(1) + 's');
     }
     GameMenu.updateTimer = updateTimer;
+    function togglePause() {
+        // don't allow to mess with the menu when game is over
+        if (Game.isGameOver()) {
+            return;
+        }
+        var htmlElement = this;
+        if (IS_PAUSED) {
+            IS_PAUSED = false;
+            $(htmlElement).text('Pause');
+        }
+        else {
+            IS_PAUSED = true;
+            $(htmlElement).text('Resume');
+        }
+        Game.pauseResume(IS_PAUSED);
+    }
 })(GameMenu || (GameMenu = {}));

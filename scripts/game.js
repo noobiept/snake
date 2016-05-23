@@ -13,13 +13,19 @@ var Game;
     var TIMER;
     var TWO_PLAYER_MODE = false;
     var MAP_NAME;
+    var GAME_OVER = false;
+    function init() {
+        TIMER = new Timer(GameMenu.updateTimer);
+    }
+    Game.init = init;
     function start(mapName, twoPlayersMode) {
         if (typeof twoPlayersMode == 'undefined') {
             twoPlayersMode = false;
         }
+        GAME_OVER = false;
         TWO_PLAYER_MODE = twoPlayersMode;
         MAP_NAME = mapName;
-        TIMER = new Timer(GameMenu.updateTimer);
+        TIMER.restart();
         GameMenu.updateTimer(TIMER);
         clearCanvas();
         var difficulty = Options.getDifficulty();
@@ -231,6 +237,7 @@ var Game;
     
      */
     function over(whoWon) {
+        GAME_OVER = true;
         var text = 'Game Over<br />';
         if (TWO_PLAYER_MODE) {
             if (typeof whoWon != 'undefined') {
@@ -259,19 +266,15 @@ var Game;
         });
         TIMER.stop();
         pause();
-        // prevent from clicking on the game menu, while the interval is set
-        var quit = document.querySelector('#GameMenu-quit');
-        quit.onclick = null;
+        // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
+        for (var i = 0; i < Snake.ALL_SNAKES.length; i++) {
+            HighScore.add(Snake.ALL_SNAKES[i].getNumberOfTails(), TIMER.getString());
+        }
+        HighScore.save();
         window.setTimeout(function () {
-            // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
-            for (var i = 0; i < Snake.ALL_SNAKES.length; i++) {
-                HighScore.add(Snake.ALL_SNAKES[i].getNumberOfTails(), TIMER.getString());
-            }
-            HighScore.save();
-            clear();
             message.remove();
+            clear();
             start(MAP_NAME, TWO_PLAYER_MODE);
-            resume();
         }, 2000);
     }
     Game.over = over;
@@ -285,8 +288,9 @@ var Game;
         Snake.removeAll();
         Wall.removeAll();
         Food.removeAll();
-        GameMenu.hide();
+        GameMenu.clear();
         clearCanvas();
+        resume();
     }
     Game.clear = clear;
     function pauseResume(pauseGame) {
@@ -310,4 +314,8 @@ var Game;
         return TWO_PLAYER_MODE;
     }
     Game.isTwoPlayersMode = isTwoPlayersMode;
+    function isGameOver() {
+        return GAME_OVER;
+    }
+    Game.isGameOver = isGameOver;
 })(Game || (Game = {}));

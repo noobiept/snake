@@ -15,6 +15,13 @@ var TIME_BETWEEN_TICKS = [ 50, 35 ];
 var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
 var MAP_NAME: MapName;
+var GAME_OVER = false;
+
+
+export function init()
+    {
+    TIMER = new Timer( GameMenu.updateTimer );
+    }
 
 
 export function start( mapName: MapName, twoPlayersMode?: boolean )
@@ -24,10 +31,11 @@ export function start( mapName: MapName, twoPlayersMode?: boolean )
         twoPlayersMode = false;
         }
 
+    GAME_OVER = false;
     TWO_PLAYER_MODE = twoPlayersMode;
     MAP_NAME = mapName;
 
-    TIMER = new Timer( GameMenu.updateTimer );
+    TIMER.restart();
     GameMenu.updateTimer( TIMER );
 
     clearCanvas();
@@ -312,6 +320,7 @@ function elementCollision( x, y, width, height, elementsArray )
  */
 export function over( whoWon?: number )
     {
+    GAME_OVER = true;
     var text = 'Game Over<br />';
 
     if ( TWO_PLAYER_MODE )
@@ -357,25 +366,20 @@ export function over( whoWon?: number )
     TIMER.stop();
     pause();
 
-        // prevent from clicking on the game menu, while the interval is set
-    var quit = <HTMLDivElement> document.querySelector( '#GameMenu-quit' );
 
-    quit.onclick = null;
+        // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
+    for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
+        {
+        HighScore.add( Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
+        }
+
+    HighScore.save();
 
     window.setTimeout( function()
         {
-            // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
-        for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
-            {
-            HighScore.add( Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
-            }
-
-        HighScore.save();
-        clear();
-
         message.remove();
+        clear();
         start( MAP_NAME, TWO_PLAYER_MODE );
-        resume();
 
         }, 2000 );
     };
@@ -396,8 +400,9 @@ export function clear()
     Wall.removeAll();
     Food.removeAll();
 
-    GameMenu.hide();
+    GameMenu.clear();
     clearCanvas();
+    resume();
     }
 
 
@@ -433,5 +438,11 @@ export function pauseResume( pauseGame: boolean )
 export function isTwoPlayersMode()
     {
     return TWO_PLAYER_MODE;
+    }
+
+
+export function isGameOver()
+    {
+    return GAME_OVER;
     }
 }

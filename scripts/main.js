@@ -35,6 +35,7 @@ function initApp(data) {
     HighScore.load(data['snake_high_score']);
     MainMenu.init(data['snake_selected_map']);
     GameMenu.init();
+    Game.init();
     // preload the images/etc used in the program
     PRELOAD = new createjs.LoadQueue(true);
     PRELOAD.loadManifest([

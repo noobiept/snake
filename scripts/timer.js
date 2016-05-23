@@ -16,6 +16,11 @@ var Timer = (function () {
     Timer.prototype.getCount = function () {
         return this.count;
     };
+    Timer.prototype.restart = function () {
+        this.stop();
+        this.count = 0;
+        this.start();
+    };
     Timer.prototype.getString = function () {
         return (this.count / 1000) + 's';
     };

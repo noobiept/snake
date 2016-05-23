@@ -68,6 +68,7 @@ createjs.Ticker.on( 'tick', tick );
 HighScore.load( data[ 'snake_high_score' ] );
 MainMenu.init( data[ 'snake_selected_map' ] );
 GameMenu.init();
+Game.init();
 
     // preload the images/etc used in the program
 PRELOAD = new createjs.LoadQueue( true );

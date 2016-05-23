@@ -3,6 +3,7 @@ module GameMenu
 var GAME_MENU: HTMLElement;
 var PLAYERS_SCORE: HTMLElement[] = [];
 var TIMER_ELEMENT: HTMLElement;
+var IS_PAUSED = false;
 
 
 /**
@@ -17,33 +18,18 @@ export function init()
 
         // :: Pause / Resume :: //
 
-    var isPaused = false;
     var pauseResume = <HTMLDivElement> document.getElementById( 'GameMenu-pauseResume' );
-    pauseResume.onclick = function()
-        {
-        if ( isPaused )
-            {
-            isPaused = false;
-            $( pauseResume ).text( 'Pause' );
-            }
-
-        else
-            {
-            isPaused = true;
-            $( pauseResume ).text( 'Resume' );
-            }
-
-        Game.pauseResume( isPaused );
-        };
+    pauseResume.onclick = togglePause;
 
         // :: Quit :: //
 
     var quit = <HTMLDivElement> document.getElementById( 'GameMenu-quit' );
     quit.onclick = function()
         {
-        if ( isPaused )
+            // don't allow to mess with the menu when game is over
+        if ( Game.isGameOver() )
             {
-            resume();
+            return;
             }
 
         Game.clear();
@@ -72,9 +58,10 @@ export function show( twoPlayerMode: boolean )
     }
 
 
-export function hide()
+export function clear()
     {
     $( '#GameMenu-pauseResume' ).text( 'Pause' );
+    IS_PAUSED = false;
 
     $( '#GameMenu' ).css( 'display', 'none' );
     $( '#GameMenu-player2-score' ).css( 'display', 'none' );
@@ -109,5 +96,31 @@ export function updateScore( playerPosition: number, score: number )
 export function updateTimer( timer: Timer )
     {
     $( TIMER_ELEMENT ).text( ( timer.getCount() / 1000 ).toFixed( 1 ) + 's' );
+    }
+
+
+function togglePause()
+    {
+        // don't allow to mess with the menu when game is over
+    if ( Game.isGameOver() )
+        {
+        return;
+        }
+
+    var htmlElement = this;
+
+    if ( IS_PAUSED )
+        {
+        IS_PAUSED = false;
+        $( htmlElement ).text( 'Pause' );
+        }
+
+    else
+        {
+        IS_PAUSED = true;
+        $( htmlElement ).text( 'Resume' );
+        }
+
+    Game.pauseResume( IS_PAUSED );
     }
 }
