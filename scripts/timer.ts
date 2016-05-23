@@ -5,20 +5,15 @@ private htmlElement: HTMLElement;
 private interval: Interval;
 
 
-constructor( htmlElement: HTMLElement )
+constructor( timeElapsed: (timer: Timer) => any )
     {
     var timerObject = this;
 
-    $( htmlElement ).text( '0.0s' );
-
     this.count = 0;
-    this.htmlElement = htmlElement;
     this.interval = new Interval( function()
         {
         timerObject.count += 100;
-
-        $( timerObject.htmlElement ).text( ( timerObject.count / 1000 ).toFixed( 1 ) + 's' );
-
+        timeElapsed( timerObject );
         }, 100 );
     }
 
@@ -32,6 +27,12 @@ start()
 stop()
     {
     this.interval.stop();
+    }
+
+
+getCount()
+    {
+    return this.count;
     }
 
 

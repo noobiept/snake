@@ -34,6 +34,7 @@ function initApp(data) {
     createjs.Ticker.on('tick', tick);
     HighScore.load(data['snake_high_score']);
     MainMenu.init(data['snake_selected_map']);
+    GameMenu.init();
     // preload the images/etc used in the program
     PRELOAD = new createjs.LoadQueue(true);
     PRELOAD.loadManifest([
@@ -54,7 +55,7 @@ function initApp(data) {
 window.onresize = function () {
     centerCanvas();
     MainMenu.reCenter();
-    Game.reCenterGameMenu();
+    GameMenu.reCenterGameMenu();
 };
 window.onkeydown = function (event) {
     var returnValue;

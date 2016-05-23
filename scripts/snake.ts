@@ -19,7 +19,6 @@ private all_tails: Tail[];
 private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
 private keyboard_mapping: KeyboardMapping;
 private first_tail: Tail;
-private score_element: HTMLElement;
 
 
 constructor( args: SnakeArgs )
@@ -40,13 +39,13 @@ constructor( args: SnakeArgs )
         // for example: { left: EVENT_KEY.a, right: EVENT_KEY.d, (...) }
     this.keyboard_mapping = args.keyboardMapping;
 
+    Snake.ALL_SNAKES.push( this );
+
         // add a starting tail
     this.first_tail = this.addTail();
 
     this.first_tail.position( args.x, args.y );
     this.first_tail.type = ElementsType.snake; // the first tail represents the head of the snake, so it has a different type
-
-    Snake.ALL_SNAKES.push( this );
     }
 
 
@@ -84,10 +83,7 @@ addTail()
     var tail = new Tail( this );
     this.all_tails.push( tail );
 
-    if ( this.score_element )
-        {
-        $( this.score_element ).text( this.all_tails.length );
-        }
+    GameMenu.updateScore( Snake.ALL_SNAKES.indexOf( this ), this.all_tails.length );
 
     return tail;
     }
@@ -170,17 +166,6 @@ getTail( position )
 getDirection()
     {
     return this.first_tail.direction;
-    }
-
-
-/*
-    To display the number of tails, associate an html element, where we're changing the .text() whenever a tail is added
- */
-setScoreElement = function( scoreElement: HTMLElement )
-    {
-    this.score_element = scoreElement;
-
-    $( this.score_element ).text( this.all_tails.length );
     }
 
 

@@ -19,6 +19,8 @@ var Game;
         }
         TWO_PLAYER_MODE = twoPlayersMode;
         MAP_NAME = mapName;
+        TIMER = new Timer(GameMenu.updateTimer);
+        GameMenu.updateTimer(TIMER);
         clearCanvas();
         var difficulty = Options.getDifficulty();
         var canvasWidth = Options.getCanvasWidth();
@@ -112,7 +114,7 @@ var Game;
         }, DOUBLE_FOOD_TIMINGS[difficulty]);
         INTERVALS.push(interval);
         setupWalls(mapName);
-        initMenu();
+        GameMenu.show(TWO_PLAYER_MODE);
     }
     Game.start = start;
     /**
@@ -220,65 +222,6 @@ var Game;
         }
         return false;
     }
-    /**
-     * Initialize the game menu.
-     */
-    function initMenu() {
-        var gameMenu = document.querySelector('#GameMenu');
-        // :: score :: //
-        var player1_score = gameMenu.querySelector('#GameMenu-player1-score');
-        var player1_score_span = player1_score.querySelector('span');
-        Snake.ALL_SNAKES[0].setScoreElement(player1_score_span);
-        if (TWO_PLAYER_MODE) {
-            var player2_score = gameMenu.querySelector('#GameMenu-player2-score');
-            var player2_score_span = player2_score.querySelector('span');
-            Snake.ALL_SNAKES[1].setScoreElement(player2_score_span);
-            $(player2_score).css('display', 'inline-block');
-        }
-        // :: Timer :: //
-        var timer = gameMenu.querySelector('#GameMenu-timer');
-        TIMER = new Timer(timer);
-        // :: Pause / Resume :: //
-        var pauseResume = gameMenu.querySelector('#GameMenu-pauseResume');
-        var isPaused = false;
-        var i = 0;
-        pauseResume.onclick = function () {
-            if (isPaused) {
-                isPaused = false;
-                $(pauseResume).text('Pause');
-                TIMER.start();
-                for (i = 0; i < INTERVALS.length; i++) {
-                    INTERVALS[i].start();
-                }
-                resume();
-            }
-            else {
-                isPaused = true;
-                $(pauseResume).text('Resume');
-                TIMER.stop();
-                for (i = 0; i < INTERVALS.length; i++) {
-                    INTERVALS[i].stop();
-                }
-                pause();
-            }
-        };
-        // :: Quit :: //
-        var quit = gameMenu.querySelector('#GameMenu-quit');
-        quit.onclick = function () {
-            if (isPaused) {
-                resume();
-            }
-            clear();
-            MainMenu.open();
-        };
-        Game.reCenterGameMenu();
-        $(gameMenu).css('display', 'block');
-    }
-    function resetMenu() {
-        $('#GameMenu-pauseResume').text('Pause');
-        $('#GameMenu').css('display', 'none');
-        $('#GameMenu-player2-score').css('display', 'none');
-    }
     /*
         When the snake hits its tails for example
     
@@ -342,24 +285,29 @@ var Game;
         Snake.removeAll();
         Wall.removeAll();
         Food.removeAll();
-        resetMenu();
+        GameMenu.hide();
         clearCanvas();
     }
+    Game.clear = clear;
+    function pauseResume(pauseGame) {
+        if (pauseGame) {
+            TIMER.stop();
+            for (var i = 0; i < INTERVALS.length; i++) {
+                INTERVALS[i].stop();
+            }
+            pause();
+        }
+        else {
+            TIMER.start();
+            for (var i = 0; i < INTERVALS.length; i++) {
+                INTERVALS[i].start();
+            }
+            resume();
+        }
+    }
+    Game.pauseResume = pauseResume;
     function isTwoPlayersMode() {
         return TWO_PLAYER_MODE;
     }
     Game.isTwoPlayersMode = isTwoPlayersMode;
-    function reCenterGameMenu() {
-        var gameMenu = document.getElementById('GameMenu');
-        // position the menu on the bottom right of the canvas
-        var canvasPosition = $(CANVAS).position();
-        var canvasWidth = Options.getCanvasWidth();
-        //var left = canvasPosition.left + Options.getCanvasWidth() - $( gameMenu ).width();
-        var left = canvasPosition.left;
-        var top = canvasPosition.top + Options.getCanvasHeight();
-        $(gameMenu).css('top', top + 'px');
-        $(gameMenu).css('left', left + 'px');
-        $(gameMenu).css('width', canvasWidth + 'px'); // have to set the menu's width, so that the left/right sub-menus really go to their position
-    }
-    Game.reCenterGameMenu = reCenterGameMenu;
 })(Game || (Game = {}));

@@ -67,6 +67,7 @@ createjs.Ticker.on( 'tick', tick );
 
 HighScore.load( data[ 'snake_high_score' ] );
 MainMenu.init( data[ 'snake_selected_map' ] );
+GameMenu.init();
 
     // preload the images/etc used in the program
 PRELOAD = new createjs.LoadQueue( true );
@@ -98,7 +99,7 @@ window.onresize = function()
 {
 centerCanvas();
 MainMenu.reCenter();
-Game.reCenterGameMenu();
+GameMenu.reCenterGameMenu();
 };
 
 
