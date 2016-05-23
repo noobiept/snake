@@ -50,6 +50,10 @@ em
     color: antiquewhite;
     }
 
+.displayValue
+    {
+    color: chartreuse;
+    }
 
     /* Main Menus */
 
@@ -136,7 +140,6 @@ figure
 #GameMenu-left > *
     {
     display: inline-block;
-    width: 90px;
     padding: 0;
     margin: 10px 0;
     }
@@ -147,9 +150,4 @@ figure
     width: 120px;
     padding: 0;
     margin: 10px 10px;
-    }
-
-#GameMenu-player2-score
-    {
-    display: none;
     }

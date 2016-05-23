@@ -42,7 +42,6 @@ var GameMenu;
         $('#GameMenu-pauseResume').text('Pause');
         IS_PAUSED = false;
         $('#GameMenu').css('display', 'none');
-        $('#GameMenu-player2-score').css('display', 'none');
     }
     GameMenu.clear = clear;
     function reCenterGameMenu() {

@@ -63,7 +63,6 @@ export function clear()
     IS_PAUSED = false;
 
     $( '#GameMenu' ).css( 'display', 'none' );
-    $( '#GameMenu-player2-score' ).css( 'display', 'none' );
     }
 
 
