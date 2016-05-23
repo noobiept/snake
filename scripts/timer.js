@@ -26,3 +26,4 @@ var Timer = (function () {
     };
     return Timer;
 }());
+//# sourceMappingURL=timer.js.map

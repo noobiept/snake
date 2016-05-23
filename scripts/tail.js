@@ -157,3 +157,4 @@ var Tail = (function () {
     Tail.TAIL_HEIGHT = Tail.TAIL_WIDTH;
     return Tail;
 }());
+//# sourceMappingURL=tail.js.map

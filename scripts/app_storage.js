@@ -64,3 +64,4 @@ var AppStorage;
     }
     AppStorage.setData = setData;
 })(AppStorage || (AppStorage = {}));
+//# sourceMappingURL=app_storage.js.map

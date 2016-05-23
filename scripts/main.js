@@ -165,3 +165,4 @@ function tick(event) {
     Snake.checkCollision();
     STAGE.update();
 }
+//# sourceMappingURL=main.js.map

@@ -83,3 +83,4 @@ var GameMenu;
         Game.pauseResume(IS_PAUSED);
     }
 })(GameMenu || (GameMenu = {}));
+//# sourceMappingURL=game_menu.js.map

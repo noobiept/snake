@@ -253,3 +253,4 @@ var Snake = (function () {
     Snake.ALL_SNAKES = [];
     return Snake;
 }());
+//# sourceMappingURL=snake.js.map

@@ -59,3 +59,4 @@ var HighScore;
     }
     HighScore.getMapScores = getMapScores;
 })(HighScore || (HighScore = {}));
+//# sourceMappingURL=high_score.js.map

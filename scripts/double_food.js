@@ -27,3 +27,4 @@ var DoubleFood = (function (_super) {
     };
     return DoubleFood;
 }(Food));
+//# sourceMappingURL=double_food.js.map

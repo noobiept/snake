@@ -18,3 +18,4 @@ var Interval = (function () {
     };
     return Interval;
 }());
+//# sourceMappingURL=interval.js.map

@@ -51,3 +51,4 @@ var Wall = (function () {
     Wall.ALL_WALLS = [];
     return Wall;
 }());
+//# sourceMappingURL=wall.js.map

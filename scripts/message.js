@@ -21,3 +21,4 @@ var Message = (function () {
     };
     return Message;
 }());
+//# sourceMappingURL=message.js.map

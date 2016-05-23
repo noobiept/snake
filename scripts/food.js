@@ -50,3 +50,4 @@ var Food = (function () {
     Food.FOOD_HEIGHT = 10;
     return Food;
 }());
+//# sourceMappingURL=food.js.map
