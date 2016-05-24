@@ -32,6 +32,10 @@ var HighScore;
     }
     HighScore.save = save;
     function add(mapName, numberOfTails, time) {
+        // the snake always has 1 tail, so only consider scores above that (where you actually played the game)
+        if (numberOfTails <= 1) {
+            return;
+        }
         var scoreArray = HIGH_SCORE[mapName];
         if (typeof scoreArray === 'undefined') {
             scoreArray = [];

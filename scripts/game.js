@@ -186,7 +186,7 @@ var Game;
             var width = canvasWidth * 0.1;
             var widthThickness = canvasWidth * 0.01;
             var height = canvasHeight * 0.06;
-            var heightThickness = canvasHeight * 0.01;
+            var heightThickness = canvasHeight * 0.015;
             var steps = 4;
             var xOffset = canvasWidth / (steps + 1);
             var yOffset = canvasHeight / (steps + 1);
