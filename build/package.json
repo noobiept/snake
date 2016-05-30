@@ -1,6 +1,6 @@
 {
     "name": "snake",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "devDependencies": {
         "grunt": "~1.0.1",
         "grunt-contrib-copy": "~1.0.0",
