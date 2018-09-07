@@ -38,6 +38,10 @@ interface KeyboardMapping {
 
 type MapName = 'random' | 'stairs' | 'lines' | 'empty';
 
+interface Dict {
+    [key: string]: any;
+}
+
     // used to access preloaded assets (images/etc)
 var PRELOAD: createjs.LoadQueue;
 
@@ -48,7 +52,7 @@ AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before
 };
 
 
-function initApp( data )
+function initApp( data: Dict )
 {
 Options.load( data[ 'snake_options' ] );
 

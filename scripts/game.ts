@@ -292,7 +292,7 @@ function setupWalls( mapName: MapName )
 /**
  * Check if a food/wall position is colliding with any of the  walls/foods.
  */
-function elementCollision( x, y, width, height, elementsArray )
+function elementCollision( x: number, y: number, width: number, height: number, elementsArray )
     {
     for (var i = 0 ; i < elementsArray.length ; i++)
         {
