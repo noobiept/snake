@@ -73,7 +73,7 @@ var EVENT_KEY = {
 /*
     Checks if a x/y position is within a range around other x/y position
 */
-function isNextTo( x, y, targetX, targetY, range )
+function isNextTo( x: number, y: number, targetX: number, targetY: number, range: number )
 {
     // we make a 'box' with the target position and the range
 var boxLeft = targetX - range / 2;
@@ -94,7 +94,7 @@ else
 }
 
 
-function checkCollision( oneX, oneY, oneWidth, oneHeight, twoX, twoY, twoWidth, twoHeight )
+function checkCollision( oneX: number, oneY: number, oneWidth: number, oneHeight: number, twoX: number, twoY: number, twoWidth: number, twoHeight: number )
 {
     // calculate the position of the corners of the object (as a rectangle)
     // the position origin of the objects is in the center
@@ -117,13 +117,13 @@ return false;
 }
 
 
-function getRandomInt( min, max )
+function getRandomInt( min: number, max: number )
 {
 return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
-function getRandomFloat( min, max )
+function getRandomFloat( min: number, max: number )
 {
 return Math.random() * (max - min) + min;
 }
@@ -132,7 +132,7 @@ return Math.random() * (max - min) + min;
 /*
     If an x/y position is out of bounds, it overflows (goes to the other side of the canvas, the amount it overflows)
  */
-function checkOverflowPosition( x_or_y, limit )
+function checkOverflowPosition( x_or_y: number, limit: number )
 {
 if ( x_or_y < 0 )
     {
@@ -151,7 +151,7 @@ return x_or_y;
 /*
     Centers an html element in the middle of the game canvas (assumes html element has its css position: absolute;
  */
-function centerElement( element )
+function centerElement( element: HTMLElement )
 {
 var canvasWidth = Options.getCanvasWidth();
 var canvasHeight = Options.getCanvasHeight();
@@ -170,7 +170,7 @@ $( element ).css({
 }
 
 
-function boolToOnOff( value )
+function boolToOnOff( value: boolean )
 {
 if ( value == true )
     {

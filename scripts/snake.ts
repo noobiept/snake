@@ -98,7 +98,7 @@ getX()
     }
 
 
-getY = function()
+getY()
     {
     return this.first_tail.getY();
     }
@@ -107,7 +107,7 @@ getY = function()
 /*
     newDirection (of the DIR variable)
  */
-changeDirection( newDirection )
+changeDirection( newDirection: Direction )
     {
     var currentDirection = this.getDirection();
 
@@ -152,7 +152,7 @@ getNumberOfTails()
     }
 
 
-getTail( position )
+getTail( position: number )
     {
     if ( position < 0 || position >= this.all_tails.length )
         {
@@ -169,7 +169,7 @@ getDirection()
     }
 
 
-onKeyDown( keyCode )
+onKeyDown( keyCode: number )
     {
     var keysHeld = this.keys_held;
     var keyboardMapping = this.keyboard_mapping;
@@ -205,7 +205,7 @@ onKeyDown( keyCode )
     }
 
 
-onKeyUp( keyCode )
+onKeyUp( keyCode: number )
     {
     var keysHeld = this.keys_held;
     var keyboardMapping = this.keyboard_mapping;
@@ -375,7 +375,7 @@ static checkCollision()
             var all_tails_1 = snake1.all_tails;
             var all_tails_2 =  snake2.all_tails;
 
-            var check = function( x, y, width, height, all_tails )
+            var check = function( x: number, y: number, width: number, height: number, all_tails: Tail[] )
                 {
                 var tail;
 

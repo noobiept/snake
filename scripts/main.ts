@@ -169,7 +169,7 @@ createjs.Ticker.setPaused( false );
 }
 
 
-function movement_tick( snakeObject )
+function movement_tick( snakeObject: Snake )
 {
 var keysHeld = snakeObject.keys_held;
 var direction = snakeObject.getDirection();
