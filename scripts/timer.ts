@@ -1,7 +1,6 @@
 class Timer
 {
 private count: number;
-private htmlElement: HTMLElement;
 private interval: Interval;
 
 

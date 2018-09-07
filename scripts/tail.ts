@@ -18,7 +18,7 @@ constructor( snakeObject: Snake )
     this.snakeObject = snakeObject;
 
     var numberOfTails = snakeObject.getNumberOfTails();
-    var x, y;
+    var x = 0, y = 0;
     var path = [];
     var direction;
 

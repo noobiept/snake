@@ -111,7 +111,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean )
         // add food
     var interval = new Interval( function()
         {
-        var x, y;
+        var x = 0, y = 0;
 
             // don't add food on top of the walls (otherwise its impossible to get it)
             // try 5 times, otherwise just use whatever position
@@ -137,7 +137,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean )
         // add double food
     interval = new Interval( function()
         {
-        var x, y;
+        var x = 0, y = 0;
 
             // don't add food on top of the walls (otherwise its impossible to get it)
             // try 5 times, otherwise just use whatever position
@@ -179,7 +179,9 @@ function setupWalls( mapName: MapName )
         {
         var interval = new Interval( function()
             {
-            var x, y, width, height, verticalOrientation;
+            var x = 0, y = 0;
+            var width = 0, height = 0;
+            var verticalOrientation = 0;
             var canvasWidth = Options.getCanvasWidth();
             var canvasHeight = Options.getCanvasHeight();
             var maxWallWidth = canvasWidth * 0.2;
@@ -292,7 +294,7 @@ function setupWalls( mapName: MapName )
 /**
  * Check if a food/wall position is colliding with any of the  walls/foods.
  */
-function elementCollision( x: number, y: number, width: number, height: number, elementsArray )
+function elementCollision( x: number, y: number, width: number, height: number, elementsArray: Wall[] | Food[] )
     {
     for (var i = 0 ; i < elementsArray.length ; i++)
         {

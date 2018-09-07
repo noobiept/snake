@@ -12,7 +12,7 @@ constructor( x: number, y: number, width: number, height: number )
     this.width = width;
     this.height = height;
 
-    this.draw( x, y, width, height );
+    this.shape = this.draw( x, y, width, height );
 
     Wall.ALL_WALLS.push( this );
     }
@@ -35,7 +35,7 @@ draw( x: number, y: number, width: number, height: number )
 
     STAGE.addChild( wall );
 
-    this.shape = wall;
+    return wall;
     }
 
 

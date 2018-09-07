@@ -6,7 +6,7 @@ static FOOD_HEIGHT = 10;
 
 protected width: number;
 protected height: number;
-protected shape: createjs.Bitmap;
+protected shape!: createjs.Bitmap;
 
 
 constructor( x: number, y: number )
