@@ -1,12 +1,10 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "strict": true,
+        "target": "es2017",
         "sourceMap": true
     },
-    "exclude": [
-        "build",
-        "libraries",
-        "release",
-        "typings"
+    "include": [
+        "scripts/**/*.ts"
     ]
 }
