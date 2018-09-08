@@ -1,12 +1,12 @@
-Links
-=====
+# Links #
+
 
 - [http://nbpt.eu/games/snake/](http://nbpt.eu/games/snake/)
 - [chrome store](https://chrome.google.com/webstore/detail/snake-game/pihfccclbpikjeecdehncecpmkggndjn)
 
 
-Brief Description
-=================
+# Brief Description #
+
 
 There's several maps to choose from (selected in main menu).
 
@@ -30,15 +30,8 @@ In the options menu, you can change the difficulty of the game by changing some 
 
 The high-score menu shows the scores of the selected map. To see the scores of the other maps just select the map in the main menu before opening the high-score menu.
 
-Dependencies
-============
+# Development #
 
-- typescript -- `1.8`
-- typings -- `1.0`
-- jquery -- `2.2`
-- jquery-ui -- `1.11`
-    - slider
-    - blitzer theme
-- createjs
-    - easeljs -- `0.8`
-    - preloadjs -- `0.6`
+- `npm run ts` (run the typescript compiler on watch mode)
+- `npm run server` (run a development server with the game on `http://localhost:8000/`)
+- `npm run build` (build the release version of the game to the `/release/` directory)

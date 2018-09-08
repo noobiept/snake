@@ -11,6 +11,12 @@
         "grunt-contrib-uglify": "~4.0.0",
         "grunt-processhtml": "~0.4.1",
         "grunt-ts": "~6.0.0-beta.21",
+        "http-server": "^0.11.1",
         "typescript": "~3.0.3"
+    },
+    "scripts": {
+        "ts": "tsc -w",
+        "server": "http-server -p 8000",
+        "build": "grunt"
     }
 }
