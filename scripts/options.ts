@@ -8,13 +8,11 @@ interface OptionsData
     difficulty: Difficulty;
     }
 
-enum Difficulty
+export enum Difficulty
     {
     normal = 0,
     hard = 1
     };
-
-var DIFFICULTY_STRING = [ 'normal', 'hard' ];
 
 var OPTIONS: OptionsData = {
     canvas_width: 800,
@@ -69,15 +67,9 @@ export function getDifficulty()
     }
 
 
-export function setDifficultyString( stringValue )
-    {
-    Options.setDifficulty( DIFFICULTY_STRING.indexOf( stringValue ) );
-    }
-
-
 export function getDifficultyString()
     {
-    return DIFFICULTY_STRING[ OPTIONS.difficulty ];
+    return Difficulty[ OPTIONS.difficulty ];
     }
 
 

@@ -195,14 +195,14 @@ export function options()
             {
             $( difficultyValue ).text( 'hard' );
 
-            Options.setDifficultyString( 'hard' );
+            Options.setDifficulty( Options.Difficulty.hard );
             }
 
         else
             {
             $( difficultyValue ).text( 'normal' );
 
-            Options.setDifficultyString( 'normal' );
+            Options.setDifficulty( Options.Difficulty.normal );
             }
         };
 
