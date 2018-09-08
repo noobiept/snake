@@ -11,10 +11,10 @@ var IS_PAUSED = false;
  */
 export function init()
     {
-    GAME_MENU = document.getElementById( 'GameMenu' );
-    PLAYERS_SCORE[ 0 ] = document.getElementById( 'GameMenu-player1-score' );
-    PLAYERS_SCORE[ 1 ] = document.getElementById( 'GameMenu-player2-score' );
-    TIMER_ELEMENT = document.getElementById( 'GameMenu-timer' );
+    GAME_MENU = document.getElementById( 'GameMenu' )!;
+    PLAYERS_SCORE[ 0 ] = document.getElementById( 'GameMenu-player1-score' )!;
+    PLAYERS_SCORE[ 1 ] = document.getElementById( 'GameMenu-player2-score' )!;
+    TIMER_ELEMENT = document.getElementById( 'GameMenu-timer' )!;
 
         // :: Pause / Resume :: //
 
@@ -41,7 +41,7 @@ export function init()
 
 export function show( twoPlayerMode: boolean )
     {
-    var playerTwoScore = PLAYERS_SCORE[ 1 ].parentElement;
+    var playerTwoScore = PLAYERS_SCORE[ 1 ].parentElement!;
 
     if ( twoPlayerMode )
         {
@@ -68,7 +68,7 @@ export function clear()
 
 export function reCenterGameMenu()
     {
-    var gameMenu = document.getElementById( 'GameMenu' );
+    var gameMenu = document.getElementById( 'GameMenu' )!;
 
         // position the menu on the bottom right of the canvas
     var canvasPosition = $( CANVAS ).position();
@@ -97,7 +97,7 @@ export function updateTimer( timer: Timer )
     }
 
 
-function togglePause()
+function togglePause( this: HTMLElement )
     {
         // don't allow to mess with the menu when game is over
     if ( Game.isGameOver() )

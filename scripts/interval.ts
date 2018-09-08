@@ -3,7 +3,7 @@ class Interval
 private what_to_call: () => any;
 private interval_time: number;
 private is_on: boolean;
-private interval_id: number;
+private interval_id: number | undefined;
 
 
 constructor( what_to_call: () => any, interval_time: number )
@@ -28,6 +28,7 @@ stop()
     {
     window.clearInterval( this.interval_id );
 
+    this.interval_id = undefined;
     this.is_on = false;
     }
 
