@@ -104,8 +104,8 @@ getY()
     }
 
 
-/*
-    newDirection (of the DIR variable)
+/**
+ * Change the direction of the snake (at the current x/y position).
  */
 changeDirection( newDirection: Direction )
     {
@@ -136,7 +136,7 @@ changeDirection( newDirection: Direction )
         {
         tail = this.all_tails[ i ];
 
-        tail.path.push(
+        tail.addNewDirection(
             {
                 x: x,
                 y: y,

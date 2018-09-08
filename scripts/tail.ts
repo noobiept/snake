@@ -216,6 +216,15 @@ getType()
     }
 
 
+/**
+ * Add a new direction to the tail path.
+ */
+addNewDirection( path: Path )
+    {
+    this.path.push( path );
+    }
+
+
 /*
     Move in the current direction
  */
