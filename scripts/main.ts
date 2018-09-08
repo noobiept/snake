@@ -169,91 +169,6 @@ createjs.Ticker.setPaused( false );
 }
 
 
-function movement_tick( snakeObject: Snake )
-{
-var keysHeld = snakeObject.keys_held;
-var direction = snakeObject.getDirection();
-
-if ( keysHeld.left )
-    {
-    if ( keysHeld.down )
-        {
-        if ( direction == Direction.left || direction == Direction.right )
-            {
-            snakeObject.changeDirection( Direction.down );
-            }
-
-        else if ( direction == Direction.down || direction == Direction.up )
-            {
-            snakeObject.changeDirection( Direction.left );
-            }
-        }
-
-    else if ( keysHeld.up )
-        {
-        if ( direction == Direction.left || direction == Direction.right )
-            {
-            snakeObject.changeDirection( Direction.up );
-            }
-
-        else if ( direction == Direction.up || direction == Direction.down )
-            {
-            snakeObject.changeDirection( Direction.left );
-            }
-        }
-
-    else
-        {
-        snakeObject.changeDirection( Direction.left );
-        }
-    }
-
-else if ( keysHeld.right )
-    {
-    if ( keysHeld.down )
-        {
-        if ( direction == Direction.right || direction == Direction.left )
-            {
-            snakeObject.changeDirection( Direction.down );
-            }
-
-        else if ( direction == Direction.down || direction == Direction.up )
-            {
-            snakeObject.changeDirection( Direction.right );
-            }
-        }
-
-    else if ( keysHeld.up )
-        {
-        if ( direction == Direction.right || direction == Direction.left )
-            {
-            snakeObject.changeDirection( Direction.up );
-            }
-
-        else if ( direction == Direction.up || direction == Direction.down )
-            {
-            snakeObject.changeDirection( Direction.right );
-            }
-        }
-
-    else
-        {
-        snakeObject.changeDirection( Direction.right );
-        }
-    }
-
-else if ( keysHeld.up )
-    {
-    snakeObject.changeDirection( Direction.up );
-    }
-
-else if ( keysHeld.down )
-    {
-    snakeObject.changeDirection( Direction.down );
-    }
-}
-
-
 function tick( event )
 {
 if ( event.paused )
@@ -266,9 +181,6 @@ var snakeObject;
 for (var i = 0 ; i < Snake.ALL_SNAKES.length ; i++)
     {
     snakeObject = Snake.ALL_SNAKES[ i ];
-
-    movement_tick( snakeObject );
-
     snakeObject.tick();
     }
 

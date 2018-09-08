@@ -241,6 +241,94 @@ onKeyUp( keyCode: number )
     }
 
 
+/**
+ * Deal with the snake's movement at every tick (based on the player's inputs).
+ */
+movementTick()
+    {
+    var keysHeld = this.keys_held;
+    var direction = this.getDirection();
+
+    if ( keysHeld.left )
+        {
+        if ( keysHeld.down )
+            {
+            if ( direction == Direction.left || direction == Direction.right )
+                {
+                this.changeDirection( Direction.down );
+                }
+
+            else if ( direction == Direction.down || direction == Direction.up )
+                {
+                this.changeDirection( Direction.left );
+                }
+            }
+
+        else if ( keysHeld.up )
+            {
+            if ( direction == Direction.left || direction == Direction.right )
+                {
+                this.changeDirection( Direction.up );
+                }
+
+            else if ( direction == Direction.up || direction == Direction.down )
+                {
+                this.changeDirection( Direction.left );
+                }
+            }
+
+        else
+            {
+            this.changeDirection( Direction.left );
+            }
+        }
+
+    else if ( keysHeld.right )
+        {
+        if ( keysHeld.down )
+            {
+            if ( direction == Direction.right || direction == Direction.left )
+                {
+                this.changeDirection( Direction.down );
+                }
+
+            else if ( direction == Direction.down || direction == Direction.up )
+                {
+                this.changeDirection( Direction.right );
+                }
+            }
+
+        else if ( keysHeld.up )
+            {
+            if ( direction == Direction.right || direction == Direction.left )
+                {
+                this.changeDirection( Direction.up );
+                }
+
+            else if ( direction == Direction.up || direction == Direction.down )
+                {
+                this.changeDirection( Direction.right );
+                }
+            }
+
+        else
+            {
+            this.changeDirection( Direction.right );
+            }
+        }
+
+    else if ( keysHeld.up )
+        {
+        this.changeDirection( Direction.up );
+        }
+
+    else if ( keysHeld.down )
+        {
+        this.changeDirection( Direction.down );
+        }
+    }
+
+
 tick()
     {
     var firstTail = this.first_tail;
@@ -252,6 +340,9 @@ tick()
 
     var tail;
     var allTails = this.all_tails;
+
+
+    this.movementTick();
 
         // :: deal with the collision detection between the snake and tails :: //
         // 'i' starts at 1, to not check the first tail (that's the one we're comparing with)
