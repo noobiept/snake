@@ -1,5 +1,3 @@
-/// <reference path="food.ts" />
-
 class DoubleFood extends Food
 {
 constructor( x: number, y: number )

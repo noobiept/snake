@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
     // createjs
 var STAGE: createjs.Stage;
 

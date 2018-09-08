@@ -4,6 +4,7 @@
     "description": "A snake game, with several maps to choose from, plus a 2 player mode!",
     "devDependencies": {
         "@types/createjs": "0.0.29",
+        "@types/jquery": "^3.3.6",
         "grunt": "~1.0.3",
         "grunt-contrib-clean": "~1.1.0",
         "grunt-contrib-copy": "~1.0.0",
