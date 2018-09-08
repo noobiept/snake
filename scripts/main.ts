@@ -169,7 +169,7 @@ createjs.Ticker.setPaused( false );
 }
 
 
-function tick( event )
+function tick( event: Dict )
 {
 if ( event.paused )
     {

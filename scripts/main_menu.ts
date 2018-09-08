@@ -4,8 +4,8 @@ var MAIN_MENU: HTMLElement;
 var OPTIONS: HTMLElement;
 var HIGH_SCORE: HTMLElement;
 var HELP: HTMLElement;
-var SELECTED: HTMLElement = null;
-var MAP_SELECTED: HTMLElement = null;
+var SELECTED: HTMLElement | null = null;
+var MAP_SELECTED: HTMLElement;
 
 
 export function init( mapName?: string )
@@ -110,14 +110,14 @@ export function options()
 
         // :: Width :: //
 
-    var width = OPTIONS.querySelector( '#Options-width' );
-    var widthValue = width.querySelector( 'span' );
+    var width = OPTIONS.querySelector( '#Options-width' )!;
+    var widthValue = width.querySelector( 'span' )!;
 
     var canvasWidth = Options.getCanvasWidth();
 
     $( widthValue ).text( canvasWidth );
 
-    var widthSlider = width.querySelector( '#Options-width-slider' );
+    var widthSlider = width.querySelector( '#Options-width-slider' )!;
 
     $( widthSlider ).slider({
         min: 400,
@@ -127,24 +127,23 @@ export function options()
         range: 'min',
         slide: function( event, ui )
             {
-            $( widthValue ).text( ui.value );
+            $( widthValue ).text( ui.value! );
 
-            Options.setCanvasWidth( ui.value );
-
+            Options.setCanvasWidth( ui.value! );
             MainMenu.reCenter();
             }
         });
 
         // :: Height :: //
 
-    var height = OPTIONS.querySelector( '#Options-height' );
-    var heightValue = height.querySelector( 'span' );
+    var height = OPTIONS.querySelector( '#Options-height' )!;
+    var heightValue = height.querySelector( 'span' )!;
 
     var canvasHeight = Options.getCanvasHeight();
 
     $( heightValue ).text( canvasHeight );
 
-    var heightSlider = height.querySelector( '#Options-height-slider' );
+    var heightSlider = height.querySelector( '#Options-height-slider' )!;
 
     $( heightSlider ).slider({
         min: 400,
@@ -154,18 +153,17 @@ export function options()
         range: 'min',
         slide: function( event, ui )
             {
-            $( heightValue ).text( ui.value );
+            $( heightValue ).text( ui.value! );
 
-            Options.setCanvasHeight( ui.value );
-
+            Options.setCanvasHeight( ui.value! );
             MainMenu.reCenter();
             }
         });
 
         // :: frame :: //
 
-    var frame = <HTMLElement> OPTIONS.querySelector( '#Options-frame' );
-    var frameValue = frame.querySelector( 'span' );
+    var frame = <HTMLElement> OPTIONS.querySelector( '#Options-frame' )!;
+    var frameValue = frame.querySelector( 'span' )!;
 
     $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
 
@@ -186,8 +184,8 @@ export function options()
 
         // :: difficulty :: //
 
-    var difficulty = <HTMLElement> OPTIONS.querySelector( '#Options-difficulty' );
-    var difficultyValue = difficulty.querySelector( 'span' );
+    var difficulty = <HTMLElement> OPTIONS.querySelector( '#Options-difficulty' )!;
+    var difficultyValue = difficulty.querySelector( 'span' )!;
 
     $( difficultyValue ).text( Options.getDifficultyString() );
 
@@ -229,8 +227,8 @@ export function highScore( mapName: MapName )
     {
     clear();
 
-    var title = document.getElementById( 'HighScoreTitle' );
-    var table = HIGH_SCORE.querySelector( '#HighScore-table' );
+    var title = document.getElementById( 'HighScoreTitle' )!;
+    var table = HIGH_SCORE.querySelector( '#HighScore-table' )!;
 
     title.innerHTML = 'High score -- ' + mapName;
 
