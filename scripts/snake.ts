@@ -407,35 +407,7 @@ tick()
     for (i = 0 ; i < allTails.length ; i++)
         {
         tail = allTails[ i ];
-
-            // have to check if this tail needs to change direction or not
-        var direction = tail.direction;
-
-
-        if ( tail.path.length !== 0 )
-            {
-            var checkpoint = tail.path[ 0 ];
-
-            var checkX = checkpoint.x;
-            var checkY = checkpoint.y;
-
-            var x = tail.getX();
-            var y = tail.getY();
-
-                // check if its on the right position
-            if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
-                {
-                    // new direction
-                direction = checkpoint.direction;
-
-                tail.direction = direction;
-
-                    // remove the path checkpoint
-                tail.path.splice( 0, 1 );
-                }
-            }
-
-        tail.moveInDirection();
+        tail.tick();
         }
     }
 

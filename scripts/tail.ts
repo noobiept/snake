@@ -256,4 +256,39 @@ moveInDirection()
         this.move( 0, speed );
         }
     }
+
+
+/**
+ * Deal with tail movement.
+ */
+tick()
+    {
+        // have to check if this tail needs to change direction or not
+    var direction = this.direction;
+
+    if ( this.path.length !== 0 )
+        {
+        var checkpoint = this.path[ 0 ];
+
+        var checkX = checkpoint.x;
+        var checkY = checkpoint.y;
+
+        var x = this.getX();
+        var y = this.getY();
+
+            // check if its on the right position
+        if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
+            {
+                // new direction
+            direction = checkpoint.direction;
+
+            this.direction = direction;
+
+                // remove the path checkpoint
+            this.path.splice( 0, 1 );
+            }
+        }
+
+    this.moveInDirection();
+    }
 }
