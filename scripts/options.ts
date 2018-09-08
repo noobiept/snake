@@ -1,21 +1,30 @@
 module Options
 {
-var DIFFICULTY = {
-    normal: 0,
-    hard: 1
+interface OptionsData
+    {
+    canvas_width: number;
+    canvas_height: number;
+    frameOn: boolean;
+    difficulty: Difficulty;
+    }
+
+enum Difficulty
+    {
+    normal = 0,
+    hard = 1
     };
 
 var DIFFICULTY_STRING = [ 'normal', 'hard' ];
 
-var OPTIONS = {
+var OPTIONS: OptionsData = {
     canvas_width: 800,
     canvas_height: 400,
     frameOn: false,
-    difficulty: DIFFICULTY.normal
+    difficulty: Difficulty.normal
     };
 
 
-export function load( options )
+export function load( options: OptionsData )
     {
     if ( options )
         {
@@ -48,7 +57,7 @@ export function save()
     }
 
 
-export function setDifficulty( difficulty )
+export function setDifficulty( difficulty: Difficulty )
     {
     OPTIONS.difficulty = difficulty;
     }
