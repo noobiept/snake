@@ -159,9 +159,9 @@ var canvasHeight = Options.getCanvasHeight();
     // the canvas may not be starting at 0,0 position, so we need to account for that
 var canvasPosition = $( CANVAS ).position();
 
-var left = canvasWidth / 2 - $( element ).width() / 2 + canvasPosition.left;
+var left = canvasWidth / 2 - $( element ).width()! / 2 + canvasPosition.left;
 
-var top = canvasHeight / 2 - $( element ).height() / 2 + canvasPosition.top;
+var top = canvasHeight / 2 - $( element ).height()! / 2 + canvasPosition.top;
 
 $( element ).css({
     top  : top  + 'px',

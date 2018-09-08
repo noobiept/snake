@@ -33,7 +33,7 @@ constructor( snakeObject: Snake )
         // we position after the last tail, and it depends on what direction it is going
     else
         {
-        var lastTail = snakeObject.getTail( numberOfTails - 1 );
+        var lastTail = snakeObject.getLastTail();
         var lastDirection = lastTail.direction;
 
         if ( lastDirection == Direction.left )
@@ -69,8 +69,10 @@ constructor( snakeObject: Snake )
         }
 
         // draw it, and setup the physics body
-    this.draw( x, y );
+    this.shape = this.draw( x, y );
 
+    this.width = Tail.TAIL_WIDTH;
+    this.height = Tail.TAIL_HEIGHT;
     this.type = ElementsType.tail;
     this.path = path;
     this.direction = direction;
@@ -95,11 +97,7 @@ draw( x: number, y: number )
 
     STAGE.addChild( snakeTail );
 
-        // set the properties to the object
-    this.shape = snakeTail;
-
-    this.width = Tail.TAIL_WIDTH;
-    this.height = Tail.TAIL_HEIGHT;
+    return snakeTail;
     }
 
 

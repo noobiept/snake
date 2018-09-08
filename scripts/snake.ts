@@ -163,6 +163,15 @@ getTail( position: number )
     }
 
 
+/**
+ * There's always at least 1 tail in the snake.
+ */
+getLastTail()
+    {
+    return this.all_tails[ this.all_tails.length - 1 ]
+    }
+
+
 getDirection()
     {
     return this.first_tail.direction;
