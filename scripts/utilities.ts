@@ -1,5 +1,5 @@
-import { CANVAS } from './main.js';
 import * as Options from './options.js';
+import { CANVAS } from './main.js';
 
 
 /*
@@ -127,7 +127,7 @@ return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
-function getRandomFloat( min: number, max: number )
+export function getRandomFloat( min: number, max: number )
 {
 return Math.random() * (max - min) + min;
 }
@@ -136,7 +136,7 @@ return Math.random() * (max - min) + min;
 /*
     If an x/y position is out of bounds, it overflows (goes to the other side of the canvas, the amount it overflows)
  */
-function checkOverflowPosition( x_or_y: number, limit: number )
+export function checkOverflowPosition( x_or_y: number, limit: number )
 {
 if ( x_or_y < 0 )
     {

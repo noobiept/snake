@@ -1,5 +1,15 @@
-module Game
-{
+import * as GameMenu from './game_menu.js';
+import * as Options from './options.js';
+import * as HighScore from './high_score.js';
+import * as MainMenu from './main_menu.js';
+import Snake from './snake.js';
+import Wall from './wall.js';
+import Food from './food.js';
+import DoubleFood from './double_food.js';
+import { MapName, Direction, pause, resume } from './main.js';
+import { EVENT_KEY, getRandomInt, checkOverflowPosition, checkCollision } from './utilities.js';
+
+
 var INTERVALS: Interval[] = [];
 
     // the time until we add a new food/wall/etc
@@ -401,8 +411,8 @@ export function quit()
     {
     addScores();
 
-    Game.clear();
-    MainMenu.open();
+    clear();
+    MainMenu.openMainMenu();
     }
 
 
@@ -465,4 +475,3 @@ export function isGameOver()
     {
     return GAME_OVER;
     }
-}

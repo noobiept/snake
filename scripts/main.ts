@@ -3,6 +3,7 @@ import * as Options from './options.js';
 import * as MainMenu from './main_menu.js';
 import * as HighScore from './high_score.js';
 import * as GameMenu from './game_menu.js';
+import * as Game from './game.js';
 import Snake from './snake.js';
 
 
@@ -163,13 +164,13 @@ $( CANVAS ).css( 'top', top + 'px' );
 }
 
 
-function pause()
+export function pause()
 {
 createjs.Ticker.setPaused( true );
 }
 
 
-function resume()
+export function resume()
 {
 createjs.Ticker.setPaused( false );
 }
