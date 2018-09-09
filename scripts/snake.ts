@@ -1,8 +1,10 @@
-import { Direction, KeyboardMapping, ElementsType } from './main.js';
+import * as GameMenu from './game_menu.js';
+import * as Game from './game.js';
 import Tail from "./tail.js";
-import { checkCollision } from './utilities.js';
 import Food from './food.js';
 import Wall from './wall.js';
+import { Direction, KeyboardMapping, ElementsType } from './main.js';
+import { checkCollision } from './utilities.js';
 
 
 interface SnakeArgs

@@ -6,6 +6,9 @@ import Snake from './snake.js';
 import Wall from './wall.js';
 import Food from './food.js';
 import DoubleFood from './double_food.js';
+import Message from './message.js';
+import Timer from './timer.js';
+import Interval from './interval.js';
 import { MapName, Direction, pause, resume } from './main.js';
 import { EVENT_KEY, getRandomInt, checkOverflowPosition, checkCollision } from './utilities.js';
 

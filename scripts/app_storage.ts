@@ -1,3 +1,6 @@
+import { Dict } from './main.js';
+
+
 /**
  * Calls the `callback` with a dictionary that has all the requested keys/values from `localStorage`.
  */

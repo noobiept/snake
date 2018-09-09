@@ -1,7 +1,9 @@
-import { MapName } from './main.js';
-import { centerElement, boolToOnOff } from './utilities.js';
 import * as Options from './options.js';
 import * as AppStorage from './app_storage.js';
+import * as Game from './game.js';
+import * as HighScore from './high_score.js';
+import { MapName } from './main.js';
+import { centerElement, boolToOnOff } from './utilities.js';
 
 
 var MAIN_MENU: HTMLElement;

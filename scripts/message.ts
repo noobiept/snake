@@ -1,3 +1,6 @@
+import { centerElement } from './utilities.js';
+
+
 interface MessageArgs
     {
     text: string;
@@ -7,7 +10,7 @@ interface MessageArgs
     }
 
 
-class Message
+export default class Message
 {
 private message: HTMLDivElement;
 

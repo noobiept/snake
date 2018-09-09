@@ -1,4 +1,4 @@
-class Interval
+export default class Interval
 {
 private what_to_call: () => any;
 private interval_time: number;

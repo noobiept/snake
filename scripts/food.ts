@@ -1,3 +1,4 @@
+import Snake from './snake.js';
 import { PRELOAD, STAGE } from "./main.js";
 
 

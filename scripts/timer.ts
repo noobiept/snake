@@ -1,4 +1,7 @@
-class Timer
+import Interval from './interval.js';
+
+
+export default class Timer
 {
 private count: number;
 private interval: Interval;
