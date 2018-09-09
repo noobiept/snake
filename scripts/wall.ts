@@ -1,4 +1,7 @@
-class Wall
+import { STAGE } from './main.js';
+
+
+export default class Wall
 {
 static ALL_WALLS: Wall[] = [];
 

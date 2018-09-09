@@ -1,7 +1,11 @@
+import { CANVAS } from './main.js';
+import * as Options from './options.js';
+
+
 /*
  * Keys code for the keyboard events
  */
-var EVENT_KEY = {
+export var EVENT_KEY = {
 
     backspace  : 8,
     tab        : 9,
@@ -73,7 +77,7 @@ var EVENT_KEY = {
 /*
     Checks if a x/y position is within a range around other x/y position
 */
-function isNextTo( x: number, y: number, targetX: number, targetY: number, range: number )
+export function isNextTo( x: number, y: number, targetX: number, targetY: number, range: number )
 {
     // we make a 'box' with the target position and the range
 var boxLeft = targetX - range / 2;
@@ -94,7 +98,7 @@ else
 }
 
 
-function checkCollision( oneX: number, oneY: number, oneWidth: number, oneHeight: number, twoX: number, twoY: number, twoWidth: number, twoHeight: number )
+export function checkCollision( oneX: number, oneY: number, oneWidth: number, oneHeight: number, twoX: number, twoY: number, twoWidth: number, twoHeight: number )
 {
     // calculate the position of the corners of the object (as a rectangle)
     // the position origin of the objects is in the center
@@ -117,7 +121,7 @@ return false;
 }
 
 
-function getRandomInt( min: number, max: number )
+export function getRandomInt( min: number, max: number )
 {
 return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -151,7 +155,7 @@ return x_or_y;
 /*
     Centers an html element in the middle of the game canvas (assumes html element has its css position: absolute;
  */
-function centerElement( element: HTMLElement )
+export function centerElement( element: HTMLElement )
 {
 var canvasWidth = Options.getCanvasWidth();
 var canvasHeight = Options.getCanvasHeight();
@@ -170,7 +174,7 @@ $( element ).css({
 }
 
 
-function boolToOnOff( value: boolean )
+export function boolToOnOff( value: boolean )
 {
 if ( value == true )
     {

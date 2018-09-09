@@ -1,4 +1,7 @@
-class DoubleFood extends Food
+import Food from './food.js';
+
+
+export default class DoubleFood extends Food
 {
 constructor( x: number, y: number )
     {

@@ -1,4 +1,7 @@
-class Food
+import { PRELOAD, STAGE } from "./main.js";
+
+
+export default class Food
 {
 static ALL_FOOD: Food[] = [];
 static FOOD_WIDTH = 10;

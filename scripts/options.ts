@@ -1,5 +1,8 @@
-module Options
-{
+import * as AppStorage from './app_storage.js';
+import { CANVAS } from './main.js';
+import { centerCanvas } from './main.js';
+
+
 interface OptionsData
     {
     canvas_width: number;
@@ -115,4 +118,3 @@ export function getFrame()
     {
     return OPTIONS.frameOn;
     }
-}

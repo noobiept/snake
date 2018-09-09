@@ -1,3 +1,10 @@
+import { Direction, KeyboardMapping, ElementsType } from './main.js';
+import Tail from "./tail.js";
+import { checkCollision } from './utilities.js';
+import Food from './food.js';
+import Wall from './wall.js';
+
+
 interface SnakeArgs
     {
     x: number;
@@ -8,7 +15,7 @@ interface SnakeArgs
     }
 
 
-class Snake
+export default class Snake
 {
 static ALL_SNAKES: Snake[] = [];
 

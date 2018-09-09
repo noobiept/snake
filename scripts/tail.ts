@@ -1,4 +1,8 @@
-class Tail
+import { ElementsType, Direction, Path, STAGE } from "./main.js";
+import { isNextTo } from "./utilities.js";
+
+
+export default class Tail
 {
 static TAIL_WIDTH = 10;    // width and height need to be the same value
 static TAIL_HEIGHT = Tail.TAIL_WIDTH;

@@ -1,29 +1,31 @@
+import * as AppStorage from './app_storage.js';
+
     // createjs
-var STAGE: createjs.Stage;
+export var STAGE: createjs.Stage;
 
     // program stuff
-var CANVAS: HTMLCanvasElement;
+export var CANVAS: HTMLCanvasElement;
 
     // the elements type in the game (useful to identify objects, call .getType() )
-enum ElementsType {
+export enum ElementsType {
     tail,
     snake
 }
 
-enum Direction {
+export enum Direction {
     left,
     right,
     up,
     down
 }
 
-interface Path {
+export interface Path {
     x: number;
     y: number;
     direction: Direction;
 }
 
-interface KeyboardMapping {
+export interface KeyboardMapping {
     left: number;
     left2?: number;
     right: number;
@@ -34,14 +36,14 @@ interface KeyboardMapping {
     down2?: number;
 }
 
-type MapName = 'random' | 'stairs' | 'lines' | 'empty';
+export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
 
-interface Dict {
+export interface Dict {
     [key: string]: any;
 }
 
     // used to access preloaded assets (images/etc)
-var PRELOAD: createjs.LoadQueue;
+export var PRELOAD: createjs.LoadQueue;
 
 
 window.onload = function()
@@ -145,7 +147,7 @@ return true;
 /*
     center the canvas in the middle of window
  */
-function centerCanvas()
+export function centerCanvas()
 {
 var left = window.innerWidth / 2 - CANVAS.width / 2;
 var top = window.innerHeight / 2 - CANVAS.height / 2;
