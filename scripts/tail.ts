@@ -1,7 +1,7 @@
+import * as Options from './options.js';
+import Snake from './snake.js';
 import { ElementsType, Direction, Path, STAGE } from "./main.js";
 import { isNextTo } from "./utilities.js";
-import Snake from './snake.js';
-import * as Options from './options.js';
 
 
 export default class Tail
