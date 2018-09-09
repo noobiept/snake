@@ -1,5 +1,9 @@
-module HighScore
-{
+import * as AppStorage from './app_storage.js';
+import * as Options from './options.js';
+import { MapName } from './main.js';
+import { boolToOnOff } from './utilities.js';
+
+
 interface Score {
     numberOfTails: number;
     difficulty: string;
@@ -100,4 +104,3 @@ export function getMapScores( mapName: MapName )
     {
     return HIGH_SCORE[ mapName ];
     }
-}

@@ -1,4 +1,10 @@
 import * as AppStorage from './app_storage.js';
+import * as Options from './options.js';
+import * as MainMenu from './main_menu.js';
+import * as HighScore from './high_score.js';
+import * as GameMenu from './game_menu.js';
+import Snake from './snake.js';
+
 
     // createjs
 export var STAGE: createjs.Stage;
@@ -88,12 +94,12 @@ var callback;
 if ( !data[ 'snake_has_run_before' ] )
     {
     AppStorage.setData({ snake_has_run_before: true });
-    callback = MainMenu.help;
+    callback = MainMenu.openHelp;
     }
 
 else
     {
-    callback = MainMenu.open;
+    callback = MainMenu.openMainMenu;
     }
 
 PRELOAD.addEventListener( 'complete', callback );

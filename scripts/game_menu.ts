@@ -1,5 +1,7 @@
-module GameMenu
-{
+import * as Options from './options.js';
+import { CANVAS } from './main.js';
+
+
 var GAME_MENU: HTMLElement;
 var PLAYERS_SCORE: HTMLElement[] = [];
 var TIMER_ELEMENT: HTMLElement;
@@ -35,7 +37,7 @@ export function init()
         Game.quit();
         };
 
-    GameMenu.reCenterGameMenu();
+    reCenterGameMenu();
     }
 
 
@@ -121,4 +123,3 @@ function togglePause( this: HTMLElement )
 
     Game.pauseResume( IS_PAUSED );
     }
-}
