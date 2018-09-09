@@ -1,5 +1,9 @@
-module MainMenu
-{
+import { MapName } from './main.js';
+import { centerElement, boolToOnOff } from './utilities.js';
+import * as Options from './options.js';
+import * as AppStorage from './app_storage.js';
+
+
 var MAIN_MENU: HTMLElement;
 var OPTIONS: HTMLElement;
 var HIGH_SCORE: HTMLElement;
@@ -60,29 +64,29 @@ export function init( mapName?: string )
 
     options.onclick = function()
         {
-        MainMenu.options();
+        openOptions();
         };
 
     highScore.onclick = function()
         {
-        MainMenu.highScore( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
+        openHighScore( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
         };
 
     help.onclick = function()
         {
-        MainMenu.help();
+        openHelp();
         };
     }
 
 
-export function open()
+export function openMainMenu()
     {
     clear();
 
     $( MAIN_MENU ).css( 'display', 'block' );
 
     SELECTED = MAIN_MENU;
-    MainMenu.reCenter();
+    reCenter();
     }
 
 
@@ -104,7 +108,7 @@ function changeMap( element: HTMLElement, save= true )
     }
 
 
-export function options()
+export function openOptions()
     {
     clear();
 
@@ -130,7 +134,7 @@ export function options()
             $( widthValue ).text( ui.value! );
 
             Options.setCanvasWidth( ui.value! );
-            MainMenu.reCenter();
+            reCenter();
             }
         });
 
@@ -156,7 +160,7 @@ export function options()
             $( heightValue ).text( ui.value! );
 
             Options.setCanvasHeight( ui.value! );
-            MainMenu.reCenter();
+            reCenter();
             }
         });
 
@@ -213,17 +217,17 @@ export function options()
     back.onclick = function()
         {
         Options.save();
-        MainMenu.open();
+        openMainMenu();
         };
 
     $( OPTIONS ).css( 'display', 'block' );
 
     SELECTED = OPTIONS;
-    MainMenu.reCenter();
+    reCenter();
     }
 
 
-export function highScore( mapName: MapName )
+export function openHighScore( mapName: MapName )
     {
     clear();
 
@@ -306,17 +310,17 @@ export function highScore( mapName: MapName )
             // clean the table, otherwise if we return to the high-score page it will have repeated rows
         $( table ).empty();
 
-        MainMenu.open();
+        openMainMenu();
         };
 
     $( HIGH_SCORE ).css( 'display', 'block' );
 
     SELECTED = HIGH_SCORE;
-    MainMenu.reCenter();
+    reCenter();
     }
 
 
-export function help()
+export function openHelp()
     {
     clear();
 
@@ -324,13 +328,13 @@ export function help()
     $( HELP ).css( 'display', 'block' );
 
     SELECTED = HELP;
-    MainMenu.reCenter();
+    reCenter();
 
     var back = <HTMLElement> HELP.querySelector( '#Help-back' );
 
     back.onclick = function()
         {
-        MainMenu.open();
+        openMainMenu();
         };
     }
 
@@ -351,4 +355,3 @@ export function reCenter()
         centerElement( SELECTED );
         }
     }
-}
