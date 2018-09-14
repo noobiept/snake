@@ -1,12 +1,11 @@
-module.exports = function( grunt )
-{
-var root = './';
-var dest = './release/<%= pkg.name %> <%= pkg.version %>/';
+module.exports = function ( grunt ) {
+    var root = './';
+    var dest = './release/<%= pkg.name %> <%= pkg.version %>/';
 
-grunt.initConfig({
+    grunt.initConfig( {
         pkg: grunt.file.readJSON( 'package.json' ),
 
-            // typescript
+        // typescript
         ts: {
             release: {
                 src: [ root + 'scripts/*.ts' ],
@@ -18,14 +17,14 @@ grunt.initConfig({
             }
         },
 
-            // delete the destination folder
+        // delete the destination folder
         clean: {
             release: [
                 dest
             ]
         },
 
-            // copy the images and libraries files
+        // copy the images and libraries files
         copy: {
             release: {
                 expand: true,
@@ -40,24 +39,24 @@ grunt.initConfig({
             }
         },
 
-            // minimize the javascript
+        // minimize the javascript
         uglify: {
             release: {
-                files: [{
+                files: [ {
                     src: 'temp/code.js',
                     dest: dest + 'min.js'
-                }]
+                } ]
             }
         },
 
         cssmin: {
             release: {
-                files: [{
+                files: [ {
                     expand: true,
                     cwd: root + 'css/',
                     src: '*.css',
                     dest: dest + 'css/'
-                }]
+                } ]
             },
             options: {
                 advanced: false
@@ -66,24 +65,24 @@ grunt.initConfig({
 
         processhtml: {
             release: {
-                files: [{
+                files: [ {
                     expand: true,
                     cwd: root,
                     src: 'index.html',
                     dest: dest
-                }]
+                } ]
             }
         }
-    });
+    } );
 
     // load the plugins
-grunt.loadNpmTasks( 'grunt-ts' );
-grunt.loadNpmTasks( 'grunt-contrib-copy' );
-grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
-grunt.loadNpmTasks( 'grunt-contrib-clean' );
-grunt.loadNpmTasks( 'grunt-processhtml' );
+    grunt.loadNpmTasks( 'grunt-ts' );
+    grunt.loadNpmTasks( 'grunt-contrib-copy' );
+    grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+    grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
+    grunt.loadNpmTasks( 'grunt-contrib-clean' );
+    grunt.loadNpmTasks( 'grunt-processhtml' );
 
     // tasks
-grunt.registerTask( 'default', [ 'clean', 'ts', 'copy', 'uglify', 'cssmin', 'processhtml' ] );
+    grunt.registerTask( 'default', [ 'clean', 'ts', 'copy', 'uglify', 'cssmin', 'processhtml' ] );
 };

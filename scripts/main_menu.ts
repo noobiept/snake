@@ -14,14 +14,13 @@ var SELECTED: HTMLElement | null = null;
 var MAP_SELECTED: HTMLElement;
 
 
-export function init( mapName?: string )
-    {
+export function init( mapName?: string ) {
     MAIN_MENU = <HTMLElement> document.querySelector( '#MainMenu' );
     OPTIONS = <HTMLElement> document.querySelector( '#Options' );
     HIGH_SCORE = <HTMLElement> document.querySelector( '#HighScore' );
     HELP = <HTMLElement> document.querySelector( '#Help' );
 
-        // initialize the main menu elements
+    // initialize the main menu elements
     var startGame = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-startGame' );
     var startGame_2players = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
     var selectMap = <HTMLElement> document.getElementById( 'MainMenu-selectMap' );
@@ -29,92 +28,78 @@ export function init( mapName?: string )
     var highScore = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-highScore' );
     var help = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-help' );
 
-    startGame.onclick = function()
-        {
+    startGame.onclick = function () {
         clear();
         Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), false );
-        };
+    };
 
-    startGame_2players.onclick = function()
-        {
+    startGame_2players.onclick = function () {
         clear();
         Game.start( <MapName> MAP_SELECTED.getAttribute( 'data-map' ), true );
-        };
+    };
 
-        // set the click event on all the map elements (to change to that map)
-    for (let a = 0 ; a < selectMap.children.length ; a++)
-        {
+    // set the click event on all the map elements (to change to that map)
+    for ( let a = 0; a < selectMap.children.length; a++ ) {
         let map = <HTMLElement> selectMap.children[ a ];
 
-         map.onclick = function( event )
-            {
+        map.onclick = function ( event ) {
             changeMap( map );
-            };
-        }
-
-        // start with the given map selected
-    if ( mapName )
-        {
-        changeMap( <HTMLElement> selectMap.querySelector( 'li[data-map="' + mapName + '"]' ), false );
-        }
-
-        // start with the first element selected
-    else
-        {
-        changeMap( <HTMLElement> selectMap.firstElementChild, false );
-        }
-
-    options.onclick = function()
-        {
-        openOptions();
-        };
-
-    highScore.onclick = function()
-        {
-        openHighScore( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
-        };
-
-    help.onclick = function()
-        {
-        openHelp();
         };
     }
 
+    // start with the given map selected
+    if ( mapName ) {
+        changeMap( <HTMLElement> selectMap.querySelector( 'li[data-map="' + mapName + '"]' ), false );
+    }
 
-export function openMainMenu()
-    {
+    // start with the first element selected
+    else {
+        changeMap( <HTMLElement> selectMap.firstElementChild, false );
+    }
+
+    options.onclick = function () {
+        openOptions();
+    };
+
+    highScore.onclick = function () {
+        openHighScore( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
+    };
+
+    help.onclick = function () {
+        openHelp();
+    };
+}
+
+
+export function openMainMenu() {
     clear();
 
     $( MAIN_MENU ).css( 'display', 'block' );
 
     SELECTED = MAIN_MENU;
     reCenter();
+}
+
+
+function changeMap( element: HTMLElement, save = true ) {
+    // remove previous selection
+    if ( MAP_SELECTED ) {
+        MAP_SELECTED.classList.remove( 'mapSelected' );
     }
 
-
-function changeMap( element: HTMLElement, save= true )
-    {
-        // remove previous selection
-    if ( MAP_SELECTED )
-        {
-        MAP_SELECTED.classList.remove( 'mapSelected' );
-        }
-
-    if ( save !== false )
-        {
-        AppStorage.setData({ 'snake_selected_map': element.getAttribute( 'data-map' ) });
-        }
+    if ( save !== false ) {
+        AppStorage.setData( { 'snake_selected_map': element.getAttribute( 'data-map' ) } );
+    }
 
     element.classList.add( 'mapSelected' );
     MAP_SELECTED = element;
-    }
+}
 
 
-export function openOptions()
-    {
+export function openOptions() {
     clear();
 
-        // :: Width :: //
+    // :: Width :: //
 
     var width = OPTIONS.querySelector( '#Options-width' )!;
     var widthValue = width.querySelector( 'span' )!;
@@ -125,22 +110,21 @@ export function openOptions()
 
     var widthSlider = width.querySelector( '#Options-width-slider' )!;
 
-    $( widthSlider ).slider({
+    $( widthSlider ).slider( {
         min: 400,
         max: 1800,
         step: 100,
         value: canvasWidth,
         range: 'min',
-        slide: function( event, ui )
-            {
+        slide: function ( event, ui ) {
             $( widthValue ).text( ui.value! );
 
             Options.setCanvasWidth( ui.value! );
             reCenter();
-            }
-        });
+        }
+    } );
 
-        // :: Height :: //
+    // :: Height :: //
 
     var height = OPTIONS.querySelector( '#Options-height' )!;
     var heightValue = height.querySelector( 'span' )!;
@@ -151,86 +135,77 @@ export function openOptions()
 
     var heightSlider = height.querySelector( '#Options-height-slider' )!;
 
-    $( heightSlider ).slider({
+    $( heightSlider ).slider( {
         min: 400,
         max: 1000,
         step: 100,
         value: canvasHeight,
         range: 'min',
-        slide: function( event, ui )
-            {
+        slide: function ( event, ui ) {
             $( heightValue ).text( ui.value! );
 
             Options.setCanvasHeight( ui.value! );
             reCenter();
-            }
-        });
+        }
+    } );
 
-        // :: frame :: //
+    // :: frame :: //
 
     var frame = <HTMLElement> OPTIONS.querySelector( '#Options-frame' )!;
     var frameValue = frame.querySelector( 'span' )!;
 
     $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
 
-    frame.onclick = function()
-        {
-        if ( $( frameValue ).text() == 'On' )
-            {
+    frame.onclick = function () {
+        if ( $( frameValue ).text() == 'On' ) {
             Options.setFrame( false );
-            }
+        }
 
-        else
-            {
+        else {
             Options.setFrame( true );
-            }
+        }
 
         $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
-        };
+    };
 
-        // :: difficulty :: //
+    // :: difficulty :: //
 
     var difficulty = <HTMLElement> OPTIONS.querySelector( '#Options-difficulty' )!;
     var difficultyValue = difficulty.querySelector( 'span' )!;
 
     $( difficultyValue ).text( Options.getDifficultyString() );
 
-    difficulty.onclick = function()
-        {
-        if ( $( difficultyValue ).text() == 'normal' )
-            {
+    difficulty.onclick = function () {
+        if ( $( difficultyValue ).text() == 'normal' ) {
             $( difficultyValue ).text( 'hard' );
 
             Options.setDifficulty( Options.Difficulty.hard );
-            }
+        }
 
-        else
-            {
+        else {
             $( difficultyValue ).text( 'normal' );
 
             Options.setDifficulty( Options.Difficulty.normal );
-            }
-        };
+        }
+    };
 
-        // :: back :: //
+    // :: back :: //
 
     var back = <HTMLElement> OPTIONS.querySelector( '#Options-back' );
 
-    back.onclick = function()
-        {
+    back.onclick = function () {
         Options.save();
         openMainMenu();
-        };
+    };
 
     $( OPTIONS ).css( 'display', 'block' );
 
     SELECTED = OPTIONS;
     reCenter();
-    }
+}
 
 
-export function openHighScore( mapName: MapName )
-    {
+export function openHighScore( mapName: MapName ) {
     clear();
 
     var title = document.getElementById( 'HighScoreTitle' )!;
@@ -238,29 +213,26 @@ export function openHighScore( mapName: MapName )
 
     title.innerHTML = 'High score -- ' + mapName;
 
-            // data
+    // data
     var allScores = HighScore.getMapScores( mapName );
 
-    if ( !allScores || allScores.length === 0 )
-        {
+    if ( !allScores || allScores.length === 0 ) {
         table.innerHTML = 'No score yet.';
-        }
+    }
 
-    else
-        {
-            // header
+    else {
+        // header
         var tableRow = document.createElement( 'tr' );
 
         var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Canvas Width', 'Canvas Height', 'Time' ];
         var tableHeader;
 
-        for (var i = 0 ; i < header.length ; i++)
-            {
+        for ( var i = 0; i < header.length; i++ ) {
             tableHeader = document.createElement( 'th' );
 
             $( tableHeader ).text( header[ i ] );
             tableRow.appendChild( tableHeader );
-            }
+        }
 
         table.appendChild( tableRow );
 
@@ -273,8 +245,7 @@ export function openHighScore( mapName: MapName )
         var canvasHeightData;
         var time;
 
-        for (i = 0 ; i < allScores.length ; i++)
-            {
+        for ( i = 0; i < allScores.length; i++ ) {
             score = allScores[ i ];
 
             tableRow = document.createElement( 'tr' );
@@ -286,7 +257,7 @@ export function openHighScore( mapName: MapName )
             canvasHeightData = document.createElement( 'td' );
             time = document.createElement( 'td' );
 
-            $( position ).text( (i + 1).toString() );
+            $( position ).text( ( i + 1 ).toString() );
             $( numberOfTails ).text( score.numberOfTails );
             $( difficulty ).text( score.difficulty );
             $( frame ).text( score.frame );
@@ -302,31 +273,29 @@ export function openHighScore( mapName: MapName )
             tableRow.appendChild( canvasHeightData );
             tableRow.appendChild( time );
             table.appendChild( tableRow );
-            }
         }
+    }
 
     var back = <HTMLElement> HIGH_SCORE.querySelector( '#HighScore-back' );
 
-    back.onclick = function()
-        {
-            // clean the table, otherwise if we return to the high-score page it will have repeated rows
+    back.onclick = function () {
+        // clean the table, otherwise if we return to the high-score page it will have repeated rows
         $( table ).empty();
 
         openMainMenu();
-        };
+    };
 
     $( HIGH_SCORE ).css( 'display', 'block' );
 
     SELECTED = HIGH_SCORE;
     reCenter();
-    }
+}
 
 
-export function openHelp()
-    {
+export function openHelp() {
     clear();
 
-        // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
+    // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
     $( HELP ).css( 'display', 'block' );
 
     SELECTED = HELP;
@@ -334,26 +303,22 @@ export function openHelp()
 
     var back = <HTMLElement> HELP.querySelector( '#Help-back' );
 
-    back.onclick = function()
-        {
+    back.onclick = function () {
         openMainMenu();
-        };
-    }
+    };
+}
 
 
-function clear()
-    {
-    $( MAIN_MENU  ).css( 'display', 'none' );
-    $( OPTIONS    ).css( 'display', 'none' );
+function clear() {
+    $( MAIN_MENU ).css( 'display', 'none' );
+    $( OPTIONS ).css( 'display', 'none' );
     $( HIGH_SCORE ).css( 'display', 'none' );
-    $( HELP       ).css( 'display', 'none' );
-    }
+    $( HELP ).css( 'display', 'none' );
+}
 
 
-export function reCenter()
-    {
-    if ( SELECTED )
-        {
+export function reCenter() {
+    if ( SELECTED ) {
         centerElement( SELECTED );
-        }
     }
+}

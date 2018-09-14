@@ -35,128 +35,133 @@
         <link rel="stylesheet" type="text/css" href="libraries/jqueryui-1.11/jquery-ui.min.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
-<body>
+    <body>
 
-    <canvas id="mainCanvas"></canvas>
+        <canvas id="mainCanvas"></canvas>
 
-    <div id="MainMenu">
-        <ul id="MainMenu-selectMap">
-            <li data-map="empty">
-                <figure>
-                    <img src="images/map_empty.png" alt="Empty" />
-                    <figcaption>Empty</figcaption>
-                </figure>
-            </li>
-            <li data-map="random">
-                <figure>
-                    <img src="images/map_random.png" alt="Random" />
-                    <figcaption>Random</figcaption>
-                </figure>
-            </li>
-            <li data-map="stairs">
-                <figure>
-                    <img src="images/map_stairs.png" alt="Stairs" />
-                    <figcaption>Stairs</figcaption>
-                </figure>
-            </li>
-            <li data-map="lines">
-                <figure>
-                    <img src="images/map_lines.png" alt="Lines" />
-                    <figcaption>Lines</figcaption>
-                </figure>
-            </li>
-        </ul>
-        <div id="MainMenu-startGame" class="button">Start Game</div>
-        <div id="MainMenu-startGame-2players" class="button">Start Game (2 players)</div>
-        <div id="MainMenu-options" class="button">Options</div>
-        <div id="MainMenu-highScore" class="button">High Score</div>
-        <div id="MainMenu-help" class="button">Help</div>
-        <a id="MainMenu-donate" class="button" href="http://nbpt.eu/donate/" target="_blank">Donate</a>
-    </div>
-
-    <div id="Options">
-        <div id="Options-container">
-            <div id="Options-width">Canvas Width: <span>800</span><div id="Options-width-slider"></div></div>
-            <div id="Options-height">Canvas Height: <span>400</span><div id="Options-height-slider"></div></div>
-            <div id="Options-frame" class="button">Frame: <span>Off</span></div>
-            <div id="Options-difficulty" class="button">Difficulty: <span>normal</span></div>
+        <div id="MainMenu">
+            <ul id="MainMenu-selectMap">
+                <li data-map="empty">
+                    <figure>
+                        <img src="images/map_empty.png" alt="Empty" />
+                        <figcaption>Empty</figcaption>
+                    </figure>
+                </li>
+                <li data-map="random">
+                    <figure>
+                        <img src="images/map_random.png" alt="Random" />
+                        <figcaption>Random</figcaption>
+                    </figure>
+                </li>
+                <li data-map="stairs">
+                    <figure>
+                        <img src="images/map_stairs.png" alt="Stairs" />
+                        <figcaption>Stairs</figcaption>
+                    </figure>
+                </li>
+                <li data-map="lines">
+                    <figure>
+                        <img src="images/map_lines.png" alt="Lines" />
+                        <figcaption>Lines</figcaption>
+                    </figure>
+                </li>
+            </ul>
+            <div id="MainMenu-startGame" class="button">Start Game</div>
+            <div id="MainMenu-startGame-2players" class="button">Start Game (2 players)</div>
+            <div id="MainMenu-options" class="button">Options</div>
+            <div id="MainMenu-highScore" class="button">High Score</div>
+            <div id="MainMenu-help" class="button">Help</div>
+            <a id="MainMenu-donate" class="button" href="http://nbpt.eu/donate/" target="_blank">Donate</a>
         </div>
 
-        <div id="Options-back" class="button">Back</div>
-    </div>
-
-    <div id="HighScore">
-        <h2 id="HighScoreTitle">High Score</h2>
-
-        <table id="HighScore-table"></table>
-
-        <div id="HighScore-back" class="button">Back</div>
-    </div>
-
-    <div id="Help">
-        <h2>Help</h2>
-
-        <!-- have 2 help blocks per 'line' -->
-        <div id="Help-blocks">
-            <div class="Help-block">
-                <p id="Help-elements">
-                    <img src="images/red_apple_10px.png" alt="Food" /> <em>Food</em> : adds a tail to the snake.<br />
-                    <img src="images/orange_10px.png" alt="DoubleFood" /> <em>Double Food</em> : adds two tails to the snake.<br />
-                    <img src="images/wall_help.png" alt="Wall" /> <em>Wall</em> : You can't go through it.
-                </p>
-
-                <p id="Help-2player-winningConditions">
-                    In two player mode, wins the player<br />
-                    which has more tails, or if the other<br />
-                     player collides against your snake.
-                </p>
+        <div id="Options">
+            <div id="Options-container">
+                <div id="Options-width">Canvas Width: <span>800</span>
+                    <div id="Options-width-slider"></div>
+                </div>
+                <div id="Options-height">Canvas Height: <span>400</span>
+                    <div id="Options-height-slider"></div>
+                </div>
+                <div id="Options-frame" class="button">Frame: <span>Off</span></div>
+                <div id="Options-difficulty" class="button">Difficulty: <span>normal</span></div>
             </div>
 
-            <div class="Help-block">
-                <div>
-                    <h4>Player 1 keyboard (green)</h4>
-                    <ul>
-                        <li>up : <em>w</em></li>
-                        <li>down : <em>s</em></li>
-                        <li>left : <em>a</em></li>
-                        <li>right : <em>d</em></li>
-                    </ul>
+            <div id="Options-back" class="button">Back</div>
+        </div>
+
+        <div id="HighScore">
+            <h2 id="HighScoreTitle">High Score</h2>
+
+            <table id="HighScore-table"></table>
+
+            <div id="HighScore-back" class="button">Back</div>
+        </div>
+
+        <div id="Help">
+            <h2>Help</h2>
+
+            <!-- have 2 help blocks per 'line' -->
+            <div id="Help-blocks">
+                <div class="Help-block">
+                    <p id="Help-elements">
+                        <img src="images/red_apple_10px.png" alt="Food" /> <em>Food</em> : adds a tail to the snake.<br />
+                        <img src="images/orange_10px.png" alt="DoubleFood" /> <em>Double Food</em> : adds two tails to
+                        the snake.<br />
+                        <img src="images/wall_help.png" alt="Wall" /> <em>Wall</em> : You can't go through it.
+                    </p>
+
+                    <p id="Help-2player-winningConditions">
+                        In two player mode, wins the player<br />
+                        which has more tails, or if the other<br />
+                        player collides against your snake.
+                    </p>
                 </div>
 
-                <div>
-                    <h4>Player 2 keyboard (blue)</h4>
-                    <ul>
-                        <li>up : <em>up arrow</em></li>
-                        <li>down : <em>down arrow</em></li>
-                        <li>left : <em>left arrow</em></li>
-                        <li>right : <em>right arrow</em></li>
-                    </ul>
+                <div class="Help-block">
+                    <div>
+                        <h4>Player 1 keyboard (green)</h4>
+                        <ul>
+                            <li>up : <em>w</em></li>
+                            <li>down : <em>s</em></li>
+                            <li>left : <em>a</em></li>
+                            <li>right : <em>d</em></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4>Player 2 keyboard (blue)</h4>
+                        <ul>
+                            <li>up : <em>up arrow</em></li>
+                            <li>down : <em>down arrow</em></li>
+                            <li>left : <em>left arrow</em></li>
+                            <li>right : <em>right arrow</em></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="Help-block">
+                    In single player mode, you can play with either the player 1 or player 2 keys.
                 </div>
             </div>
-            <div class="Help-block">
-                In single player mode, you can play with either the player 1 or player 2 keys.
+
+            <div id="Help-back" class="button">Back</div>
+        </div>
+
+        <div id="GameMenu">
+            <div id="GameMenu-left">
+                <div>tails 1: <span id="GameMenu-player1-score" class="displayValue"></span></div>
+                <div>tails 2: <span id="GameMenu-player2-score" class="displayValue"></span></div>
+                <div>Time: <span id="GameMenu-timer" class="displayValue"></span></div>
             </div>
+
+            <div id="GameMenu-right">
+                <div id="GameMenu-pauseResume" class="button">Pause</div>
+                <div id="GameMenu-quit" class="button">Quit</div>
+            </div>
+
+
         </div>
 
-        <div id="Help-back" class="button">Back</div>
-    </div>
+        <div id="Message"></div>
 
-    <div id="GameMenu">
-        <div id="GameMenu-left">
-            <div>tails 1: <span id="GameMenu-player1-score" class="displayValue"></span></div>
-            <div>tails 2: <span id="GameMenu-player2-score" class="displayValue"></span></div>
-            <div>Time: <span id="GameMenu-timer" class="displayValue"></span></div>
-        </div>
-
-        <div id="GameMenu-right">
-            <div id="GameMenu-pauseResume" class="button">Pause</div>
-            <div id="GameMenu-quit" class="button">Quit</div>
-        </div>
-
-
-    </div>
-
-    <div id="Message"></div>
-
-</body>
+    </body>
 </html>

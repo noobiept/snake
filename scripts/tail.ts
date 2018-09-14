@@ -4,241 +4,213 @@ import { ElementsType, Direction, Path, STAGE } from "./main.js";
 import { isNextTo } from "./utilities.js";
 
 
-export default class Tail
-{
-static TAIL_WIDTH = 10;    // width and height need to be the same value
-static TAIL_HEIGHT = Tail.TAIL_WIDTH;
+export default class Tail {
+    static TAIL_WIDTH = 10;    // width and height need to be the same value
+    static TAIL_HEIGHT = Tail.TAIL_WIDTH;
 
-type: ElementsType;
-direction: Direction;
+    type: ElementsType;
+    direction: Direction;
 
-private snakeObject: Snake;
-private path: Path[];
-private shape: createjs.Shape;
-private width: number;
-private height: number;
+    private snakeObject: Snake;
+    private path: Path[];
+    private shape: createjs.Shape;
+    private width: number;
+    private height: number;
 
 
-constructor( snakeObject: Snake )
-    {
-    this.snakeObject = snakeObject;
+    constructor( snakeObject: Snake ) {
+        this.snakeObject = snakeObject;
 
-    var numberOfTails = snakeObject.getNumberOfTails();
-    var x = 0, y = 0;
-    var path = [];
-    var direction;
+        var numberOfTails = snakeObject.getNumberOfTails();
+        var x = 0, y = 0;
+        var path = [];
+        var direction;
 
         // first tail being added, add at the same position as the container (the x/y of the tail is relative to the snake)
-    if ( numberOfTails == 0 )
-        {
-        x = 0;
-        y = 0;
-        direction = snakeObject.starting_direction;
+        if ( numberOfTails == 0 ) {
+            x = 0;
+            y = 0;
+            direction = snakeObject.starting_direction;
         }
 
         // we position after the last tail, and it depends on what direction it is going
-    else
-        {
-        var lastTail = snakeObject.getLastTail();
-        var lastDirection = lastTail.direction;
+        else {
+            var lastTail = snakeObject.getLastTail();
+            var lastDirection = lastTail.direction;
 
-        if ( lastDirection == Direction.left )
-            {
-            x = lastTail.getX() + Tail.TAIL_WIDTH;
-            y = lastTail.getY();
+            if ( lastDirection == Direction.left ) {
+                x = lastTail.getX() + Tail.TAIL_WIDTH;
+                y = lastTail.getY();
             }
 
-        else if ( lastDirection == Direction.right )
-            {
-            x = lastTail.getX() - Tail.TAIL_WIDTH;
-            y = lastTail.getY();
+            else if ( lastDirection == Direction.right ) {
+                x = lastTail.getX() - Tail.TAIL_WIDTH;
+                y = lastTail.getY();
             }
 
-        else if ( lastDirection == Direction.up )
-            {
-            x = lastTail.getX();
-            y = lastTail.getY() + Tail.TAIL_HEIGHT;
+            else if ( lastDirection == Direction.up ) {
+                x = lastTail.getX();
+                y = lastTail.getY() + Tail.TAIL_HEIGHT;
             }
 
-        else if ( lastDirection == Direction.down )
-            {
-            x = lastTail.getX();
-            y = lastTail.getY() - Tail.TAIL_HEIGHT;
+            else if ( lastDirection == Direction.down ) {
+                x = lastTail.getX();
+                y = lastTail.getY() - Tail.TAIL_HEIGHT;
             }
 
             // this tail continues the same path as the previous last one
             // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
-        var pathJson = JSON.stringify( lastTail.path );
-        path = JSON.parse( pathJson );
+            var pathJson = JSON.stringify( lastTail.path );
+            path = JSON.parse( pathJson );
 
-        direction = lastTail.direction;
+            direction = lastTail.direction;
         }
 
         // draw it, and setup the physics body
-    this.shape = this.draw( x, y );
+        this.shape = this.draw( x, y );
 
-    this.width = Tail.TAIL_WIDTH;
-    this.height = Tail.TAIL_HEIGHT;
-    this.type = ElementsType.tail;
-    this.path = path;
-    this.direction = direction;
+        this.width = Tail.TAIL_WIDTH;
+        this.height = Tail.TAIL_HEIGHT;
+        this.type = ElementsType.tail;
+        this.path = path;
+        this.direction = direction;
     }
 
 
-draw( x: number, y: number )
-    {
+    draw( x: number, y: number ) {
         // createjs
-    var snakeTail = new createjs.Shape();
+        var snakeTail = new createjs.Shape();
 
-    snakeTail.regX = Tail.TAIL_WIDTH / 2;
-    snakeTail.regY = Tail.TAIL_HEIGHT / 2;
+        snakeTail.regX = Tail.TAIL_WIDTH / 2;
+        snakeTail.regY = Tail.TAIL_HEIGHT / 2;
 
-    snakeTail.x = x;
-    snakeTail.y = y;
+        snakeTail.x = x;
+        snakeTail.y = y;
 
-    var g = snakeTail.graphics;
+        var g = snakeTail.graphics;
 
-    g.beginFill( this.snakeObject.color );
-    g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
+        g.beginFill( this.snakeObject.color );
+        g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
 
-    STAGE.addChild( snakeTail );
+        STAGE.addChild( snakeTail );
 
-    return snakeTail;
+        return snakeTail;
     }
 
 
-/*
-    Change the shape's color to red, to signal that the tail as been hit
- */
-asBeenHit()
-    {
-    var g = this.shape.graphics;
+    /*
+        Change the shape's color to red, to signal that the tail as been hit
+     */
+    asBeenHit() {
+        var g = this.shape.graphics;
 
-    g.beginFill( 'red' );
-    g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
+        g.beginFill( 'red' );
+        g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
     }
 
 
-remove()
-    {
-    STAGE.removeChild( this.shape );
+    remove() {
+        STAGE.removeChild( this.shape );
     }
 
 
-/*
-    position on the canvas
- */
-position( x: number, y: number )
-    {
-    return this.move( x, y, 0, 0 );
+    /*
+        position on the canvas
+     */
+    position( x: number, y: number ) {
+        return this.move( x, y, 0, 0 );
     }
 
 
-/*
-    move in relation to the current position (or a position given)
- */
-move( x: number, y?: number, startX?: number, startY?: number )
-    {
-    var canvasWidth = Options.getCanvasWidth();
-    var canvasHeight = Options.getCanvasHeight();
+    /*
+        move in relation to the current position (or a position given)
+     */
+    move( x: number, y?: number, startX?: number, startY?: number ) {
+        var canvasWidth = Options.getCanvasWidth();
+        var canvasHeight = Options.getCanvasHeight();
 
-    if ( typeof x == 'undefined' )
-        {
-        x = 0;
+        if ( typeof x == 'undefined' ) {
+            x = 0;
         }
 
-    if ( typeof y == 'undefined' )
-        {
-        y = 0;
+        if ( typeof y == 'undefined' ) {
+            y = 0;
         }
 
-    if ( typeof startX == 'undefined' )
-        {
-        startX = this.getX();
+        if ( typeof startX == 'undefined' ) {
+            startX = this.getX();
         }
 
-    if ( typeof startY == 'undefined' )
-        {
-        startY = this.getY();
+        if ( typeof startY == 'undefined' ) {
+            startY = this.getY();
         }
 
-    var nextX = startX + x;
-    var nextY = startY + y;
+        var nextX = startX + x;
+        var nextY = startY + y;
 
         // see if outside of canvas (if so, move to the other side)
-    if ( nextX < 0 )
-        {
-        nextX = canvasWidth;
+        if ( nextX < 0 ) {
+            nextX = canvasWidth;
         }
 
-    else if ( nextX > canvasWidth )
-        {
-        nextX = 0;
+        else if ( nextX > canvasWidth ) {
+            nextX = 0;
         }
 
 
-    if ( nextY < 0 )
-        {
-        nextY = canvasHeight;
+        if ( nextY < 0 ) {
+            nextY = canvasHeight;
         }
 
-    else if ( nextY > canvasHeight )
-        {
-        nextY = 0;
+        else if ( nextY > canvasHeight ) {
+            nextY = 0;
         }
 
-    this.shape.x = nextX;
-    this.shape.y = nextY;
+        this.shape.x = nextX;
+        this.shape.y = nextY;
     }
 
 
-getX()
-    {
-    return this.shape.x;
+    getX() {
+        return this.shape.x;
     }
 
 
-getY()
-    {
-    return this.shape.y;
+    getY() {
+        return this.shape.y;
     }
 
 
-getWidth()
-    {
-    return this.width;
+    getWidth() {
+        return this.width;
     }
 
 
-getHeight()
-    {
-    return this.height;
+    getHeight() {
+        return this.height;
     }
 
 
-getType()
-    {
-    return this.type;
+    getType() {
+        return this.type;
     }
 
 
-/**
- * Add a new direction to the tail path.
- */
-addNewDirection( path: Path )
-    {
-    this.path.push( path );
+    /**
+     * Add a new direction to the tail path.
+     */
+    addNewDirection( path: Path ) {
+        this.path.push( path );
     }
 
 
-/*
-    Move in the current direction
- */
-moveInDirection()
-    {
+    /*
+        Move in the current direction
+     */
+    moveInDirection() {
         // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
-    var speed = Tail.TAIL_WIDTH;
-    var direction = this.direction;
+        var speed = Tail.TAIL_WIDTH;
+        var direction = this.direction;
 
         // when moving diagonally (45 degrees), we have to slow down the x and y
         // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
@@ -249,59 +221,53 @@ moveInDirection()
         // y = sin( pi / 4 ) -> 0.707
 
         // here we're only moving through 'x' or 'y', so just need 'speed'
-    if ( direction == Direction.left )
-        {
-        this.move( -speed );
+        if ( direction == Direction.left ) {
+            this.move( -speed );
         }
 
-    else if ( direction == Direction.right )
-        {
-        this.move( speed );
+        else if ( direction == Direction.right ) {
+            this.move( speed );
         }
 
-    else if ( direction == Direction.up )
-        {
-        this.move( 0, -speed );
+        else if ( direction == Direction.up ) {
+            this.move( 0, -speed );
         }
 
-    else if ( direction == Direction.down )
-        {
-        this.move( 0, speed );
+        else if ( direction == Direction.down ) {
+            this.move( 0, speed );
         }
     }
 
 
-/**
- * Deal with tail movement.
- */
-tick()
-    {
+    /**
+     * Deal with tail movement.
+     */
+    tick() {
         // have to check if this tail needs to change direction or not
-    var direction = this.direction;
+        var direction = this.direction;
 
-    if ( this.path.length !== 0 )
-        {
-        var checkpoint = this.path[ 0 ];
+        if ( this.path.length !== 0 ) {
+            var checkpoint = this.path[ 0 ];
 
-        var checkX = checkpoint.x;
-        var checkY = checkpoint.y;
+            var checkX = checkpoint.x;
+            var checkY = checkpoint.y;
 
-        var x = this.getX();
-        var y = this.getY();
+            var x = this.getX();
+            var y = this.getY();
 
             // check if its on the right position
-        if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
+            if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
             {
                 // new direction
-            direction = checkpoint.direction;
+                direction = checkpoint.direction;
 
-            this.direction = direction;
+                this.direction = direction;
 
                 // remove the path checkpoint
-            this.path.splice( 0, 1 );
+                this.path.splice( 0, 1 );
             }
         }
 
-    this.moveInDirection();
+        this.moveInDirection();
     }
 }

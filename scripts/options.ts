@@ -3,118 +3,100 @@ import { CANVAS } from './main.js';
 import { centerCanvas } from './main.js';
 
 
-interface OptionsData
-    {
+interface OptionsData {
     canvas_width: number;
     canvas_height: number;
     frameOn: boolean;
     difficulty: Difficulty;
-    }
+}
 
-export enum Difficulty
-    {
+export enum Difficulty {
     normal = 0,
     hard = 1
-    };
+};
 
 var OPTIONS: OptionsData = {
     canvas_width: 800,
     canvas_height: 400,
     frameOn: false,
     difficulty: Difficulty.normal
-    };
+};
 
 
-export function load( options: OptionsData )
-    {
-    if ( options )
-        {
-        if ( $.isNumeric( options.canvas_width ) )
-            {
+export function load( options: OptionsData ) {
+    if ( options ) {
+        if ( $.isNumeric( options.canvas_width ) ) {
             OPTIONS.canvas_width = options.canvas_width;
-            }
+        }
 
-        if ( $.isNumeric( options.canvas_height ) )
-            {
+        if ( $.isNumeric( options.canvas_height ) ) {
             OPTIONS.canvas_height = options.canvas_height;
-            }
+        }
 
-        if ( typeof options.frameOn !== 'undefined' )
-            {
+        if ( typeof options.frameOn !== 'undefined' ) {
             OPTIONS.frameOn = options.frameOn;
-            }
+        }
 
-        if ( typeof options.difficulty !== 'undefined' )
-            {
+        if ( typeof options.difficulty !== 'undefined' ) {
             OPTIONS.difficulty = options.difficulty;
-            }
         }
     }
+}
 
 
-export function save()
-    {
-    AppStorage.setData({ snake_options: OPTIONS });
-    }
+export function save() {
+    AppStorage.setData( { snake_options: OPTIONS } );
+}
 
 
-export function setDifficulty( difficulty: Difficulty )
-    {
+export function setDifficulty( difficulty: Difficulty ) {
     OPTIONS.difficulty = difficulty;
-    }
+}
 
 
-export function getDifficulty()
-    {
+export function getDifficulty() {
     return OPTIONS.difficulty;
-    }
+}
 
 
-export function getDifficultyString()
-    {
+export function getDifficultyString() {
     return Difficulty[ OPTIONS.difficulty ];
-    }
+}
 
 
-export function setCanvasWidth( width: number )
-    {
+export function setCanvasWidth( width: number ) {
     OPTIONS.canvas_width = width;
 
     CANVAS.width = width;
 
     centerCanvas();
-    }
+}
 
 
-export function getCanvasWidth()
-    {
+export function getCanvasWidth() {
     return OPTIONS.canvas_width;
-    }
+}
 
 
-export function setCanvasHeight( height: number )
-    {
+export function setCanvasHeight( height: number ) {
     OPTIONS.canvas_height = height;
 
     CANVAS.height = height;
 
     centerCanvas();
-    }
+}
 
 
-export function getCanvasHeight()
-    {
+export function getCanvasHeight() {
     return OPTIONS.canvas_height;
-    }
+}
 
 
-export function setFrame( yesNo: boolean )
-    {
+export function setFrame( yesNo: boolean ) {
     OPTIONS.frameOn = yesNo;
-    }
+}
 
 
-export function getFrame()
-    {
+export function getFrame() {
     return OPTIONS.frameOn;
-    }
+}

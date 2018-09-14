@@ -3,37 +3,33 @@ import Snake from './snake.js';
 import { PRELOAD, STAGE } from './main.js';
 
 
-export default class DoubleFood extends Food
-{
-constructor( x: number, y: number )
-    {
-    super( x, y );
+export default class DoubleFood extends Food {
+    constructor( x: number, y: number ) {
+        super( x, y );
     }
 
 
-draw( x: number, y: number )
-    {
-    var width = this.width;
-    var height = this.height;
+    draw( x: number, y: number ) {
+        var width = this.width;
+        var height = this.height;
 
-    var food = new createjs.Bitmap( <HTMLImageElement> PRELOAD.getResult( 'orange' ) );
+        var food = new createjs.Bitmap( <HTMLImageElement> PRELOAD.getResult( 'orange' ) );
 
-    food.regX = width / 2;
-    food.regY = height / 2;
+        food.regX = width / 2;
+        food.regY = height / 2;
 
-    food.x = x;
-    food.y = y;
+        food.x = x;
+        food.y = y;
 
-    STAGE.addChild( food );
+        STAGE.addChild( food );
 
-    this.shape = food;
+        this.shape = food;
     }
 
 
-eat( snakeObject: Snake )
-    {
-    snakeObject.addTail();
-    snakeObject.addTail();
+    eat( snakeObject: Snake ) {
+        snakeObject.addTail();
+        snakeObject.addTail();
 
         //HERE and increase momentarily the snake's speed, as the disadvantage
     }
