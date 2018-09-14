@@ -1,5 +1,4 @@
 syntax: glob
-.vscode/
 release/
 node_modules/
 scripts/*.js
