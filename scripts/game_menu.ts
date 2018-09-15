@@ -1,7 +1,5 @@
-import * as Options from './options.js';
 import * as Game from './game.js';
 import Timer from './timer.js';
-import { CANVAS } from './main.js';
 
 
 var GAME_MENU: HTMLElement;

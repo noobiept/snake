@@ -1,5 +1,5 @@
 import * as AppStorage from './app_storage.js';
-import { CANVAS } from './main.js';
+import { changeCanvasDimensions } from './main.js';
 
 
 interface OptionsData {
@@ -66,7 +66,7 @@ export function getDifficultyString() {
 export function setCanvasWidth( width: number ) {
     OPTIONS.canvas_width = width;
 
-    CANVAS.width = width;
+    changeCanvasDimensions( width );
 }
 
 
@@ -78,7 +78,7 @@ export function getCanvasWidth() {
 export function setCanvasHeight( height: number ) {
     OPTIONS.canvas_height = height;
 
-    CANVAS.height = height;
+    changeCanvasDimensions( undefined, height );
 }
 
 

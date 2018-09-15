@@ -1,7 +1,3 @@
-import * as Options from './options.js';
-import { CANVAS } from './main.js';
-
-
 /*
  * Keys code for the keyboard events
  */

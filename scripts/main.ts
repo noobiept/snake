@@ -46,8 +46,8 @@ export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
 // createjs
 export var STAGE: createjs.Stage;
 
-// program stuff
-export var CANVAS: HTMLCanvasElement;
+// the canvas element where the game is drawn in
+var CANVAS: HTMLCanvasElement;
 
 // used to access preloaded assets (images/etc)
 var PRELOAD: createjs.LoadQueue;
@@ -146,6 +146,21 @@ export function resume() {
  */
 export function getAsset( name: 'orange' | 'apple' ) {
     return PRELOAD.getResult( name ) as HTMLImageElement;
+}
+
+
+/**
+ * Change the width/height of the canvas element where the game is drawn.
+ * Pass 'undefined' if you don't want to change one of them.
+ */
+export function changeCanvasDimensions( width?: number, height?: number ) {
+    if ( width ) {
+        CANVAS.width = width;
+    }
+
+    if ( height ) {
+        CANVAS.height = height;
+    }
 }
 
 
