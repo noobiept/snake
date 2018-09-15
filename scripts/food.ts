@@ -1,5 +1,5 @@
 import Snake from './snake.js';
-import { PRELOAD, STAGE } from "./main.js";
+import { getAsset, STAGE } from "./main.js";
 
 
 export default class Food {
@@ -26,7 +26,7 @@ export default class Food {
         var width = this.width;
         var height = this.height;
 
-        var food = new createjs.Bitmap( <HTMLImageElement> PRELOAD.getResult( 'apple' ) );
+        var food = new createjs.Bitmap( getAsset( 'apple' ) );
 
         food.regX = width / 2;
         food.regY = height / 2;

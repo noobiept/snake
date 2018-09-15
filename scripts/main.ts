@@ -50,7 +50,7 @@ export interface Dict {
 }
 
 // used to access preloaded assets (images/etc)
-export var PRELOAD: createjs.LoadQueue;
+var PRELOAD: createjs.LoadQueue;
 
 
 window.onload = function () {
@@ -159,6 +159,14 @@ export function pause() {
 
 export function resume() {
     createjs.Ticker.setPaused( false );
+}
+
+
+/**
+ * Returns an asset that was pre-loaded.
+ */
+export function getAsset( name: 'orange' | 'apple' ) {
+    return PRELOAD.getResult( name ) as HTMLImageElement;
 }
 
 
