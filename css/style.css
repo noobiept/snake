@@ -13,6 +13,11 @@ body
     padding: 0;
     }
 
+#GameContent
+    {
+    position: relative;
+    }
+
 #MainCanvas
     {
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -59,13 +64,22 @@ em
 
     /* Main Menus */
 
-#MainMenu, #Options, #HighScore, #GameMenu, #Help
+#MainMenu, #Options, #HighScore, #Help
     {
     display: none;
     position: absolute; /* position the elements on the center of the window (both horizontally and vertically) */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    }
+
+#GameMenu
+    {
+    display: none;
+    position: absolute; /* position below the canvas at the bottom/right corner */
+    bottom: 0;
+    right: 0;
+    transform: translate(0, 100%);
     }
 
 #MainMenu-selectMap

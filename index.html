@@ -36,7 +36,22 @@
         <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
     <body>
-        <canvas id="MainCanvas"></canvas>
+        <div id="GameContent">
+            <canvas id="MainCanvas"></canvas>
+
+            <div id="GameMenu">
+                <div id="GameMenu-left">
+                    <div>tails 1: <span id="GameMenu-player1-score" class="displayValue"></span></div>
+                    <div>tails 2: <span id="GameMenu-player2-score" class="displayValue"></span></div>
+                    <div>Time: <span id="GameMenu-timer" class="displayValue"></span></div>
+                </div>
+
+                <div id="GameMenu-right">
+                    <div id="GameMenu-pauseResume" class="button">Pause</div>
+                    <div id="GameMenu-quit" class="button">Quit</div>
+                </div>
+            </div>
+        </div>
 
         <div id="MainMenu">
             <ul id="MainMenu-selectMap">
@@ -143,21 +158,6 @@
             </div>
 
             <div id="Help-back" class="button">Back</div>
-        </div>
-
-        <div id="GameMenu">
-            <div id="GameMenu-left">
-                <div>tails 1: <span id="GameMenu-player1-score" class="displayValue"></span></div>
-                <div>tails 2: <span id="GameMenu-player2-score" class="displayValue"></span></div>
-                <div>Time: <span id="GameMenu-timer" class="displayValue"></span></div>
-            </div>
-
-            <div id="GameMenu-right">
-                <div id="GameMenu-pauseResume" class="button">Pause</div>
-                <div id="GameMenu-quit" class="button">Quit</div>
-            </div>
-
-
         </div>
 
         <div id="Message"></div>
