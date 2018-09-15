@@ -1,6 +1,5 @@
 import * as AppStorage from './app_storage.js';
 import { CANVAS } from './main.js';
-import { centerCanvas } from './main.js';
 
 
 interface OptionsData {
@@ -68,8 +67,6 @@ export function setCanvasWidth( width: number ) {
     OPTIONS.canvas_width = width;
 
     CANVAS.width = width;
-
-    centerCanvas();
 }
 
 
@@ -82,8 +79,6 @@ export function setCanvasHeight( height: number ) {
     OPTIONS.canvas_height = height;
 
     CANVAS.height = height;
-
-    centerCanvas();
 }
 
 

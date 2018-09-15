@@ -7,12 +7,6 @@ import * as Game from './game.js';
 import Snake from './snake.js';
 
 
-// createjs
-export var STAGE: createjs.Stage;
-
-// program stuff
-export var CANVAS: HTMLCanvasElement;
-
 // the elements type in the game (useful to identify objects, call .getType() )
 export enum ElementsType {
     tail,
@@ -43,11 +37,17 @@ export interface KeyboardMapping {
     down2?: number;
 }
 
-export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
-
 export interface Dict {
     [ key: string ]: any;
 }
+
+export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
+
+// createjs
+export var STAGE: createjs.Stage;
+
+// program stuff
+export var CANVAS: HTMLCanvasElement;
 
 // used to access preloaded assets (images/etc)
 var PRELOAD: createjs.LoadQueue;
@@ -62,11 +62,9 @@ function initApp( data: Dict ) {
     Options.load( data[ 'snake_options' ] );
 
     // setup the canvas
-    CANVAS = <HTMLCanvasElement> document.querySelector( '#mainCanvas' );
+    CANVAS = <HTMLCanvasElement> document.querySelector( '#MainCanvas' );
     CANVAS.width = Options.getCanvasWidth();
     CANVAS.height = Options.getCanvasHeight();
-
-    centerCanvas();
 
     // :: createjs stuff :: //
     STAGE = new createjs.Stage( CANVAS );
@@ -104,7 +102,6 @@ function initApp( data: Dict ) {
 
 
 window.onresize = function () {
-    centerCanvas();
     MainMenu.reCenter();
     GameMenu.reCenterGameMenu();
 };
@@ -138,18 +135,6 @@ window.onkeyup = function ( event ) {
 
     return true;
 };
-
-
-/*
-    center the canvas in the middle of window
- */
-export function centerCanvas() {
-    var left = window.innerWidth / 2 - CANVAS.width / 2;
-    var top = window.innerHeight / 2 - CANVAS.height / 2;
-
-    $( CANVAS ).css( 'left', left + 'px' );
-    $( CANVAS ).css( 'top', top + 'px' );
-}
 
 
 export function pause() {
