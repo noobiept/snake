@@ -1,11 +1,6 @@
-import { centerElement } from './utilities.js';
-
-
 interface MessageArgs {
     text: string;
-    x?: number;
-    y?: number;
-    cssClass: string;
+    cssClass?: string;
 }
 
 
@@ -15,19 +10,10 @@ export default class Message {
 
     constructor( stuff: MessageArgs ) {
         var message = <HTMLDivElement> document.querySelector( '#Message' );
-        $( message ).html( stuff.text );
-
-        if ( typeof stuff.x == 'undefined' ) {
-            centerElement( message );
-        }
-
-        else {
-            $( message ).css( 'left', stuff.x + 'px' );
-            $( message ).css( 'top', stuff.y + 'px' );
-        }
+        message.innerHTML = stuff.text;
 
         if ( typeof stuff.cssClass != 'undefined' ) {
-            $( message ).addClass( stuff.cssClass );
+            message.classList.add( stuff.cssClass );
         }
 
         $( message ).css( 'display', 'block' );

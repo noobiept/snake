@@ -142,27 +142,6 @@ export function checkOverflowPosition( x_or_y: number, limit: number ) {
 }
 
 
-/*
-    Centers an html element in the middle of the game canvas (assumes html element has its css position: absolute;
- */
-export function centerElement( element: HTMLElement ) {
-    var canvasWidth = Options.getCanvasWidth();
-    var canvasHeight = Options.getCanvasHeight();
-
-    // the canvas may not be starting at 0,0 position, so we need to account for that
-    var canvasPosition = $( CANVAS ).position();
-
-    var left = canvasWidth / 2 - $( element ).width()! / 2 + canvasPosition.left;
-
-    var top = canvasHeight / 2 - $( element ).height()! / 2 + canvasPosition.top;
-
-    $( element ).css( {
-        top: top + 'px',
-        left: left + 'px'
-    } );
-}
-
-
 export function boolToOnOff( value: boolean ) {
     if ( value == true ) {
         return 'On';

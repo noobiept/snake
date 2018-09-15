@@ -40,10 +40,11 @@ body
 
 #Message
     {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     }
 
 .Message-gameOver
