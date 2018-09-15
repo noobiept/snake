@@ -62,11 +62,10 @@ em
 #MainMenu, #Options, #HighScore, #GameMenu, #Help
     {
     display: none;
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
+    position: absolute; /* position the elements on the center of the window (both horizontally and vertically) */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     }
 
 #MainMenu-selectMap

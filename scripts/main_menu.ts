@@ -3,7 +3,7 @@ import * as AppStorage from './app_storage.js';
 import * as Game from './game.js';
 import * as HighScore from './high_score.js';
 import { MapName } from './main.js';
-import { centerElement, boolToOnOff } from './utilities.js';
+import { boolToOnOff } from './utilities.js';
 
 
 var MAIN_MENU: HTMLElement;
@@ -77,7 +77,6 @@ export function openMainMenu() {
     $( MAIN_MENU ).css( 'display', 'block' );
 
     SELECTED = MAIN_MENU;
-    reCenter();
 }
 
 
@@ -120,7 +119,6 @@ export function openOptions() {
             $( widthValue ).text( ui.value! );
 
             Options.setCanvasWidth( ui.value! );
-            reCenter();
         }
     } );
 
@@ -145,7 +143,6 @@ export function openOptions() {
             $( heightValue ).text( ui.value! );
 
             Options.setCanvasHeight( ui.value! );
-            reCenter();
         }
     } );
 
@@ -201,7 +198,6 @@ export function openOptions() {
     $( OPTIONS ).css( 'display', 'block' );
 
     SELECTED = OPTIONS;
-    reCenter();
 }
 
 
@@ -288,7 +284,6 @@ export function openHighScore( mapName: MapName ) {
     $( HIGH_SCORE ).css( 'display', 'block' );
 
     SELECTED = HIGH_SCORE;
-    reCenter();
 }
 
 
@@ -299,7 +294,6 @@ export function openHelp() {
     $( HELP ).css( 'display', 'block' );
 
     SELECTED = HELP;
-    reCenter();
 
     var back = <HTMLElement> HELP.querySelector( '#Help-back' );
 
@@ -314,11 +308,4 @@ function clear() {
     $( OPTIONS ).css( 'display', 'none' );
     $( HIGH_SCORE ).css( 'display', 'none' );
     $( HELP ).css( 'display', 'none' );
-}
-
-
-export function reCenter() {
-    if ( SELECTED ) {
-        centerElement( SELECTED );
-    }
 }

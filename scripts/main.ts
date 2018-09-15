@@ -101,12 +101,6 @@ function initApp( data: Dict ) {
 }
 
 
-window.onresize = function () {
-    MainMenu.reCenter();
-    GameMenu.reCenterGameMenu();
-};
-
-
 window.onkeydown = function ( event ) {
     var returnValue;
 
