@@ -80,6 +80,7 @@ em
     bottom: 0;
     right: 0;
     transform: translate(0, 100%);
+    width: 100%;
     }
 
 #MainMenu-selectMap
@@ -155,14 +156,14 @@ figure
 #GameMenu-left > *
     {
     display: inline-block;
-    padding: 0;
-    margin: 10px 0;
+    padding: 10px 0;
+    margin: 0;
     }
 
 #GameMenu-right > *
     {
     display: inline-block;
-    width: 120px;
+    width: 100px;
     padding: 0;
     margin: 10px 10px;
     }
