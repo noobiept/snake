@@ -117,12 +117,13 @@ function initMainMenu( mapName?: string ) {
 function initOptions() {
     // :: Width :: //
 
-    var canvasWidth = Options.getCanvasWidth();
+    var canvasWidth = Options.getCanvasWidth().toString();
     var widthValue = document.getElementById( 'Options-width-value' ) as HTMLElement;
     var widthSlider = document.getElementById( 'Options-width-slider' ) as HTMLInputElement;
 
     // set the initial value
-    widthValue.innerText = canvasWidth.toString();
+    widthValue.innerText = canvasWidth;
+    widthSlider.value = canvasWidth;
 
     widthSlider.oninput = function () {
         const value = widthSlider.value;
@@ -133,12 +134,13 @@ function initOptions() {
 
     // :: Height :: //
 
-    var canvasHeight = Options.getCanvasHeight();
+    var canvasHeight = Options.getCanvasHeight().toString();
     var heightValue = document.getElementById( 'Options-height-value' ) as HTMLElement;
     var heightSlider = document.getElementById( 'Options-height-slider' ) as HTMLInputElement;
 
     // set the initial value
-    heightValue.innerText = canvasHeight.toString();
+    heightValue.innerText = canvasHeight;
+    heightSlider.value = canvasHeight;
 
     heightSlider.oninput = function () {
         const value = heightSlider.value;
