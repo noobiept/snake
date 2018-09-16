@@ -100,51 +100,35 @@ export function openOptions() {
 
     // :: Width :: //
 
-    var width = OPTIONS.querySelector( '#Options-width' )!;
-    var widthValue = width.querySelector( 'span' )!;
-
     var canvasWidth = Options.getCanvasWidth();
+    var widthValue = document.getElementById( 'Options-width-value' ) as HTMLElement;
+    var widthSlider = document.getElementById( 'Options-width-slider' ) as HTMLInputElement;
 
-    $( widthValue ).text( canvasWidth );
+    // set the initial value
+    widthValue.innerText = canvasWidth.toString();
 
-    var widthSlider = width.querySelector( '#Options-width-slider' )!;
+    widthSlider.oninput = function () {
+        const value = widthSlider.value;
 
-    $( widthSlider ).slider( {
-        min: 400,
-        max: 1800,
-        step: 100,
-        value: canvasWidth,
-        range: 'min',
-        slide: function ( event, ui ) {
-            $( widthValue ).text( ui.value! );
-
-            Options.setCanvasWidth( ui.value! );
-        }
-    } );
+        widthValue.innerText = value;
+        Options.setCanvasWidth( parseInt( value, 10 ) );
+    }
 
     // :: Height :: //
 
-    var height = OPTIONS.querySelector( '#Options-height' )!;
-    var heightValue = height.querySelector( 'span' )!;
-
     var canvasHeight = Options.getCanvasHeight();
+    var heightValue = document.getElementById( 'Options-height-value' ) as HTMLElement;
+    var heightSlider = document.getElementById( 'Options-height-slider' ) as HTMLInputElement;
 
-    $( heightValue ).text( canvasHeight );
+    // set the initial value
+    heightValue.innerText = canvasHeight.toString();
 
-    var heightSlider = height.querySelector( '#Options-height-slider' )!;
+    heightSlider.oninput = function () {
+        const value = heightSlider.value;
 
-    $( heightSlider ).slider( {
-        min: 400,
-        max: 1000,
-        step: 100,
-        value: canvasHeight,
-        range: 'min',
-        slide: function ( event, ui ) {
-            $( heightValue ).text( ui.value! );
-
-            Options.setCanvasHeight( ui.value! );
-        }
-    } );
+        heightValue.innerText = value;
+        Options.setCanvasHeight( parseInt( value, 10 ) );
+    }
 
     // :: frame :: //
 
