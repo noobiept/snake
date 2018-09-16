@@ -138,6 +138,41 @@ figure
     margin: 20px;
     }
 
+.rangeInput
+    {
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    height: 20px;
+    border-radius: 5px;
+    background-color: rgb(230, 230, 230);
+    transition: background-color 0.2s;
+    }
+
+.rangeInput:hover
+    {
+    background-color: white;
+    }
+
+.rangeInput::-webkit-slider-thumb
+    {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    width: 20px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: rgb(20, 20, 20);
+    transition: background-color 0.2s;
+    }
+
+.rangeInput::-webkit-slider-thumb:hover
+    {
+    background-color: black;
+    }
+
     /* Game Menu */
 
 #GameMenu-left
