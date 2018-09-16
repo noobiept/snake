@@ -128,12 +128,17 @@ figure
     margin: 2px;
     }
 
+.backButton
+    {
+    margin-top: 40px;
+    }
+
     /* Options Menu */
 
 #Options-container > *
     {
     display: inline-block;
-    width: 160px;
+    width: 170px;
     padding: 0;
     margin: 20px;
     }
