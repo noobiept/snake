@@ -90,11 +90,11 @@ function initApp( data: Dict ) {
     // on the first run of the program, show the help page
     if ( !data[ 'snake_has_run_before' ] ) {
         AppStorage.setData( { snake_has_run_before: true } );
-        callback = MainMenu.openHelp;
+        callback = () => { MainMenu.open( 'help' ) };
     }
 
     else {
-        callback = MainMenu.openMainMenu;
+        callback = () => { MainMenu.open( 'mainMenu' ) };
     }
 
     PRELOAD.addEventListener( 'complete', callback );

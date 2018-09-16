@@ -375,7 +375,7 @@ export function quit() {
     addScores();
 
     clear();
-    MainMenu.openMainMenu();
+    MainMenu.open( 'mainMenu' );
 }
 
 

@@ -6,27 +6,72 @@ import { MapName } from './main.js';
 import { boolToOnOff } from './utilities.js';
 
 
-var MAIN_MENU: HTMLElement;
-var OPTIONS: HTMLElement;
-var HIGH_SCORE: HTMLElement;
-var HELP: HTMLElement;
 var SELECTED: HTMLElement | null = null;
 var MAP_SELECTED: HTMLElement;
 
+interface Pages {
+    mainMenu: HTMLElement;
+    options: HTMLElement;
+    highScore: HTMLElement;
+    help: HTMLElement;
+}
+
+let PAGES: Pages;
+
 
 export function init( mapName?: string ) {
-    MAIN_MENU = <HTMLElement> document.querySelector( '#MainMenu' );
-    OPTIONS = <HTMLElement> document.querySelector( '#Options' );
-    HIGH_SCORE = <HTMLElement> document.querySelector( '#HighScore' );
-    HELP = <HTMLElement> document.querySelector( '#Help' );
+    PAGES = {
+        mainMenu: document.getElementById( 'MainMenu' )!,
+        options: document.getElementById( 'Options' )!,
+        highScore: document.getElementById( 'HighScore' )!,
+        help: document.getElementById( 'Help' )!
+    };
+
+
+    initMainMenu( mapName );
+    initOptions();
+    initHighScore();
+    initHelp();
+}
+
+
+/**
+ * Open a page from the main menu.
+ */
+export function open( page: keyof Pages ) {
+    const container = PAGES[ page ];
+
+    clear();
+
+    container.style.display = 'block';
+    SELECTED = container;
+}
+
+
+function changeMap( element: HTMLElement, save = true ) {
+    // remove previous selection
+    if ( MAP_SELECTED ) {
+        MAP_SELECTED.classList.remove( 'mapSelected' );
+    }
+
+    if ( save !== false ) {
+        AppStorage.setData( { 'snake_selected_map': element.getAttribute( 'data-map' ) } );
+    }
+
+    element.classList.add( 'mapSelected' );
+    MAP_SELECTED = element;
+}
+
+
+function initMainMenu( mapName?: string ) {
 
     // initialize the main menu elements
-    var startGame = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-startGame' );
-    var startGame_2players = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-startGame-2players' );
-    var selectMap = <HTMLElement> document.getElementById( 'MainMenu-selectMap' );
-    var options = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-options' );
-    var highScore = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-highScore' );
-    var help = <HTMLElement> MAIN_MENU.querySelector( '#MainMenu-help' );
+    var startGame = document.getElementById( 'MainMenu-startGame' )!;
+    var startGame_2players = document.getElementById( 'MainMenu-startGame-2players' )!;
+    var selectMap = document.getElementById( 'MainMenu-selectMap' )!;
+    var options = document.getElementById( 'MainMenu-options' )!;
+    var highScore = document.getElementById( 'MainMenu-highScore' )!;
+    var help = document.getElementById( 'MainMenu-help' )!;
 
     startGame.onclick = function () {
         clear();
@@ -58,7 +103,7 @@ export function init( mapName?: string ) {
     }
 
     options.onclick = function () {
-        openOptions();
+        open( 'options' );
     };
 
     highScore.onclick = function () {
@@ -66,38 +111,12 @@ export function init( mapName?: string ) {
     };
 
     help.onclick = function () {
-        openHelp();
+        open( 'help' );
     };
 }
 
 
-export function openMainMenu() {
-    clear();
-
-    $( MAIN_MENU ).css( 'display', 'block' );
-
-    SELECTED = MAIN_MENU;
-}
-
-
-function changeMap( element: HTMLElement, save = true ) {
-    // remove previous selection
-    if ( MAP_SELECTED ) {
-        MAP_SELECTED.classList.remove( 'mapSelected' );
-    }
-
-    if ( save !== false ) {
-        AppStorage.setData( { 'snake_selected_map': element.getAttribute( 'data-map' ) } );
-    }
-
-    element.classList.add( 'mapSelected' );
-    MAP_SELECTED = element;
-}
-
-
-export function openOptions() {
-    clear();
-
+function initOptions() {
     // :: Width :: //
 
     var canvasWidth = Options.getCanvasWidth();
@@ -132,7 +151,7 @@ export function openOptions() {
 
     // :: frame :: //
 
-    var frame = <HTMLElement> OPTIONS.querySelector( '#Options-frame' )!;
+    var frame = document.getElementById( 'Options-frame' )!;
     var frameValue = frame.querySelector( 'span' )!;
 
     $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
@@ -151,7 +170,7 @@ export function openOptions() {
 
     // :: difficulty :: //
 
-    var difficulty = <HTMLElement> OPTIONS.querySelector( '#Options-difficulty' )!;
+    var difficulty = document.getElementById( 'Options-difficulty' )!;
     var difficultyValue = difficulty.querySelector( 'span' )!;
 
     $( difficultyValue ).text( Options.getDifficultyString() );
@@ -172,16 +191,30 @@ export function openOptions() {
 
     // :: back :: //
 
-    var back = <HTMLElement> OPTIONS.querySelector( '#Options-back' );
+    var back = document.getElementById( 'Options-back' )!;
 
     back.onclick = function () {
         Options.save();
-        openMainMenu();
+        open( 'mainMenu' );
     };
+}
 
-    $( OPTIONS ).css( 'display', 'block' );
 
-    SELECTED = OPTIONS;
+function initHighScore() {
+    var back = document.getElementById( 'HighScore-back' )!;
+
+    back.onclick = function () {
+        open( 'mainMenu' );
+    };
+}
+
+
+function initHelp() {
+    var back = document.getElementById( 'Help-back' )!;
+
+    back.onclick = function () {
+        open( 'mainMenu' );
+    };
 }
 
 
@@ -189,7 +222,9 @@ export function openHighScore( mapName: MapName ) {
     clear();
 
     var title = document.getElementById( 'HighScoreTitle' )!;
-    var table = HIGH_SCORE.querySelector( '#HighScore-table' )!;
+    var table = document.getElementById( '#HighScore-table' )!;
+
+    $( table ).empty();
 
     title.innerHTML = 'High score -- ' + mapName;
 
@@ -256,40 +291,21 @@ export function openHighScore( mapName: MapName ) {
         }
     }
 
-    var back = <HTMLElement> HIGH_SCORE.querySelector( '#HighScore-back' );
+    $( PAGES.highScore ).css( 'display', 'block' );
 
-    back.onclick = function () {
-        // clean the table, otherwise if we return to the high-score page it will have repeated rows
-        $( table ).empty();
-
-        openMainMenu();
-    };
-
-    $( HIGH_SCORE ).css( 'display', 'block' );
-
-    SELECTED = HIGH_SCORE;
+    SELECTED = PAGES.highScore;
 }
 
 
-export function openHelp() {
-    clear();
-
-    // this needs to be first, so that the calculations below work (on the other functions above this is executed at the end... doesn't really matter)
-    $( HELP ).css( 'display', 'block' );
-
-    SELECTED = HELP;
-
-    var back = <HTMLElement> HELP.querySelector( '#Help-back' );
-
-    back.onclick = function () {
-        openMainMenu();
-    };
-}
-
-
+/**
+ * Hide all the menu pages.
+ */
 function clear() {
-    $( MAIN_MENU ).css( 'display', 'none' );
-    $( OPTIONS ).css( 'display', 'none' );
-    $( HIGH_SCORE ).css( 'display', 'none' );
-    $( HELP ).css( 'display', 'none' );
+    const keys = Object.keys( PAGES ) as ( keyof Pages )[];
+
+    keys.map( ( key ) => {
+        const container = PAGES[ key ];
+
+        container.style.display = 'none';
+    } );
 }
