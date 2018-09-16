@@ -24,11 +24,11 @@ var OPTIONS: OptionsData = {
 
 export function load( options: OptionsData ) {
     if ( options ) {
-        if ( $.isNumeric( options.canvas_width ) ) {
+        if ( Number.isInteger( options.canvas_width ) ) {
             OPTIONS.canvas_width = options.canvas_width;
         }
 
-        if ( $.isNumeric( options.canvas_height ) ) {
+        if ( Number.isInteger( options.canvas_height ) ) {
             OPTIONS.canvas_height = options.canvas_height;
         }
 

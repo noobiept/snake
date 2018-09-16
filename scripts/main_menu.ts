@@ -154,10 +154,10 @@ function initOptions() {
     var frame = document.getElementById( 'Options-frame' )!;
     var frameValue = frame.querySelector( 'span' )!;
 
-    $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
+    frameValue.innerText = boolToOnOff( Options.getFrame() );
 
     frame.onclick = function () {
-        if ( $( frameValue ).text() == 'On' ) {
+        if ( frameValue.innerText === 'On' ) {
             Options.setFrame( false );
         }
 
@@ -165,7 +165,7 @@ function initOptions() {
             Options.setFrame( true );
         }
 
-        $( frameValue ).text( boolToOnOff( Options.getFrame() ) );
+        frameValue.innerText = boolToOnOff( Options.getFrame() );
     };
 
     // :: difficulty :: //
@@ -173,17 +173,17 @@ function initOptions() {
     var difficulty = document.getElementById( 'Options-difficulty' )!;
     var difficultyValue = difficulty.querySelector( 'span' )!;
 
-    $( difficultyValue ).text( Options.getDifficultyString() );
+    difficultyValue.innerText = Options.getDifficultyString();
 
     difficulty.onclick = function () {
-        if ( $( difficultyValue ).text() == 'normal' ) {
-            $( difficultyValue ).text( 'hard' );
+        if ( difficultyValue.innerText === 'normal' ) {
+            difficultyValue.innerText = 'hard';
 
             Options.setDifficulty( Options.Difficulty.hard );
         }
 
         else {
-            $( difficultyValue ).text( 'normal' );
+            difficultyValue.innerText = 'normal';
 
             Options.setDifficulty( Options.Difficulty.normal );
         }
@@ -242,7 +242,7 @@ function buildHighScoreTable( mapName: MapName ) {
         for ( var i = 0; i < header.length; i++ ) {
             tableHeader = document.createElement( 'th' );
 
-            $( tableHeader ).text( header[ i ] );
+            tableHeader.innerText = header[ i ];
             tableRow.appendChild( tableHeader );
         }
 
@@ -269,13 +269,13 @@ function buildHighScoreTable( mapName: MapName ) {
             canvasHeightData = document.createElement( 'td' );
             time = document.createElement( 'td' );
 
-            $( position ).text( ( i + 1 ).toString() );
-            $( numberOfTails ).text( score.numberOfTails );
-            $( difficulty ).text( score.difficulty );
-            $( frame ).text( score.frame );
-            $( canvasWidthData ).text( score.canvasWidth );
-            $( canvasHeightData ).text( score.canvasHeight );
-            $( time ).text( score.time );
+            position.innerText = ( i + 1 ).toString();
+            numberOfTails.innerText = score.numberOfTails.toString();
+            difficulty.innerText = score.difficulty;
+            frame.innerText = score.frame;
+            canvasWidthData.innerText = score.canvasWidth.toString();
+            canvasHeightData.innerText = score.canvasHeight.toString();
+            time.innerText = score.time;
 
             tableRow.appendChild( position );
             tableRow.appendChild( numberOfTails );

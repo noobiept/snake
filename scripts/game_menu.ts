@@ -47,15 +47,18 @@ export function show( twoPlayerMode: boolean ) {
         playerTwoScore.style.display = 'none';
     }
 
-    $( GAME_MENU ).css( 'display', 'block' );
+    GAME_MENU.style.display = 'block';
 }
 
 
 export function clear() {
-    $( '#GameMenu-pauseResume' ).text( 'Pause' );
+    const pauseResume = document.getElementById( 'GameMenu-pauseResume' )!;
+    const gameMenu = document.getElementById( 'GameMenu' )!;
+
     IS_PAUSED = false;
 
-    $( '#GameMenu' ).css( 'display', 'none' );
+    pauseResume.innerText = 'Pause';
+    gameMenu.style.display = 'none';
 }
 
 
@@ -65,7 +68,9 @@ export function updateScore( playerPosition: number, score: number ) {
 
 
 export function updateTimer( timer: Timer ) {
-    $( TIMER_ELEMENT ).text( ( timer.getCount() / 1000 ).toFixed( 1 ) + 's' );
+    const text = ( timer.getCount() / 1000 ).toFixed( 1 ) + 's'
+
+    TIMER_ELEMENT.innerText = text;
 }
 
 
@@ -79,12 +84,12 @@ function togglePause( this: HTMLElement ) {
 
     if ( IS_PAUSED ) {
         IS_PAUSED = false;
-        $( htmlElement ).text( 'Pause' );
+        htmlElement.innerText = 'Pause';
     }
 
     else {
         IS_PAUSED = true;
-        $( htmlElement ).text( 'Resume' );
+        htmlElement.innerText = 'Resume';
     }
 
     Game.pauseResume( IS_PAUSED );

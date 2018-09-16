@@ -16,18 +16,14 @@ export default class Message {
             message.classList.add( stuff.cssClass );
         }
 
-        $( message ).css( 'display', 'block' );
+        message.style.display = 'block';
 
         this.message = message;
     }
 
 
     remove() {
-        $( this.message ).css( 'display', 'none' );
-        $( this.message ).removeClass();
+        this.message.style.display = 'none';
+        this.message.className = '';
     }
 }
-
-
-
-
