@@ -6,7 +6,6 @@ import { MapName } from './main.js';
 import { boolToOnOff } from './utilities.js';
 
 
-var SELECTED: HTMLElement | null = null;
 var MAP_SELECTED: HTMLElement;
 
 interface Pages {
@@ -27,7 +26,6 @@ export function init( mapName?: string ) {
         help: document.getElementById( 'Help' )!
     };
 
-
     initMainMenu( mapName );
     initOptions();
     initHighScore();
@@ -44,7 +42,6 @@ export function open( page: keyof Pages ) {
     clear();
 
     container.style.display = 'block';
-    SELECTED = container;
 }
 
 
@@ -107,7 +104,8 @@ function initMainMenu( mapName?: string ) {
     };
 
     highScore.onclick = function () {
-        openHighScore( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
+        buildHighScoreTable( <MapName> MAP_SELECTED.getAttribute( 'data-map' ) );
+        open( 'highScore' );
     };
 
     help.onclick = function () {
@@ -218,14 +216,11 @@ function initHelp() {
 }
 
 
-export function openHighScore( mapName: MapName ) {
-    clear();
-
+function buildHighScoreTable( mapName: MapName ) {
     var title = document.getElementById( 'HighScoreTitle' )!;
-    var table = document.getElementById( '#HighScore-table' )!;
+    var table = document.getElementById( 'HighScore-table' )!;
 
-    $( table ).empty();
-
+    table.innerHTML = '';   // clear the previous table
     title.innerHTML = 'High score -- ' + mapName;
 
     // data
@@ -290,10 +285,6 @@ export function openHighScore( mapName: MapName ) {
             table.appendChild( tableRow );
         }
     }
-
-    $( PAGES.highScore ).css( 'display', 'block' );
-
-    SELECTED = PAGES.highScore;
 }
 
 
