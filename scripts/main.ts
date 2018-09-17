@@ -4,6 +4,7 @@ import * as MainMenu from './main_menu.js';
 import * as HighScore from './high_score.js';
 import * as GameMenu from './game_menu.js';
 import * as Game from './game.js';
+import * as Preload from './preload.js';
 import Snake from './snake.js';
 
 
@@ -49,9 +50,6 @@ export var STAGE: createjs.Stage;
 // the canvas element where the game is drawn in
 var CANVAS: HTMLCanvasElement;
 
-// used to access preloaded assets (images/etc)
-var PRELOAD: createjs.LoadQueue;
-
 
 window.onload = function () {
     AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map' ], initApp );
@@ -77,14 +75,6 @@ function initApp( data: Dict ) {
     GameMenu.init();
     Game.init();
 
-    // preload the images/etc used in the program
-    PRELOAD = new createjs.LoadQueue( true );
-
-    PRELOAD.loadManifest( [
-        { id: 'orange', src: 'images/orange_10px.png' },
-        { id: 'apple', src: 'images/red_apple_10px.png' }
-    ] );
-
     var callback;
 
     // on the first run of the program, show the help page
@@ -97,7 +87,7 @@ function initApp( data: Dict ) {
         callback = () => { MainMenu.open( 'mainMenu' ) };
     }
 
-    PRELOAD.addEventListener( 'complete', callback );
+    Preload.init( callback );
 }
 
 
@@ -138,14 +128,6 @@ export function pause() {
 
 export function resume() {
     createjs.Ticker.setPaused( false );
-}
-
-
-/**
- * Returns an asset that was pre-loaded.
- */
-export function getAsset( name: 'orange' | 'apple' ) {
-    return PRELOAD.getResult( name ) as HTMLImageElement;
 }
 
 

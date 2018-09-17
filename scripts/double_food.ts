@@ -1,6 +1,7 @@
 import Food from './food.js';
 import Snake from './snake.js';
-import { getAsset, STAGE } from './main.js';
+import { STAGE } from './main.js';
+import { getAsset } from './preload.js';
 
 
 export default class DoubleFood extends Food {
