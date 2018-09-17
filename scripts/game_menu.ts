@@ -40,25 +40,24 @@ export function show( twoPlayerMode: boolean ) {
     var playerTwoScore = PLAYERS_SCORE[ 1 ].parentElement!;
 
     if ( twoPlayerMode ) {
-        playerTwoScore.style.display = 'inline-block';
+        playerTwoScore.classList.remove( 'hidden' )
     }
 
     else {
-        playerTwoScore.style.display = 'none';
+        playerTwoScore.classList.add( 'hidden' );
     }
 
-    GAME_MENU.style.display = 'block';
+    GAME_MENU.classList.remove( 'hidden' );
 }
 
 
 export function clear() {
     const pauseResume = document.getElementById( 'GameMenu-pauseResume' )!;
-    const gameMenu = document.getElementById( 'GameMenu' )!;
+    pauseResume.innerText = 'Pause';
 
     IS_PAUSED = false;
 
-    pauseResume.innerText = 'Pause';
-    gameMenu.style.display = 'none';
+    GAME_MENU.classList.add( 'hidden' );
 }
 
 

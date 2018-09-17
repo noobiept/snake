@@ -13,6 +13,11 @@ body
     padding: 0;
     }
 
+.hidden
+    {
+    display: none;
+    }
+
 #GameContent
     {
     position: relative;
@@ -40,7 +45,6 @@ body
 
 #Message
     {
-    display: none;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -67,7 +71,6 @@ em
 
 #MainMenu, #Options, #HighScore, #Help
     {
-    display: none;
     position: absolute; /* position the elements on the center of the window (both horizontally and vertically) */
     top: 50%;
     left: 50%;
@@ -76,7 +79,6 @@ em
 
 #GameMenu
     {
-    display: none;
     position: absolute; /* position below the canvas at the bottom/right corner */
     bottom: 0;
     right: 0;

@@ -16,14 +16,14 @@ export default class Message {
             message.classList.add( stuff.cssClass );
         }
 
-        message.style.display = 'block';
+        message.classList.remove( 'hidden' );
 
         this.message = message;
     }
 
 
     remove() {
-        this.message.style.display = 'none';
-        this.message.className = '';
+        // clear all other css classes and hide the element
+        this.message.className = 'hidden';
     }
 }

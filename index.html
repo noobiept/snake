@@ -35,7 +35,7 @@
         <div id="GameContent">
             <canvas id="MainCanvas"></canvas>
 
-            <div id="GameMenu">
+            <div id="GameMenu" class="hidden">
                 <div id="GameMenu-left">
                     <div>tails 1: <span id="GameMenu-player1-score" class="displayValue"></span></div>
                     <div>tails 2: <span id="GameMenu-player2-score" class="displayValue"></span></div>
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div id="MainMenu">
+        <div id="MainMenu" class="hidden">
             <ul id="MainMenu-selectMap">
                 <li data-map="empty">
                     <figure>
@@ -83,7 +83,7 @@
             <div id="MainMenu-help" class="button">Help</div>
         </div>
 
-        <div id="Options">
+        <div id="Options" class="hidden">
             <div id="Options-container">
                 <div>Width: <span id="Options-width-value" class="displayValue"></span>
                     <input type="range" id="Options-width-slider" class="rangeInput" min="400" max="1800" step="100" />
@@ -98,7 +98,7 @@
             <div id="Options-back" class="button backButton">Back</div>
         </div>
 
-        <div id="HighScore">
+        <div id="HighScore" class="hidden">
             <h2 id="HighScoreTitle">High Score</h2>
 
             <table id="HighScore-table"></table>
@@ -106,7 +106,7 @@
             <div id="HighScore-back" class="button backButton">Back</div>
         </div>
 
-        <div id="Help">
+        <div id="Help" class="hidden">
             <h2>Help</h2>
 
             <!-- have 2 help blocks per 'line' -->
@@ -155,7 +155,7 @@
             <div id="Help-back" class="button backButton">Back</div>
         </div>
 
-        <div id="Message"></div>
+        <div id="Message" class="hidden"></div>
 
     </body>
 </html>

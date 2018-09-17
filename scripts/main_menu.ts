@@ -41,7 +41,7 @@ export function open( page: keyof Pages ) {
 
     clear();
 
-    container.style.display = 'block';
+    container.classList.remove( 'hidden' );
 }
 
 
@@ -299,6 +299,6 @@ function clear() {
     keys.map( ( key ) => {
         const container = PAGES[ key ];
 
-        container.style.display = 'none';
+        container.classList.add( 'hidden' );
     } );
 }
