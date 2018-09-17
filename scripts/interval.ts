@@ -9,8 +9,6 @@ export default class Interval {
         this.what_to_call = what_to_call;
         this.interval_time = interval_time;
         this.is_on = false;
-
-        this.start();
     }
 
 
