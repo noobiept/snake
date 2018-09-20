@@ -1,20 +1,44 @@
-type AssetName = 'orange' | 'apple';
+const ASSETS = {
+    orange: './images/orange_10px.png',
+    apple: './images/red_apple_10px.png'
+}
+
+type AssetName = keyof typeof ASSETS;
+
+interface Loaded {
+    [ key: string ]: HTMLImageElement;
+};
+
+const LOADED: Loaded = {};
 
 
-// used to access preloaded assets (images/etc)
-var PRELOAD: createjs.LoadQueue;
-
-
+/**
+ * Preload the images/etc used in the program.
+ */
 export function init( onComplete: () => void ) {
-    // preload the images/etc used in the program
-    PRELOAD = new createjs.LoadQueue( true );
+    const keys = Object.keys( ASSETS );
+    const total = keys.length;
+    let count = 0;
 
-    PRELOAD.loadManifest( [
-        { id: 'orange', src: 'images/orange_10px.png' },
-        { id: 'apple', src: 'images/red_apple_10px.png' }
-    ] );
+    for ( let a = 0; a < total; a++ ) {
+        const key = keys[ a ] as AssetName;
+        const value = ASSETS[ key ];
+        const image = new Image();
 
-    PRELOAD.addEventListener( 'complete', onComplete );
+        const url = new URL( value, location.href );
+
+        image.src = url.href;
+        image.onload = () => {
+            LOADED[ key ] = image;
+
+            // check if we finished loading everything
+            count++;
+
+            if ( count >= total ) {
+                onComplete();
+            }
+        }
+    }
 }
 
 
@@ -22,5 +46,5 @@ export function init( onComplete: () => void ) {
  * Returns an asset that was pre-loaded.
  */
 export function getAsset( name: AssetName ) {
-    return PRELOAD.getResult( name ) as HTMLImageElement;
+    return LOADED[ name ];
 }
