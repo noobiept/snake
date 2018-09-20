@@ -133,7 +133,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         new Food( x, y );
 
     }, FOOD_TIMINGS[ difficulty ] );
-
+    interval.start();
 
     // saving a reference to this, so that we can stop this later
     INTERVALS.push( interval );
@@ -156,6 +156,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         new DoubleFood( x, y );
 
     }, DOUBLE_FOOD_TIMINGS[ difficulty ] );
+    interval.start();
 
     INTERVALS.push( interval );
 
@@ -233,6 +234,7 @@ function setupWalls( mapName: MapName ) {
             new Wall( x, y, width, height );
 
         }, WALL_TIMINGS[ difficulty ] );
+        interval.start();
 
         INTERVALS.push( interval );
     }
