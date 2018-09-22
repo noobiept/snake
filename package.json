@@ -16,8 +16,8 @@
         "typescript": "~3.0.3"
     },
     "scripts": {
+        "dev": "grunt dev",
         "ts": "tsc -w",
-        "server": "http-server -p 8000",
         "build": "grunt"
     },
     "dependencies": {
