@@ -105,7 +105,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         } );
     }
 
-    createjs.Ticker.setInterval( TIME_BETWEEN_TICKS[ difficulty ] );
+    createjs.Ticker.interval = TIME_BETWEEN_TICKS[ difficulty ];
 
     // add a wall around the canvas (so that you can't pass through from one side to the other)
     if ( Options.getFrame() ) {

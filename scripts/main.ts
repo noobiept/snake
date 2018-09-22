@@ -67,7 +67,7 @@ function initApp( data: Dict ) {
     // :: createjs stuff :: //
     STAGE = new createjs.Stage( CANVAS );
 
-    createjs.Ticker.setInterval( 50 );
+    createjs.Ticker.interval = 50;
     createjs.Ticker.on( 'tick', tick );
 
     HighScore.load( data[ 'snake_high_score' ] );
@@ -122,12 +122,12 @@ window.onkeyup = function ( event ) {
 
 
 export function pause() {
-    createjs.Ticker.setPaused( true );
+    createjs.Ticker.paused = true;
 }
 
 
 export function resume() {
-    createjs.Ticker.setPaused( false );
+    createjs.Ticker.paused = false;
 }
 
 
