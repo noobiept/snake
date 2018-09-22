@@ -9,6 +9,7 @@
         "grunt-contrib-copy": "~1.0.0",
         "grunt-contrib-cssmin": "~3.0.0",
         "grunt-contrib-uglify": "~4.0.0",
+        "grunt-http-server": "^2.1.0",
         "grunt-processhtml": "~0.4.1",
         "grunt-ts": "~6.0.0-beta.21",
         "http-server": "^0.11.1",
@@ -18,5 +19,8 @@
         "ts": "tsc -w",
         "server": "http-server -p 8000",
         "build": "grunt"
+    },
+    "dependencies": {
+        "easeljs": "^1.0.2"
     }
 }
