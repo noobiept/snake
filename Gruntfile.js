@@ -81,13 +81,6 @@ module.exports = function ( grunt ) {
                     dest: dest
                 } ]
             }
-        },
-
-        'http-server': {
-            'dev': {
-                root: root,
-                port: 8000
-            }
         }
     } );
 
@@ -98,9 +91,8 @@ module.exports = function ( grunt ) {
     grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
     grunt.loadNpmTasks( 'grunt-contrib-clean' );
     grunt.loadNpmTasks( 'grunt-processhtml' );
-    grunt.loadNpmTasks( 'grunt-http-server' );
 
     // tasks
-    grunt.registerTask( 'dev', [ 'copy:dev', 'http-server:dev' ] );
-    grunt.registerTask( 'default', [ 'clean', 'ts', 'copy:release', 'uglify', 'cssmin', 'processhtml' ] );
+    grunt.registerTask( 'dev', [ 'copy:dev' ] );
+    grunt.registerTask( 'build', [ 'clean', 'ts', 'copy:release', 'uglify', 'cssmin', 'processhtml' ] );
 };
