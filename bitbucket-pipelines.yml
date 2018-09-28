@@ -3,6 +3,8 @@ pipelines:
   default:
     - step:
         script:
+          - apt-get update
+          - apt-get install zip
           - npm install -g grunt-cli
           - npm install
           - npm run build
