@@ -1,0 +1,10 @@
+image: node:8.12
+pipelines:
+  default:
+    - step:
+        script:
+          - npm install -g grunt-cli
+          - npm install
+          - npm run build
+          - zip -r snake.zip ./release/
+          - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/drk4/snake/downloads" --form files=@"snake.zip"
