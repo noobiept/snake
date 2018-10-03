@@ -15,5 +15,5 @@ pipelines:
 
           # zip the output and upload it to the 'downloads' section
           - VERSION=$(json -f ./package.json version)
-          - zip -r snake.zip "./release/snake $VERSION"
+          - zip -r "snake $VERSION.zip" "./release/snake $VERSION"
           - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/drk4/snake/downloads" --form files=@"snake $VERSION.zip"
