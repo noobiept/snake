@@ -20,7 +20,9 @@ export function init() {
     // :: Pause / Resume :: //
 
     var pauseResume = <HTMLDivElement> document.getElementById( 'GameMenu-pauseResume' );
-    pauseResume.onclick = togglePause;
+    pauseResume.onclick = function () {
+        togglePause( pauseResume );
+    };
 
     // :: Quit :: //
 
@@ -73,13 +75,11 @@ export function updateTimer( timer: Timer ) {
 }
 
 
-function togglePause( this: HTMLElement ) {
+function togglePause( htmlElement: HTMLElement ) {
     // don't allow to mess with the menu when game is over
     if ( Game.isGameOver() ) {
         return;
     }
-
-    var htmlElement = this;
 
     if ( IS_PAUSED ) {
         IS_PAUSED = false;

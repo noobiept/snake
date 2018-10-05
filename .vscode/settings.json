@@ -11,5 +11,6 @@
     "typescript.format.insertSpaceAfterTypeAssertion": true,
     "typescript.preferences.quoteStyle": "double",
     "files.eol": "\n",
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
