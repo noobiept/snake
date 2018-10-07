@@ -22,8 +22,8 @@ export enum Direction {
 }
 
 export interface Path {
-    x: number;
-    y: number;
+    column: number;
+    line: number;
     direction: Direction;
 }
 

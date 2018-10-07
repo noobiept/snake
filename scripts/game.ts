@@ -196,8 +196,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         interval.start();
 
         INTERVALS.push( interval );
-    */
-    setupWalls( mapName );
+
+    setupWalls( mapName );    */
     GameMenu.show( TWO_PLAYER_MODE );
 }
 
@@ -483,11 +483,13 @@ function tick( event: TickEvent ) {
 
     for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
         snakeObject = Snake.ALL_SNAKES[ i ];
+        snakeObject.movementTick();
 
         const tails = snakeObject.all_tails;
 
         for ( let b = 0; b < tails.length; b++ ) {
             const tail = tails[ b ];
+            tail.tick();
 
             const current = tail.position;
             const next = tail.nextPosition();
@@ -496,6 +498,5 @@ function tick( event: TickEvent ) {
         }
     }
 
-    Snake.checkCollision();
     STAGE.update();
 }

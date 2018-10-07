@@ -122,21 +122,16 @@ export default class Snake {
             return;
         }
 
-        var x = this.getX();
-        var y = this.getY();
-
-        var numberOfTails = this.all_tails.length;
-        var tail;
+        const position = this.first_tail.position;
+        const numberOfTails = this.all_tails.length;
 
         for ( var i = 0; i < numberOfTails; i++ ) {
-            tail = this.all_tails[ i ];
+            const tail = this.all_tails[ i ];
 
-            tail.addNewDirection(
-                {
-                    x: x,
-                    y: y,
-                    direction: newDirection
-                } );
+            tail.addNewDirection( {
+                ...position,
+                direction: newDirection
+            } );
         }
     }
 

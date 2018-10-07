@@ -279,17 +279,12 @@ export default class Tail implements GridItem {
         var direction = this.direction;
 
         if ( this.path.length !== 0 ) {
-            var checkpoint = this.path[ 0 ];
-
-            var checkX = checkpoint.x;
-            var checkY = checkpoint.y;
-
-            var x = this.getX();
-            var y = this.getY();
+            const checkpoint = this.path[ 0 ];
+            const current = this.position;
 
             // check if its on the right position
-            if ( isNextTo( x, y, checkX, checkY, 2 ) )  // the range has to be less than the tail's speed
-            {
+            if ( checkpoint.column === current.column &&
+                checkpoint.line === current.line ) {
                 // new direction
                 direction = checkpoint.direction;
 
@@ -300,6 +295,6 @@ export default class Tail implements GridItem {
             }
         }
 
-        this.moveInDirection();
+        // this.moveInDirection();
     }
 }
