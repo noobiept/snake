@@ -67,31 +67,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     GRID = new Grid( {
         columns: columns,
         lines: lines,
-        onCollision: function ( a: GridItem, b: GridItem ) {
-            const typeA = a.type;
-            const typeB = b.type;
-
-            if ( typeA === ItemType.tail && typeB === ItemType.food ) {
-                const tail = a as Tail;
-                const food = b as Food;
-
-                food.eat( tail.snakeObject );
-                GRID.remove( food.position );
-                food.remove();
-            }
-
-            else if ( typeA === ItemType.food && typeB === ItemType.tail ) {
-                const tail = b as Tail;
-                const food = a as Food;
-
-                food.eat( tail.snakeObject );
-                GRID.remove( food.position );
-                food.remove();
-            }
-
-            console.log( ItemType[ a.type ], ItemType[ b.type ] );
-            return true;
-        }
+        onCollision: collisionDetection
     } );
 
     // position the snakes on opposite sides horizontally, and vertically aligned
@@ -241,6 +217,48 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     INTERVALS.push( interval );
 
     GameMenu.show( TWO_PLAYER_MODE );
+}
+
+
+/**
+ * When a 'Tail' collides with a 'Food' element, we increase the snake size and remove the 'Food' element.
+ */
+function tailFoodCollision( tail: Tail, food: Food ) {
+    food.eat( tail.snakeObject );
+    GRID.remove( food.position );
+    food.remove();
+}
+
+
+function tailDoubleFoodCollision( tail: Tail, doubleFood: DoubleFood ) {
+    doubleFood.eat( tail.snakeObject );
+    GRID.remove( doubleFood.position );
+    doubleFood.remove();
+}
+
+
+function collisionDetection( a: GridItem, b: GridItem ) {
+    const typeA = a.type;
+    const typeB = b.type;
+
+    if ( typeA === ItemType.tail && typeB === ItemType.food ) {
+        tailFoodCollision( a as Tail, b as Food );
+    }
+
+    else if ( typeA === ItemType.food && typeB === ItemType.tail ) {
+        tailFoodCollision( b as Tail, a as Food );
+    }
+
+    else if ( typeA === ItemType.tail && typeB === ItemType.doubleFood ) {
+        tailDoubleFoodCollision( a as Tail, b as DoubleFood );
+    }
+
+    else if ( typeA === ItemType.doubleFood && typeB === ItemType.tail ) {
+        tailDoubleFoodCollision( b as Tail, a as DoubleFood );
+    }
+
+    console.log( ItemType[ a.type ], ItemType[ b.type ] );
+    return true;
 }
 
 
