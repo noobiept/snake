@@ -2,7 +2,7 @@ import { STAGE } from './main.js';
 
 
 export interface GridItem {
-    shape: createjs.Shape;
+    shape: createjs.DisplayObject;
     position: Position;
 }
 

@@ -24,18 +24,16 @@ interface TickEvent {
 }
 
 
-var INTERVALS: Interval[] = [];
+const INTERVALS: Interval[] = [];
 
-// the time until we add a new food/wall/etc
+// the time until we add a new food/wall/etc (in milliseconds)
 // depends on the difficulty level
 // the order matters (get the difficulty from Options, which will be the position in this)
-var FOOD_TIMINGS = [ 1000, 2500 ];
-var DOUBLE_FOOD_TIMINGS = [ 5000, 8000 ];
-var WALL_TIMINGS = [ 4000, 3000 ];
+const SNAKE_SPEED = [ 100, 50 ];
+const SPAWN_FOOD = [ 1000, 2500 ];
+const SPAWN_DOUBLE_FOOD = [ 5000, 8000 ];
+const SPAWN_WALL = [ 4000, 3000 ];
 
-// in milliseconds
-// the order is according to the difficulty (so on normal mode, we get the first element, so 50ms)
-var TIME_BETWEEN_TICKS = [ 50, 35 ];
 var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
 var MAP_NAME: MapName;
@@ -71,7 +69,6 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         columns: columns,
         lines: lines
     } );
-
 
     // position the snakes on opposite sides horizontally, and vertically aligned
     const midLine = Math.round( lines / 2 );
@@ -139,8 +136,6 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         } );
     }
 
-
-
     /*
         createjs.Ticker.interval = TIME_BETWEEN_TICKS[ difficulty ];
 
@@ -150,31 +145,34 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
             new Wall( canvasWidth / 2, 0, canvasWidth, 5 );   // top
             new Wall( canvasWidth, canvasHeight / 2, 5, canvasHeight ); // right
             new Wall( canvasWidth / 2, canvasHeight, canvasWidth, 5 ); //bottom
-        }
+        }*///HERE
 
-        // add food
-        var interval = new Interval( function () {
-            var x = 0, y = 0;
+    //setupWalls( mapName ); //HERE
 
-            // don't add food on top of the walls (otherwise its impossible to get it)
-            // try 5 times, otherwise just use whatever position
-            for ( var i = 0; i < 5; i++ ) {
-                x = getRandomInt( 0, canvasWidth );
-                y = getRandomInt( 0, canvasHeight );
+    // add food interval
+    let interval = new Interval( function () {
 
-                if ( !elementCollision( x, y, Food.FOOD_WIDTH, Food.FOOD_HEIGHT, Wall.ALL_WALLS ) ) {
-                    break;
-                }
+        // don't add food on top of the walls/etc
+        // try 5 times, otherwise just give up
+        for ( var i = 0; i < 5; i++ ) {
+            const position = {
+                column: getRandomInt( 0, columns - 1 ),
+                line: getRandomInt( 0, lines - 1 )
+            };
+
+            const item = GRID.get( position );
+
+            if ( !item ) {
+                const food = new Food();
+
+                GRID.add( food, position );
+                break;
             }
+        }
+    }, SPAWN_FOOD[ difficulty ] );
 
-            new Food( x, y ); //HERE
-
-        }, FOOD_TIMINGS[ difficulty ] );
-        interval.start();
-
-        // saving a reference to this, so that we can stop this later
-        INTERVALS.push( interval );
-
+    INTERVALS.push( interval );
+    /*
         // add double food
         interval = new Interval( function () {
             var x = 0, y = 0;
@@ -192,14 +190,11 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 
             new DoubleFood( x, y );
 
-        }, DOUBLE_FOOD_TIMINGS[ difficulty ] );
-        interval.start();
+        }, SPAWN_DOUBLE_FOOD[ difficulty ] );
+        INTERVALS.push( interval );*/
 
-        INTERVALS.push( interval );
-
-    setupWalls( mapName );    */
-
-    const interval = new Interval( function () {
+    // setup the snake movement
+    interval = new Interval( function () {
         for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
             const snakeObject = Snake.ALL_SNAKES[ i ];
             snakeObject.movementTick();
@@ -216,9 +211,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
                 GRID.move( current, next );
             }
         }
-    }, 50 );
+    }, SNAKE_SPEED[ difficulty ] );
     INTERVALS.push( interval );
-
 
     GameMenu.show( TWO_PLAYER_MODE );
 }

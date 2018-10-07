@@ -1,29 +1,34 @@
 import Snake from './snake.js';
 import { STAGE } from "./main.js";
 import { getAsset } from './preload.js';
+import { GridItem, Position } from "./grid.js";
 
 
-export default class Food {
+export default class Food implements GridItem {
     static ALL_FOOD: Food[] = [];
     static FOOD_WIDTH = 10;
     static FOOD_HEIGHT = 10;
 
     protected width: number;
     protected height: number;
-    protected shape!: createjs.Bitmap;
+    shape: createjs.Bitmap;
+    position: Position;
 
 
-    constructor( x: number, y: number ) {
+    constructor() {
         this.width = Food.FOOD_WIDTH;
         this.height = Food.FOOD_HEIGHT;
-
-        this.draw( x, y );
+        this.shape = this.draw();
+        this.position = {
+            column: 0,
+            line: 0
+        };
 
         Food.ALL_FOOD.push( this );
     }
 
 
-    draw( x: number, y: number ) {
+    draw() {
         var width = this.width;
         var height = this.height;
 
@@ -32,12 +37,7 @@ export default class Food {
         food.regX = width / 2;
         food.regY = height / 2;
 
-        food.x = x;
-        food.y = y;
-
-        STAGE.addChild( food );
-
-        this.shape = food;
+        return food;
     }
 
 
