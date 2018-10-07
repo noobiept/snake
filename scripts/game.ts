@@ -170,32 +170,34 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
             }
         }
     }, SPAWN_FOOD[ difficulty ] );
-
     INTERVALS.push( interval );
-    /*
-        // add double food
-        interval = new Interval( function () {
-            var x = 0, y = 0;
 
-            // don't add food on top of the walls (otherwise its impossible to get it)
-            // try 5 times, otherwise just use whatever position
-            for ( var i = 0; i < 5; i++ ) {
-                x = getRandomInt( 0, canvasWidth );
-                y = getRandomInt( 0, canvasHeight );
+    // add double food
+    interval = new Interval( function () {
 
-                if ( !elementCollision( x, y, Food.FOOD_WIDTH, Food.FOOD_HEIGHT, Wall.ALL_WALLS ) ) {
-                    break;
-                }
+        // don't add food on top of the walls/etc
+        // try 5 times, otherwise just give up
+        for ( let i = 0; i < 5; i++ ) {
+            const position = {
+                column: getRandomInt( 0, columns - 1 ),
+                line: getRandomInt( 0, lines - 1 )
+            };
+
+            const item = GRID.get( position );
+
+            if ( !item ) {
+                const food = new DoubleFood();
+
+                GRID.add( food, position );
+                break;
             }
-
-            new DoubleFood( x, y );
-
-        }, SPAWN_DOUBLE_FOOD[ difficulty ] );
-        INTERVALS.push( interval );*/
+        }
+    }, SPAWN_DOUBLE_FOOD[ difficulty ] );
+    INTERVALS.push( interval );
 
     // setup the snake movement
     interval = new Interval( function () {
-        for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
+        for ( let i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
             const snakeObject = Snake.ALL_SNAKES[ i ];
             snakeObject.movementTick();
 

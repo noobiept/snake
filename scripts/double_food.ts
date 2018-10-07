@@ -1,16 +1,11 @@
 import Food from './food.js';
 import Snake from './snake.js';
-import { STAGE } from './main.js';
 import { getAsset } from './preload.js';
 
 
 export default class DoubleFood extends Food {
-    constructor( x: number, y: number ) {
-        super( x, y );
-    }
 
-
-    draw( x: number, y: number ) {
+    draw() {
         var width = this.width;
         var height = this.height;
 
@@ -19,12 +14,7 @@ export default class DoubleFood extends Food {
         food.regX = width / 2;
         food.regY = height / 2;
 
-        food.x = x;
-        food.y = y;
-
-        STAGE.addChild( food );
-
-        this.shape = food;
+        return food;
     }
 
 
