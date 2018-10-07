@@ -9,8 +9,19 @@ import DoubleFood from './double_food.js';
 import Message from './message.js';
 import Timer from './timer.js';
 import Interval from './interval.js';
-import { MapName, Direction, pause, resume } from './main.js';
+import { MapName, Direction, pause, resume, STAGE } from './main.js';
 import { EVENT_KEY, getRandomInt, checkOverflowPosition, checkCollision } from './utilities.js';
+import { Grid } from "./grid.js";
+
+
+interface TickEvent {
+    target: Object;
+    type: string;
+    paused: boolean;
+    delta: number;  // time elapsed in ms since the last tick
+    time: number;   // total time in ms since 'Ticker' was initialized
+    runTime: number;
+}
 
 
 var INTERVALS: Interval[] = [];
@@ -29,10 +40,12 @@ var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
 var MAP_NAME: MapName;
 var GAME_OVER = false;
+export var GRID: Grid;
 
 
 export function init() {
     TIMER = new Timer( GameMenu.updateTimer );
+    createjs.Ticker.on( 'tick', tick as ( event: Object ) => void );    // casting 'event' to 'Object' to fix typing issue
 }
 
 
@@ -51,14 +64,29 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     var difficulty = Options.getDifficulty();
     var canvasWidth = Options.getCanvasWidth();
     var canvasHeight = Options.getCanvasHeight();
+    const columns = 50;
+    const lines = 50;
+
+    GRID = new Grid( {
+        columns: columns,
+        lines: lines
+    } );
+
+
+    // position the snakes on opposite sides horizontally, and vertically aligned
+    const midLine = Math.round( lines / 2 );
+    const leftColumn = Math.round( columns * 0.1 );
+    const rightColumn = Math.round( columns * 0.9 );
 
     // player 1 : wasd
     // player 2 : arrow keys
     if ( twoPlayersMode ) {
         // 1 player (on left side of canvas, moving to the right)
         new Snake( {
-            x: 50,
-            y: canvasHeight / 2,
+            position: {
+                column: leftColumn,
+                line: midLine
+            },
             startingDirection: Direction.right,
             color: 'green',
             keyboardMapping: {
@@ -71,8 +99,10 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 
         // 2 player (on right side of canvas, moving to the left)
         new Snake( {
-            x: canvasWidth - 50,
-            y: canvasHeight / 2,
+            position: {
+                column: rightColumn,
+                line: midLine
+            },
             startingDirection: Direction.left,
             color: 'dodgerblue',
             keyboardMapping: {
@@ -82,14 +112,18 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
                 down: EVENT_KEY.downArrow
             }
         } );
+
+
     }
 
     // player 1 : wasd or arrow keys
     else {
         // 1 player (on left side of canvas, moving to the right)
         new Snake( {
-            x: 50,
-            y: canvasHeight / 2,
+            position: {
+                column: leftColumn,
+                line: midLine
+            },
             startingDirection: Direction.right,
             color: 'green',
             keyboardMapping: {
@@ -105,61 +139,64 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         } );
     }
 
-    createjs.Ticker.interval = TIME_BETWEEN_TICKS[ difficulty ];
 
-    // add a wall around the canvas (so that you can't pass through from one side to the other)
-    if ( Options.getFrame() ) {
-        new Wall( 0, canvasHeight / 2, 5, canvasHeight ); // left
-        new Wall( canvasWidth / 2, 0, canvasWidth, 5 );   // top
-        new Wall( canvasWidth, canvasHeight / 2, 5, canvasHeight ); // right
-        new Wall( canvasWidth / 2, canvasHeight, canvasWidth, 5 ); //bottom
-    }
 
-    // add food
-    var interval = new Interval( function () {
-        var x = 0, y = 0;
+    /*
+        createjs.Ticker.interval = TIME_BETWEEN_TICKS[ difficulty ];
 
-        // don't add food on top of the walls (otherwise its impossible to get it)
-        // try 5 times, otherwise just use whatever position
-        for ( var i = 0; i < 5; i++ ) {
-            x = getRandomInt( 0, canvasWidth );
-            y = getRandomInt( 0, canvasHeight );
-
-            if ( !elementCollision( x, y, Food.FOOD_WIDTH, Food.FOOD_HEIGHT, Wall.ALL_WALLS ) ) {
-                break;
-            }
+        // add a wall around the canvas (so that you can't pass through from one side to the other)
+        if ( Options.getFrame() ) {
+            new Wall( 0, canvasHeight / 2, 5, canvasHeight ); // left
+            new Wall( canvasWidth / 2, 0, canvasWidth, 5 );   // top
+            new Wall( canvasWidth, canvasHeight / 2, 5, canvasHeight ); // right
+            new Wall( canvasWidth / 2, canvasHeight, canvasWidth, 5 ); //bottom
         }
 
-        new Food( x, y );
+        // add food
+        var interval = new Interval( function () {
+            var x = 0, y = 0;
 
-    }, FOOD_TIMINGS[ difficulty ] );
-    interval.start();
+            // don't add food on top of the walls (otherwise its impossible to get it)
+            // try 5 times, otherwise just use whatever position
+            for ( var i = 0; i < 5; i++ ) {
+                x = getRandomInt( 0, canvasWidth );
+                y = getRandomInt( 0, canvasHeight );
 
-    // saving a reference to this, so that we can stop this later
-    INTERVALS.push( interval );
-
-    // add double food
-    interval = new Interval( function () {
-        var x = 0, y = 0;
-
-        // don't add food on top of the walls (otherwise its impossible to get it)
-        // try 5 times, otherwise just use whatever position
-        for ( var i = 0; i < 5; i++ ) {
-            x = getRandomInt( 0, canvasWidth );
-            y = getRandomInt( 0, canvasHeight );
-
-            if ( !elementCollision( x, y, Food.FOOD_WIDTH, Food.FOOD_HEIGHT, Wall.ALL_WALLS ) ) {
-                break;
+                if ( !elementCollision( x, y, Food.FOOD_WIDTH, Food.FOOD_HEIGHT, Wall.ALL_WALLS ) ) {
+                    break;
+                }
             }
-        }
 
-        new DoubleFood( x, y );
+            new Food( x, y );
 
-    }, DOUBLE_FOOD_TIMINGS[ difficulty ] );
-    interval.start();
+        }, FOOD_TIMINGS[ difficulty ] );
+        interval.start();
 
-    INTERVALS.push( interval );
+        // saving a reference to this, so that we can stop this later
+        INTERVALS.push( interval );
 
+        // add double food
+        interval = new Interval( function () {
+            var x = 0, y = 0;
+
+            // don't add food on top of the walls (otherwise its impossible to get it)
+            // try 5 times, otherwise just use whatever position
+            for ( var i = 0; i < 5; i++ ) {
+                x = getRandomInt( 0, canvasWidth );
+                y = getRandomInt( 0, canvasHeight );
+
+                if ( !elementCollision( x, y, Food.FOOD_WIDTH, Food.FOOD_HEIGHT, Wall.ALL_WALLS ) ) {
+                    break;
+                }
+            }
+
+            new DoubleFood( x, y );
+
+        }, DOUBLE_FOOD_TIMINGS[ difficulty ] );
+        interval.start();
+
+        INTERVALS.push( interval );
+    */
     setupWalls( mapName );
     GameMenu.show( TWO_PLAYER_MODE );
 }
@@ -430,4 +467,35 @@ export function isTwoPlayersMode() {
 
 export function isGameOver() {
     return GAME_OVER;
+}
+
+
+
+/**
+ * Update the game (gets called at every tick).
+ */
+function tick( event: TickEvent ) {
+    if ( event.paused ) {
+        return;
+    }
+
+    var snakeObject;
+
+    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
+        snakeObject = Snake.ALL_SNAKES[ i ];
+
+        const tails = snakeObject.all_tails;
+
+        for ( let b = 0; b < tails.length; b++ ) {
+            const tail = tails[ b ];
+
+            const current = tail.position;
+            const next = tail.nextPosition();
+
+            GRID.move( current, next );
+        }
+    }
+
+    Snake.checkCollision();
+    STAGE.update();
 }

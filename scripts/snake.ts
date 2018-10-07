@@ -5,11 +5,11 @@ import Food from './food.js';
 import Wall from './wall.js';
 import { Direction, KeyboardMapping, ElementsType } from './main.js';
 import { checkCollision } from './utilities.js';
+import { GridItem, Position } from "./grid.js";
 
 
 interface SnakeArgs {
-    x: number;
-    y: number;
+    position: Position;
     startingDirection: Direction;
     color: string;
     keyboardMapping: KeyboardMapping;
@@ -22,7 +22,7 @@ export default class Snake {
     starting_direction: Direction;
     color: string;
 
-    private all_tails: Tail[];
+    all_tails: Tail[];
     private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
     private keyboard_mapping: KeyboardMapping;
     private first_tail: Tail;
@@ -49,9 +49,9 @@ export default class Snake {
 
         // add a starting tail
         this.first_tail = this.addTail();
-
-        this.first_tail.position( args.x, args.y );
         this.first_tail.type = ElementsType.snake; // the first tail represents the head of the snake, so it has a different type
+
+        Game.GRID.add( this.first_tail, args.position );
     }
 
 
@@ -318,64 +318,64 @@ export default class Snake {
 
 
         this.movementTick();
+        /*
+                // :: deal with the collision detection between the snake and tails :: //
+                // 'i' starts at 1, to not check the first tail (that's the one we're comparing with)
+                for ( var i = 1; i < allTails.length; i++ ) {
+                    tail = allTails[ i ];
 
-        // :: deal with the collision detection between the snake and tails :: //
-        // 'i' starts at 1, to not check the first tail (that's the one we're comparing with)
-        for ( var i = 1; i < allTails.length; i++ ) {
-            tail = allTails[ i ];
+                    if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
+                        tail.asBeenHit();
 
-            if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
-                tail.asBeenHit();
-
-                Game.over();
-                return;
-            }
-        }
-
-        var a, b;
-
-        // :: check collision between the snake's tails and the food :: //
-        for ( a = 0; a < Food.ALL_FOOD.length; a++ ) {
-            var food = Food.ALL_FOOD[ a ];
-            var foodX = food.getX();
-            var foodY = food.getY();
-            var foodWidth = food.getWidth();
-            var foodHeight = food.getHeight();
-
-            for ( b = 0; b < allTails.length; b++ ) {
-                tail = allTails[ b ];
-
-                if ( checkCollision( foodX, foodY, foodWidth, foodHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
-                    food.eat( this );
-
-                    food.remove();
-                    a--;
-                    break;
+                        Game.over();
+                        return;
+                    }
                 }
-            }
-        }
 
-        // :: check collision between the snake and the walls :: //
+                var a, b;
 
-        var wall;
+                // :: check collision between the snake's tails and the food :: //
+                for ( a = 0; a < Food.ALL_FOOD.length; a++ ) {
+                    var food = Food.ALL_FOOD[ a ];
+                    var foodX = food.getX();
+                    var foodY = food.getY();
+                    var foodWidth = food.getWidth();
+                    var foodHeight = food.getHeight();
 
-        for ( i = 0; i < Wall.ALL_WALLS.length; i++ ) {
-            wall = Wall.ALL_WALLS[ i ];
+                    for ( b = 0; b < allTails.length; b++ ) {
+                        tail = allTails[ b ];
 
-            if ( checkCollision( firstX, firstY, firstWidth, firstHeight, wall.getX(), wall.getY(), wall.getWidth(), wall.getHeight() ) ) {
-                wall.asBeenHit();
+                        if ( checkCollision( foodX, foodY, foodWidth, foodHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
+                            food.eat( this );
 
-                Game.over();
-                return;
-            }
-        }
+                            food.remove();
+                            a--;
+                            break;
+                        }
+                    }
+                }
+
+                // :: check collision between the snake and the walls :: //
+
+                var wall;
+
+                for ( i = 0; i < Wall.ALL_WALLS.length; i++ ) {
+                    wall = Wall.ALL_WALLS[ i ];
+
+                    if ( checkCollision( firstX, firstY, firstWidth, firstHeight, wall.getX(), wall.getY(), wall.getWidth(), wall.getHeight() ) ) {
+                        wall.asBeenHit();
+
+                        Game.over();
+                        return;
+                    }
+                }
 
         // :: deal with the movement of the tails :: //
 
         for ( i = 0; i < allTails.length; i++ ) {
             tail = allTails[ i ];
             tail.tick();
-        }
+        }*/
     }
 
 

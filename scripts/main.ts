@@ -44,7 +44,6 @@ export interface Dict {
 
 export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
 
-// createjs
 export var STAGE: createjs.Stage;
 
 // the canvas element where the game is drawn in
@@ -67,8 +66,8 @@ function initApp( data: Dict ) {
     // :: createjs stuff :: //
     STAGE = new createjs.Stage( CANVAS );
 
+    // createjs.Ticker.timingMode = createjs.Ticker.RAF;
     createjs.Ticker.interval = 50;
-    createjs.Ticker.on( 'tick', tick );
 
     HighScore.load( data[ 'snake_high_score' ] );
     MainMenu.init( data[ 'snake_selected_map' ] );
@@ -145,19 +144,3 @@ export function changeCanvasDimensions( width?: number, height?: number ) {
     }
 }
 
-
-function tick( event: Dict ) {
-    if ( event.paused ) {
-        return;
-    }
-
-    var snakeObject;
-
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        snakeObject = Snake.ALL_SNAKES[ i ];
-        snakeObject.tick();
-    }
-
-    Snake.checkCollision();
-    STAGE.update();
-}

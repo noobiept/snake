@@ -2,18 +2,20 @@ import * as Options from './options.js';
 import Snake from './snake.js';
 import { ElementsType, Direction, Path, STAGE } from "./main.js";
 import { isNextTo } from "./utilities.js";
+import { GridItem, Position } from "./grid.js";
 
 
-export default class Tail {
+export default class Tail implements GridItem {
     static TAIL_WIDTH = 10;    // width and height need to be the same value
     static TAIL_HEIGHT = Tail.TAIL_WIDTH;
 
     type: ElementsType;
     direction: Direction;
+    position: Position;
 
     private snakeObject: Snake;
     private path: Path[];
-    private shape: createjs.Shape;
+    shape: createjs.Shape;
     private width: number;
     private height: number;
 
@@ -74,6 +76,10 @@ export default class Tail {
         this.type = ElementsType.tail;
         this.path = path;
         this.direction = direction;
+        this.position = {
+            column: 0,
+            line: 0
+        };
     }
 
 
@@ -111,14 +117,6 @@ export default class Tail {
 
     remove() {
         STAGE.removeChild( this.shape );
-    }
-
-
-    /*
-        position on the canvas
-     */
-    position( x: number, y: number ) {
-        return this.move( x, y, 0, 0 );
     }
 
 
@@ -235,6 +233,40 @@ export default class Tail {
 
         else if ( direction == Direction.down ) {
             this.move( 0, speed );
+        }
+    }
+
+
+    /**
+     * Get the next position based on the direction the tail is going.
+     */
+    nextPosition() {
+        const current = this.position;
+
+        switch ( this.direction ) {
+            case Direction.left:
+                return {
+                    column: current.column - 1,
+                    line: current.line
+                };
+
+            case Direction.right:
+                return {
+                    column: current.column + 1,
+                    line: current.line
+                };
+
+            case Direction.up:
+                return {
+                    column: current.column,
+                    line: current.line - 1
+                };
+
+            case Direction.down:
+                return {
+                    column: current.column,
+                    line: current.line + 1
+                };
         }
     }
 
