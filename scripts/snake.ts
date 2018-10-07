@@ -3,7 +3,7 @@ import * as Game from './game.js';
 import Tail from "./tail.js";
 import Food from './food.js';
 import Wall from './wall.js';
-import { Direction, KeyboardMapping, ElementsType } from './main.js';
+import { Direction, KeyboardMapping } from './main.js';
 import { checkCollision } from './utilities.js';
 import { GridItem, Position } from "./grid.js";
 
@@ -49,7 +49,6 @@ export default class Snake {
 
         // add a starting tail
         this.first_tail = this.addTail();
-        this.first_tail.type = ElementsType.snake; // the first tail represents the head of the snake, so it has a different type
 
         Game.GRID.add( this.first_tail, args.position );
     }

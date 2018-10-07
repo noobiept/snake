@@ -1,7 +1,7 @@
 import Snake from './snake.js';
 import { STAGE } from "./main.js";
 import { getAsset } from './preload.js';
-import { GridItem, Position } from "./grid.js";
+import { GridItem, Position, ItemType } from "./grid.js";
 
 
 export default class Food implements GridItem {
@@ -9,6 +9,7 @@ export default class Food implements GridItem {
     static FOOD_WIDTH = 10;
     static FOOD_HEIGHT = 10;
 
+    readonly type: ItemType = ItemType.food;
     protected width: number;
     protected height: number;
     shape: createjs.Bitmap;
@@ -73,8 +74,6 @@ export default class Food implements GridItem {
         var position = Food.ALL_FOOD.indexOf( this );
 
         Food.ALL_FOOD.splice( position, 1 );
-
-        STAGE.removeChild( this.shape );
     }
 
 

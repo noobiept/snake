@@ -1,9 +1,13 @@
 import Food from './food.js';
 import Snake from './snake.js';
 import { getAsset } from './preload.js';
+import { ItemType } from "./grid.js";
 
 
 export default class DoubleFood extends Food {
+
+    type = ItemType.doubleFood;
+
 
     draw() {
         var width = this.width;

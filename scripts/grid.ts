@@ -1,9 +1,14 @@
 import { STAGE } from './main.js';
 
 
+export enum ItemType {
+    tail, food, doubleFood
+}
+
 export interface GridItem {
     shape: createjs.DisplayObject;
     position: Position;
+    type: ItemType;
 }
 
 export interface Position {
@@ -14,6 +19,7 @@ export interface Position {
 interface GridArgs {
     columns: number;
     lines: number;
+    onCollision: ( a: GridItem, b: GridItem ) => boolean;
 }
 
 export class Grid {
@@ -85,6 +91,15 @@ export class Grid {
         }
 
         const item = this.grid[ from.column ][ from.line ];
+        const existingItem = this.grid[ to.column ][ to.line ];
+
+        if ( item && existingItem ) {
+            const ok = this.args.onCollision( item, existingItem );
+
+            if ( !ok ) {
+                return;
+            }
+        }
 
         this.grid[ from.column ][ from.line ] = undefined;
         this.grid[ to.column ][ to.line ] = item;

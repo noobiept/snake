@@ -11,7 +11,8 @@ import Timer from './timer.js';
 import Interval from './interval.js';
 import { MapName, Direction, pause, resume, STAGE } from './main.js';
 import { EVENT_KEY, getRandomInt, checkOverflowPosition, checkCollision } from './utilities.js';
-import { Grid } from "./grid.js";
+import { Grid, GridItem, ItemType } from "./grid.js";
+import Tail from "./tail.js";
 
 
 interface TickEvent {
@@ -60,14 +61,37 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     GameMenu.updateTimer( TIMER );
 
     var difficulty = Options.getDifficulty();
-    var canvasWidth = Options.getCanvasWidth();
-    var canvasHeight = Options.getCanvasHeight();
     const columns = 50;
     const lines = 50;
 
     GRID = new Grid( {
         columns: columns,
-        lines: lines
+        lines: lines,
+        onCollision: function ( a: GridItem, b: GridItem ) {
+            const typeA = a.type;
+            const typeB = b.type;
+
+            if ( typeA === ItemType.tail && typeB === ItemType.food ) {
+                const tail = a as Tail;
+                const food = b as Food;
+
+                food.eat( tail.snakeObject );
+                GRID.remove( food.position );
+                food.remove();
+            }
+
+            else if ( typeA === ItemType.food && typeB === ItemType.tail ) {
+                const tail = b as Tail;
+                const food = a as Food;
+
+                food.eat( tail.snakeObject );
+                GRID.remove( food.position );
+                food.remove();
+            }
+
+            console.log( ItemType[ a.type ], ItemType[ b.type ] );
+            return true;
+        }
     } );
 
     // position the snakes on opposite sides horizontally, and vertically aligned

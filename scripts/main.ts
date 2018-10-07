@@ -8,12 +8,6 @@ import * as Preload from './preload.js';
 import Snake from './snake.js';
 
 
-// the elements type in the game (useful to identify objects, call .getType() )
-export enum ElementsType {
-    tail,
-    snake
-}
-
 export enum Direction {
     left,
     right,

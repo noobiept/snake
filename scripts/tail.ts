@@ -1,19 +1,18 @@
 import * as Options from './options.js';
 import Snake from './snake.js';
-import { ElementsType, Direction, Path, STAGE } from "./main.js";
-import { isNextTo } from "./utilities.js";
-import { GridItem, Position } from "./grid.js";
+import { Direction, Path, STAGE } from "./main.js";
+import { GridItem, Position, ItemType } from "./grid.js";
 
 
 export default class Tail implements GridItem {
     static TAIL_WIDTH = 10;    // width and height need to be the same value
     static TAIL_HEIGHT = Tail.TAIL_WIDTH;
 
-    type: ElementsType;
+    readonly type = ItemType.tail;
     direction: Direction;
     position: Position;
 
-    private snakeObject: Snake;
+    snakeObject: Snake;
     private path: Path[];
     shape: createjs.Shape;
     private width: number;
@@ -73,7 +72,6 @@ export default class Tail implements GridItem {
 
         this.width = Tail.TAIL_WIDTH;
         this.height = Tail.TAIL_HEIGHT;
-        this.type = ElementsType.tail;
         this.path = path;
         this.direction = direction;
         this.position = {
@@ -186,11 +184,6 @@ export default class Tail implements GridItem {
 
     getHeight() {
         return this.height;
-    }
-
-
-    getType() {
-        return this.type;
     }
 
 
