@@ -18,12 +18,12 @@ export default class Timer {
 
 
     start() {
-        this.interval.start();
+        // this.interval.start();//HERE
     }
 
 
     stop() {
-        this.interval.stop();
+        // this.interval.stop();
     }
 
 

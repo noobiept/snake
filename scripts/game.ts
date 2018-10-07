@@ -167,7 +167,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
                 }
             }
 
-            new Food( x, y );
+            new Food( x, y ); //HERE
 
         }, FOOD_TIMINGS[ difficulty ] );
         interval.start();
@@ -198,6 +198,28 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         INTERVALS.push( interval );
 
     setupWalls( mapName );    */
+
+    const interval = new Interval( function () {
+        for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
+            const snakeObject = Snake.ALL_SNAKES[ i ];
+            snakeObject.movementTick();
+
+            const tails = snakeObject.all_tails;
+
+            for ( let b = 0; b < tails.length; b++ ) {
+                const tail = tails[ b ];
+                tail.tick();
+
+                const current = tail.position;
+                const next = tail.nextPosition();
+
+                GRID.move( current, next );
+            }
+        }
+    }, 50 );
+    INTERVALS.push( interval );
+
+
     GameMenu.show( TWO_PLAYER_MODE );
 }
 
@@ -210,7 +232,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
  * - `empty`  : No walls added.
  */
 function setupWalls( mapName: MapName ) {
-    var difficulty = Options.getDifficulty();
+    /*var difficulty = Options.getDifficulty();
 
     // randomly add walls in the map
     if ( mapName === 'random' ) {
@@ -314,7 +336,7 @@ function setupWalls( mapName: MapName ) {
             new Wall( x2, y, width, height );
             new Wall( x3, y, width, height );
         }
-    }
+    }*/
 }
 
 
@@ -419,10 +441,10 @@ export function quit() {
 
 
 export function clear() {
-    for ( var i = 0; i < INTERVALS.length; i++ ) {
-        INTERVALS[ i ].stop();
-    }
-
+    /* for ( var i = 0; i < INTERVALS.length; i++ ) {
+         INTERVALS[ i ].stop();
+     }
+ */
     INTERVALS.length = 0;
 
     TIMER.stop();
@@ -437,7 +459,7 @@ export function clear() {
 
 
 export function pauseResume( pauseGame: boolean ) {
-    if ( pauseGame ) {
+    /*if ( pauseGame ) {
         TIMER.stop();
 
         for ( let i = 0; i < INTERVALS.length; i++ ) {
@@ -456,7 +478,7 @@ export function pauseResume( pauseGame: boolean ) {
         }
 
         resume();
-    }
+    }*/
 }
 
 
@@ -479,23 +501,11 @@ function tick( event: TickEvent ) {
         return;
     }
 
-    var snakeObject;
+    const delta = event.delta;
 
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        snakeObject = Snake.ALL_SNAKES[ i ];
-        snakeObject.movementTick();
-
-        const tails = snakeObject.all_tails;
-
-        for ( let b = 0; b < tails.length; b++ ) {
-            const tail = tails[ b ];
-            tail.tick();
-
-            const current = tail.position;
-            const next = tail.nextPosition();
-
-            GRID.move( current, next );
-        }
+    for ( let a = 0; a < INTERVALS.length; a++ ) {
+        const interval = INTERVALS[ a ];
+        interval.tick( delta );
     }
 
     STAGE.update();

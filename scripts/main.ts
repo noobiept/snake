@@ -63,11 +63,11 @@ function initApp( data: Dict ) {
     CANVAS.width = Options.getCanvasWidth();
     CANVAS.height = Options.getCanvasHeight();
 
-    // :: createjs stuff :: //
+    // setup the stage
     STAGE = new createjs.Stage( CANVAS );
 
-    // createjs.Ticker.timingMode = createjs.Ticker.RAF;
-    createjs.Ticker.interval = 50;
+    // use the 'requestAnimationFrame' timing mode, and use the 'delta' values to control the game timings
+    createjs.Ticker.timingMode = createjs.Ticker.RAF;
 
     HighScore.load( data[ 'snake_high_score' ] );
     MainMenu.init( data[ 'snake_selected_map' ] );
