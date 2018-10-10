@@ -2,7 +2,7 @@ import { STAGE } from './main.js';
 
 
 export enum ItemType {
-    tail, food, doubleFood
+    tail, food, doubleFood, wall
 }
 
 export interface GridItem {
@@ -64,6 +64,25 @@ export class Grid {
 
         return item;
     }
+
+
+    /**
+     * Remove all the items from the grid.
+     */
+    removeAll() {
+        for ( let column = 0; column < this.grid.length; column++ ) {
+            const columns = this.grid[ column ];
+
+            for ( let line = 0; line < columns.length; line++ ) {
+
+                this.remove( {
+                    column: column,
+                    line: line
+                } );
+            }
+        }
+    }
+
 
     get( position: Position ) {
         return this.grid[ position.column ][ position.line ];

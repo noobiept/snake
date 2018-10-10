@@ -41,6 +41,38 @@ var MAP_NAME: MapName;
 var GAME_OVER = false;
 export var GRID: Grid;
 
+const SNAKES: Snake[] = [];
+
+
+window.onkeydown = function ( event ) {
+    var returnValue;
+
+    for ( var i = 0; i < SNAKES.length; i++ ) {
+        returnValue = SNAKES[ i ].onKeyDown( event.keyCode );
+
+        if ( !returnValue ) {
+            return returnValue;
+        }
+    }
+
+    return true;
+};
+
+
+window.onkeyup = function ( event ) {
+    var returnValue;
+
+    for ( var i = 0; i < SNAKES.length; i++ ) {
+        returnValue = SNAKES[ i ].onKeyUp( event.keyCode );
+
+        if ( !returnValue ) {
+            return returnValue;
+        }
+    }
+
+    return true;
+};
+
 
 export function init() {
     TIMER = new Timer( GameMenu.updateTimer );
@@ -79,7 +111,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     // player 2 : arrow keys
     if ( twoPlayersMode ) {
         // 1 player (on left side of canvas, moving to the right)
-        new Snake( {
+        const snake1 = new Snake( {
             position: {
                 column: leftColumn,
                 line: midLine
@@ -95,7 +127,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         } );
 
         // 2 player (on right side of canvas, moving to the left)
-        new Snake( {
+        const snake2 = new Snake( {
             position: {
                 column: rightColumn,
                 line: midLine
@@ -110,13 +142,14 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
             }
         } );
 
-
+        SNAKES.push( snake1 );
+        SNAKES.push( snake2 );
     }
 
     // player 1 : wasd or arrow keys
     else {
         // 1 player (on left side of canvas, moving to the right)
-        new Snake( {
+        const snake = new Snake( {
             position: {
                 column: leftColumn,
                 line: midLine
@@ -134,6 +167,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
                 down2: EVENT_KEY.downArrow
             }
         } );
+
+        SNAKES.push( snake );
     }
 
     /*
@@ -197,8 +232,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 
     // setup the snake movement
     interval = new Interval( function () {
-        for ( let i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-            const snakeObject = Snake.ALL_SNAKES[ i ];
+        for ( let i = 0; i < SNAKES.length; i++ ) {
+            const snakeObject = SNAKES[ i ];
             snakeObject.movementTick();
 
             const tails = snakeObject.all_tails;
@@ -227,7 +262,6 @@ function tailFoodCollision( tail: Tail, food: Food ) {
 
     tail.snakeObject.eat( food );
     GRID.remove( food.position );
-    food.remove();
 }
 
 
@@ -410,8 +444,8 @@ export function over( whoWon?: number ) {
         }
 
         else {
-            var player1_score = Snake.ALL_SNAKES[ 0 ].getNumberOfTails();
-            var player2_score = Snake.ALL_SNAKES[ 1 ].getNumberOfTails();
+            var player1_score = SNAKES[ 0 ].getNumberOfTails();
+            var player2_score = SNAKES[ 1 ].getNumberOfTails();
 
             if ( player1_score > player2_score ) {
                 text += 'Player 1 Won!';
@@ -428,7 +462,7 @@ export function over( whoWon?: number ) {
     }
 
     else {
-        text = 'Game Over<br />Score: ' + Snake.ALL_SNAKES[ 0 ].getNumberOfTails();
+        text = 'Game Over<br />Score: ' + SNAKES[ 0 ].getNumberOfTails();
     }
 
 
@@ -456,8 +490,8 @@ function addScores() {
     TIMER.stop();
 
     // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        HighScore.add( MAP_NAME, Snake.ALL_SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
+    for ( var i = 0; i < SNAKES.length; i++ ) {
+        HighScore.add( MAP_NAME, SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
     }
 
     HighScore.save();
@@ -477,18 +511,11 @@ export function quit() {
 
 
 export function clear() {
-    /* for ( var i = 0; i < INTERVALS.length; i++ ) {
-         INTERVALS[ i ].stop();
-     }
- */
     INTERVALS.length = 0;
+    SNAKES.length = 0;
 
     TIMER.stop();
-
-    Snake.removeAll();
-    Wall.removeAll();
-    Food.removeAll();
-
+    GRID.removeAll();
     GameMenu.clear();
     resume();
 }

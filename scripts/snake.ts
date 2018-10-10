@@ -17,8 +17,6 @@ interface SnakeArgs {
 
 
 export default class Snake {
-    static ALL_SNAKES: Snake[] = [];
-
     color: string;
 
     all_tails: Tail[];
@@ -43,32 +41,8 @@ export default class Snake {
         // for example: { left: EVENT_KEY.a, right: EVENT_KEY.d, (...) }
         this.keyboard_mapping = args.keyboardMapping;
 
-        Snake.ALL_SNAKES.push( this );
-
         // add a starting tail
         this.first_tail = this.addTail( args.position, args.startingDirection );
-    }
-
-
-    static removeAll() {
-        for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-            Snake.ALL_SNAKES[ i ].remove();
-            i--;    // we're removing from the array
-        }
-    }
-
-
-    remove() {
-        var position = Snake.ALL_SNAKES.indexOf( this );
-
-        Snake.ALL_SNAKES.splice( position, 1 );
-
-        var tail;
-
-        for ( var i = 0; i < this.all_tails.length; i++ ) {
-            tail = this.all_tails[ i ];
-            tail.remove();
-        }
     }
 
 
@@ -136,7 +110,7 @@ export default class Snake {
 
         Game.GRID.add( tail, position );
 
-        GameMenu.updateScore( Snake.ALL_SNAKES.indexOf( this ), this.all_tails.length );
+        //GameMenu.updateScore( Snake.ALL_SNAKES.indexOf( this ), this.all_tails.length ); //HERE
 
         return tail;
     }
@@ -392,7 +366,7 @@ export default class Snake {
                     }
                 }
 
-                var a, b;
+                var a, b;   //HERE
 
                 // :: check collision between the snake's tails and the food :: //
                 for ( a = 0; a < Food.ALL_FOOD.length; a++ ) {
@@ -436,66 +410,5 @@ export default class Snake {
             tail = allTails[ i ];
             tail.tick();
         }*/
-    }
-
-
-    /*
-        Check if a collision happened between any of the snakes
-     */
-    static checkCollision() {
-        var a = 0;
-        var b = 0;
-        var snake1;
-        var snake2;
-
-        for ( a = 0; a < Snake.ALL_SNAKES.length - 1; a++ ) {
-            snake1 = Snake.ALL_SNAKES[ a ];
-
-            for ( b = a + 1; b < Snake.ALL_SNAKES.length; b++ ) {
-                snake2 = Snake.ALL_SNAKES[ b ];
-
-
-                var tail_1 = snake1.first_tail;
-                var tail_2 = snake2.first_tail;
-
-
-                var all_tails_1 = snake1.all_tails;
-                var all_tails_2 = snake2.all_tails;
-
-                var check = function ( x: number, y: number, width: number, height: number, all_tails: Tail[] ) {
-                    var tail;
-
-                    // deal with the collision detection between a snake and the tails from the other snake
-                    for ( var i = 0; i < all_tails.length; i++ ) {
-                        tail = all_tails[ i ];
-
-
-                        if ( checkCollision( x, y, width, height, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
-                            tail.asBeenHit();
-
-                            return true;
-                        }
-                    }
-
-                    return false;
-                };
-
-                if ( check( tail_1.getX(), tail_1.getY(), tail_1.getWidth(), tail_1.getHeight(), all_tails_2 ) == true ) {
-                    // player 2 won (player1 collided with player2)
-                    Game.over( 2 );
-
-                    return true;
-                }
-
-                if ( check( tail_2.getX(), tail_2.getY(), tail_2.getWidth(), tail_2.getHeight(), all_tails_1 ) == true ) {
-                    // player 1 won
-                    Game.over( 1 );
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }

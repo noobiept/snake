@@ -85,36 +85,6 @@ function initApp( data: Dict ) {
 }
 
 
-window.onkeydown = function ( event ) {
-    var returnValue;
-
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        returnValue = Snake.ALL_SNAKES[ i ].onKeyDown( event.keyCode );
-
-        if ( !returnValue ) {
-            return returnValue;
-        }
-    }
-
-    return true;
-};
-
-
-window.onkeyup = function ( event ) {
-    var returnValue;
-
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        returnValue = Snake.ALL_SNAKES[ i ].onKeyUp( event.keyCode );
-
-        if ( !returnValue ) {
-            return returnValue;
-        }
-    }
-
-    return true;
-};
-
-
 export function pause() {
     createjs.Ticker.paused = true;
 }

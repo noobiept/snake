@@ -13,7 +13,6 @@ interface EatenEffect {
 
 
 export default class Food implements GridItem {
-    static ALL_FOOD: Food[] = [];
     static FOOD_WIDTH = 10;
     static FOOD_HEIGHT = 10;
 
@@ -33,8 +32,6 @@ export default class Food implements GridItem {
             column: 0,
             line: 0
         };
-
-        Food.ALL_FOOD.push( this );
     }
 
 
@@ -68,20 +65,5 @@ export default class Food implements GridItem {
 
     getHeight() {
         return this.height;
-    }
-
-
-    remove() {
-        var position = Food.ALL_FOOD.indexOf( this );
-
-        Food.ALL_FOOD.splice( position, 1 );
-    }
-
-
-    static removeAll() {
-        for ( var i = 0; i < Food.ALL_FOOD.length; i++ ) {
-            Food.ALL_FOOD[ i ].remove();
-            i--;    // since we're messing around with the ALL_FOOD array
-        }
     }
 }
