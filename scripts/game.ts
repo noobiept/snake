@@ -231,14 +231,10 @@ function tailFoodCollision( tail: Tail, food: Food ) {
 }
 
 
-function tailDoubleFoodCollision( tail: Tail, doubleFood: DoubleFood ) {
-
-    tail.snakeObject.eat( doubleFood );
-    GRID.remove( doubleFood.position );
-    doubleFood.remove();
-}
-
-
+/**
+ * Deal with the collision between 2 elements in the grid.
+ * Need to first identify the type and then call the appropriate function.
+ */
 function collisionDetection( a: GridItem, b: GridItem ) {
     const typeA = a.type;
     const typeB = b.type;
@@ -252,11 +248,11 @@ function collisionDetection( a: GridItem, b: GridItem ) {
     }
 
     else if ( typeA === ItemType.tail && typeB === ItemType.doubleFood ) {
-        tailDoubleFoodCollision( a as Tail, b as DoubleFood );
+        tailFoodCollision( a as Tail, b as DoubleFood );
     }
 
     else if ( typeA === ItemType.doubleFood && typeB === ItemType.tail ) {
-        tailDoubleFoodCollision( b as Tail, a as DoubleFood );
+        tailFoodCollision( b as Tail, a as DoubleFood );
     }
 
     console.log( ItemType[ a.type ], ItemType[ b.type ] );
