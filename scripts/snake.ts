@@ -19,7 +19,6 @@ interface SnakeArgs {
 export default class Snake {
     static ALL_SNAKES: Snake[] = [];
 
-    starting_direction: Direction;
     color: string;
 
     all_tails: Tail[];
@@ -30,7 +29,6 @@ export default class Snake {
 
     constructor( args: SnakeArgs ) {
         this.all_tails = [];
-        this.starting_direction = args.startingDirection;
         this.color = args.color;
 
         // keys being pressed/held
@@ -48,9 +46,7 @@ export default class Snake {
         Snake.ALL_SNAKES.push( this );
 
         // add a starting tail
-        this.first_tail = this.addTail();
-
-        Game.GRID.add( this.first_tail, args.position );
+        this.first_tail = this.addTail( args.position, args.startingDirection );
     }
 
 
@@ -76,12 +72,69 @@ export default class Snake {
     }
 
 
-    /*
-        Add a new tail at the end
+    /**
+     * Add a tail either on the given position, or after the last tail.
      */
-    addTail() {
-        var tail = new Tail( this );
+    addTail( position?: Position, direction?: Direction ) {
+        const last = this.getLastTail();
+
+        // add at the end of the snake
+        if ( !position ) {
+            const lastDirection = last.direction;
+            const lastPosition = last.position;
+
+            if ( lastDirection === Direction.left ) {
+                position = {
+                    column: lastPosition.column + 1,
+                    line: lastPosition.line
+                };
+            }
+
+            else if ( lastDirection === Direction.right ) {
+                position = {
+                    column: lastPosition.column - 1,
+                    line: lastPosition.line
+                };
+            }
+
+            else if ( lastDirection === Direction.up ) {
+                position = {
+                    column: lastPosition.column,
+                    line: lastPosition.line + 1
+                };
+            }
+
+            else if ( lastDirection === Direction.down ) {
+                position = {
+                    column: lastPosition.column,
+                    line: lastPosition.line - 1
+                };
+            }
+
+            else {
+                throw Error( "Invalid direction on the last tail." );
+            }
+        }
+
+        if ( !direction ) {
+            direction = last.direction;
+        }
+
+
+        let path = [];
+
+        // copy the path of the last tail
+        if ( this.all_tails.length !== 0 ) {
+            // this tail continues the same path as the previous last one
+            // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
+            var pathJson = JSON.stringify( last.path );
+            path = JSON.parse( pathJson );
+        }
+
+        var tail = new Tail( this, direction, path );
         this.all_tails.push( tail );
+
+        Game.GRID.add( tail, position );
 
         GameMenu.updateScore( Snake.ALL_SNAKES.indexOf( this ), this.all_tails.length );
 

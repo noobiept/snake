@@ -13,62 +13,17 @@ export default class Tail implements GridItem {
     position: Position;
 
     snakeObject: Snake;
-    private path: Path[];
+    path: Path[];
     shape: createjs.Shape;
     private width: number;
     private height: number;
 
 
-    constructor( snakeObject: Snake ) {
+    constructor( snakeObject: Snake, direction: Direction, path: Path[] ) {
         this.snakeObject = snakeObject;
 
-        var numberOfTails = snakeObject.getNumberOfTails();
-        var x = 0, y = 0;
-        var path = [];
-        var direction;
-
-        // first tail being added, add at the same position as the container (the x/y of the tail is relative to the snake)
-        if ( numberOfTails == 0 ) {
-            x = 0;
-            y = 0;
-            direction = snakeObject.starting_direction;
-        }
-
-        // we position after the last tail, and it depends on what direction it is going
-        else {
-            var lastTail = snakeObject.getLastTail();
-            var lastDirection = lastTail.direction;
-
-            if ( lastDirection == Direction.left ) {
-                x = lastTail.getX() + Tail.TAIL_WIDTH;
-                y = lastTail.getY();
-            }
-
-            else if ( lastDirection == Direction.right ) {
-                x = lastTail.getX() - Tail.TAIL_WIDTH;
-                y = lastTail.getY();
-            }
-
-            else if ( lastDirection == Direction.up ) {
-                x = lastTail.getX();
-                y = lastTail.getY() + Tail.TAIL_HEIGHT;
-            }
-
-            else if ( lastDirection == Direction.down ) {
-                x = lastTail.getX();
-                y = lastTail.getY() - Tail.TAIL_HEIGHT;
-            }
-
-            // this tail continues the same path as the previous last one
-            // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
-            var pathJson = JSON.stringify( lastTail.path );
-            path = JSON.parse( pathJson );
-
-            direction = lastTail.direction;
-        }
-
         // draw it, and setup the physics body
-        this.shape = this.draw( x, y );
+        this.shape = this.draw();
 
         this.width = Tail.TAIL_WIDTH;
         this.height = Tail.TAIL_HEIGHT;
@@ -81,15 +36,12 @@ export default class Tail implements GridItem {
     }
 
 
-    draw( x: number, y: number ) {
+    draw() {
         // createjs
         var snakeTail = new createjs.Shape();
 
         snakeTail.regX = Tail.TAIL_WIDTH / 2;
         snakeTail.regY = Tail.TAIL_HEIGHT / 2;
-
-        snakeTail.x = x;
-        snakeTail.y = y;
 
         var g = snakeTail.graphics;
 
