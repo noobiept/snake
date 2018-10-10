@@ -1,21 +1,23 @@
 import { STAGE } from './main.js';
+import { GridItem, Position, ItemType } from "./grid.js";
 
 
-export default class Wall {
-    static ALL_WALLS: Wall[] = [];
-
+export default class Wall implements GridItem {
     private width: number;
     private height: number;
-    private shape: createjs.Shape;
-
+    shape: createjs.Shape;
+    position: Position;
+    readonly type: ItemType = ItemType.wall;
 
     constructor( x: number, y: number, width: number, height: number ) {
         this.width = width;
         this.height = height;
+        this.position = {
+            column: 0,
+            line: 0
+        }
 
         this.shape = this.draw( x, y, width, height );
-
-        Wall.ALL_WALLS.push( this );
     }
 
 
@@ -67,22 +69,5 @@ export default class Wall {
 
     getHeight() {
         return this.height;
-    }
-
-
-    remove() {
-        var position = Wall.ALL_WALLS.indexOf( this );
-
-        Wall.ALL_WALLS.splice( position, 1 );
-
-        STAGE.removeChild( this.shape );
-    }
-
-
-    static removeAll() {
-        for ( var i = 0; i < Wall.ALL_WALLS.length; i++ ) {
-            Wall.ALL_WALLS[ i ].remove();
-            i--;    // since we're messing around with the ALL_FOOD array
-        }
     }
 }
