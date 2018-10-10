@@ -231,6 +231,19 @@ export default class Snake {
 
 
     /**
+     * When the snakes eats a type of food, there's some effects we need to apply to the snake (more tails, etc).
+     */
+    eat( food: Food ) {
+        const effects = food.eaten;
+
+        // add more tails
+        for ( let a = 0; a < effects.tails; a++ ) {
+            this.addTail();
+        }
+    }
+
+
+    /**
      * Deal with the snake's movement at every tick (based on the player's inputs).
      */
     movementTick() {

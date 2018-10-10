@@ -6,7 +6,8 @@ import { ItemType } from "./grid.js";
 
 export default class DoubleFood extends Food {
 
-    type = ItemType.doubleFood;
+    readonly type = ItemType.doubleFood;
+    readonly eaten = { tails: 2 };
 
 
     draw() {
@@ -19,13 +20,5 @@ export default class DoubleFood extends Food {
         food.regY = height / 2;
 
         return food;
-    }
-
-
-    eat( snakeObject: Snake ) {
-        snakeObject.addTail();
-        snakeObject.addTail();
-
-        //HERE and increase momentarily the snake's speed, as the disadvantage
     }
 }

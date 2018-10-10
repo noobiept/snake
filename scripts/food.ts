@@ -4,16 +4,25 @@ import { getAsset } from './preload.js';
 import { GridItem, Position, ItemType } from "./grid.js";
 
 
+/**
+ * If the food is eaten by a snake, what are the effects.
+ */
+interface EatenEffect {
+    tails: number;  // number of tails added
+}
+
+
 export default class Food implements GridItem {
     static ALL_FOOD: Food[] = [];
     static FOOD_WIDTH = 10;
     static FOOD_HEIGHT = 10;
 
-    readonly type: ItemType = ItemType.food;
     protected width: number;
     protected height: number;
     shape: createjs.Bitmap;
     position: Position;
+    readonly type: ItemType = ItemType.food;
+    readonly eaten: EatenEffect = { tails: 1 };
 
 
     constructor() {
@@ -39,14 +48,6 @@ export default class Food implements GridItem {
         food.regY = height / 2;
 
         return food;
-    }
-
-
-    /*
-        When there's a collision between the snake and the food, the food is 'eaten' (this applies the effects of that)
-     */
-    eat( snakeObject: Snake ) {
-        snakeObject.addTail();
     }
 
 

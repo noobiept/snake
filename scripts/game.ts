@@ -224,14 +224,16 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
  * When a 'Tail' collides with a 'Food' element, we increase the snake size and remove the 'Food' element.
  */
 function tailFoodCollision( tail: Tail, food: Food ) {
-    food.eat( tail.snakeObject );
+
+    tail.snakeObject.eat( food );
     GRID.remove( food.position );
     food.remove();
 }
 
 
 function tailDoubleFoodCollision( tail: Tail, doubleFood: DoubleFood ) {
-    doubleFood.eat( tail.snakeObject );
+
+    tail.snakeObject.eat( doubleFood );
     GRID.remove( doubleFood.position );
     doubleFood.remove();
 }
