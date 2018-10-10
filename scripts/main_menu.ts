@@ -117,36 +117,36 @@ function initMainMenu( mapName?: string ) {
 function initOptions() {
     // :: Width :: //
 
-    var canvasWidth = Options.getCanvasWidth().toString();
-    var widthValue = document.getElementById( 'Options-width-value' ) as HTMLElement;
-    var widthSlider = document.getElementById( 'Options-width-slider' ) as HTMLInputElement;
+    var columns = Options.getColumns().toString();
+    var columnsValue = document.getElementById( 'Options-columns-value' ) as HTMLElement;
+    var columnsSlider = document.getElementById( 'Options-columns-slider' ) as HTMLInputElement;
 
     // set the initial value
-    widthValue.innerText = canvasWidth;
-    widthSlider.value = canvasWidth;
+    columnsValue.innerText = columns;
+    columnsSlider.value = columns;
 
-    widthSlider.oninput = function () {
-        const value = widthSlider.value;
+    columnsSlider.oninput = function () {
+        const value = columnsSlider.value;
 
-        widthValue.innerText = value;
-        Options.setCanvasWidth( parseInt( value, 10 ) );
+        columnsValue.innerText = value;
+        Options.setColumns( parseInt( value, 10 ) );
     }
 
     // :: Height :: //
 
-    var canvasHeight = Options.getCanvasHeight().toString();
-    var heightValue = document.getElementById( 'Options-height-value' ) as HTMLElement;
-    var heightSlider = document.getElementById( 'Options-height-slider' ) as HTMLInputElement;
+    var lines = Options.getLines().toString();
+    var linesValues = document.getElementById( 'Options-lines-value' ) as HTMLElement;
+    var linesSlider = document.getElementById( 'Options-lines-slider' ) as HTMLInputElement;
 
     // set the initial value
-    heightValue.innerText = canvasHeight;
-    heightSlider.value = canvasHeight;
+    linesValues.innerText = lines;
+    linesSlider.value = lines;
 
-    heightSlider.oninput = function () {
-        const value = heightSlider.value;
+    linesSlider.oninput = function () {
+        const value = linesSlider.value;
 
-        heightValue.innerText = value;
-        Options.setCanvasHeight( parseInt( value, 10 ) );
+        linesValues.innerText = value;
+        Options.setLines( parseInt( value, 10 ) );
     }
 
     // :: frame :: //
@@ -236,7 +236,7 @@ function buildHighScoreTable( mapName: MapName ) {
         // header
         var tableRow = document.createElement( 'tr' );
 
-        var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Canvas Width', 'Canvas Height', 'Time' ];
+        var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Columns', 'Lines', 'Time' ];
         var tableHeader;
 
         for ( var i = 0; i < header.length; i++ ) {
@@ -253,8 +253,8 @@ function buildHighScoreTable( mapName: MapName ) {
         var numberOfTails;
         var difficulty;
         var frame;
-        var canvasWidthData;
-        var canvasHeightData;
+        var columns;
+        var lines;
         var time;
 
         for ( i = 0; i < allScores.length; i++ ) {
@@ -265,24 +265,24 @@ function buildHighScoreTable( mapName: MapName ) {
             numberOfTails = document.createElement( 'td' );
             difficulty = document.createElement( 'td' );
             frame = document.createElement( 'td' );
-            canvasWidthData = document.createElement( 'td' );
-            canvasHeightData = document.createElement( 'td' );
+            columns = document.createElement( 'td' );
+            lines = document.createElement( 'td' );
             time = document.createElement( 'td' );
 
             position.innerText = ( i + 1 ).toString();
             numberOfTails.innerText = score.numberOfTails.toString();
             difficulty.innerText = score.difficulty;
             frame.innerText = score.frame;
-            canvasWidthData.innerText = score.canvasWidth.toString();
-            canvasHeightData.innerText = score.canvasHeight.toString();
+            columns.innerText = score.columns.toString();
+            lines.innerText = score.lines.toString();
             time.innerText = score.time;
 
             tableRow.appendChild( position );
             tableRow.appendChild( numberOfTails );
             tableRow.appendChild( difficulty );
             tableRow.appendChild( frame );
-            tableRow.appendChild( canvasWidthData );
-            tableRow.appendChild( canvasHeightData );
+            tableRow.appendChild( columns );
+            tableRow.appendChild( lines );
             tableRow.appendChild( time );
             table.appendChild( tableRow );
         }

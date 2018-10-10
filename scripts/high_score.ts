@@ -8,8 +8,8 @@ interface Score {
     numberOfTails: number;
     difficulty: string;
     frame: string;
-    canvasWidth: number;
-    canvasHeight: number;
+    columns: number;
+    lines: number;
     time: string;
 }
 
@@ -74,8 +74,8 @@ export function add( mapName: MapName, numberOfTails: number, time: string ) {
         numberOfTails: numberOfTails,
         difficulty: Options.getDifficultyString(),
         frame: boolToOnOff( Options.getFrame() ),
-        canvasWidth: Options.getCanvasWidth(),
-        canvasHeight: Options.getCanvasHeight(),
+        columns: Options.getColumns(),
+        lines: Options.getLines(),
         time: time
     } );
 

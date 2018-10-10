@@ -6,6 +6,7 @@ import * as GameMenu from './game_menu.js';
 import * as Game from './game.js';
 import * as Preload from './preload.js';
 import Snake from './snake.js';
+import { Grid } from "./grid.js";
 
 
 export enum Direction {
@@ -54,8 +55,8 @@ function initApp( data: Dict ) {
 
     // setup the canvas
     CANVAS = <HTMLCanvasElement> document.querySelector( '#MainCanvas' );
-    CANVAS.width = Options.getCanvasWidth();
-    CANVAS.height = Options.getCanvasHeight();
+
+    changeCanvasDimensions( Options.getColumns(), Options.getLines() );
 
     // setup the stage
     STAGE = new createjs.Stage( CANVAS );
@@ -125,16 +126,9 @@ export function resume() {
 
 
 /**
- * Change the width/height of the canvas element where the game is drawn.
- * Pass 'undefined' if you don't want to change one of them.
+ * Change the width/height of the canvas element where the game is drawn. The size is based on the number of columns/lines being used in the game.
  */
-export function changeCanvasDimensions( width?: number, height?: number ) {
-    if ( width ) {
-        CANVAS.width = width;
-    }
-
-    if ( height ) {
-        CANVAS.height = height;
-    }
+export function changeCanvasDimensions( columns: number, lines: number ) {
+    CANVAS.width = columns * Grid.size;
+    CANVAS.height = lines * Grid.size;
 }
-

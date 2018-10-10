@@ -3,8 +3,8 @@ import { changeCanvasDimensions } from './main.js';
 
 
 interface OptionsData {
-    canvas_width: number;
-    canvas_height: number;
+    columns: number;
+    lines: number;
     frameOn: boolean;
     difficulty: Difficulty;
 }
@@ -15,8 +15,8 @@ export enum Difficulty {
 };
 
 var OPTIONS: OptionsData = {
-    canvas_width: 800,
-    canvas_height: 400,
+    columns: 50,
+    lines: 50,
     frameOn: false,
     difficulty: Difficulty.normal
 };
@@ -24,12 +24,12 @@ var OPTIONS: OptionsData = {
 
 export function load( options: OptionsData ) {
     if ( options ) {
-        if ( Number.isInteger( options.canvas_width ) ) {
-            OPTIONS.canvas_width = options.canvas_width;
+        if ( Number.isInteger( options.columns ) ) {
+            OPTIONS.columns = options.columns;
         }
 
-        if ( Number.isInteger( options.canvas_height ) ) {
-            OPTIONS.canvas_height = options.canvas_height;
+        if ( Number.isInteger( options.lines ) ) {
+            OPTIONS.lines = options.lines;
         }
 
         if ( typeof options.frameOn !== 'undefined' ) {
@@ -63,27 +63,27 @@ export function getDifficultyString() {
 }
 
 
-export function setCanvasWidth( width: number ) {
-    OPTIONS.canvas_width = width;
+export function setColumns( columns: number ) {
+    OPTIONS.columns = columns;
 
-    changeCanvasDimensions( width );
+    changeCanvasDimensions( columns, OPTIONS.lines );
 }
 
 
-export function getCanvasWidth() {
-    return OPTIONS.canvas_width;
+export function getColumns() {
+    return OPTIONS.columns;
 }
 
 
-export function setCanvasHeight( height: number ) {
-    OPTIONS.canvas_height = height;
+export function setLines( lines: number ) {
+    OPTIONS.lines = lines;
 
-    changeCanvasDimensions( undefined, height );
+    changeCanvasDimensions( OPTIONS.columns, lines );
 }
 
 
-export function getCanvasHeight() {
-    return OPTIONS.canvas_height;
+export function getLines() {
+    return OPTIONS.lines;
 }
 
 

@@ -74,8 +74,8 @@ export default class Tail implements GridItem {
         move in relation to the current position (or a position given)
      */
     move( x: number, y?: number, startX?: number, startY?: number ) {
-        var canvasWidth = Options.getCanvasWidth();
-        var canvasHeight = Options.getCanvasHeight();
+        var canvasWidth = Options.getColumns();
+        var canvasHeight = Options.getLines();
 
         if ( typeof x == 'undefined' ) {
             x = 0;
