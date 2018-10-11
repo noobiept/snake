@@ -9,7 +9,7 @@ import DoubleFood from './double_food.js';
 import Message from './message.js';
 import Timer from './timer.js';
 import Interval from './interval.js';
-import { MapName, Direction, pause, resume, STAGE } from './main.js';
+import { MapName, Direction, STAGE } from './main.js';
 import { EVENT_KEY, getRandomInt, checkOverflowPosition, checkCollision } from './utilities.js';
 import { Grid, GridItem, ItemType } from "./grid.js";
 import Tail from "./tail.js";
@@ -39,6 +39,7 @@ var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
 var MAP_NAME: MapName;
 var GAME_OVER = false;
+var PAUSE = false;
 export var GRID: Grid;
 
 const SNAKES: Snake[] = [];
@@ -510,6 +511,16 @@ export function quit() {
 }
 
 
+function pause() {
+    PAUSE = true;
+}
+
+
+function resume() {
+    PAUSE = false;
+}
+
+
 export function clear() {
     INTERVALS.length = 0;
     SNAKES.length = 0;
@@ -522,26 +533,16 @@ export function clear() {
 
 
 export function pauseResume( pauseGame: boolean ) {
-    /*if ( pauseGame ) {
+    if ( pauseGame ) {
         TIMER.stop();
-
-        for ( let i = 0; i < INTERVALS.length; i++ ) {
-            INTERVALS[ i ].stop();
-        }
-
         pause();
     }
 
     // resume
     else {
         TIMER.start();
-
-        for ( let i = 0; i < INTERVALS.length; i++ ) {
-            INTERVALS[ i ].start();
-        }
-
         resume();
-    }*/
+    }
 }
 
 
@@ -560,7 +561,7 @@ export function isGameOver() {
  * Update the game (gets called at every tick).
  */
 function tick( event: TickEvent ) {
-    if ( event.paused ) {
+    if ( PAUSE ) {
         return;
     }
 

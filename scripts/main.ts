@@ -85,16 +85,6 @@ function initApp( data: Dict ) {
 }
 
 
-export function pause() {
-    createjs.Ticker.paused = true;
-}
-
-
-export function resume() {
-    createjs.Ticker.paused = false;
-}
-
-
 /**
  * Change the width/height of the canvas element where the game is drawn. The size is based on the number of columns/lines being used in the game.
  */
