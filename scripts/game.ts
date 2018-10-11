@@ -91,7 +91,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     MAP_NAME = mapName;
 
     TIMER.restart();
-    GameMenu.updateTimer( TIMER );
+    GameMenu.updateTimer( TIMER.getString() );
 
     var difficulty = Options.getDifficulty();
     const columns = 50;
@@ -288,7 +288,6 @@ function collisionDetection( a: GridItem, b: GridItem ) {
     }
 
     console.log( ItemType[ a.type ], ItemType[ b.type ] );
-
 }
 
 
@@ -568,6 +567,8 @@ function tick( event: TickEvent ) {
         const interval = INTERVALS[ a ];
         interval.tick( delta );
     }
+
+    TIMER.tick( delta );
 
     STAGE.update();
 }

@@ -14,6 +14,11 @@ export default class Interval {
     }
 
 
+    reset() {
+        this.count = 0;
+    }
+
+
     tick( delta: number ) {
         this.count += delta;
 
