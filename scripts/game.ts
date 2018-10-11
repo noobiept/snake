@@ -31,8 +31,8 @@ const INTERVALS: Interval[] = [];
 // depends on the difficulty level
 // the order matters (get the difficulty from Options, which will be the position in this)
 const SNAKE_SPEED = [ 100, 50 ];
-const SPAWN_FOOD = [ 1000, 2500 ];
-const SPAWN_DOUBLE_FOOD = [ 5000, 8000 ];
+const SPAWN_FOOD = [ 1000, 500 ];
+const SPAWN_DOUBLE_FOOD = [ 5000, 2500 ];
 const SPAWN_WALL = [ 4000, 3000 ];
 
 var TIMER: Timer;
@@ -244,7 +244,18 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 function tailFoodCollision( tail: Tail, food: Food ) {
 
     tail.snakeObject.eat( food );
-    GRID.remove( food.position );
+    GRID.remove( food );
+}
+
+
+/**
+ * A collision between two 'Tail' elements. The game ends when that happens.
+ */
+function tailTailCollision( tail1: Tail, tail2: Tail ) {
+    tail1.asBeenHit();
+    tail2.asBeenHit();
+
+    over();
 }
 
 
@@ -270,6 +281,10 @@ function collisionDetection( a: GridItem, b: GridItem ) {
 
     else if ( typeA === ItemType.doubleFood && typeB === ItemType.tail ) {
         tailFoodCollision( b as Tail, a as DoubleFood );
+    }
+
+    else if ( typeA === ItemType.tail && typeB === ItemType.tail ) {
+        tailTailCollision( a as Tail, b as Tail );
     }
 
     console.log( ItemType[ a.type ], ItemType[ b.type ] );
