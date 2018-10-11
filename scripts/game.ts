@@ -188,46 +188,30 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     // add food interval
     let interval = new Interval( function () {
 
-        // don't add food on top of the walls/etc
-        // try 5 times, otherwise just give up
-        for ( var i = 0; i < 5; i++ ) {
-            const position = {
-                column: getRandomInt( 0, columns - 1 ),
-                line: getRandomInt( 0, lines - 1 )
-            };
+        // the grid allows multiple items to be on the same position, so just get a random position, even if it ends up on top of another element
+        const position = {
+            column: getRandomInt( 0, columns - 1 ),
+            line: getRandomInt( 0, lines - 1 )
+        };
 
-            const item = GRID.get( position );
+        const food = new Food();
+        GRID.add( food, position );
 
-            if ( !item ) {
-                const food = new Food();
-
-                GRID.add( food, position );
-                break;
-            }
-        }
     }, SPAWN_FOOD[ difficulty ] );
     INTERVALS.push( interval );
 
     // add double food
     interval = new Interval( function () {
 
-        // don't add food on top of the walls/etc
-        // try 5 times, otherwise just give up
-        for ( let i = 0; i < 5; i++ ) {
-            const position = {
-                column: getRandomInt( 0, columns - 1 ),
-                line: getRandomInt( 0, lines - 1 )
-            };
+        // the grid allows multiple items to be on the same position, so just get a random position, even if it ends up on top of another element
+        const position = {
+            column: getRandomInt( 0, columns - 1 ),
+            line: getRandomInt( 0, lines - 1 )
+        };
 
-            const item = GRID.get( position );
+        const food = new DoubleFood();
+        GRID.add( food, position );
 
-            if ( !item ) {
-                const food = new DoubleFood();
-
-                GRID.add( food, position );
-                break;
-            }
-        }
     }, SPAWN_DOUBLE_FOOD[ difficulty ] );
     INTERVALS.push( interval );
 
@@ -243,10 +227,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
                 const tail = tails[ b ];
                 tail.tick();
 
-                const current = tail.position;
                 const next = tail.nextPosition();
-
-                GRID.move( current, next );
+                GRID.move( tail, next );
             }
         }
     }, SNAKE_SPEED[ difficulty ] );
@@ -291,7 +273,7 @@ function collisionDetection( a: GridItem, b: GridItem ) {
     }
 
     console.log( ItemType[ a.type ], ItemType[ b.type ] );
-    return true;
+
 }
 
 

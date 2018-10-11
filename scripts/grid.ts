@@ -19,13 +19,13 @@ export interface Position {
 interface GridArgs {
     columns: number;
     lines: number;
-    onCollision: ( a: GridItem, b: GridItem ) => boolean;
+    onCollision: ( a: GridItem, b: GridItem ) => void;
 }
 
 export class Grid {
     static size = 10;   // size of each grid item in pixels
 
-    grid: ( GridItem | undefined )[][];
+    grid: ( GridItem[] )[][];
     args: GridArgs;
 
     constructor( args: GridArgs ) {
@@ -33,8 +33,12 @@ export class Grid {
         this.grid = [];
 
         // initialize the 'grid' array
-        for ( let a = 0; a < args.columns; a++ ) {
-            this.grid[ a ] = [];
+        for ( let column = 0; column < args.columns; column++ ) {
+            this.grid[ column ] = [];
+
+            for ( let line = 0; line < args.lines; line++ ) {
+                this.grid[ column ][ line ] = [];
+            }
         }
     }
 
@@ -42,7 +46,7 @@ export class Grid {
         const column = position.column;
         const line = position.line;
 
-        this.grid[ column ][ line ] = item;
+        this.grid[ column ][ line ].push( item );
 
         const shape = item.shape;
         shape.x = column * Grid.size
@@ -53,14 +57,20 @@ export class Grid {
         STAGE.addChild( shape );
     }
 
-    remove( position: Position ) {
-        const item = this.grid[ position.column ][ position.line ];
 
-        this.grid[ position.column ][ position.line ] = undefined;
+    /**
+     * Remove the item from the grid.
+     */
+    remove( item: GridItem ) {
+        const position = item.position;
 
-        if ( item ) {
-            STAGE.removeChild( item.shape );
+        const index = this.grid[ position.column ][ position.line ].indexOf( item );
+        if ( index < 0 ) {
+            throw Error( 'Item not in the correct position.' )
         }
+
+        this.grid[ position.column ][ position.line ].splice( index, 1 );
+        STAGE.removeChild( item.shape );
 
         return item;
     }
@@ -75,10 +85,12 @@ export class Grid {
 
             for ( let line = 0; line < columns.length; line++ ) {
 
-                this.remove( {
-                    column: column,
-                    line: line
-                } );
+                const lines = columns[ line ];
+
+                for ( let a = lines.length - 1; a >= 0; a-- ) {
+                    const item = lines[ a ];
+                    this.remove( item );
+                }
             }
         }
     }
@@ -88,7 +100,12 @@ export class Grid {
         return this.grid[ position.column ][ position.line ];
     }
 
-    move( from: Position, to: Position ) {
+
+    move( item: GridItem, to: Position ) {
+        if ( !item ) {
+            return;
+        }
+
         const columns = this.args.columns;
         const lines = this.args.lines;
 
@@ -109,25 +126,31 @@ export class Grid {
             to.line = lines - 1;
         }
 
-        const item = this.grid[ from.column ][ from.line ];
-        const existingItem = this.grid[ to.column ][ to.line ];
+        const existingItems = this.grid[ to.column ][ to.line ];
 
-        if ( item && existingItem ) {
-            const ok = this.args.onCollision( item, existingItem );
-
-            if ( !ok ) {
-                return;
+        // a collision happened between the item and other items on the destination position
+        if ( existingItems.length > 0 ) {
+            for ( let a = 0; a < existingItems.length; a++ ) {
+                const otherItem = existingItems[ a ];
+                this.args.onCollision( item, otherItem );
             }
         }
 
-        this.grid[ from.column ][ from.line ] = undefined;
-        this.grid[ to.column ][ to.line ] = item;
-
-        if ( item ) {
-            item.shape.x = to.column * Grid.size;
-            item.shape.y = to.line * Grid.size;
-
-            item.position = to;
+        // remove from the previous position
+        const from = item.position;
+        const index = this.grid[ from.column ][ from.line ].indexOf( item );
+        if ( index < 0 ) {
+            throw Error( 'Item not in the correct position.' );
         }
+
+        this.grid[ from.column ][ from.line ].splice( index, 1 );
+
+        // add to the new position
+        this.grid[ to.column ][ to.line ].push( item );
+
+        // update the position of the item
+        item.shape.x = to.column * Grid.size;
+        item.shape.y = to.line * Grid.size;
+        item.position = to;
     }
 }
