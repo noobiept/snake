@@ -468,12 +468,16 @@ function wallLine( position: GridPosition, length: number, direction: Direction 
             throw Error( 'Invalid direction.' )
     }
 
+    let elementPosition = { ...position };
+
     for ( let a = 0; a < length; a++ ) {
         const wall = new Wall();
-        GRID.add( wall, position );
+        GRID.add( wall, elementPosition );
 
-        position.column += addColumn;
-        position.line += addLine;
+        elementPosition = {
+            column: elementPosition.column + addColumn,
+            line: elementPosition.line + addLine
+        };
     }
 }
 
