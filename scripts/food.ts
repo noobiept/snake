@@ -1,7 +1,5 @@
-import Snake from './snake.js';
-import { STAGE } from "./main.js";
 import { getAsset } from './preload.js';
-import { GridItem, Position, ItemType } from "./grid.js";
+import { Grid, GridItem, Position, ItemType } from "./grid.js";
 
 
 /**
@@ -13,11 +11,6 @@ interface EatenEffect {
 
 
 export default class Food implements GridItem {
-    static FOOD_WIDTH = 10;
-    static FOOD_HEIGHT = 10;
-
-    protected width: number;
-    protected height: number;
     shape: createjs.Bitmap;
     position: Position;
     readonly type: ItemType = ItemType.food;
@@ -25,8 +18,6 @@ export default class Food implements GridItem {
 
 
     constructor() {
-        this.width = Food.FOOD_WIDTH;
-        this.height = Food.FOOD_HEIGHT;
         this.shape = this.draw();
         this.position = {
             column: 0,
@@ -36,34 +27,11 @@ export default class Food implements GridItem {
 
 
     draw() {
-        var width = this.width;
-        var height = this.height;
-
         var food = new createjs.Bitmap( getAsset( 'apple' ) );
 
-        food.regX = width / 2;
-        food.regY = height / 2;
+        food.regX = Grid.halfSize;
+        food.regY = Grid.halfSize;
 
         return food;
-    }
-
-
-    getX() {
-        return this.shape.x;
-    }
-
-
-    getY() {
-        return this.shape.y;
-    }
-
-
-    getWidth() {
-        return this.width;
-    }
-
-
-    getHeight() {
-        return this.height;
     }
 }

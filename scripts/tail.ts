@@ -1,13 +1,10 @@
 import * as Options from './options.js';
 import Snake from './snake.js';
 import { Direction, Path, STAGE } from "./main.js";
-import { GridItem, Position, ItemType } from "./grid.js";
+import { Grid, GridItem, Position, ItemType } from "./grid.js";
 
 
 export default class Tail implements GridItem {
-    static TAIL_WIDTH = 10;    // width and height need to be the same value
-    static TAIL_HEIGHT = Tail.TAIL_WIDTH;
-
     readonly type = ItemType.tail;
     direction: Direction;
     position: Position;
@@ -15,8 +12,6 @@ export default class Tail implements GridItem {
     snakeObject: Snake;
     path: Path[];
     shape: createjs.Shape;
-    private width: number;
-    private height: number;
 
 
     constructor( snakeObject: Snake, direction: Direction, path: Path[] ) {
@@ -25,8 +20,6 @@ export default class Tail implements GridItem {
         // draw it, and setup the physics body
         this.shape = this.draw();
 
-        this.width = Tail.TAIL_WIDTH;
-        this.height = Tail.TAIL_HEIGHT;
         this.path = path;
         this.direction = direction;
         this.position = {
@@ -40,13 +33,13 @@ export default class Tail implements GridItem {
         // createjs
         var snakeTail = new createjs.Shape();
 
-        snakeTail.regX = Tail.TAIL_WIDTH / 2;
-        snakeTail.regY = Tail.TAIL_HEIGHT / 2;
+        snakeTail.regX = Grid.halfSize;
+        snakeTail.regY = Grid.halfSize;
 
         var g = snakeTail.graphics;
 
         g.beginFill( this.snakeObject.color );
-        g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
+        g.drawRoundRect( 0, 0, Grid.size, Grid.size, 2 );
 
         STAGE.addChild( snakeTail );
 
@@ -61,7 +54,7 @@ export default class Tail implements GridItem {
         var g = this.shape.graphics;
 
         g.beginFill( 'red' );
-        g.drawRoundRect( 0, 0, Tail.TAIL_WIDTH, Tail.TAIL_HEIGHT, 2 );
+        g.drawRoundRect( 0, 0, Grid.size, Grid.size, 2 );
     }
 
 
@@ -70,115 +63,11 @@ export default class Tail implements GridItem {
     }
 
 
-    /*
-        move in relation to the current position (or a position given)
-     */
-    move( x: number, y?: number, startX?: number, startY?: number ) {
-        var canvasWidth = Options.getColumns();
-        var canvasHeight = Options.getLines();
-
-        if ( typeof x == 'undefined' ) {
-            x = 0;
-        }
-
-        if ( typeof y == 'undefined' ) {
-            y = 0;
-        }
-
-        if ( typeof startX == 'undefined' ) {
-            startX = this.getX();
-        }
-
-        if ( typeof startY == 'undefined' ) {
-            startY = this.getY();
-        }
-
-        var nextX = startX + x;
-        var nextY = startY + y;
-
-        // see if outside of canvas (if so, move to the other side)
-        if ( nextX < 0 ) {
-            nextX = canvasWidth;
-        }
-
-        else if ( nextX > canvasWidth ) {
-            nextX = 0;
-        }
-
-
-        if ( nextY < 0 ) {
-            nextY = canvasHeight;
-        }
-
-        else if ( nextY > canvasHeight ) {
-            nextY = 0;
-        }
-
-        this.shape.x = nextX;
-        this.shape.y = nextY;
-    }
-
-
-    getX() {
-        return this.shape.x;
-    }
-
-
-    getY() {
-        return this.shape.y;
-    }
-
-
-    getWidth() {
-        return this.width;
-    }
-
-
-    getHeight() {
-        return this.height;
-    }
-
-
     /**
      * Add a new direction to the tail path.
      */
     addNewDirection( path: Path ) {
         this.path.push( path );
-    }
-
-
-    /*
-        Move in the current direction
-     */
-    moveInDirection() {
-        // the speed has to be the same value as the width/height so that when turning the tails, they don't overlap
-        var speed = Tail.TAIL_WIDTH;
-        var direction = this.direction;
-
-        // when moving diagonally (45 degrees), we have to slow down the x and y
-        // we have a triangle, and want the hypotenuse to be 'speed', with angle of 45º (pi / 4)
-        // sin(angle) = opposite / hypotenuse
-        // cos(angle) = adjacent / hypotenuse
-
-        // x = cos( pi / 4 ) -> 0.707
-        // y = sin( pi / 4 ) -> 0.707
-
-        // here we're only moving through 'x' or 'y', so just need 'speed'
-        if ( direction == Direction.left ) {
-            this.move( -speed );
-        }
-
-        else if ( direction == Direction.right ) {
-            this.move( speed );
-        }
-
-        else if ( direction == Direction.up ) {
-            this.move( 0, -speed );
-        }
-
-        else if ( direction == Direction.down ) {
-            this.move( 0, speed );
-        }
     }
 
 

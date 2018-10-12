@@ -24,6 +24,7 @@ interface GridArgs {
 
 export class Grid {
     static readonly size = 10;   // size of each grid item in pixels
+    static readonly halfSize = Grid.size / 2;
 
     grid: ( GridItem[] )[][];
     args: GridArgs;
@@ -49,8 +50,8 @@ export class Grid {
         this.grid[ column ][ line ].push( item );
 
         const shape = item.shape;
-        shape.x = column * Grid.size + Grid.size / 2;
-        shape.y = line * Grid.size + Grid.size / 2;
+        shape.x = column * Grid.size + Grid.halfSize;
+        shape.y = line * Grid.size + Grid.halfSize;
 
         item.position = position;
 
@@ -149,8 +150,8 @@ export class Grid {
         this.grid[ to.column ][ to.line ].push( item );
 
         // update the position of the item
-        item.shape.x = to.column * Grid.size + Grid.size / 2;
-        item.shape.y = to.line * Grid.size + Grid.size / 2;
+        item.shape.x = to.column * Grid.size + Grid.halfSize;
+        item.shape.y = to.line * Grid.size + Grid.halfSize;
         item.position = to;
     }
 }
