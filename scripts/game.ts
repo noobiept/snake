@@ -94,8 +94,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     GameMenu.updateTimer( TIMER.getString() );
 
     var difficulty = Options.getDifficulty();
-    const columns = 50;
-    const lines = 50;
+    const columns = Options.getColumns();
+    const lines = Options.getLines();
 
     GRID = new Grid( {
         columns: columns,
