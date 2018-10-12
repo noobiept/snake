@@ -285,6 +285,17 @@ function tailTailCollision( tail1: Tail, tail2: Tail ) {
 
 
 /**
+ * A collision between a 'Tail' and a 'Wall' element. Game ends here as well.
+ */
+function tailWallCollision( tail: Tail, wall: Wall ) {
+    tail.asBeenHit();
+    wall.asBeenHit();
+
+    over();
+}
+
+
+/**
  * Deal with the collision between 2 elements in the grid.
  * Need to first identify the type and then call the appropriate function.
  */
@@ -310,6 +321,14 @@ function collisionDetection( a: GridItem, b: GridItem ) {
 
     else if ( typeA === ItemType.tail && typeB === ItemType.tail ) {
         tailTailCollision( a as Tail, b as Tail );
+    }
+
+    else if ( typeA === ItemType.tail && typeB === ItemType.wall ) {
+        tailWallCollision( a as Tail, b as Wall );
+    }
+
+    else if ( typeA === ItemType.wall && typeB === ItemType.tail ) {
+        tailWallCollision( b as Tail, a as Wall );
     }
 
     console.log( ItemType[ a.type ], ItemType[ b.type ] );
