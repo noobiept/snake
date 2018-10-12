@@ -10,8 +10,8 @@ import Message from './message.js';
 import Timer from './timer.js';
 import Interval from './interval.js';
 import { MapName, Direction, STAGE } from './main.js';
-import { EVENT_KEY, getRandomInt, checkOverflowPosition, checkCollision } from './utilities.js';
-import { Grid, GridItem, ItemType } from "./grid.js";
+import { EVENT_KEY, getRandomInt } from './utilities.js';
+import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import Tail from "./tail.js";
 
 
@@ -172,18 +172,43 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         SNAKES.push( snake );
     }
 
-    /*
-        createjs.Ticker.interval = TIME_BETWEEN_TICKS[ difficulty ];
+    // add a wall around the canvas (so that you can't pass through from one side to the other)
+    if ( Options.getFrame() ) {
 
-        // add a wall around the canvas (so that you can't pass through from one side to the other)
-        if ( Options.getFrame() ) {
-            new Wall( 0, canvasHeight / 2, 5, canvasHeight ); // left
-            new Wall( canvasWidth / 2, 0, canvasWidth, 5 );   // top
-            new Wall( canvasWidth, canvasHeight / 2, 5, canvasHeight ); // right
-            new Wall( canvasWidth / 2, canvasHeight, canvasWidth, 5 ); //bottom
-        }*///HERE
+        // left/right sides
+        for ( let line = 0; line < lines; line++ ) {
+            const leftWall = new Wall();
+            const rightWall = new Wall();
 
-    //setupWalls( mapName ); //HERE
+            GRID.add( leftWall, {
+                column: 0,
+                line: line
+            } );
+            GRID.add( rightWall, {
+                column: columns - 1,
+                line: line
+            } );
+        }
+
+        // top/bottom sides
+        // the first/last items were already added above
+        for ( let column = 1; column < columns - 1; column++ ) {
+            const topWall = new Wall();
+            const bottomWall = new Wall();
+
+            GRID.add( topWall, {
+                column: column,
+                line: 0
+            } );
+            GRID.add( bottomWall, {
+                column: column,
+                line: lines - 1
+            } );
+        }
+    }
+
+    // add the map walls (its different depending on the selected map)
+    setupWalls( mapName );
 
     // add food interval
     let interval = new Interval( function () {
