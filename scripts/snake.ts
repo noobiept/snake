@@ -116,19 +116,6 @@ export default class Snake {
     }
 
 
-    /*
-        Return the position of the first tail (so, of the snake)
-     */
-    getX() {
-        return this.first_tail.getX();
-    }
-
-
-    getY() {
-        return this.first_tail.getY();
-    }
-
-
     /**
      * Change the direction of the snake (at the current x/y position).
      */
@@ -336,79 +323,5 @@ export default class Snake {
         else if ( keysHeld.down ) {
             this.changeDirection( Direction.down );
         }
-    }
-
-
-    tick() {
-        var firstTail = this.first_tail;
-
-        var firstX = firstTail.getX();
-        var firstY = firstTail.getY();
-        var firstWidth = firstTail.getWidth() / 2;
-        var firstHeight = firstTail.getHeight() / 2;
-
-        var tail;
-        var allTails = this.all_tails;
-
-
-        this.movementTick();
-        /*
-                // :: deal with the collision detection between the snake and tails :: //
-                // 'i' starts at 1, to not check the first tail (that's the one we're comparing with)
-                for ( var i = 1; i < allTails.length; i++ ) {
-                    tail = allTails[ i ];
-
-                    if ( checkCollision( firstX, firstY, firstWidth, firstHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
-                        tail.asBeenHit();
-
-                        Game.over();
-                        return;
-                    }
-                }
-
-                var a, b;   //HERE
-
-                // :: check collision between the snake's tails and the food :: //
-                for ( a = 0; a < Food.ALL_FOOD.length; a++ ) {
-                    var food = Food.ALL_FOOD[ a ];
-                    var foodX = food.getX();
-                    var foodY = food.getY();
-                    var foodWidth = food.getWidth();
-                    var foodHeight = food.getHeight();
-
-                    for ( b = 0; b < allTails.length; b++ ) {
-                        tail = allTails[ b ];
-
-                        if ( checkCollision( foodX, foodY, foodWidth, foodHeight, tail.getX(), tail.getY(), tail.getWidth(), tail.getHeight() ) == true ) {
-                            food.eat( this );
-
-                            food.remove();
-                            a--;
-                            break;
-                        }
-                    }
-                }
-
-                // :: check collision between the snake and the walls :: //
-
-                var wall;
-
-                for ( i = 0; i < Wall.ALL_WALLS.length; i++ ) {
-                    wall = Wall.ALL_WALLS[ i ];
-
-                    if ( checkCollision( firstX, firstY, firstWidth, firstHeight, wall.getX(), wall.getY(), wall.getWidth(), wall.getHeight() ) ) {
-                        wall.asBeenHit();
-
-                        Game.over();
-                        return;
-                    }
-                }
-
-        // :: deal with the movement of the tails :: //
-
-        for ( i = 0; i < allTails.length; i++ ) {
-            tail = allTails[ i ];
-            tail.tick();
-        }*/
     }
 }

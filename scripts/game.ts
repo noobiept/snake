@@ -343,127 +343,138 @@ function collisionDetection( a: GridItem, b: GridItem ) {
  * - `empty`  : No walls added.
  */
 function setupWalls( mapName: MapName ) {
-    /*var difficulty = Options.getDifficulty();
+    const difficulty = Options.getDifficulty();
+    const columns = Options.getColumns();
+    const lines = Options.getLines();
 
     // randomly add walls in the map
     if ( mapName === 'random' ) {
         var interval = new Interval( function () {
-            var x = 0, y = 0;
-            var width = 0, height = 0;
-            var verticalOrientation = 0;
-            var canvasWidth = Options.getCanvasWidth();
-            var canvasHeight = Options.getCanvasHeight();
-            var maxWallWidth = canvasWidth * 0.2;
-            var minWallWidth = canvasWidth * 0.1;
-            var maxWallHeight = canvasHeight * 0.2;
-            var minWallHeight = canvasHeight * 0.1;
+            var maxWallColumns = Math.round( columns * 0.2 );
+            var minWallColumns = Math.round( columns * 0.1 );
+            var maxWallLines = Math.round( lines * 0.2 );
+            var minWallLines = Math.round( lines * 0.1 );
 
-            // don't add walls on top of the food (otherwise its impossible to get it)
-            // try 5 times, otherwise just use whatever position
-            for ( var i = 0; i < 5; i++ ) {
-                x = getRandomInt( 0, canvasWidth );
-                y = getRandomInt( 0, canvasHeight );
-                verticalOrientation = getRandomInt( 0, 1 );
+            const totalDirections = Object.keys( Direction ).length / 2;
+            const direction = getRandomInt( 0, totalDirections - 1 ) as Direction;
 
-                if ( verticalOrientation ) {
-                    width = 10;
-                    height = getRandomInt( minWallHeight, maxWallHeight );
-                }
+            const position = {
+                column: getRandomInt( 0, columns ),
+                line: getRandomInt( 0, lines )
+            };
+            let length = 1;
 
-                else {
-                    width = getRandomInt( minWallWidth, maxWallWidth );
-                    height = 10;
-                }
-
-                if ( !elementCollision( x, y, width, height, Food.ALL_FOOD ) ) {
-                    break;
-                }
+            if ( direction ) {
+                length = getRandomInt( minWallLines, maxWallLines );
             }
 
-            // we have to make sure it doesnt add on top of the snake
-            //HERE it could still be added on top of the tails?.. isn't as bad since what matters in the collision is the first tail
-            // also we could add the wall on top of food (since we're changing the values we checked above)
-            for ( i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-                var snakeX = Snake.ALL_SNAKES[ i ].getX();
-                var snakeY = Snake.ALL_SNAKES[ i ].getY();
-
-                var margin = 60;
-
-                // means the wall position is close to the snake
-                if ( snakeX > x - margin && snakeX < x + margin &&
-                    snakeY > y - margin && snakeY < y + margin ) {
-                    x += 100;
-                    y += 100;
-
-                    // to make sure it doesn't go out of bounds
-                    x = checkOverflowPosition( x, canvasWidth );
-                    y = checkOverflowPosition( y, canvasHeight );
-                }
+            else {
+                length = getRandomInt( minWallColumns, maxWallColumns );
             }
 
-            new Wall( x, y, width, height );
+            // needs at a minimum to occupy one grid position
+            if ( length < 1 ) {
+                length = 1;
+            }
 
-        }, WALL_TIMINGS[ difficulty ] );
-        interval.start();
+            // we have to make sure it isn't added on top of the snake's tails
+            for ( let a = 0; a < SNAKES.length; a++ ) {
+                const snake = SNAKES[ a ];
 
+                var margin = 5;
+                //HERE
+            }
+
+            wallLine( position, length, direction );
+
+        }, SPAWN_WALL[ difficulty ] );
         INTERVALS.push( interval );
     }
+    /*
+        else if ( mapName === 'stairs' ) {
+            var columnLength = Math.round( columns * 0.1 );
+            var lineLength = Math.round( lines * 0.06 );
+            var steps = 4;
+            var columnOffset = columns / ( steps + 1 );
+            var lineOffset = lines / ( steps + 1 );
 
-    else if ( mapName === 'stairs' ) {
-        var canvasWidth = Options.getCanvasWidth();
-        var canvasHeight = Options.getCanvasHeight();
-        var width = canvasWidth * 0.1;
-        var widthThickness = canvasWidth * 0.01;
-        var height = canvasHeight * 0.06;
-        var heightThickness = canvasHeight * 0.015;
-        var steps = 4;
-        var xOffset = canvasWidth / ( steps + 1 );
-        var yOffset = canvasHeight / ( steps + 1 );
+            for ( let a = 0; a < steps; a++ ) {
+                var column = ( a + 1 ) * columnOffset;
+                var line = ( a + 1 ) * lineOffset;
 
-        for ( var a = 0; a < steps; a++ ) {
-            var x = ( a + 1 ) * xOffset;
-            var y = ( a + 1 ) * yOffset;
+                const position1 = {
+                    column: column, line: line
+                };
+                const position2 = {
+                    column: column + Math.round( columnLength / 2 ),
+                    line: line + Math.round( lineLength / 2 )
+                }
 
-            new Wall( x, y, width, widthThickness );
-            new Wall( x + width / 2, y + height / 2, heightThickness, height );
+                const wall1 = new Wall();
+                const wall2 = new Wall();
+
+                GRID.add( wall1, position1 );
+                GRID.add( wall2, position2 );
+            }
         }
-    }
 
-    else if ( mapName === 'lines' ) {
-        var lines = 4;
-        var canvasWidth = Options.getCanvasWidth();
-        var canvasHeight = Options.getCanvasHeight();
-        var x1 = canvasWidth * 0.15;
-        var x2 = canvasWidth * 0.5;
-        var x3 = canvasWidth * 0.85;
-        var yDiff = canvasHeight / ( lines + 1 );
-        var width = canvasWidth * 0.2;
-        var height = canvasHeight * 0.01;
+        else if ( mapName === 'lines' ) {
+            var lines = 4;
+            var canvasWidth = Options.getCanvasWidth();
+            var canvasHeight = Options.getCanvasHeight();
+            var x1 = canvasWidth * 0.15;
+            var x2 = canvasWidth * 0.5;
+            var x3 = canvasWidth * 0.85;
+            var yDiff = canvasHeight / ( lines + 1 );
+            var width = canvasWidth * 0.2;
+            var height = canvasHeight * 0.01;
 
-        for ( var a = 0; a < lines; a++ ) {
-            var y = yDiff * ( a + 1 );
+            for ( var a = 0; a < lines; a++ ) {
+                var line = yDiff * ( a + 1 );
 
-            new Wall( x1, y, width, height );
-            new Wall( x2, y, width, height );
-            new Wall( x3, y, width, height );
-        }
-    }*/
+                new Wall( x1, line, width, height );
+                new Wall( x2, line, width, height );
+                new Wall( x3, line, width, height );
+            }
+        }*/
 }
 
 
 /**
- * Check if a food/wall position is colliding with any of the  walls/foods.
+ * Add a line of 'Wall' elements in the given direction.
  */
-function elementCollision( x: number, y: number, width: number, height: number, elementsArray: Wall[] | Food[] ) {
-    for ( var i = 0; i < elementsArray.length; i++ ) {
-        var element = elementsArray[ i ];
+function wallLine( position: GridPosition, length: number, direction: Direction ) {
+    let addColumn = 0;
+    let addLine = 0;
 
-        if ( checkCollision( x, y, width, height, element.getX(), element.getY(), element.getWidth(), element.getHeight() ) ) {
-            return true;
-        }
+    switch ( direction ) {
+        case Direction.up:
+            addLine = -1;
+            break;
+
+        case Direction.down:
+            addLine = 1;
+            break;
+
+        case Direction.left:
+            addColumn = -1;
+            break;
+
+        case Direction.right:
+            addColumn = 1;
+            break;
+
+        default:
+            throw Error( 'Invalid direction.' )
     }
 
-    return false;
+    for ( let a = 0; a < length; a++ ) {
+        const wall = new Wall();
+        GRID.add( wall, position );
+
+        position.column += addColumn;
+        position.line += addLine;
+    }
 }
 
 
