@@ -1,5 +1,5 @@
 import { getAsset } from './preload.js';
-import { Grid, GridItem, Position, ItemType } from "./grid.js";
+import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 
 /**
@@ -12,7 +12,7 @@ interface EatenEffect {
 
 export default class Food implements GridItem {
     shape: createjs.Bitmap;
-    position: Position;
+    position: GridPosition;
     readonly type: ItemType = ItemType.food;
     readonly eaten: EatenEffect = { tails: 1 };
 

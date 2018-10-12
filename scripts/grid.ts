@@ -7,11 +7,11 @@ export enum ItemType {
 
 export interface GridItem {
     shape: createjs.DisplayObject;
-    position: Position;
+    position: GridPosition;
     type: ItemType;
 }
 
-export interface Position {
+export interface GridPosition {
     column: number;
     line: number;
 }
@@ -43,9 +43,16 @@ export class Grid {
         }
     }
 
-    add( item: GridItem, position: Position ) {
+    add( item: GridItem, position: GridPosition ) {
         const column = position.column;
         const line = position.line;
+
+        if ( column >= this.args.columns ||
+            line >= this.args.lines ||
+            column < 0 ||
+            line < 0 ) {
+            return;
+        }
 
         this.grid[ column ][ line ].push( item );
 
@@ -97,12 +104,12 @@ export class Grid {
     }
 
 
-    get( position: Position ) {
+    get( position: GridPosition ) {
         return this.grid[ position.column ][ position.line ];
     }
 
 
-    move( item: GridItem, to: Position ) {
+    move( item: GridItem, to: GridPosition ) {
         if ( !item ) {
             return;
         }

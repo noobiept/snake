@@ -1,9 +1,9 @@
-import { Grid, GridItem, Position, ItemType } from "./grid.js";
+import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 
 export default class Wall implements GridItem {
     shape: createjs.Shape;
-    position: Position;
+    position: GridPosition;
     readonly type: ItemType = ItemType.wall;
 
 

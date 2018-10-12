@@ -5,11 +5,11 @@ import Food from './food.js';
 import Wall from './wall.js';
 import { Direction, KeyboardMapping } from './main.js';
 import { checkCollision } from './utilities.js';
-import { GridItem, Position } from "./grid.js";
+import { GridItem, GridPosition } from "./grid.js";
 
 
 interface SnakeArgs {
-    position: Position;
+    position: GridPosition;
     startingDirection: Direction;
     color: string;
     keyboardMapping: KeyboardMapping;
@@ -49,7 +49,7 @@ export default class Snake {
     /**
      * Add a tail either on the given position, or after the last tail.
      */
-    addTail( position?: Position, direction?: Direction ) {
+    addTail( position?: GridPosition, direction?: Direction ) {
         const last = this.getLastTail();
 
         // add at the end of the snake

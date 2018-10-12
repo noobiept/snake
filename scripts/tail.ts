@@ -1,13 +1,13 @@
 import * as Options from './options.js';
 import Snake from './snake.js';
 import { Direction, Path, STAGE } from "./main.js";
-import { Grid, GridItem, Position, ItemType } from "./grid.js";
+import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 
 export default class Tail implements GridItem {
     readonly type = ItemType.tail;
     direction: Direction;
-    position: Position;
+    position: GridPosition;
 
     snakeObject: Snake;
     path: Path[];
