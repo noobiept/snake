@@ -336,6 +336,119 @@ function collisionDetection( a: GridItem, b: GridItem ) {
 
 
 /**
+ * Add some walls randomly on the map on a set interval.
+ */
+function setupRandomMap() {
+    const difficulty = Options.getDifficulty();
+    const columns = Options.getColumns();
+    const lines = Options.getLines();
+
+    var interval = new Interval( function () {
+        var maxWallColumns = Math.round( columns * 0.2 );
+        var minWallColumns = Math.round( columns * 0.1 );
+        var maxWallLines = Math.round( lines * 0.2 );
+        var minWallLines = Math.round( lines * 0.1 );
+
+        const totalDirections = Object.keys( Direction ).length / 2;
+        const direction = getRandomInt( 0, totalDirections - 1 ) as Direction;
+
+        const position = {
+            column: getRandomInt( 0, columns ),
+            line: getRandomInt( 0, lines )
+        };
+        let length = 1;
+
+        if ( direction ) {
+            length = getRandomInt( minWallLines, maxWallLines );
+        }
+
+        else {
+            length = getRandomInt( minWallColumns, maxWallColumns );
+        }
+
+        // needs at a minimum to occupy one grid position
+        if ( length < 1 ) {
+            length = 1;
+        }
+
+        // we have to make sure it isn't added on top of the snake's tails
+        for ( let a = 0; a < SNAKES.length; a++ ) {
+            const snake = SNAKES[ a ];
+
+            var margin = 5;
+            //HERE
+        }
+
+        wallLine( position, length, direction );
+
+    }, SPAWN_WALL[ difficulty ] );
+    INTERVALS.push( interval );
+}
+
+
+/**
+ * Add some walls on a 'stair' like layout.
+ */
+function setupStairsMap() {
+    const columns = Options.getColumns();
+    const lines = Options.getLines();
+
+    var columnLength = Math.round( columns * 0.1 );
+    var lineLength = Math.round( lines * 0.06 );
+    var steps = 4;
+    var columnOffset = columns / ( steps + 1 );
+    var lineOffset = lines / ( steps + 1 );
+
+    for ( let a = 0; a < steps; a++ ) {
+        var column = ( a + 1 ) * columnOffset;
+        var line = ( a + 1 ) * lineOffset;
+
+        const position1 = {
+            column: column, line: line
+        };
+        const position2 = {
+            column: column + Math.round( columnLength / 2 ),
+            line: line + Math.round( lineLength / 2 )
+        }
+
+        const wall1 = new Wall();
+        const wall2 = new Wall();
+
+        GRID.add( wall1, position1 );
+        GRID.add( wall2, position2 );
+    }
+}
+
+
+/**
+ * Add some horizontal walls on the map.
+ */
+function setupLinesMap() {
+    const linesTotal = 4;
+    const columns = Options.getColumns();
+    const lines = Options.getLines();
+    const length = Math.round( columns * 0.2 ); // of each wall
+    const yDiff = lines / ( linesTotal + 1 );
+
+    // there's 3 wall lines in a row, with some margins in between
+    // so: (margin)(wall)(margin)(wall)(margin)(wall)(margin)
+    const margin = ( columns - 3 * length ) / 4;
+
+    const column1 = margin;
+    const column2 = 2 * margin + length;
+    const column3 = 3 * margin + 2 * length;
+
+    for ( let a = 0; a < linesTotal; a++ ) {
+        const line = yDiff * ( a + 1 );
+
+        wallLine( { column: column1, line: line }, length, Direction.right );
+        wallLine( { column: column2, line: line }, length, Direction.right );
+        wallLine( { column: column3, line: line }, length, Direction.right );
+    }
+}
+
+
+/**
  * Setup the map walls (depends on the map type).
  * - `random` : Adds walls randomly in the map.
  * - `stairs` : Stair like walls.
@@ -343,100 +456,17 @@ function collisionDetection( a: GridItem, b: GridItem ) {
  * - `empty`  : No walls added.
  */
 function setupWalls( mapName: MapName ) {
-    const difficulty = Options.getDifficulty();
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
-
-    // randomly add walls in the map
     if ( mapName === 'random' ) {
-        var interval = new Interval( function () {
-            var maxWallColumns = Math.round( columns * 0.2 );
-            var minWallColumns = Math.round( columns * 0.1 );
-            var maxWallLines = Math.round( lines * 0.2 );
-            var minWallLines = Math.round( lines * 0.1 );
-
-            const totalDirections = Object.keys( Direction ).length / 2;
-            const direction = getRandomInt( 0, totalDirections - 1 ) as Direction;
-
-            const position = {
-                column: getRandomInt( 0, columns ),
-                line: getRandomInt( 0, lines )
-            };
-            let length = 1;
-
-            if ( direction ) {
-                length = getRandomInt( minWallLines, maxWallLines );
-            }
-
-            else {
-                length = getRandomInt( minWallColumns, maxWallColumns );
-            }
-
-            // needs at a minimum to occupy one grid position
-            if ( length < 1 ) {
-                length = 1;
-            }
-
-            // we have to make sure it isn't added on top of the snake's tails
-            for ( let a = 0; a < SNAKES.length; a++ ) {
-                const snake = SNAKES[ a ];
-
-                var margin = 5;
-                //HERE
-            }
-
-            wallLine( position, length, direction );
-
-        }, SPAWN_WALL[ difficulty ] );
-        INTERVALS.push( interval );
+        setupRandomMap();
     }
-    /*
-        else if ( mapName === 'stairs' ) {
-            var columnLength = Math.round( columns * 0.1 );
-            var lineLength = Math.round( lines * 0.06 );
-            var steps = 4;
-            var columnOffset = columns / ( steps + 1 );
-            var lineOffset = lines / ( steps + 1 );
 
-            for ( let a = 0; a < steps; a++ ) {
-                var column = ( a + 1 ) * columnOffset;
-                var line = ( a + 1 ) * lineOffset;
+    else if ( mapName === 'stairs' ) {
+        setupStairsMap();
+    }
 
-                const position1 = {
-                    column: column, line: line
-                };
-                const position2 = {
-                    column: column + Math.round( columnLength / 2 ),
-                    line: line + Math.round( lineLength / 2 )
-                }
-
-                const wall1 = new Wall();
-                const wall2 = new Wall();
-
-                GRID.add( wall1, position1 );
-                GRID.add( wall2, position2 );
-            }
-        }
-
-        else if ( mapName === 'lines' ) {
-            var lines = 4;
-            var canvasWidth = Options.getCanvasWidth();
-            var canvasHeight = Options.getCanvasHeight();
-            var x1 = canvasWidth * 0.15;
-            var x2 = canvasWidth * 0.5;
-            var x3 = canvasWidth * 0.85;
-            var yDiff = canvasHeight / ( lines + 1 );
-            var width = canvasWidth * 0.2;
-            var height = canvasHeight * 0.01;
-
-            for ( var a = 0; a < lines; a++ ) {
-                var line = yDiff * ( a + 1 );
-
-                new Wall( x1, line, width, height );
-                new Wall( x2, line, width, height );
-                new Wall( x3, line, width, height );
-            }
-        }*/
+    else if ( mapName === 'lines' ) {
+        setupLinesMap();
+    }
 }
 
 
