@@ -213,12 +213,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     // add food interval
     let interval = new Interval( function () {
 
-        // the grid allows multiple items to be on the same position, so just get a random position, even if it ends up on top of another element
-        const position = {
-            column: getRandomInt( 0, columns - 1 ),
-            line: getRandomInt( 0, lines - 1 )
-        };
-
+        const position = GRID.getRandomEmptyPosition();
         const food = new Food();
         GRID.add( food, position );
 
@@ -228,12 +223,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     // add double food
     interval = new Interval( function () {
 
-        // the grid allows multiple items to be on the same position, so just get a random position, even if it ends up on top of another element
-        const position = {
-            column: getRandomInt( 0, columns - 1 ),
-            line: getRandomInt( 0, lines - 1 )
-        };
-
+        const position = GRID.getRandomEmptyPosition();
         const food = new DoubleFood();
         GRID.add( food, position );
 

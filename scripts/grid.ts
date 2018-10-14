@@ -1,4 +1,5 @@
 import { STAGE } from './main.js';
+import { getRandomInt } from "./utilities.js";
 
 
 export enum ItemType {
@@ -14,6 +15,12 @@ export interface GridItem {
 export interface GridPosition {
     column: number;
     line: number;
+}
+
+export interface GridRectangle {
+    position: GridPosition;
+    width: number;  // in number of grid positions
+    height: number;
 }
 
 interface GridArgs {
@@ -160,5 +167,43 @@ export class Grid {
         item.shape.x = to.column * Grid.size + Grid.halfSize;
         item.shape.y = to.line * Grid.size + Grid.halfSize;
         item.position = to;
+    }
+
+
+    /**
+     * Get a random position in the grid that doesn't have any item in there yet.
+     * You can optionally exclude certain areas from the search.
+     */
+    getRandomEmptyPosition( excludeRectangle?: GridRectangle ) {
+        const emptyPositions = [];
+        const grid = this.grid;
+        const columns = this.args.columns;
+        const lines = this.args.lines;
+
+        for ( let column = 0; column < columns; column++ ) {
+            for ( let line = 0; line < lines; line++ ) {
+                const items = grid[ column ][ line ];
+
+                if ( items.length === 0 ) {
+                    emptyPositions.push( {
+                        column: column,
+                        line: line
+                    } );
+                }
+            }
+        }
+
+        // there's no empty positions anymore, just put in a random occupied position instead
+        if ( emptyPositions.length === 0 ) {
+            return {
+                column: getRandomInt( 0, columns ),
+                line: getRandomInt( 0, lines )
+            };
+        }
+
+        else {
+            const index = getRandomInt( 0, emptyPositions.length - 1 );
+            return emptyPositions[ index ];
+        }
     }
 }
