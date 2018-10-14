@@ -174,7 +174,7 @@ export class Grid {
      * Get a random position in the grid that doesn't have any item in there yet.
      * You can optionally exclude certain areas from the search.
      */
-    getRandomEmptyPosition( excludeRectangle?: GridRectangle ) {
+    getRandomEmptyPosition( excludeRectangles?: GridRectangle[] ) {
         const emptyPositions = [];
         const grid = this.grid;
         const columns = this.args.columns;
@@ -185,10 +185,14 @@ export class Grid {
                 const items = grid[ column ][ line ];
 
                 if ( items.length === 0 ) {
-                    emptyPositions.push( {
-                        column: column,
-                        line: line
-                    } );
+                    const position = { column: column, line: line };
+
+                    if ( !positionInRectangles( position, excludeRectangles ) ) {
+                        emptyPositions.push( {
+                            column: column,
+                            line: line
+                        } );
+                    }
                 }
             }
         }
@@ -204,6 +208,27 @@ export class Grid {
         else {
             const index = getRandomInt( 0, emptyPositions.length - 1 );
             return emptyPositions[ index ];
+        }
+    }
+}
+
+
+/**
+ * Check if a position is within any of the given rectangles.
+ */
+function positionInRectangles( position: GridPosition, rectangles?: GridRectangle[] ) {
+    if ( !rectangles ) {
+        return false;
+    }
+
+    for ( let a = 0; a < rectangles.length; a++ ) {
+        const rect = rectangles[ a ];
+
+        if ( !( position.column < rect.position.column ||
+            position.column > rect.position.column + rect.width ||
+            position.line < rect.position.line ||
+            position.line > rect.position.line + rect.height ) ) {
+            return true;
         }
     }
 }

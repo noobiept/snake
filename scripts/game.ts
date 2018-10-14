@@ -342,10 +342,26 @@ function setupRandomMap() {
         const totalDirections = Object.keys( Direction ).length / 2;
         const direction = getRandomInt( 0, totalDirections - 1 ) as Direction;
 
-        const position = {
-            column: getRandomInt( 0, columns ),
-            line: getRandomInt( 0, lines )
-        };
+        // don't add wall elements to close to a snake
+        const exclude = [];
+        const margin = 5;
+
+        for ( let a = 0; a < SNAKES.length; a++ ) {
+            const snake = SNAKES[ a ];
+            const first = snake.first_tail;
+            const position = {
+                column: Math.round( first.position.column - margin / 2 ),
+                line: Math.round( first.position.line - margin / 2 )
+            };
+
+            exclude.push( {
+                position: position,
+                width: margin,
+                height: margin
+            } );
+        }
+
+        const position = GRID.getRandomEmptyPosition( exclude );
         let length = 1;
 
         if ( direction ) {
@@ -359,14 +375,6 @@ function setupRandomMap() {
         // needs at a minimum to occupy one grid position
         if ( length < 1 ) {
             length = 1;
-        }
-
-        // we have to make sure it isn't added on top of the snake's tails
-        for ( let a = 0; a < SNAKES.length; a++ ) {
-            const snake = SNAKES[ a ];
-
-            var margin = 5;
-            //HERE
         }
 
         wallLine( position, length, direction );

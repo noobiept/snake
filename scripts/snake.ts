@@ -22,7 +22,7 @@ export default class Snake {
     all_tails: Tail[];
     private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
     private keyboard_mapping: KeyboardMapping;
-    private first_tail: Tail;
+    first_tail: Tail;
 
 
     constructor( args: SnakeArgs ) {
