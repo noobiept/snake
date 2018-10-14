@@ -334,9 +334,9 @@ function setupRandomMap() {
     const lines = Options.getLines();
 
     var interval = new Interval( function () {
-        var maxWallColumns = Math.round( columns * 0.2 );
+        var maxWallColumns = Math.round( columns * 0.3 );
         var minWallColumns = Math.round( columns * 0.1 );
-        var maxWallLines = Math.round( lines * 0.2 );
+        var maxWallLines = Math.round( lines * 0.3 );
         var minWallLines = Math.round( lines * 0.1 );
 
         const totalDirections = Object.keys( Direction ).length / 2;
@@ -496,8 +496,11 @@ function wallLine( position: GridPosition, length: number, direction: Direction 
     let elementPosition = { ...position };
 
     for ( let a = 0; a < length; a++ ) {
-        const wall = new Wall();
-        GRID.add( wall, elementPosition );
+        // don't add on top of non-empty positions
+        if ( GRID.isValid( elementPosition ) && GRID.isEmpty( elementPosition ) ) {
+            const wall = new Wall();
+            GRID.add( wall, elementPosition );
+        }
 
         elementPosition = {
             column: elementPosition.column + addColumn,

@@ -111,8 +111,20 @@ export class Grid {
     }
 
 
-    get( position: GridPosition ) {
-        return this.grid[ position.column ][ position.line ];
+    isEmpty( position: GridPosition ) {
+        return this.grid[ position.column ][ position.line ].length === 0;
+    }
+
+
+    isValid( position: GridPosition ) {
+        if ( position.column < 0 ||
+            position.column >= this.args.columns ||
+            position.line < 0 ||
+            position.line >= this.args.lines ) {
+            return false;
+        }
+
+        return true;
     }
 
 
