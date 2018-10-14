@@ -393,29 +393,26 @@ function setupStairsMap() {
     const columns = Options.getColumns();
     const lines = Options.getLines();
 
-    var columnLength = Math.round( columns * 0.1 );
-    var lineLength = Math.round( lines * 0.06 );
-    var steps = 4;
-    var columnOffset = columns / ( steps + 1 );
-    var lineOffset = lines / ( steps + 1 );
+    const horizontalLength = Math.round( columns * 0.12 );
+    const verticalLength = Math.round( lines * 0.09 );
+    const steps = 4;
+    const horizontalMargin = ( columns - steps * horizontalLength ) / ( steps + 1 );
+    const verticalMargin = ( lines - steps * verticalLength ) / ( steps + 1 );
 
     for ( let a = 0; a < steps; a++ ) {
-        var column = ( a + 1 ) * columnOffset;
-        var line = ( a + 1 ) * lineOffset;
+        const column = Math.round( ( a + 1 ) * horizontalMargin + a * horizontalLength );
+        const line = Math.round( ( a + 1 ) * verticalMargin + a * verticalLength );
 
         const position1 = {
             column: column, line: line
         };
         const position2 = {
-            column: column + Math.round( columnLength / 2 ),
-            line: line + Math.round( lineLength / 2 )
-        }
+            column: column + horizontalLength,
+            line: line
+        };
 
-        const wall1 = new Wall();
-        const wall2 = new Wall();
-
-        GRID.add( wall1, position1 );
-        GRID.add( wall2, position2 );
+        wallLine( position1, horizontalLength, Direction.right );
+        wallLine( position2, verticalLength, Direction.down );
     }
 }
 
