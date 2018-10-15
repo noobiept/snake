@@ -249,7 +249,21 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     }, SNAKE_SPEED[ difficulty ] );
     INTERVALS.push( interval );
 
+    // update the scores
+    for ( let a = 0; a < SNAKES.length; a++ ) {
+        const snake = SNAKES[ a ];
+        updateScore( snake );
+    }
+
     GameMenu.show( TWO_PLAYER_MODE );
+}
+
+
+/**
+ * Update the score based on the tail size of the snake.
+ */
+function updateScore( snake: Snake ) {
+    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.all_tails.length );
 }
 
 
@@ -260,11 +274,9 @@ function tailFoodCollision( tail: Tail, food: Food ) {
 
     const snake = tail.snakeObject;
     snake.eat( food );
-
-    // update the score based on the tail size of the snake
-    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.all_tails.length );
-
     GRID.remove( food );
+
+    updateScore( snake );
 }
 
 
