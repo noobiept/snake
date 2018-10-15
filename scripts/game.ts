@@ -93,7 +93,6 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     TIMER.restart();
     GameMenu.updateTimer( TIMER.getString() );
 
-    var difficulty = Options.getDifficulty();
     const columns = Options.getColumns();
     const lines = Options.getLines();
 
@@ -102,6 +101,27 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         lines: lines,
         onCollision: collisionDetection
     } );
+
+    setupSnakes( twoPlayersMode );
+    setupFrame();
+    setupWalls( mapName );
+    setupFoodInterval();
+    setupDoubleFoodInterval();
+    setupSnakeMovement();
+
+    // update the scores
+    for ( let a = 0; a < SNAKES.length; a++ ) {
+        const snake = SNAKES[ a ];
+        updateScore( snake );
+    }
+
+    GameMenu.show( TWO_PLAYER_MODE );
+}
+
+
+function setupSnakes( twoPlayersMode: boolean ) {
+    const lines = GRID.args.lines;
+    const columns = GRID.args.columns;
 
     // position the snakes on opposite sides horizontally, and vertically aligned
     const midLine = Math.round( lines / 2 );
@@ -171,8 +191,16 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 
         SNAKES.push( snake );
     }
+}
 
-    // add a wall around the canvas (so that you can't pass through from one side to the other)
+
+/**
+ * Add a wall around the canvas (so that you can't pass through from one side to the other).
+ */
+function setupFrame() {
+    const lines = GRID.args.lines;
+    const columns = GRID.args.columns;
+
     if ( Options.getFrame() ) {
 
         // left/right sides
@@ -206,139 +234,6 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
             } );
         }
     }
-
-    // add the map walls (its different depending on the selected map)
-    setupWalls( mapName );
-
-    // add food interval
-    let interval = new Interval( function () {
-
-        const position = GRID.getRandomEmptyPosition();
-        const food = new Food();
-        GRID.add( food, position );
-
-    }, SPAWN_FOOD[ difficulty ] );
-    INTERVALS.push( interval );
-
-    // add double food
-    interval = new Interval( function () {
-
-        const position = GRID.getRandomEmptyPosition();
-        const food = new DoubleFood();
-        GRID.add( food, position );
-
-    }, SPAWN_DOUBLE_FOOD[ difficulty ] );
-    INTERVALS.push( interval );
-
-    // setup the snake movement
-    interval = new Interval( function () {
-        for ( let i = 0; i < SNAKES.length; i++ ) {
-            const snakeObject = SNAKES[ i ];
-            snakeObject.movementTick();
-
-            const tails = snakeObject.all_tails;
-
-            for ( let b = 0; b < tails.length; b++ ) {
-                const tail = tails[ b ];
-                tail.tick();
-
-                const next = tail.nextPosition();
-                GRID.move( tail, next );
-            }
-        }
-    }, SNAKE_SPEED[ difficulty ] );
-    INTERVALS.push( interval );
-
-    // update the scores
-    for ( let a = 0; a < SNAKES.length; a++ ) {
-        const snake = SNAKES[ a ];
-        updateScore( snake );
-    }
-
-    GameMenu.show( TWO_PLAYER_MODE );
-}
-
-
-/**
- * Update the score based on the tail size of the snake.
- */
-function updateScore( snake: Snake ) {
-    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.all_tails.length );
-}
-
-
-/**
- * When a 'Tail' collides with a 'Food' element, we increase the snake size and remove the 'Food' element.
- */
-function tailFoodCollision( tail: Tail, food: Food ) {
-
-    const snake = tail.snakeObject;
-    snake.eat( food );
-    GRID.remove( food );
-
-    updateScore( snake );
-}
-
-
-/**
- * A collision between two 'Tail' elements. The game ends when that happens.
- */
-function tailTailCollision( tail1: Tail, tail2: Tail ) {
-    tail1.asBeenHit();
-    tail2.asBeenHit();
-
-    over();
-}
-
-
-/**
- * A collision between a 'Tail' and a 'Wall' element. Game ends here as well.
- */
-function tailWallCollision( tail: Tail, wall: Wall ) {
-    tail.asBeenHit();
-    wall.asBeenHit();
-
-    over();
-}
-
-
-/**
- * Deal with the collision between 2 elements in the grid.
- * Need to first identify the type and then call the appropriate function.
- */
-function collisionDetection( a: GridItem, b: GridItem ) {
-    const typeA = a.type;
-    const typeB = b.type;
-
-    if ( typeA === ItemType.tail && typeB === ItemType.food ) {
-        tailFoodCollision( a as Tail, b as Food );
-    }
-
-    else if ( typeA === ItemType.food && typeB === ItemType.tail ) {
-        tailFoodCollision( b as Tail, a as Food );
-    }
-
-    else if ( typeA === ItemType.tail && typeB === ItemType.doubleFood ) {
-        tailFoodCollision( a as Tail, b as DoubleFood );
-    }
-
-    else if ( typeA === ItemType.doubleFood && typeB === ItemType.tail ) {
-        tailFoodCollision( b as Tail, a as DoubleFood );
-    }
-
-    else if ( typeA === ItemType.tail && typeB === ItemType.tail ) {
-        tailTailCollision( a as Tail, b as Tail );
-    }
-
-    else if ( typeA === ItemType.tail && typeB === ItemType.wall ) {
-        tailWallCollision( a as Tail, b as Wall );
-    }
-
-    else if ( typeA === ItemType.wall && typeB === ItemType.tail ) {
-        tailWallCollision( b as Tail, a as Wall );
-    }
-
-    console.log( ItemType[ a.type ], ItemType[ b.type ] );
 }
 
 
@@ -524,6 +419,143 @@ function wallLine( position: GridPosition, length: number, direction: Direction 
             line: elementPosition.line + addLine
         };
     }
+}
+
+
+function setupFoodInterval() {
+    const difficulty = Options.getDifficulty();
+
+    // add food interval
+    const interval = new Interval( function () {
+
+        const position = GRID.getRandomEmptyPosition();
+        const food = new Food();
+        GRID.add( food, position );
+
+    }, SPAWN_FOOD[ difficulty ] );
+    INTERVALS.push( interval );
+}
+
+
+function setupDoubleFoodInterval() {
+    const difficulty = Options.getDifficulty();
+
+    // add double food
+    const interval = new Interval( function () {
+
+        const position = GRID.getRandomEmptyPosition();
+        const food = new DoubleFood();
+        GRID.add( food, position );
+
+    }, SPAWN_DOUBLE_FOOD[ difficulty ] );
+    INTERVALS.push( interval );
+}
+
+
+function setupSnakeMovement() {
+    const difficulty = Options.getDifficulty();
+
+    // setup the snake movement
+    const interval = new Interval( function () {
+        for ( let i = 0; i < SNAKES.length; i++ ) {
+            const snakeObject = SNAKES[ i ];
+            snakeObject.movementTick();
+
+            const tails = snakeObject.all_tails;
+
+            for ( let b = 0; b < tails.length; b++ ) {
+                const tail = tails[ b ];
+                tail.tick();
+
+                const next = tail.nextPosition();
+                GRID.move( tail, next );
+            }
+        }
+    }, SNAKE_SPEED[ difficulty ] );
+    INTERVALS.push( interval );
+}
+
+
+/**
+ * Update the score based on the tail size of the snake.
+ */
+function updateScore( snake: Snake ) {
+    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.all_tails.length );
+}
+
+
+/**
+ * When a 'Tail' collides with a 'Food' element, we increase the snake size and remove the 'Food' element.
+ */
+function tailFoodCollision( tail: Tail, food: Food ) {
+
+    const snake = tail.snakeObject;
+    snake.eat( food );
+    GRID.remove( food );
+
+    updateScore( snake );
+}
+
+
+/**
+ * A collision between two 'Tail' elements. The game ends when that happens.
+ */
+function tailTailCollision( tail1: Tail, tail2: Tail ) {
+    tail1.asBeenHit();
+    tail2.asBeenHit();
+
+    over();
+}
+
+
+/**
+ * A collision between a 'Tail' and a 'Wall' element. Game ends here as well.
+ */
+function tailWallCollision( tail: Tail, wall: Wall ) {
+    tail.asBeenHit();
+    wall.asBeenHit();
+
+    over();
+}
+
+
+/**
+ * Deal with the collision between 2 elements in the grid.
+ * Need to first identify the type and then call the appropriate function.
+ */
+function collisionDetection( a: GridItem, b: GridItem ) {
+    const typeA = a.type;
+    const typeB = b.type;
+
+    if ( typeA === ItemType.tail && typeB === ItemType.food ) {
+        tailFoodCollision( a as Tail, b as Food );
+    }
+
+    else if ( typeA === ItemType.food && typeB === ItemType.tail ) {
+        tailFoodCollision( b as Tail, a as Food );
+    }
+
+    else if ( typeA === ItemType.tail && typeB === ItemType.doubleFood ) {
+        tailFoodCollision( a as Tail, b as DoubleFood );
+    }
+
+    else if ( typeA === ItemType.doubleFood && typeB === ItemType.tail ) {
+        tailFoodCollision( b as Tail, a as DoubleFood );
+    }
+
+    else if ( typeA === ItemType.tail && typeB === ItemType.tail ) {
+        tailTailCollision( a as Tail, b as Tail );
+    }
+
+    else if ( typeA === ItemType.tail && typeB === ItemType.wall ) {
+        tailWallCollision( a as Tail, b as Wall );
+    }
+
+    else if ( typeA === ItemType.wall && typeB === ItemType.tail ) {
+        tailWallCollision( b as Tail, a as Wall );
+    }
+
+    console.log( ItemType[ a.type ], ItemType[ b.type ] );
 }
 
 

@@ -33,8 +33,8 @@ export class Grid {
     static readonly size = 10;   // size of each grid item in pixels
     static readonly halfSize = Grid.size / 2;
 
-    grid: ( GridItem[] )[][];
-    args: GridArgs;
+    private grid: ( GridItem[] )[][];
+    readonly args: GridArgs;
 
     constructor( args: GridArgs ) {
         this.args = args;
