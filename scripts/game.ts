@@ -258,7 +258,12 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
  */
 function tailFoodCollision( tail: Tail, food: Food ) {
 
-    tail.snakeObject.eat( food );
+    const snake = tail.snakeObject;
+    snake.eat( food );
+
+    // update the score based on the tail size of the snake
+    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.all_tails.length );
+
     GRID.remove( food );
 }
 

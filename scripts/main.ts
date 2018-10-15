@@ -5,7 +5,6 @@ import * as HighScore from './high_score.js';
 import * as GameMenu from './game_menu.js';
 import * as Game from './game.js';
 import * as Preload from './preload.js';
-import Snake from './snake.js';
 import { Grid } from "./grid.js";
 
 

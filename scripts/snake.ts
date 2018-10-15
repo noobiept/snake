@@ -1,11 +1,8 @@
-import * as GameMenu from './game_menu.js';
 import * as Game from './game.js';
 import Tail from "./tail.js";
 import Food from './food.js';
-import Wall from './wall.js';
 import { Direction, KeyboardMapping } from './main.js';
-import { checkCollision } from './utilities.js';
-import { GridItem, GridPosition } from "./grid.js";
+import { GridPosition } from "./grid.js";
 
 
 interface SnakeArgs {
@@ -109,8 +106,6 @@ export default class Snake {
         this.all_tails.push( tail );
 
         Game.GRID.add( tail, position );
-
-        //GameMenu.updateScore( Snake.ALL_SNAKES.indexOf( this ), this.all_tails.length ); //HERE
 
         return tail;
     }

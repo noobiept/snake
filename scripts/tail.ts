@@ -1,4 +1,3 @@
-import * as Options from './options.js';
 import Snake from './snake.js';
 import { Direction, Path, STAGE } from "./main.js";
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
@@ -128,7 +127,5 @@ export default class Tail implements GridItem {
                 this.path.splice( 0, 1 );
             }
         }
-
-        // this.moveInDirection();
     }
 }
