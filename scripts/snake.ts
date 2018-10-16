@@ -87,10 +87,9 @@ export default class Snake {
             }
         }
 
-        if ( !direction ) {
+        if ( typeof direction === 'undefined' ) {
             direction = last.direction;
         }
-
 
         let path = [];
 
