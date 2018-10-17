@@ -1,37 +1,20 @@
 import Food from './food.js';
-import Snake from './snake.js';
-import { STAGE } from './main.js';
 import { getAsset } from './preload.js';
+import { Grid, ItemType } from "./grid.js";
 
 
 export default class DoubleFood extends Food {
-    constructor( x: number, y: number ) {
-        super( x, y );
-    }
+
+    readonly type = ItemType.doubleFood;
+    readonly eaten = { tails: 2 };
 
 
-    draw( x: number, y: number ) {
-        var width = this.width;
-        var height = this.height;
-
+    draw() {
         var food = new createjs.Bitmap( getAsset( 'orange' ) );
 
-        food.regX = width / 2;
-        food.regY = height / 2;
+        food.regX = Grid.halfSize;
+        food.regY = Grid.halfSize;
 
-        food.x = x;
-        food.y = y;
-
-        STAGE.addChild( food );
-
-        this.shape = food;
-    }
-
-
-    eat( snakeObject: Snake ) {
-        snakeObject.addTail();
-        snakeObject.addTail();
-
-        //HERE and increase momentarily the snake's speed, as the disadvantage
+        return food;
     }
 }

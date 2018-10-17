@@ -1,5 +1,4 @@
 import * as Game from './game.js';
-import Timer from './timer.js';
 
 
 var GAME_MENU: HTMLElement;
@@ -68,10 +67,8 @@ export function updateScore( playerPosition: number, score: number ) {
 }
 
 
-export function updateTimer( timer: Timer ) {
-    const text = ( timer.getCount() / 1000 ).toFixed( 1 ) + 's'
-
-    TIMER_ELEMENT.innerText = text;
+export function updateTimer( time: string ) {
+    TIMER_ELEMENT.innerText = time;
 }
 
 

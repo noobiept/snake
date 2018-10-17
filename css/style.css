@@ -185,6 +185,8 @@ figure
 #GameMenu-left
     {
     float: left;
+    display: flex;
+    flex-direction: row;
     }
 
 #GameMenu-right
@@ -194,8 +196,7 @@ figure
 
 #GameMenu-left > *
     {
-    display: inline-block;
-    padding: 10px 0;
+    padding: 10px;
     margin: 0;
     }
 

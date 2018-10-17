@@ -112,11 +112,17 @@ export function checkCollision( oneX: number, oneY: number, oneWidth: number, on
 }
 
 
+/**
+ * Returns a random integer in the given range (inclusive).
+ */
 export function getRandomInt( min: number, max: number ) {
     return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
 }
 
 
+/**
+ * Returns a random float in the given range (inclusive).
+ */
 export function getRandomFloat( min: number, max: number ) {
     return Math.random() * ( max - min ) + min;
 }

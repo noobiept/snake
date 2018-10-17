@@ -1,33 +1,30 @@
+/**
+ * Use to run some code at a certain interval. It counts based on the given 'delta' time (time that passes between ticks).
+ */
 export default class Interval {
-    private what_to_call: () => any;
-    private interval_time: number;
-    private is_on: boolean;
-    private interval_id: number | undefined;
+    private callback: () => any;
+    private target: number;
+    private count: number;
 
 
-    constructor( what_to_call: () => any, interval_time: number ) {
-        this.what_to_call = what_to_call;
-        this.interval_time = interval_time;
-        this.is_on = false;
+    constructor( callback: () => any, intervalTime: number ) {
+        this.callback = callback;
+        this.target = intervalTime;
+        this.count = 0;
     }
 
 
-    start() {
-        this.interval_id = window.setInterval( this.what_to_call, this.interval_time );
-
-        this.is_on = true;
+    reset() {
+        this.count = 0;
     }
 
 
-    stop() {
-        window.clearInterval( this.interval_id );
+    tick( delta: number ) {
+        this.count += delta;
 
-        this.interval_id = undefined;
-        this.is_on = false;
-    }
-
-
-    isOn() {
-        return this.is_on;
+        if ( this.count >= this.target ) {
+            this.count = 0;
+            this.callback();
+        }
     }
 }

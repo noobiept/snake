@@ -5,14 +5,8 @@ import * as HighScore from './high_score.js';
 import * as GameMenu from './game_menu.js';
 import * as Game from './game.js';
 import * as Preload from './preload.js';
-import Snake from './snake.js';
+import { Grid } from "./grid.js";
 
-
-// the elements type in the game (useful to identify objects, call .getType() )
-export enum ElementsType {
-    tail,
-    snake
-}
 
 export enum Direction {
     left,
@@ -22,8 +16,8 @@ export enum Direction {
 }
 
 export interface Path {
-    x: number;
-    y: number;
+    column: number;
+    line: number;
     direction: Direction;
 }
 
@@ -44,7 +38,6 @@ export interface Dict {
 
 export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
 
-// createjs
 export var STAGE: createjs.Stage;
 
 // the canvas element where the game is drawn in
@@ -61,14 +54,14 @@ function initApp( data: Dict ) {
 
     // setup the canvas
     CANVAS = <HTMLCanvasElement> document.querySelector( '#MainCanvas' );
-    CANVAS.width = Options.getCanvasWidth();
-    CANVAS.height = Options.getCanvasHeight();
 
-    // :: createjs stuff :: //
+    changeCanvasDimensions( Options.getColumns(), Options.getLines() );
+
+    // setup the stage
     STAGE = new createjs.Stage( CANVAS );
 
-    createjs.Ticker.interval = 50;
-    createjs.Ticker.on( 'tick', tick );
+    // use the 'requestAnimationFrame' timing mode, and use the 'delta' values to control the game timings
+    createjs.Ticker.timingMode = createjs.Ticker.RAF;
 
     HighScore.load( data[ 'snake_high_score' ] );
     MainMenu.init( data[ 'snake_selected_map' ] );
@@ -91,73 +84,10 @@ function initApp( data: Dict ) {
 }
 
 
-window.onkeydown = function ( event ) {
-    var returnValue;
-
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        returnValue = Snake.ALL_SNAKES[ i ].onKeyDown( event.keyCode );
-
-        if ( !returnValue ) {
-            return returnValue;
-        }
-    }
-
-    return true;
-};
-
-
-window.onkeyup = function ( event ) {
-    var returnValue;
-
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        returnValue = Snake.ALL_SNAKES[ i ].onKeyUp( event.keyCode );
-
-        if ( !returnValue ) {
-            return returnValue;
-        }
-    }
-
-    return true;
-};
-
-
-export function pause() {
-    createjs.Ticker.paused = true;
-}
-
-
-export function resume() {
-    createjs.Ticker.paused = false;
-}
-
-
 /**
- * Change the width/height of the canvas element where the game is drawn.
- * Pass 'undefined' if you don't want to change one of them.
+ * Change the width/height of the canvas element where the game is drawn. The size is based on the number of columns/lines being used in the game.
  */
-export function changeCanvasDimensions( width?: number, height?: number ) {
-    if ( width ) {
-        CANVAS.width = width;
-    }
-
-    if ( height ) {
-        CANVAS.height = height;
-    }
-}
-
-
-function tick( event: Dict ) {
-    if ( event.paused ) {
-        return;
-    }
-
-    var snakeObject;
-
-    for ( var i = 0; i < Snake.ALL_SNAKES.length; i++ ) {
-        snakeObject = Snake.ALL_SNAKES[ i ];
-        snakeObject.tick();
-    }
-
-    Snake.checkCollision();
-    STAGE.update();
+export function changeCanvasDimensions( columns: number, lines: number ) {
+    CANVAS.width = columns * Grid.size;
+    CANVAS.height = lines * Grid.size;
 }

@@ -4,26 +4,25 @@ import Interval from './interval.js';
 export default class Timer {
     private count: number;
     private interval: Interval;
+    private active: boolean;
 
 
-    constructor( timeElapsed: ( timer: Timer ) => any ) {
-        var timerObject = this;
-
+    constructor( timeElapsed: ( time: string ) => any ) {
+        this.active = false;
         this.count = 0;
-        this.interval = new Interval( function () {
-            timerObject.count += 100;
-            timeElapsed( timerObject );
+        this.interval = new Interval( () => {
+            timeElapsed( this.getString() );
         }, 100 );
     }
 
 
     start() {
-        this.interval.start();
+        this.active = true;
     }
 
 
     stop() {
-        this.interval.stop();
+        this.active = false;
     }
 
 
@@ -33,13 +32,21 @@ export default class Timer {
 
 
     restart() {
-        this.stop();
         this.count = 0;
-        this.start();
+        this.active = true;
+        this.interval.reset();
     }
 
 
     getString() {
-        return ( this.count / 1000 ) + 's';
+        return ( this.count / 1000 ).toFixed( 1 ) + 's';
+    }
+
+
+    tick( delta: number ) {
+        if ( this.active ) {
+            this.count += delta;
+            this.interval.tick( delta );
+        }
     }
 }
