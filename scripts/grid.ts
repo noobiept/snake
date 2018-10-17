@@ -1,5 +1,6 @@
 import { STAGE } from './main.js';
 import { getRandomInt } from "./utilities.js";
+import { CollisionElements } from "./game.js";
 
 
 export enum ItemType {
@@ -26,7 +27,7 @@ export interface GridRectangle {
 interface GridArgs {
     columns: number;
     lines: number;
-    onCollision: ( a: GridItem, b: GridItem ) => void;
+    onCollision: ( items: CollisionElements ) => void;
 }
 
 export class Grid {
@@ -159,7 +160,10 @@ export class Grid {
         if ( existingItems.length > 0 ) {
             for ( let a = 0; a < existingItems.length; a++ ) {
                 const otherItem = existingItems[ a ];
-                this.args.onCollision( item, otherItem );
+                this.args.onCollision( {
+                    a: item,
+                    b: otherItem
+                } );
             }
         }
 

@@ -24,8 +24,14 @@ interface TickEvent {
     runTime: number;
 }
 
+export interface CollisionElements {
+    a: GridItem;
+    b: GridItem;
+}
+
 
 const INTERVALS: Interval[] = [];
+const COLLISIONS: CollisionElements[] = [];
 
 // the time until we add a new food/wall/etc (in milliseconds)
 // depends on the difficulty level
@@ -99,7 +105,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     GRID = new Grid( {
         columns: columns,
         lines: lines,
-        onCollision: collisionDetection
+        onCollision: collisionOccurred
     } );
 
     setupSnakes( twoPlayersMode );
@@ -523,7 +529,9 @@ function tailWallCollision( tail: Tail, wall: Wall ) {
  * Deal with the collision between 2 elements in the grid.
  * Need to first identify the type and then call the appropriate function.
  */
-function collisionDetection( a: GridItem, b: GridItem ) {
+function dealWithCollision( items: CollisionElements ) {
+    const a = items.a;
+    const b = items.b;
     const typeA = a.type;
     const typeB = b.type;
 
@@ -554,8 +562,14 @@ function collisionDetection( a: GridItem, b: GridItem ) {
     else if ( typeA === ItemType.wall && typeB === ItemType.tail ) {
         tailWallCollision( b as Tail, a as Wall );
     }
+}
 
-    console.log( ItemType[ a.type ], ItemType[ b.type ] );
+
+/**
+ * Add the pair that collided to be processed later on.
+ */
+function collisionOccurred( items: CollisionElements ) {
+    COLLISIONS.push( items );
 }
 
 
@@ -653,8 +667,12 @@ function resume() {
 }
 
 
+/**
+ * Clear the game data.
+ */
 export function clear() {
     INTERVALS.length = 0;
+    COLLISIONS.length = 0;
     SNAKES.length = 0;
 
     TIMER.stop();
@@ -699,12 +717,22 @@ function tick( event: TickEvent ) {
 
     const delta = event.delta;
 
+    // run all the intervals (spawn of food, tail movement, etc)
     for ( let a = 0; a < INTERVALS.length; a++ ) {
         const interval = INTERVALS[ a ];
         interval.tick( delta );
     }
 
+    // deal with all the occurred collisions then reset the array
+    for ( let a = 0; a < COLLISIONS.length; a++ ) {
+        const items = COLLISIONS[ a ];
+        dealWithCollision( items );
+    }
+    COLLISIONS.length = 0;
+
+    // update the timer
     TIMER.tick( delta );
 
+    // draw stuff to the canvas
     STAGE.update();
 }
