@@ -5,6 +5,7 @@ import * as HighScore from './high_score.js';
 import * as GameMenu from './game_menu.js';
 import * as Game from './game.js';
 import * as Preload from './preload.js';
+import * as  Message from "./message.js";
 import { Grid } from "./grid.js";
 
 
@@ -45,7 +46,13 @@ var CANVAS: HTMLCanvasElement;
 
 
 window.onload = function () {
-    AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map' ], initApp );
+    Message.init();
+    Message.show( 'Loading...' );
+
+    AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map' ], function ( data ) {
+        initApp( data );
+        Message.hide();
+    } );
 };
 
 

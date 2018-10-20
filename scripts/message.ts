@@ -1,29 +1,16 @@
-interface MessageArgs {
-    text: string;
-    cssClass?: string;
+let ELEMENT: HTMLElement;
+
+
+export function init() {
+    ELEMENT = document.getElementById( 'Message' )!;
 }
 
 
-export default class Message {
-    private message: HTMLDivElement;
+export function show( text: string ) {
+    ELEMENT.innerText = text;
+    ELEMENT.classList.remove( 'hidden' );
+}
 
-
-    constructor( stuff: MessageArgs ) {
-        var message = <HTMLDivElement> document.querySelector( '#Message' );
-        message.innerHTML = stuff.text;
-
-        if ( typeof stuff.cssClass != 'undefined' ) {
-            message.classList.add( stuff.cssClass );
-        }
-
-        message.classList.remove( 'hidden' );
-
-        this.message = message;
-    }
-
-
-    remove() {
-        // clear all other css classes and hide the element
-        this.message.className = 'hidden';
-    }
+export function hide() {
+    ELEMENT.classList.add( 'hidden' );
 }

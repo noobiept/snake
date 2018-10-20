@@ -2,11 +2,11 @@ import * as GameMenu from './game_menu.js';
 import * as Options from './options.js';
 import * as HighScore from './high_score.js';
 import * as MainMenu from './main_menu.js';
+import * as Message from './message.js';
 import Snake from './snake.js';
 import Wall from './wall.js';
 import Food from './food.js';
 import DoubleFood from './double_food.js';
-import Message from './message.js';
 import Timer from './timer.js';
 import Interval from './interval.js';
 import { MapName, Direction, STAGE } from './main.js';
@@ -628,17 +628,12 @@ export function over( whoWon?: number ) {
         text = 'Game Over<br />Score: ' + SNAKES[ 0 ].getNumberOfTails();
     }
 
-
-    var message = new Message( {
-        text: text,
-        cssClass: 'Message-gameOver'
-    } );
-
+    Message.show( text );
     pause();
     addScores();
 
     window.setTimeout( function () {
-        message.remove();
+        Message.hide();
         clear();
         start( MAP_NAME, TWO_PLAYER_MODE );
 
