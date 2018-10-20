@@ -683,6 +683,11 @@ function resume() {
 }
 
 
+export function isPaused() {
+    return PAUSE;
+}
+
+
 /**
  * Clear the game data.
  */

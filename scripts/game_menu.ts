@@ -4,7 +4,6 @@ import * as Game from './game.js';
 var GAME_MENU: HTMLElement;
 var PLAYERS_SCORE: HTMLElement[] = [];
 var TIMER_ELEMENT: HTMLElement;
-var IS_PAUSED = false;
 
 
 /**
@@ -56,8 +55,6 @@ export function clear() {
     const pauseResume = document.getElementById( 'GameMenu-pauseResume' )!;
     pauseResume.innerText = 'Pause';
 
-    IS_PAUSED = false;
-
     GAME_MENU.classList.add( 'hidden' );
 }
 
@@ -72,21 +69,23 @@ export function updateTimer( time: string ) {
 }
 
 
+/**
+ * Pause/resume the game.
+ */
 function togglePause( htmlElement: HTMLElement ) {
     // don't allow to mess with the menu when game is over
     if ( Game.isGameOver() ) {
         return;
     }
 
-    if ( IS_PAUSED ) {
-        IS_PAUSED = false;
-        htmlElement.innerText = 'Pause';
-    }
-
-    else {
-        IS_PAUSED = true;
+    const paused = !Game.isPaused();
+    if ( paused ) {
         htmlElement.innerText = 'Resume';
     }
 
-    Game.pauseResume( IS_PAUSED );
+    else {
+        htmlElement.innerText = 'Pause';
+    }
+
+    Game.pauseResume( paused );
 }
