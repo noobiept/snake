@@ -7,7 +7,7 @@ export function init() {
 
 
 export function show( text: string ) {
-    ELEMENT.innerText = text;
+    ELEMENT.innerHTML = text;
     ELEMENT.classList.remove( 'hidden' );
 }
 
