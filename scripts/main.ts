@@ -51,7 +51,9 @@ window.onload = function () {
 
     AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map' ], function ( data ) {
         initApp( data );
+
         Message.hide();
+        showCanvas();
     } );
 };
 
@@ -97,4 +99,14 @@ function initApp( data: Dict ) {
 export function changeCanvasDimensions( columns: number, lines: number ) {
     CANVAS.width = columns * Grid.size;
     CANVAS.height = lines * Grid.size;
+}
+
+
+/**
+ * Show the canvas element.
+ */
+function showCanvas() {
+    if ( CANVAS ) {
+        CANVAS.classList.remove( 'hidden' );
+    }
 }
