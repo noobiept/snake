@@ -48,7 +48,12 @@ var GAME_OVER = false;
 var PAUSE = false;
 export var GRID: Grid;
 
+// the colors are positioned according to the player position as well (player 1 is green, etc)
 const SNAKES: Snake[] = [];
+const SNAKES_COLORS = [
+    'green',
+    'dodgerblue'
+];
 
 
 window.onkeydown = function ( event ) {
@@ -138,13 +143,14 @@ function setupSnakes( twoPlayersMode: boolean ) {
     // player 2 : arrow keys
     if ( twoPlayersMode ) {
         // 1 player (on left side of canvas, moving to the right)
+        const position1 = 0;
         const snake1 = new Snake( {
             position: {
                 column: leftColumn,
                 line: midLine
             },
             startingDirection: Direction.right,
-            color: 'green',
+            color: SNAKES_COLORS[ position1 ],
             keyboardMapping: {
                 left: EVENT_KEY.a,
                 right: EVENT_KEY.d,
@@ -154,13 +160,14 @@ function setupSnakes( twoPlayersMode: boolean ) {
         } );
 
         // 2 player (on right side of canvas, moving to the left)
+        const position2 = 1;
         const snake2 = new Snake( {
             position: {
                 column: rightColumn,
                 line: midLine
             },
             startingDirection: Direction.left,
-            color: 'dodgerblue',
+            color: SNAKES_COLORS[ position2 ],
             keyboardMapping: {
                 left: EVENT_KEY.leftArrow,
                 right: EVENT_KEY.rightArrow,
@@ -176,13 +183,14 @@ function setupSnakes( twoPlayersMode: boolean ) {
     // player 1 : wasd or arrow keys
     else {
         // 1 player (on left side of canvas, moving to the right)
+        const position = 0;
         const snake = new Snake( {
             position: {
                 column: leftColumn,
                 line: midLine
             },
             startingDirection: Direction.right,
-            color: 'green',
+            color: SNAKES_COLORS[ position ],
             keyboardMapping: {
                 left: EVENT_KEY.a,
                 left2: EVENT_KEY.leftArrow,
@@ -495,7 +503,15 @@ function updateScore( snake: Snake ) {
  */
 function tailFoodCollision( tail: Tail, food: Food ) {
 
-    const snake = tail.snakeObject;
+    // get the snake object based on the tail color
+    const color = tail.color;
+    const position = SNAKES_COLORS.indexOf( color );
+
+    if ( position < 0 ) {
+        throw Error( 'Invalid tail color.' );
+    }
+
+    const snake = SNAKES[ position ];
     snake.eat( food );
     GRID.remove( food );
 

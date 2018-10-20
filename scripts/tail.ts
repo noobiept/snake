@@ -1,4 +1,3 @@
-import Snake from './snake.js';
 import { Direction, Path, STAGE } from "./main.js";
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
@@ -7,29 +6,24 @@ export default class Tail implements GridItem {
     readonly type = ItemType.tail;
     direction: Direction;
     position: GridPosition;
-
-    snakeObject: Snake;
     path: Path[];
     shape: createjs.Shape;
+    color: string;
 
 
-    constructor( snakeObject: Snake, direction: Direction, path: Path[] ) {
-        this.snakeObject = snakeObject;
-
-        // draw it, and setup the physics body
-        this.shape = this.draw();
-
+    constructor( color: string, direction: Direction, path: Path[] ) {
+        this.color = color;
         this.path = path;
         this.direction = direction;
         this.position = {
             column: 0,
             line: 0
         };
+        this.shape = this.draw();
     }
 
 
     draw() {
-        // createjs
         var snakeTail = new createjs.Shape();
 
         snakeTail.regX = Grid.halfSize;
@@ -37,7 +31,7 @@ export default class Tail implements GridItem {
 
         var g = snakeTail.graphics;
 
-        g.beginFill( this.snakeObject.color );
+        g.beginFill( this.color );
         g.drawRoundRect( 0, 0, Grid.size, Grid.size, 2 );
 
         STAGE.addChild( snakeTail );

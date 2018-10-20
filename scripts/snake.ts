@@ -101,7 +101,7 @@ export default class Snake {
             path = JSON.parse( pathJson );
         }
 
-        var tail = new Tail( this, direction, path );
+        var tail = new Tail( this.color, direction, path );
         this.all_tails.push( tail );
 
         Game.GRID.add( tail, position );
