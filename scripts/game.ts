@@ -9,10 +9,11 @@ import Food from './food.js';
 import DoubleFood from './double_food.js';
 import Timer from './timer.js';
 import Interval from './interval.js';
-import { MapName, Direction, STAGE } from './main.js';
-import { EVENT_KEY, getRandomInt } from './utilities.js';
-import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import Tail from "./tail.js";
+import { MapName, Direction, STAGE } from './main.js';
+import { EVENT_KEY } from './utilities.js';
+import { Grid, GridItem, ItemType } from "./grid.js";
+import { setupWalls } from './maps.js';
 
 
 interface TickEvent {
@@ -39,7 +40,6 @@ const COLLISIONS: CollisionElements[] = [];
 const SNAKE_SPEED = [ 100, 50 ];
 const SPAWN_FOOD = [ 1000, 500 ];
 const SPAWN_DOUBLE_FOOD = [ 5000, 2500 ];
-const SPAWN_WALL = [ 4000, 3000 ];
 
 var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
@@ -115,7 +115,12 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 
     setupSnakes( twoPlayersMode );
     setupFrame();
-    setupWalls( mapName );
+
+    const interval = setupWalls( mapName, SNAKES, GRID );
+    if ( interval ) {
+        INTERVALS.push( interval );
+    }
+
     setupFoodInterval();
     setupDoubleFoodInterval();
     setupSnakeMovement();
@@ -247,191 +252,6 @@ function setupFrame() {
                 line: lines - 1
             } );
         }
-    }
-}
-
-
-/**
- * Add some walls randomly on the map on a set interval.
- */
-function setupRandomMap() {
-    const difficulty = Options.getDifficulty();
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
-
-    var interval = new Interval( function () {
-        var maxWallColumns = Math.round( columns * 0.3 );
-        var minWallColumns = Math.round( columns * 0.1 );
-        var maxWallLines = Math.round( lines * 0.3 );
-        var minWallLines = Math.round( lines * 0.1 );
-
-        const totalDirections = Object.keys( Direction ).length / 2;
-        const direction = getRandomInt( 0, totalDirections - 1 ) as Direction;
-
-        // don't add wall elements to close to a snake
-        const exclude = [];
-        const margin = 5;
-
-        for ( let a = 0; a < SNAKES.length; a++ ) {
-            const snake = SNAKES[ a ];
-            const first = snake.first_tail;
-            const position = {
-                column: Math.round( first.position.column - margin / 2 ),
-                line: Math.round( first.position.line - margin / 2 )
-            };
-
-            exclude.push( {
-                position: position,
-                width: margin,
-                height: margin
-            } );
-        }
-
-        const position = GRID.getRandomEmptyPosition( exclude );
-        let length = 1;
-
-        if ( direction ) {
-            length = getRandomInt( minWallLines, maxWallLines );
-        }
-
-        else {
-            length = getRandomInt( minWallColumns, maxWallColumns );
-        }
-
-        // needs at a minimum to occupy one grid position
-        if ( length < 1 ) {
-            length = 1;
-        }
-
-        wallLine( position, length, direction );
-
-    }, SPAWN_WALL[ difficulty ] );
-    INTERVALS.push( interval );
-}
-
-
-/**
- * Add some walls on a 'stair' like layout.
- */
-function setupStairsMap() {
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
-
-    const horizontalLength = Math.round( columns * 0.12 );
-    const verticalLength = Math.round( lines * 0.09 );
-    const steps = 4;
-    const horizontalMargin = ( columns - steps * horizontalLength ) / ( steps + 1 );
-    const verticalMargin = ( lines - steps * verticalLength ) / ( steps + 1 );
-
-    for ( let a = 0; a < steps; a++ ) {
-        const column = Math.round( ( a + 1 ) * horizontalMargin + a * horizontalLength );
-        const line = Math.round( ( a + 1 ) * verticalMargin + a * verticalLength );
-
-        const position1 = {
-            column: column, line: line
-        };
-        const position2 = {
-            column: column + horizontalLength,
-            line: line
-        };
-
-        wallLine( position1, horizontalLength, Direction.right );
-        wallLine( position2, verticalLength, Direction.down );
-    }
-}
-
-
-/**
- * Add some horizontal walls on the map.
- */
-function setupLinesMap() {
-    const linesTotal = 4;
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
-    const length = Math.round( columns * 0.2 ); // of each wall
-    const yDiff = lines / ( linesTotal + 1 );
-
-    // there's 3 wall lines in a row, with some margins in between
-    // so: (margin)(wall)(margin)(wall)(margin)(wall)(margin)
-    const margin = ( columns - 3 * length ) / 4;
-
-    const column1 = margin;
-    const column2 = 2 * margin + length;
-    const column3 = 3 * margin + 2 * length;
-
-    for ( let a = 0; a < linesTotal; a++ ) {
-        const line = yDiff * ( a + 1 );
-
-        wallLine( { column: column1, line: line }, length, Direction.right );
-        wallLine( { column: column2, line: line }, length, Direction.right );
-        wallLine( { column: column3, line: line }, length, Direction.right );
-    }
-}
-
-
-/**
- * Setup the map walls (depends on the map type).
- * - `random` : Adds walls randomly in the map.
- * - `stairs` : Stair like walls.
- * - `lines`  : Horizontal lines walls.
- * - `empty`  : No walls added.
- */
-function setupWalls( mapName: MapName ) {
-    if ( mapName === 'random' ) {
-        setupRandomMap();
-    }
-
-    else if ( mapName === 'stairs' ) {
-        setupStairsMap();
-    }
-
-    else if ( mapName === 'lines' ) {
-        setupLinesMap();
-    }
-}
-
-
-/**
- * Add a line of 'Wall' elements in the given direction.
- */
-function wallLine( position: GridPosition, length: number, direction: Direction ) {
-    let addColumn = 0;
-    let addLine = 0;
-
-    switch ( direction ) {
-        case Direction.up:
-            addLine = -1;
-            break;
-
-        case Direction.down:
-            addLine = 1;
-            break;
-
-        case Direction.left:
-            addColumn = -1;
-            break;
-
-        case Direction.right:
-            addColumn = 1;
-            break;
-
-        default:
-            throw Error( 'Invalid direction.' )
-    }
-
-    let elementPosition = { ...position };
-
-    for ( let a = 0; a < length; a++ ) {
-        // don't add on top of non-empty positions
-        if ( GRID.isValid( elementPosition ) && GRID.isEmpty( elementPosition ) ) {
-            const wall = new Wall();
-            GRID.add( wall, elementPosition );
-        }
-
-        elementPosition = {
-            column: elementPosition.column + addColumn,
-            line: elementPosition.line + addLine
-        };
     }
 }
 
