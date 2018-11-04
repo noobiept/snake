@@ -20,7 +20,19 @@ const SPAWN_WALL = [ 4000, 3000 ];
  */
 export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
     if ( mapName === 'random' ) {
-        return setupRandomMap( snakes, grid );
+        return setupRandomMap(
+            snakes,
+            grid,
+            [ Direction.north, Direction.south, Direction.west, Direction.east ]
+        );
+    }
+
+    else if ( mapName === 'randomDiagonal' ) {
+        return setupRandomMap(
+            snakes,
+            grid,
+            [ Direction.northEast, Direction.northWest ]
+        );
     }
 
     else if ( mapName === 'stairs' ) {
@@ -36,7 +48,7 @@ export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
 /**
  * Add some walls randomly on the map on a set interval.
  */
-function setupRandomMap( snakes: Snake[], grid: Grid ) {
+function setupRandomMap( snakes: Snake[], grid: Grid, directions: Direction[] ) {
     const difficulty = Options.getDifficulty();
     const columns = Options.getColumns();
     const lines = Options.getLines();
@@ -47,8 +59,8 @@ function setupRandomMap( snakes: Snake[], grid: Grid ) {
         var maxWallLines = Math.round( lines * 0.3 );
         var minWallLines = Math.round( lines * 0.1 );
 
-        const totalDirections = Object.keys( Direction ).length / 2;
-        const direction = getRandomInt( 0, totalDirections - 1 ) as Direction;
+        const directionIndex = getRandomInt( 0, directions.length - 1 );
+        const direction = directions[ directionIndex ];
 
         // don't add wall elements to close to a snake
         const exclude = [];

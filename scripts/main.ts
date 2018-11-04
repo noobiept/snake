@@ -39,7 +39,7 @@ export interface Dict {
     [ key: string ]: any;
 }
 
-export type MapName = 'random' | 'stairs' | 'lines' | 'empty';
+export type MapName = 'random' | 'randomDiagonal' | 'stairs' | 'lines' | 'empty';
 
 export var STAGE: createjs.Stage;
 
