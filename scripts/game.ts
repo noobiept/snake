@@ -154,7 +154,7 @@ function setupSnakes( twoPlayersMode: boolean ) {
                 column: leftColumn,
                 line: midLine
             },
-            startingDirection: Direction.right,
+            startingDirection: Direction.east,
             color: SNAKES_COLORS[ position1 ],
             keyboardMapping: {
                 left: EVENT_KEY.a,
@@ -171,7 +171,7 @@ function setupSnakes( twoPlayersMode: boolean ) {
                 column: rightColumn,
                 line: midLine
             },
-            startingDirection: Direction.left,
+            startingDirection: Direction.west,
             color: SNAKES_COLORS[ position2 ],
             keyboardMapping: {
                 left: EVENT_KEY.leftArrow,
@@ -194,7 +194,7 @@ function setupSnakes( twoPlayersMode: boolean ) {
                 column: leftColumn,
                 line: midLine
             },
-            startingDirection: Direction.right,
+            startingDirection: Direction.east,
             color: SNAKES_COLORS[ position ],
             keyboardMapping: {
                 left: EVENT_KEY.a,

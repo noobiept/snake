@@ -10,10 +10,12 @@ import { Grid } from "./grid.js";
 
 
 export enum Direction {
-    left,
-    right,
-    up,
-    down
+    west,
+    east,
+    north,
+    south,
+    northWest,
+    northEast
 }
 
 export interface Path {

@@ -54,28 +54,28 @@ export default class Snake {
             const lastDirection = last.direction;
             const lastPosition = last.position;
 
-            if ( lastDirection === Direction.left ) {
+            if ( lastDirection === Direction.west ) {
                 position = {
                     column: lastPosition.column + 1,
                     line: lastPosition.line
                 };
             }
 
-            else if ( lastDirection === Direction.right ) {
+            else if ( lastDirection === Direction.east ) {
                 position = {
                     column: lastPosition.column - 1,
                     line: lastPosition.line
                 };
             }
 
-            else if ( lastDirection === Direction.up ) {
+            else if ( lastDirection === Direction.north ) {
                 position = {
                     column: lastPosition.column,
                     line: lastPosition.line + 1
                 };
             }
 
-            else if ( lastDirection === Direction.down ) {
+            else if ( lastDirection === Direction.south ) {
                 position = {
                     column: lastPosition.column,
                     line: lastPosition.line - 1
@@ -122,10 +122,10 @@ export default class Snake {
         }
 
         // don't allow to go to the opposing direction
-        if ( ( currentDirection == Direction.left && newDirection == Direction.right ) ||
-            ( currentDirection == Direction.right && newDirection == Direction.left ) ||
-            ( currentDirection == Direction.up && newDirection == Direction.down ) ||
-            ( currentDirection == Direction.down && newDirection == Direction.up ) ) {
+        if ( ( currentDirection == Direction.west && newDirection == Direction.east ) ||
+            ( currentDirection == Direction.east && newDirection == Direction.west ) ||
+            ( currentDirection == Direction.north && newDirection == Direction.south ) ||
+            ( currentDirection == Direction.south && newDirection == Direction.north ) ) {
             return;
         }
 
@@ -260,62 +260,62 @@ export default class Snake {
 
         if ( keysHeld.left ) {
             if ( keysHeld.down ) {
-                if ( direction == Direction.left || direction == Direction.right ) {
-                    this.changeDirection( Direction.down );
+                if ( direction == Direction.west || direction == Direction.east ) {
+                    this.changeDirection( Direction.south );
                 }
 
-                else if ( direction == Direction.down || direction == Direction.up ) {
-                    this.changeDirection( Direction.left );
+                else if ( direction == Direction.south || direction == Direction.north ) {
+                    this.changeDirection( Direction.west );
                 }
             }
 
             else if ( keysHeld.up ) {
-                if ( direction == Direction.left || direction == Direction.right ) {
-                    this.changeDirection( Direction.up );
+                if ( direction == Direction.west || direction == Direction.east ) {
+                    this.changeDirection( Direction.north );
                 }
 
-                else if ( direction == Direction.up || direction == Direction.down ) {
-                    this.changeDirection( Direction.left );
+                else if ( direction == Direction.north || direction == Direction.south ) {
+                    this.changeDirection( Direction.west );
                 }
             }
 
             else {
-                this.changeDirection( Direction.left );
+                this.changeDirection( Direction.west );
             }
         }
 
         else if ( keysHeld.right ) {
             if ( keysHeld.down ) {
-                if ( direction == Direction.right || direction == Direction.left ) {
-                    this.changeDirection( Direction.down );
+                if ( direction == Direction.east || direction == Direction.west ) {
+                    this.changeDirection( Direction.south );
                 }
 
-                else if ( direction == Direction.down || direction == Direction.up ) {
-                    this.changeDirection( Direction.right );
+                else if ( direction == Direction.south || direction == Direction.north ) {
+                    this.changeDirection( Direction.east );
                 }
             }
 
             else if ( keysHeld.up ) {
-                if ( direction == Direction.right || direction == Direction.left ) {
-                    this.changeDirection( Direction.up );
+                if ( direction == Direction.east || direction == Direction.west ) {
+                    this.changeDirection( Direction.north );
                 }
 
-                else if ( direction == Direction.up || direction == Direction.down ) {
-                    this.changeDirection( Direction.right );
+                else if ( direction == Direction.north || direction == Direction.south ) {
+                    this.changeDirection( Direction.east );
                 }
             }
 
             else {
-                this.changeDirection( Direction.right );
+                this.changeDirection( Direction.east );
             }
         }
 
         else if ( keysHeld.up ) {
-            this.changeDirection( Direction.up );
+            this.changeDirection( Direction.north );
         }
 
         else if ( keysHeld.down ) {
-            this.changeDirection( Direction.down );
+            this.changeDirection( Direction.south );
         }
     }
 }

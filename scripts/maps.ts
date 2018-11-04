@@ -118,8 +118,8 @@ function setupStairsMap( snakes: Snake[], grid: Grid ) {
             line: line
         };
 
-        wallLine( position1, horizontalLength, Direction.right, grid );
-        wallLine( position2, verticalLength, Direction.down, grid );
+        wallLine( position1, horizontalLength, Direction.east, grid );
+        wallLine( position2, verticalLength, Direction.south, grid );
     }
 }
 
@@ -145,9 +145,9 @@ function setupLinesMap( snakes: Snake[], grid: Grid ) {
     for ( let a = 0; a < linesTotal; a++ ) {
         const line = yDiff * ( a + 1 );
 
-        wallLine( { column: column1, line: line }, length, Direction.right, grid );
-        wallLine( { column: column2, line: line }, length, Direction.right, grid );
-        wallLine( { column: column3, line: line }, length, Direction.right, grid );
+        wallLine( { column: column1, line: line }, length, Direction.east, grid );
+        wallLine( { column: column2, line: line }, length, Direction.east, grid );
+        wallLine( { column: column3, line: line }, length, Direction.east, grid );
     }
 }
 
@@ -160,20 +160,30 @@ function wallLine( position: GridPosition, length: number, direction: Direction,
     let addLine = 0;
 
     switch ( direction ) {
-        case Direction.up:
+        case Direction.north:
             addLine = -1;
             break;
 
-        case Direction.down:
+        case Direction.south:
             addLine = 1;
             break;
 
-        case Direction.left:
+        case Direction.west:
             addColumn = -1;
             break;
 
-        case Direction.right:
+        case Direction.east:
             addColumn = 1;
+            break;
+
+        case Direction.northWest:
+            addColumn = -1;
+            addLine = -1;
+            break;
+
+        case Direction.northEast:
+            addColumn = 1;
+            addLine = -1;
             break;
 
         default:

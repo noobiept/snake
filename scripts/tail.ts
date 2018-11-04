@@ -71,29 +71,32 @@ export default class Tail implements GridItem {
         const current = this.position;
 
         switch ( this.direction ) {
-            case Direction.left:
+            case Direction.west:
                 return {
                     column: current.column - 1,
                     line: current.line
                 };
 
-            case Direction.right:
+            case Direction.east:
                 return {
                     column: current.column + 1,
                     line: current.line
                 };
 
-            case Direction.up:
+            case Direction.north:
                 return {
                     column: current.column,
                     line: current.line - 1
                 };
 
-            case Direction.down:
+            case Direction.south:
                 return {
                     column: current.column,
                     line: current.line + 1
                 };
+
+            default:
+                throw Error( "Invalid 'tail' direction." );
         }
     }
 
