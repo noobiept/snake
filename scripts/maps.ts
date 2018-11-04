@@ -19,28 +19,31 @@ const SPAWN_WALL = [ 4000, 3000 ];
  * - `empty`  : No walls added.
  */
 export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
-    if ( mapName === 'random' ) {
-        return setupRandomMap(
-            snakes,
-            grid,
-            [ Direction.north, Direction.south, Direction.west, Direction.east ]
-        );
-    }
 
-    else if ( mapName === 'randomDiagonal' ) {
-        return setupRandomMap(
-            snakes,
-            grid,
-            [ Direction.northEast, Direction.northWest ]
-        );
-    }
+    switch ( mapName ) {
+        case 'random':
+            return setupRandomMap(
+                snakes,
+                grid,
+                [ Direction.north, Direction.south, Direction.west, Direction.east ]
+            );
+            break;
 
-    else if ( mapName === 'stairs' ) {
-        return setupStairsMap( snakes, grid );
-    }
+        case 'randomDiagonal':
+            return setupRandomMap(
+                snakes,
+                grid,
+                [ Direction.northEast, Direction.northWest, Direction.southEast, Direction.southWest ]
+            );
+            break;
 
-    else if ( mapName === 'lines' ) {
-        return setupLinesMap( snakes, grid );
+        case 'stairs':
+            return setupStairsMap( snakes, grid );
+            break;
+
+        case 'lines':
+            return setupLinesMap( snakes, grid );
+            break;
     }
 }
 
@@ -64,7 +67,7 @@ function setupRandomMap( snakes: Snake[], grid: Grid, directions: Direction[] ) 
 
         // don't add wall elements to close to a snake
         const exclude = [];
-        const margin = 5;
+        const margin = 10;
 
         for ( let a = 0; a < snakes.length; a++ ) {
             const snake = snakes[ a ];
@@ -196,6 +199,16 @@ function wallLine( position: GridPosition, length: number, direction: Direction,
         case Direction.northEast:
             addColumn = 1;
             addLine = -1;
+            break;
+
+        case Direction.southEast:
+            addColumn = 1;
+            addLine = 1;
+            break;
+
+        case Direction.southWest:
+            addColumn = -1;
+            addLine = 1;
             break;
 
         default:

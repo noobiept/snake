@@ -15,7 +15,9 @@ export enum Direction {
     north,
     south,
     northWest,
-    northEast
+    northEast,
+    southWest,
+    southEast
 }
 
 export interface Path {
