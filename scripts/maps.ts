@@ -7,34 +7,54 @@ import { GridPosition, Grid } from './grid.js';
 import { MapName, Direction } from './main.js';
 
 
+interface RandomOptions {
+    directions: Direction[];                                        // Randomly select a position from the given list each time.
+    length: { percentage: boolean; min: number; max: number; };     // Randomly select a value between 'min' and 'max'. This value is either a fixed number of positions or a percentage based on the canvas dimensions.
+    spawnInterval: number;                                          // Time in milliseconds between each wall spawn.
+}
+
+
 // spawn interval of the walls on the 'random' map type
 // different value for each difficulty
 const SPAWN_WALL = [ 4000, 3000 ];
 
 /**
  * Setup the map walls (depends on the map type).
- * - `random` : Adds walls randomly in the map.
- * - `stairs` : Stair like walls.
- * - `lines`  : Horizontal lines walls.
- * - `empty`  : No walls added.
+ * - `random`         : Adds horizontal/vertical walls randomly in the map.
+ * - `randomDiagonal` : Add walls in a diagonal direction randomly in the map.
+ * - `randomSingle`   : Add single position walls randomly in the map.
+ * - `stairs`         : Stair like walls.
+ * - `lines`          : Horizontal lines walls.
+ * - `empty`          : No walls added.
  */
 export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
 
+    const difficulty = Options.getDifficulty();
+    const interval = SPAWN_WALL[ difficulty ];
+
     switch ( mapName ) {
         case 'random':
-            return setupRandomMap(
-                snakes,
-                grid,
-                [ Direction.north, Direction.south, Direction.west, Direction.east ]
-            );
+            return setupRandomMap( snakes, grid, {
+                directions: [ Direction.north, Direction.south, Direction.west, Direction.east ],
+                length: { percentage: true, min: 0.1, max: 0.2 },
+                spawnInterval: interval
+            } );
             break;
 
         case 'randomDiagonal':
-            return setupRandomMap(
-                snakes,
-                grid,
-                [ Direction.northEast, Direction.northWest, Direction.southEast, Direction.southWest ]
-            );
+            return setupRandomMap( snakes, grid, {
+                directions: [ Direction.northEast, Direction.northWest, Direction.southEast, Direction.southWest ],
+                length: { percentage: true, min: 0.1, max: 0.2 },
+                spawnInterval: interval
+            } );
+            break;
+
+        case 'randomSingle':
+            return setupRandomMap( snakes, grid, {
+                directions: [ Direction.north ],
+                length: { percentage: false, min: 1, max: 1 },
+                spawnInterval: interval
+            } );
             break;
 
         case 'stairs':
@@ -51,16 +71,17 @@ export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
 /**
  * Add some walls randomly on the map on a set interval.
  */
-function setupRandomMap( snakes: Snake[], grid: Grid, directions: Direction[] ) {
-    const difficulty = Options.getDifficulty();
+function setupRandomMap( snakes: Snake[], grid: Grid, options: RandomOptions ) {
+
     const columns = Options.getColumns();
     const lines = Options.getLines();
+    const maxWallColumns = Math.round( columns * 0.3 );
+    const minWallColumns = Math.round( columns * 0.1 );
+    const maxWallLines = Math.round( lines * 0.3 );
+    const minWallLines = Math.round( lines * 0.1 );
+    const directions = options.directions;
 
-    var interval = new Interval( function () {
-        var maxWallColumns = Math.round( columns * 0.3 );
-        var minWallColumns = Math.round( columns * 0.1 );
-        var maxWallLines = Math.round( lines * 0.3 );
-        var minWallLines = Math.round( lines * 0.1 );
+    const interval = new Interval( function () {
 
         const directionIndex = getRandomInt( 0, directions.length - 1 );
         const direction = directions[ directionIndex ];
@@ -87,7 +108,7 @@ function setupRandomMap( snakes: Snake[], grid: Grid, directions: Direction[] ) 
         const position = grid.getRandomEmptyPosition( exclude );
         let length = 1;
 
-        if ( direction ) {
+        if ( direction ) {  //HERE bug?? pass the length to the wallLine() (make sure it works properly for the diagonal lines
             length = getRandomInt( minWallLines, maxWallLines );
         }
 
@@ -102,7 +123,7 @@ function setupRandomMap( snakes: Snake[], grid: Grid, directions: Direction[] ) 
 
         wallLine( position, length, direction, grid );
 
-    }, SPAWN_WALL[ difficulty ] );
+    }, options.spawnInterval );
 
     return interval;
 }
