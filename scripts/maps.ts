@@ -36,7 +36,7 @@ export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
         case 'random':
             return setupRandomMap( snakes, grid, {
                 directions: [ Direction.north, Direction.south, Direction.west, Direction.east ],
-                length: { percentage: true, min: 0.1, max: 0.2 },
+                length: { percentage: true, min: 0.1, max: 0.3 },
                 spawnInterval: interval
             } );
             break;
@@ -44,7 +44,7 @@ export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
         case 'randomDiagonal':
             return setupRandomMap( snakes, grid, {
                 directions: [ Direction.northEast, Direction.northWest, Direction.southEast, Direction.southWest ],
-                length: { percentage: true, min: 0.1, max: 0.2 },
+                length: { percentage: true, min: 0.1, max: 0.3 },
                 spawnInterval: interval
             } );
             break;
@@ -75,10 +75,10 @@ function setupRandomMap( snakes: Snake[], grid: Grid, options: RandomOptions ) {
 
     const columns = Options.getColumns();
     const lines = Options.getLines();
-    const maxWallColumns = Math.round( columns * 0.3 );
-    const minWallColumns = Math.round( columns * 0.1 );
-    const maxWallLines = Math.round( lines * 0.3 );
-    const minWallLines = Math.round( lines * 0.1 );
+    const maxWallColumns = Math.round( columns * options.length.max );
+    const minWallColumns = Math.round( columns * options.length.min );
+    const maxWallLines = Math.round( lines * options.length.max );
+    const minWallLines = Math.round( lines * options.length.min );
     const directions = options.directions;
 
     const interval = new Interval( function () {
@@ -106,15 +106,28 @@ function setupRandomMap( snakes: Snake[], grid: Grid, options: RandomOptions ) {
         }
 
         const position = grid.getRandomEmptyPosition( exclude );
-        let length = 1;
 
-        if ( direction ) {  //HERE bug?? pass the length to the wallLine() (make sure it works properly for the diagonal lines
-            length = getRandomInt( minWallLines, maxWallLines );
+        let min = 0;
+        let max = 0;
+
+        if ( options.length.percentage ) {
+            if ( direction === Direction.north || direction === Direction.south ) {
+                min = minWallLines;
+                max = maxWallLines;
+            }
+
+            else {
+                min = minWallColumns;
+                max = maxWallColumns;
+            }
         }
 
         else {
-            length = getRandomInt( minWallColumns, maxWallColumns );
+            min = options.length.min;
+            max = options.length.max;
         }
+
+        let length = getRandomInt( min, max );
 
         // needs at a minimum to occupy one grid position
         if ( length < 1 ) {
