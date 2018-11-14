@@ -2,7 +2,7 @@ import * as Options from './options.js';
 import * as AppStorage from './app_storage.js';
 import * as Game from './game.js';
 import * as HighScore from './high_score.js';
-import { MapName } from './main.js';
+import { MapName, updateCanvasDimensions } from './main.js';
 import { boolToOnOff } from './utilities.js';
 
 
@@ -117,7 +117,7 @@ function initMainMenu( mapName?: string ) {
 function initOptions() {
     // :: Width :: //
 
-    var columns = Options.getColumns().toString();
+    var columns = Options.get( 'columns' ).toString();
     var columnsValue = document.getElementById( 'Options-columns-value' ) as HTMLElement;
     var columnsSlider = document.getElementById( 'Options-columns-slider' ) as HTMLInputElement;
 
@@ -135,7 +135,7 @@ function initOptions() {
 
     // :: Height :: //
 
-    var lines = Options.getLines().toString();
+    var lines = Options.get( 'lines' ).toString();
     var linesValues = document.getElementById( 'Options-lines-value' ) as HTMLElement;
     var linesSlider = document.getElementById( 'Options-lines-slider' ) as HTMLInputElement;
 
@@ -156,39 +156,18 @@ function initOptions() {
     var frame = document.getElementById( 'Options-frame' )!;
     var frameValue = frame.querySelector( 'span' )!;
 
-    frameValue.innerText = boolToOnOff( Options.getFrame() );
+    frameValue.innerText = boolToOnOff( Options.get( 'frameOn' ) );
 
     frame.onclick = function () {
         if ( frameValue.innerText === 'On' ) {
-            Options.setFrame( false );
+            Options.set( 'frameOn', false );
         }
 
         else {
-            Options.setFrame( true );
+            Options.set( 'frameOn', true );
         }
 
-        frameValue.innerText = boolToOnOff( Options.getFrame() );
-    };
-
-    // :: difficulty :: //
-
-    var difficulty = document.getElementById( 'Options-difficulty' )!;
-    var difficultyValue = difficulty.querySelector( 'span' )!;
-
-    difficultyValue.innerText = Options.getDifficultyString();
-
-    difficulty.onclick = function () {
-        if ( difficultyValue.innerText === 'normal' ) {
-            difficultyValue.innerText = 'hard';
-
-            Options.setDifficulty( Options.Difficulty.hard );
-        }
-
-        else {
-            difficultyValue.innerText = 'normal';
-
-            Options.setDifficulty( Options.Difficulty.normal );
-        }
+        frameValue.innerText = boolToOnOff( Options.get( 'frameOn' ) );
     };
 
     // :: back :: //
@@ -238,7 +217,7 @@ function buildHighScoreTable( mapName: MapName ) {
         // header
         var tableRow = document.createElement( 'tr' );
 
-        var header = [ 'Position', 'Number Of Tails', 'Difficulty', 'Frame', 'Columns', 'Lines', 'Time' ];
+        var header = [ 'Position', 'Number Of Tails', 'Frame', 'Columns', 'Lines', 'Time' ];
         var tableHeader;
 
         for ( var i = 0; i < header.length; i++ ) {
@@ -253,7 +232,6 @@ function buildHighScoreTable( mapName: MapName ) {
         var score;
         var position;
         var numberOfTails;
-        var difficulty;
         var frame;
         var columns;
         var lines;
@@ -265,7 +243,6 @@ function buildHighScoreTable( mapName: MapName ) {
             tableRow = document.createElement( 'tr' );
             position = document.createElement( 'td' );
             numberOfTails = document.createElement( 'td' );
-            difficulty = document.createElement( 'td' );
             frame = document.createElement( 'td' );
             columns = document.createElement( 'td' );
             lines = document.createElement( 'td' );
@@ -273,7 +250,6 @@ function buildHighScoreTable( mapName: MapName ) {
 
             position.innerText = ( i + 1 ).toString();
             numberOfTails.innerText = score.numberOfTails.toString();
-            difficulty.innerText = score.difficulty;
             frame.innerText = score.frame;
             columns.innerText = score.columns.toString();
             lines.innerText = score.lines.toString();
@@ -281,7 +257,6 @@ function buildHighScoreTable( mapName: MapName ) {
 
             tableRow.appendChild( position );
             tableRow.appendChild( numberOfTails );
-            tableRow.appendChild( difficulty );
             tableRow.appendChild( frame );
             tableRow.appendChild( columns );
             tableRow.appendChild( lines );

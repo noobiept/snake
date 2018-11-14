@@ -6,7 +6,6 @@ import { boolToOnOff } from './utilities.js';
 
 interface Score {
     numberOfTails: number;
-    difficulty: string;
     frame: string;
     columns: number;
     lines: number;
@@ -72,10 +71,9 @@ export function add( mapName: MapName, numberOfTails: number, time: string ) {
 
     scoreArray.push( {
         numberOfTails: numberOfTails,
-        difficulty: Options.getDifficultyString(),
-        frame: boolToOnOff( Options.getFrame() ),
-        columns: Options.getColumns(),
-        lines: Options.getLines(),
+        frame: boolToOnOff( Options.get( 'frameOn' ) ),
+        columns: Options.get( 'columns' ),
+        lines: Options.get( 'lines' ),
         time: time
     } );
 
