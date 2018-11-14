@@ -68,7 +68,7 @@ function initApp( data: Dict ) {
     // setup the canvas
     CANVAS = <HTMLCanvasElement> document.querySelector( '#MainCanvas' );
 
-    changeCanvasDimensions( Options.getColumns(), Options.getLines() );
+    updateCanvasDimensions();
 
     // setup the stage
     STAGE = new createjs.Stage( CANVAS );
@@ -100,7 +100,10 @@ function initApp( data: Dict ) {
 /**
  * Change the width/height of the canvas element where the game is drawn. The size is based on the number of columns/lines being used in the game.
  */
-export function changeCanvasDimensions( columns: number, lines: number ) {
+export function updateCanvasDimensions() {
+    const columns = Options.get( 'columns' );
+    const lines = Options.get( 'lines' );
+
     CANVAS.width = columns * Grid.size;
     CANVAS.height = lines * Grid.size;
 }

@@ -129,7 +129,8 @@ function initOptions() {
         const value = columnsSlider.value;
 
         columnsValue.innerText = value;
-        Options.setColumns( parseInt( value, 10 ) );
+        Options.set( 'columns', parseInt( value, 10 ) );
+        updateCanvasDimensions();
     }
 
     // :: Height :: //
@@ -146,7 +147,8 @@ function initOptions() {
         const value = linesSlider.value;
 
         linesValues.innerText = value;
-        Options.setLines( parseInt( value, 10 ) );
+        Options.set( 'lines', parseInt( value, 10 ) );
+        updateCanvasDimensions();
     }
 
     // :: frame :: //
