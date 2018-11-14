@@ -14,10 +14,6 @@ interface RandomOptions {
 }
 
 
-// spawn interval of the walls on the 'random' map type
-// different value for each difficulty
-const SPAWN_WALL = [ 4000, 3000 ];
-
 /**
  * Setup the map walls (depends on the map type).
  * - `random`         : Adds horizontal/vertical walls randomly in the map.
@@ -29,8 +25,7 @@ const SPAWN_WALL = [ 4000, 3000 ];
  */
 export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
 
-    const difficulty = Options.getDifficulty();
-    const interval = SPAWN_WALL[ difficulty ];
+    const interval = Options.get( 'wallInterval' );
 
     switch ( mapName ) {
         case 'random':
@@ -73,8 +68,8 @@ export function setupWalls( mapName: MapName, snakes: Snake[], grid: Grid ) {
  */
 function setupRandomMap( snakes: Snake[], grid: Grid, options: RandomOptions ) {
 
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
+    const columns = Options.get( 'columns' );
+    const lines = Options.get( 'lines' );
     const maxWallColumns = Math.round( columns * options.length.max );
     const minWallColumns = Math.round( columns * options.length.min );
     const maxWallLines = Math.round( lines * options.length.max );
@@ -146,8 +141,8 @@ function setupRandomMap( snakes: Snake[], grid: Grid, options: RandomOptions ) {
  * Add some walls on a 'stair' like layout.
  */
 function setupStairsMap( snakes: Snake[], grid: Grid ) {
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
+    const columns = Options.get( 'columns' );
+    const lines = Options.get( 'lines' );
 
     const horizontalLength = Math.round( columns * 0.12 );
     const verticalLength = Math.round( lines * 0.09 );
@@ -178,8 +173,8 @@ function setupStairsMap( snakes: Snake[], grid: Grid ) {
  */
 function setupLinesMap( snakes: Snake[], grid: Grid ) {
     const linesTotal = 4;
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
+    const columns = Options.get( 'columns' );
+    const lines = Options.get( 'lines' );
     const length = Math.round( columns * 0.2 ); // of each wall
     const yDiff = lines / ( linesTotal + 1 );
 

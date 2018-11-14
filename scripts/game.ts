@@ -34,13 +34,6 @@ export interface CollisionElements {
 const INTERVALS: Interval[] = [];
 const COLLISIONS: CollisionElements[] = [];
 
-// the time until we add a new food/wall/etc (in milliseconds)
-// depends on the difficulty level
-// the order matters (get the difficulty from Options, which will be the position in this)
-const SNAKE_SPEED = [ 100, 50 ];
-const SPAWN_FOOD = [ 1000, 500 ];
-const SPAWN_DOUBLE_FOOD = [ 5000, 2500 ];
-
 var TIMER: Timer;
 var TWO_PLAYER_MODE = false;
 var MAP_NAME: MapName;
@@ -104,8 +97,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     TIMER.restart();
     GameMenu.updateTimer( TIMER.getString() );
 
-    const columns = Options.getColumns();
-    const lines = Options.getLines();
+    const columns = Options.get( 'columns' );
+    const lines = Options.get( 'lines' );
 
     GRID = new Grid( {
         columns: columns,
@@ -220,7 +213,7 @@ function setupFrame() {
     const lines = GRID.args.lines;
     const columns = GRID.args.columns;
 
-    if ( Options.getFrame() ) {
+    if ( Options.get( 'frameOn' ) ) {
 
         // left/right sides
         for ( let line = 0; line < lines; line++ ) {
@@ -257,7 +250,7 @@ function setupFrame() {
 
 
 function setupFoodInterval() {
-    const difficulty = Options.getDifficulty();
+    const foodInterval = Options.get( 'foodInterval' );
 
     // add food interval
     const interval = new Interval( function () {
@@ -266,13 +259,13 @@ function setupFoodInterval() {
         const food = new Food();
         GRID.add( food, position );
 
-    }, SPAWN_FOOD[ difficulty ] );
+    }, foodInterval );
     INTERVALS.push( interval );
 }
 
 
 function setupDoubleFoodInterval() {
-    const difficulty = Options.getDifficulty();
+    const doubleFoodInterval = Options.get( 'doubleFoodInterval' );
 
     // add double food
     const interval = new Interval( function () {
@@ -281,13 +274,13 @@ function setupDoubleFoodInterval() {
         const food = new DoubleFood();
         GRID.add( food, position );
 
-    }, SPAWN_DOUBLE_FOOD[ difficulty ] );
+    }, doubleFoodInterval );
     INTERVALS.push( interval );
 }
 
 
 function setupSnakeMovement() {
-    const difficulty = Options.getDifficulty();
+    const snakeSpeed = Options.get( 'snakeSpeed' );
 
     // setup the snake movement
     const interval = new Interval( function () {
@@ -305,7 +298,7 @@ function setupSnakeMovement() {
                 GRID.move( tail, next );
             }
         }
-    }, SNAKE_SPEED[ difficulty ] );
+    }, snakeSpeed );
     INTERVALS.push( interval );
 }
 
