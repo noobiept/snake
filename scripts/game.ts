@@ -281,6 +281,7 @@ function setupDoubleFoodInterval() {
 
 function setupSnakeMovement() {
     const snakeSpeed = Options.get( 'snakeSpeed' );
+    const snakeInterval = 1 / snakeSpeed * 1000;
 
     // setup the snake movement
     const interval = new Interval( function () {
@@ -298,7 +299,7 @@ function setupSnakeMovement() {
                 GRID.move( tail, next );
             }
         }
-    }, snakeSpeed );
+    }, snakeInterval );
     INTERVALS.push( interval );
 }
 

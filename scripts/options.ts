@@ -8,7 +8,7 @@ interface OptionsData {
     wallInterval: number;   // the intervals are in milliseconds
     foodInterval: number;
     doubleFoodInterval: number;
-    snakeSpeed: number;
+    snakeSpeed: number; // is in Hz (movement frequency)
 }
 
 export type OptionsKey = keyof OptionsData;
