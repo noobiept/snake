@@ -115,44 +115,16 @@ function initMainMenu( mapName?: string ) {
 
 
 function initOptions() {
-    // :: Width :: //
 
-    var columns = Options.get( 'columns' ).toString();
-    var columnsValue = document.getElementById( 'Options-columns-value' ) as HTMLElement;
-    var columnsRange = document.getElementById( 'Options-columns-range' ) as HTMLInputElement;
+    // setup the range settings
+    setupRangeSetting( 'columns', updateCanvasDimensions );
+    setupRangeSetting( 'lines', updateCanvasDimensions );
+    setupRangeSetting( 'snakeSpeed' );
+    setupRangeSetting( 'wallInterval' );
+    setupRangeSetting( 'foodInterval' );
+    setupRangeSetting( 'doubleFoodInterval' );
 
-    // set the initial value
-    columnsValue.innerText = columns;
-    columnsRange.value = columns;
-
-    columnsRange.oninput = function () {
-        const value = columnsRange.value;
-
-        columnsValue.innerText = value;
-        Options.set( 'columns', parseInt( value, 10 ) );
-        updateCanvasDimensions();
-    }
-
-    // :: Height :: //
-
-    var lines = Options.get( 'lines' ).toString();
-    var linesValues = document.getElementById( 'Options-lines-value' ) as HTMLElement;
-    var linesRange = document.getElementById( 'Options-lines-range' ) as HTMLInputElement;
-
-    // set the initial value
-    linesValues.innerText = lines;
-    linesRange.value = lines;
-
-    linesRange.oninput = function () {
-        const value = linesRange.value;
-
-        linesValues.innerText = value;
-        Options.set( 'lines', parseInt( value, 10 ) );
-        updateCanvasDimensions();
-    }
-
-    // :: frame :: //
-
+    // setup the 'frameOn' setting (on/off setting)
     var frame = document.getElementById( 'Options-frame' )!;
     var frameValue = document.getElementById( 'Options-frame-value' )!;
 
@@ -170,8 +142,7 @@ function initOptions() {
         frameValue.innerText = boolToOnOff( Options.get( 'frameOn' ) );
     };
 
-    // :: back :: //
-
+    // setup the 'back' button
     var back = document.getElementById( 'Options-back' )!;
 
     back.onclick = function () {
@@ -179,6 +150,32 @@ function initOptions() {
         open( 'mainMenu' );
     };
 }
+
+
+/**
+ * Setup the UI elements of a range setting from the options page (to be used to change the number of columns, the snake speed, etc).
+ */
+function setupRangeSetting( option: Options.OptionsKey, onChange?: () => void ) {
+    const currentValue = Options.get( option ).toString();
+    const elementValue = document.getElementById( `Options-${option}-value` ) as HTMLElement;
+    const elementRange = document.getElementById( `Options-${option}-range` ) as HTMLInputElement;
+
+    // set the initial value
+    elementValue.innerText = currentValue;
+    elementRange.value = currentValue;
+
+    elementRange.oninput = function () {
+        const value = elementRange.value;
+
+        elementValue.innerText = value;
+        Options.set( option, parseInt( value, 10 ) );
+
+        if ( onChange ) {
+            onChange();
+        }
+    };
+}
+
 
 
 function initHighScore() {

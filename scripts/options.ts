@@ -11,6 +11,9 @@ interface OptionsData {
     snakeSpeed: number;
 }
 
+export type OptionsKey = keyof OptionsData;
+
+
 const OPTIONS: OptionsData = {
     columns: 50,
     lines: 50,
@@ -70,7 +73,7 @@ export function save() {
 /**
  * Get the current value of the given option.
  */
-export function get<Key extends keyof OptionsData>( option: Key ) {
+export function get<Key extends OptionsKey>( option: Key ) {
     return OPTIONS[ option ];
 }
 
@@ -78,6 +81,6 @@ export function get<Key extends keyof OptionsData>( option: Key ) {
 /**
  * Set a new value to the given option.
  */
-export function set<Key extends keyof OptionsData>( option: Key, value: OptionsData[ Key ] ) {
+export function set<Key extends OptionsKey>( option: Key, value: OptionsData[ Key ] ) {
     OPTIONS[ option ] = value;
 }
