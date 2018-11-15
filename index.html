@@ -94,14 +94,53 @@
 
         <div id="Options" class="hidden">
             <div id="Options-container">
-                <div>Columns: <span id="Options-columns-value" class="displayValue"></span>
-                    <input type="range" id="Options-columns-slider" class="rangeInput" min="20" max="100" step="5" />
+                <div>
+                    <h1>Canvas settings</h1>
+                    <div>
+                        <span>Columns: </span>
+                        <span id="Options-columns-value" class="displayValue"></span>
+                        <input type="range" id="Options-columns-range" class="rangeInput" min="20" max="100" step="5" />
+                    </div>
+                    <div>
+                        <span>Lines: </span>
+                        <span id="Options-lines-value" class="displayValue"></span>
+                        <input type="range" id="Options-lines-range" class="rangeInput" min="20" max="100" step="5" />
+                    </div>
+                    <div id="Options-frame" class="button">
+                        <span>Frame: </span>
+                        <span id="Options-frame-value">Off</span>
+                    </div>
                 </div>
-                <div>Lines: <span id="Options-lines-value" class="displayValue"></span>
-                    <input type="range" id="Options-lines-slider" class="rangeInput" min="20" max="100" step="5" />
+                <div>
+                    <h1>Snake settings</h1>
+                    <div>
+                        <span>Snake speed: </span>
+                        <span id="Options-snakeSpeed-value" class="displayValue"></span>
+                        <input type="range" id="Options-snakeSpeed-range" class="rangeInput" min="20" max="100" step="10" />
+                    </div>
                 </div>
-                <div id="Options-frame" class="button">Frame: <span>Off</span></div>
-                <div id="Options-difficulty" class="button">Difficulty: <span>normal</span></div>
+                <div>
+                    <h1>Maps settings</h1>
+                    <div>
+                        <img src="images/wall_help.png" />
+                        <span><em>Wall</em> spawn interval: </span>
+                        <span id="Options-wallInterval-value" class="displayValue"></span>
+                        <input type="range" id="Options-wallInterval-range" class="rangeInput" min="1" max="5" step="0.5" />
+                    </div>
+                    <div>
+                        <img src="images/red_apple_10px.png" />
+                        <span><em>Food</em> spawn interval: </span>
+                        <span id="Options-foodInterval-value" class="displayValue"></span>
+                        <input type="range" id="Options-foodInterval-range" class="rangeInput" min="1" max="5" step="0.5" />
+                    </div>
+                    <div>
+                        <img src="images/orange_10px.png" />
+                        <span><em>Double food</em> spawn interval: </span>
+                        <span id="Options-doubleFoodInterval-value" class="displayValue"></span>
+                        <input type="range" id="Options-doubleFoodInterval-range" class="rangeInput" min="1" max="5"
+                            step="0.5" />
+                    </div>
+                </div>
             </div>
 
             <div id="Options-back" class="button backButton">Back</div>

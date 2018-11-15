@@ -133,12 +133,23 @@ figure
 
     /* Options Menu */
 
-#Options-container > *
+#Options-container
     {
-    display: inline-block;
-    width: 170px;
-    padding: 0;
-    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    }
+
+#Options-container > div
+    {
+    height: 150px;
+    }
+
+#Options-container h1
+    {
+    font-size: 26px;
     }
 
 .rangeInput

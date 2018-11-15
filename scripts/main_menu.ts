@@ -119,14 +119,14 @@ function initOptions() {
 
     var columns = Options.get( 'columns' ).toString();
     var columnsValue = document.getElementById( 'Options-columns-value' ) as HTMLElement;
-    var columnsSlider = document.getElementById( 'Options-columns-slider' ) as HTMLInputElement;
+    var columnsRange = document.getElementById( 'Options-columns-range' ) as HTMLInputElement;
 
     // set the initial value
     columnsValue.innerText = columns;
-    columnsSlider.value = columns;
+    columnsRange.value = columns;
 
-    columnsSlider.oninput = function () {
-        const value = columnsSlider.value;
+    columnsRange.oninput = function () {
+        const value = columnsRange.value;
 
         columnsValue.innerText = value;
         Options.set( 'columns', parseInt( value, 10 ) );
@@ -137,14 +137,14 @@ function initOptions() {
 
     var lines = Options.get( 'lines' ).toString();
     var linesValues = document.getElementById( 'Options-lines-value' ) as HTMLElement;
-    var linesSlider = document.getElementById( 'Options-lines-slider' ) as HTMLInputElement;
+    var linesRange = document.getElementById( 'Options-lines-range' ) as HTMLInputElement;
 
     // set the initial value
     linesValues.innerText = lines;
-    linesSlider.value = lines;
+    linesRange.value = lines;
 
-    linesSlider.oninput = function () {
-        const value = linesSlider.value;
+    linesRange.oninput = function () {
+        const value = linesRange.value;
 
         linesValues.innerText = value;
         Options.set( 'lines', parseInt( value, 10 ) );
@@ -154,7 +154,7 @@ function initOptions() {
     // :: frame :: //
 
     var frame = document.getElementById( 'Options-frame' )!;
-    var frameValue = frame.querySelector( 'span' )!;
+    var frameValue = document.getElementById( 'Options-frame-value' )!;
 
     frameValue.innerText = boolToOnOff( Options.get( 'frameOn' ) );
 
