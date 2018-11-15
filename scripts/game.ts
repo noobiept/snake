@@ -544,7 +544,7 @@ function tick( event: TickEvent ) {
         return;
     }
 
-    const delta = event.delta;
+    const delta = event.delta;  // in milliseconds
 
     // run all the intervals (spawn of food, tail movement, etc)
     for ( let a = 0; a < INTERVALS.length; a++ ) {
