@@ -3,7 +3,7 @@ import * as AppStorage from './app_storage.js';
 import * as Game from './game.js';
 import * as HighScore from './high_score.js';
 import { MapName, updateCanvasDimensions } from './main.js';
-import { boolToOnOff } from './utilities.js';
+import { boolToOnOff, joinAndCapitalize, splitCamelCaseWords } from './utilities.js';
 
 
 var MAP_SELECTED: HTMLElement;
@@ -200,8 +200,10 @@ function buildHighScoreTable( mapName: MapName ) {
     var title = document.getElementById( 'HighScoreTitle' )!;
     var table = document.getElementById( 'HighScore-table' )!;
 
+    const displayName = joinAndCapitalize( splitCamelCaseWords( mapName ) );
+
     table.innerHTML = '';   // clear the previous table
-    title.innerHTML = 'High score -- ' + mapName;
+    title.innerHTML = 'High score -- ' + displayName;
 
     // data
     var allScores = HighScore.getMapScores( mapName );
