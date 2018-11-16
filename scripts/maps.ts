@@ -176,11 +176,11 @@ function setupLinesMap( snakes: Snake[], grid: Grid ) {
     const columns = Options.get( 'columns' );
     const lines = Options.get( 'lines' );
     const length = Math.round( columns * 0.2 ); // of each wall
-    const yDiff = lines / ( linesTotal + 1 );
+    const yDiff = Math.round( lines / ( linesTotal + 1 ) );
 
     // there's 3 wall lines in a row, with some margins in between
     // so: (margin)(wall)(margin)(wall)(margin)(wall)(margin)
-    const margin = ( columns - 3 * length ) / 4;
+    const margin = Math.round( ( columns - 3 * length ) / 4 );
 
     const column1 = margin;
     const column2 = 2 * margin + length;
