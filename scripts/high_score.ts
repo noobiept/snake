@@ -22,10 +22,44 @@ var HIGH_SCORE_LENGTH = 5;
 
 
 /**
+ * Determine if we have a valid 'MapScores' object.
+ */
+function isMapScores( object: any ): object is MapScores {
+    if ( object ) {
+        const keys = Object.keys( object );
+
+        for ( let a = 0; a < keys.length; a++ ) {
+            const mapName = keys[ a ];
+            const mapScores = object[ mapName ];
+
+            if ( !Array.isArray( mapScores ) ) {
+                return false;
+            }
+
+            for ( let b = 0; b < mapScores.length; b++ ) {
+                const score = mapScores[ b ];
+
+                if ( !( score instanceof Object ) ||
+                    !score.hasOwnProperty( 'numberOfTails' ) ||
+                    !score.hasOwnProperty( 'time' ) ||
+                    !score.hasOwnProperty( 'options' ) ) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+
+/**
  * Load the scores from local storage.
  */
-export function load( score: MapScores ) {
-    if ( score ) {
+export function load( score?: any ) {
+    if ( isMapScores( score ) ) {
         HIGH_SCORE = score;
     }
 }
