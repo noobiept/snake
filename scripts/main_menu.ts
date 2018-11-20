@@ -203,7 +203,7 @@ function buildHighScoreTable( mapName: MapName ) {
     const displayName = joinAndCapitalize( splitCamelCaseWords( mapName ) );
 
     table.innerHTML = '';   // clear the previous table
-    title.innerHTML = 'High score -- ' + displayName;
+    title.innerHTML = `High score (${displayName})`;
 
     // data
     var allScores = HighScore.getMapScores( mapName );
@@ -216,7 +216,7 @@ function buildHighScoreTable( mapName: MapName ) {
         // header
         var tableRow = document.createElement( 'tr' );
 
-        var header = [ 'Position', 'Number Of Tails', 'Frame', 'Columns', 'Lines', 'Time' ];
+        var header = [ 'Position', 'Number Of Tails', 'Time' ];
         var tableHeader;
 
         for ( var i = 0; i < header.length; i++ ) {
@@ -228,37 +228,20 @@ function buildHighScoreTable( mapName: MapName ) {
 
         table.appendChild( tableRow );
 
-        var score;
-        var position;
-        var numberOfTails;
-        var frame;
-        var columns;
-        var lines;
-        var time;
-
         for ( i = 0; i < allScores.length; i++ ) {
-            score = allScores[ i ];
+            const score = allScores[ i ];
 
-            tableRow = document.createElement( 'tr' );
-            position = document.createElement( 'td' );
-            numberOfTails = document.createElement( 'td' );
-            frame = document.createElement( 'td' );
-            columns = document.createElement( 'td' );
-            lines = document.createElement( 'td' );
-            time = document.createElement( 'td' );
+            const tableRow = document.createElement( 'tr' );
+            const position = document.createElement( 'td' );
+            const numberOfTails = document.createElement( 'td' );
+            const time = document.createElement( 'td' );
 
             position.innerText = ( i + 1 ).toString();
             numberOfTails.innerText = score.numberOfTails.toString();
-            frame.innerText = score.frame;
-            columns.innerText = score.columns.toString();
-            lines.innerText = score.lines.toString();
             time.innerText = score.time;
 
             tableRow.appendChild( position );
             tableRow.appendChild( numberOfTails );
-            tableRow.appendChild( frame );
-            tableRow.appendChild( columns );
-            tableRow.appendChild( lines );
             tableRow.appendChild( time );
             table.appendChild( tableRow );
         }

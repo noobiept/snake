@@ -1,15 +1,12 @@
 import * as AppStorage from './app_storage.js';
 import * as Options from './options.js';
 import { MapName } from './main.js';
-import { boolToOnOff } from './utilities.js';
 
 
 interface Score {
     numberOfTails: number;
-    frame: string;
-    columns: number;
-    lines: number;
     time: string;
+    options: Options.OptionsData;
 }
 
 // dictionary where the key is the map name and the value is an array of scores
@@ -24,38 +21,27 @@ var HIGH_SCORE: MapScores = {};
 var HIGH_SCORE_LENGTH = 5;
 
 
-/*
-    Load from local storage
+/**
+ * Load the scores from local storage.
  */
 export function load( score: MapScores ) {
     if ( score ) {
-        // previous high-score data was an array with the scores
-        // need to migrate the data to the current structure
-        // the previous high-score were all on the 'random' map type (since that was the only map available)
-        if ( Array.isArray( score ) ) {
-            var randomScores = <any> score;
-            HIGH_SCORE = {
-                'random': randomScores
-            }
-
-            save();
-        }
-
-        else {
-            HIGH_SCORE = score;
-        }
+        HIGH_SCORE = score;
     }
 }
 
 
-/*
-    Save to local storage
+/**
+ * Save to local storage.
  */
 export function save() {
     AppStorage.setData( { snake_high_score: HIGH_SCORE } );
 }
 
 
+/**
+ * Add a score. Its only going to be saved it it happens to be a high-score.
+ */
 export function add( mapName: MapName, numberOfTails: number, time: string ) {
     // the snake always has 1 tail, so only consider scores above that (where you actually played the game)
     if ( numberOfTails <= 1 ) {
@@ -63,6 +49,7 @@ export function add( mapName: MapName, numberOfTails: number, time: string ) {
     }
 
     var scoreArray = HIGH_SCORE[ mapName ];
+    const options = Options.clone();
 
     if ( typeof scoreArray === 'undefined' ) {
         scoreArray = [];
@@ -71,10 +58,8 @@ export function add( mapName: MapName, numberOfTails: number, time: string ) {
 
     scoreArray.push( {
         numberOfTails: numberOfTails,
-        frame: boolToOnOff( Options.get( 'frameOn' ) ),
-        columns: Options.get( 'columns' ),
-        lines: Options.get( 'lines' ),
-        time: time
+        time: time,
+        options: options
     } );
 
     scoreArray.sort( function ( a, b ) {

@@ -1,7 +1,7 @@
 import * as AppStorage from './app_storage.js';
 
 
-interface OptionsData {
+export interface OptionsData {
     columns: number;
     lines: number;
     frameOn: boolean;
@@ -15,13 +15,13 @@ export type OptionsKey = keyof OptionsData;
 
 
 const OPTIONS: OptionsData = {
-    columns: 50,
-    lines: 50,
+    columns: 60,
+    lines: 40,
     frameOn: false,
     wallInterval: 4000,
     foodInterval: 1000,
     doubleFoodInterval: 5000,
-    snakeSpeed: 50
+    snakeSpeed: 20
 };
 
 
@@ -83,4 +83,12 @@ export function get<Key extends OptionsKey>( option: Key ) {
  */
 export function set<Key extends OptionsKey>( option: Key, value: OptionsData[ Key ] ) {
     OPTIONS[ option ] = value;
+}
+
+
+/**
+ * Get a new object with the current options values.
+ */
+export function clone() {
+    return Object.assign( {}, OPTIONS );
 }
