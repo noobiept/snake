@@ -1,9 +1,9 @@
 import * as Options from './options.js';
 import * as AppStorage from './app_storage.js';
 import * as Game from './game.js';
-import * as HighScore from './high_score.js';
 import { MapName, updateCanvasDimensions } from './main.js';
-import { boolToOnOff, joinAndCapitalize, splitCamelCaseWords } from './utilities.js';
+import { boolToOnOff } from './utilities.js';
+import { buildHighScoreTable } from "./high_score_menu.js";
 
 
 var MAP_SELECTED: HTMLElement;
@@ -177,7 +177,6 @@ function setupRangeSetting( option: Options.OptionsKey, onChange?: () => void ) 
 }
 
 
-
 function initHighScore() {
     var back = document.getElementById( 'HighScore-back' )!;
 
@@ -193,59 +192,6 @@ function initHelp() {
     back.onclick = function () {
         open( 'mainMenu' );
     };
-}
-
-
-function buildHighScoreTable( mapName: MapName ) {
-    var title = document.getElementById( 'HighScoreTitle' )!;
-    var table = document.getElementById( 'HighScore-table' )!;
-
-    const displayName = joinAndCapitalize( splitCamelCaseWords( mapName ) );
-
-    table.innerHTML = '';   // clear the previous table
-    title.innerHTML = `High score (${displayName})`;
-
-    // data
-    var allScores = HighScore.getMapScores( mapName );
-
-    if ( !allScores || allScores.length === 0 ) {
-        table.innerHTML = 'No score yet.';
-    }
-
-    else {
-        // header
-        var tableRow = document.createElement( 'tr' );
-
-        var header = [ 'Position', 'Number Of Tails', 'Time' ];
-        var tableHeader;
-
-        for ( var i = 0; i < header.length; i++ ) {
-            tableHeader = document.createElement( 'th' );
-
-            tableHeader.innerText = header[ i ];
-            tableRow.appendChild( tableHeader );
-        }
-
-        table.appendChild( tableRow );
-
-        for ( i = 0; i < allScores.length; i++ ) {
-            const score = allScores[ i ];
-
-            const tableRow = document.createElement( 'tr' );
-            const position = document.createElement( 'td' );
-            const numberOfTails = document.createElement( 'td' );
-            const time = document.createElement( 'td' );
-
-            position.innerText = ( i + 1 ).toString();
-            numberOfTails.innerText = score.numberOfTails.toString();
-            time.innerText = score.time;
-
-            tableRow.appendChild( position );
-            tableRow.appendChild( numberOfTails );
-            tableRow.appendChild( time );
-            table.appendChild( tableRow );
-        }
-    }
 }
 
 

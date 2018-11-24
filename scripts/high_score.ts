@@ -3,7 +3,7 @@ import * as Options from './options.js';
 import { MapName } from './main.js';
 
 
-interface Score {
+export interface Score {
     numberOfTails: number;
     time: string;
     options: Options.OptionsData;
