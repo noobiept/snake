@@ -46,19 +46,17 @@ export function buildHighScoreTable( mapName: MapName ) {
             const numberOfTails = document.createElement( 'td' );
             const time = document.createElement( 'td' );
             const info = document.createElement( 'td' );
-            const infoButton = document.createElement( 'span' );
 
+            info.innerText = 'Info';
             info.className = 'button';
 
             position.innerText = ( i + 1 ).toString();
             numberOfTails.innerText = score.numberOfTails.toString();
             time.innerText = score.time;
-            infoButton.innerText = 'Info';
             info.onclick = function () {
                 showInfoWindow( score );
             };
 
-            info.appendChild( infoButton );
             tableRow.appendChild( position );
             tableRow.appendChild( numberOfTails );
             tableRow.appendChild( time );

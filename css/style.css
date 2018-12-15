@@ -104,7 +104,8 @@ em
 
     /* High-score Menu */
 
-#HighScore-table td:nth-child(even), #HighScore-table th:nth-child(even)
+#HighScore-table td:nth-child(even):not(:last-child),
+#HighScore-table th:nth-child(even):not(:last-child)
     {
     background-color: rgb(50, 50, 50);
     }
