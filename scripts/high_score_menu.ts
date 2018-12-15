@@ -1,14 +1,14 @@
 import { MapName } from './main.js';
 import { getMapScores, Score } from './high_score.js';
-import { joinAndCapitalize, splitCamelCaseWords } from './utilities.js';
+import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff } from './utilities.js';
 
 
 /**
  * Build the top scores table to show on the 'high-score' page.
  */
 export function buildHighScoreTable( mapName: MapName ) {
-    var title = document.getElementById( 'HighScoreTitle' )!;
-    var table = document.getElementById( 'HighScore-table' )!;
+    const title = document.getElementById( 'HighScore-title' )!;
+    const table = document.getElementById( 'HighScore-table' )!;
 
     const displayName = joinAndCapitalize( splitCamelCaseWords( mapName ) );
 
@@ -45,20 +45,24 @@ export function buildHighScoreTable( mapName: MapName ) {
             const position = document.createElement( 'td' );
             const numberOfTails = document.createElement( 'td' );
             const time = document.createElement( 'td' );
-            const options = document.createElement( 'td' );
+            const info = document.createElement( 'td' );
+            const infoButton = document.createElement( 'span' );
+
+            info.className = 'button';
 
             position.innerText = ( i + 1 ).toString();
             numberOfTails.innerText = score.numberOfTails.toString();
             time.innerText = score.time;
-            options.innerText = 'Info';
-            options.onclick = function () {
-                showPopupWindow( score );
+            infoButton.innerText = 'Info';
+            info.onclick = function () {
+                showInfoWindow( score );
             };
 
+            info.appendChild( infoButton );
             tableRow.appendChild( position );
             tableRow.appendChild( numberOfTails );
             tableRow.appendChild( time );
-            tableRow.append( options );
+            tableRow.append( info );
             table.appendChild( tableRow );
         }
     }
@@ -68,19 +72,38 @@ export function buildHighScoreTable( mapName: MapName ) {
 /**
  * Show a 'popup window' with the options that were used to achieve the selected score.
  */
-export function showPopupWindow( score: Score ) {
-    const container = document.createElement( 'div' );
+export function showInfoWindow( score: Score ) {
+
+    const container = document.getElementById( 'HighScore-info' )!;
+    const options = score.options;
+
+    // clear the 'info' window
+    container.innerHTML = '';
+
     const body = document.createElement( 'div' );
     const close = document.createElement( 'div' );
 
-    body.innerHTML = `Food interval: ${score.options.foodInterval}<br />Double Food interval: ${score.options.doubleFoodInterval}`;
+
+    body.innerHTML = `
+        Columns: ${options.columns}<br />
+        Lines: ${options.lines}<br />
+        Frame: ${boolToOnOff( options.frameOn )}<br />
+        Food interval: ${options.foodInterval}<br />
+        Double food interval: ${options.doubleFoodInterval}<br />
+        Wall interval: ${options.wallInterval}<br />
+        Snake speed: ${options.snakeSpeed}
+    `;
+
+
+    close.className = 'button backButton';
     close.innerText = 'Close';
     close.onclick = () => {
-        document.body.removeChild( container );
+        container.classList.add( 'hidden' );
     };
 
     container.appendChild( body );
     container.appendChild( close );
 
-    document.body.appendChild( container );
+    // show the window
+    container.classList.remove( 'hidden' );
 }

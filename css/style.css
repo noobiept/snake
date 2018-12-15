@@ -102,10 +102,30 @@ em
     cursor: pointer;
     }
 
+    /* High-score Menu */
+
 #HighScore-table td:nth-child(even), #HighScore-table th:nth-child(even)
     {
     background-color: rgb(50, 50, 50);
     }
+
+#HighScore-content
+    {
+    position: relative;
+    }
+
+#HighScore-info
+    {
+    position: absolute;
+    width: 300px;
+    left: 100%;
+    top: 0;
+    background-color: black;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    }
+
+    /* Help Menu */
 
 #Help ul
     {
