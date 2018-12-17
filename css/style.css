@@ -62,8 +62,6 @@ em
     {
     display: inline-block;
     color: chartreuse;
-    width: 50px;
-    text-align: right;
     }
 
     /* Main Menus */
@@ -233,6 +231,12 @@ figure
 .rangeInput::-webkit-slider-thumb:hover
     {
     background-color: black;
+    }
+
+.optionsValue
+    {
+    width: 50px;
+    text-align: right;
     }
 
     /* Game Menu */
