@@ -97,15 +97,15 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
     const body = document.createElement( 'div' );
     const close = document.createElement( 'div' );
 
-    addInfoValue( 'Tails: ', score.numberOfTails, body );
-    addInfoValue( 'Time: ', score.time, body );
-    addInfoValue( 'Columns: ', options.columns, body );
-    addInfoValue( 'Lines: ', options.lines, body );
-    addInfoValue( 'Frame: ', boolToOnOff( options.frameOn ), body );
-    addInfoValue( 'Food interval: ', options.foodInterval, body );
-    addInfoValue( 'Double food interval: ', options.doubleFoodInterval, body );
-    addInfoValue( 'Wall interval: ', options.wallInterval, body );
-    addInfoValue( 'Snake speed: ', options.snakeSpeed, body );
+    addInfoValue( body, 'Tails: ', score.numberOfTails );
+    addInfoValue( body, 'Time: ', score.time );
+    addInfoValue( body, 'Columns: ', options.columns );
+    addInfoValue( body, 'Lines: ', options.lines );
+    addInfoValue( body, 'Frame: ', boolToOnOff( options.frameOn ) );
+    addInfoValue( body, 'Food interval: ', options.foodInterval, 'ms' );
+    addInfoValue( body, 'Double food interval: ', options.doubleFoodInterval, 'ms' );
+    addInfoValue( body, 'Wall interval: ', options.wallInterval, 'ms' );
+    addInfoValue( body, 'Snake speed: ', options.snakeSpeed, 'Hz' );
 
     close.className = 'button backButton';
     close.innerText = 'Close';
@@ -151,7 +151,7 @@ function clearCurrent() {
 /**
  * Show the text, then the value and add that to the container.
  */
-function addInfoValue( text: string, value: any, container: HTMLElement ) {
+function addInfoValue( container: HTMLElement, text: string, value: any, unit?: string ) {
     const textElement = document.createElement( 'div' );
     textElement.innerText = text;
 
@@ -159,6 +159,12 @@ function addInfoValue( text: string, value: any, container: HTMLElement ) {
     valueElement.className = 'displayValue';
     valueElement.innerText = value;
 
+    const unitElement = document.createElement( 'span' );
+    if ( unit ) {
+        unitElement.innerText = ` ${unit}`;
+    }
+
     textElement.appendChild( valueElement );
+    textElement.appendChild( unitElement );
     container.append( textElement );
 }
