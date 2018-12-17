@@ -97,15 +97,15 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
     const body = document.createElement( 'div' );
     const close = document.createElement( 'div' );
 
-    body.innerHTML = `
-        Columns: ${options.columns}<br />
-        Lines: ${options.lines}<br />
-        Frame: ${boolToOnOff( options.frameOn )}<br />
-        Food interval: ${options.foodInterval}<br />
-        Double food interval: ${options.doubleFoodInterval}<br />
-        Wall interval: ${options.wallInterval}<br />
-        Snake speed: ${options.snakeSpeed}
-    `;
+    addInfoValue( 'Tails: ', score.numberOfTails, body );
+    addInfoValue( 'Time: ', score.time, body );
+    addInfoValue( 'Columns: ', options.columns, body );
+    addInfoValue( 'Lines: ', options.lines, body );
+    addInfoValue( 'Frame: ', boolToOnOff( options.frameOn ), body );
+    addInfoValue( 'Food interval: ', options.foodInterval, body );
+    addInfoValue( 'Double food interval: ', options.doubleFoodInterval, body );
+    addInfoValue( 'Wall interval: ', options.wallInterval, body );
+    addInfoValue( 'Snake speed: ', options.snakeSpeed, body );
 
     close.className = 'button backButton';
     close.innerText = 'Close';
@@ -145,4 +145,20 @@ function clearCurrent() {
 
     CURRENT_BUTTON = undefined;
     CURRENT_SCORE = undefined;
+}
+
+
+/**
+ * Show the text, then the value and add that to the container.
+ */
+function addInfoValue( text: string, value: any, container: HTMLElement ) {
+    const textElement = document.createElement( 'div' );
+    textElement.innerText = text;
+
+    const valueElement = document.createElement( 'span' );
+    valueElement.className = 'displayValue';
+    valueElement.innerText = value;
+
+    textElement.appendChild( valueElement );
+    container.append( textElement );
 }
