@@ -33,7 +33,7 @@ body
     cursor: pointer;
     color: white;
     text-shadow: rgba(0, 0, 255, 0.7) 3px 0 2px;
-
+    transition: text-shadow 0.2s linear;
     padding: 0 30px;
     margin: 10px 0;
     }
@@ -131,6 +131,12 @@ em
     {
     color: black;
     background-color: white;
+    text-shadow: rgba(100, 100, 255, 0.7) 3px 0 2px;
+    }
+
+.selectedInfo:hover
+    {
+    text-shadow: rgba(0, 0, 255, 0.7) 3px 0 2px;
     }
 
     /* Help Menu */
