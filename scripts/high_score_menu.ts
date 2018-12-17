@@ -3,6 +3,10 @@ import { getMapScores, Score } from './high_score.js';
 import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff } from './utilities.js';
 
 
+let CURRENT_SCORE: Score | undefined;   // associated 'score' of the current opened window
+let CURRENT_BUTTON: HTMLElement | undefined;   // associated 'info button' of the opened window (so we can add/remove style to it)
+
+
 /**
  * Build the top scores table to show on the 'high-score' page.
  */
@@ -54,7 +58,7 @@ export function buildHighScoreTable( mapName: MapName ) {
             numberOfTails.innerText = score.numberOfTails.toString();
             time.innerText = score.time;
             info.onclick = function () {
-                showInfoWindow( score );
+                showInfoWindow( score, info );
             };
 
             tableRow.appendChild( position );
@@ -70,17 +74,28 @@ export function buildHighScoreTable( mapName: MapName ) {
 /**
  * Show a 'popup window' with the options that were used to achieve the selected score.
  */
-export function showInfoWindow( score: Score ) {
+function showInfoWindow( score: Score, button: HTMLElement ) {
 
     const container = document.getElementById( 'HighScore-info' )!;
     const options = score.options;
+
+    // close the window
+    if ( CURRENT_SCORE === score ) {
+        hideInfoWindow();
+        return;
+    }
+
+    clearCurrent();
+
+    // save some references to the current opened info window
+    CURRENT_SCORE = score;
+    CURRENT_BUTTON = button;
 
     // clear the 'info' window
     container.innerHTML = '';
 
     const body = document.createElement( 'div' );
     const close = document.createElement( 'div' );
-
 
     body.innerHTML = `
         Columns: ${options.columns}<br />
@@ -92,11 +107,10 @@ export function showInfoWindow( score: Score ) {
         Snake speed: ${options.snakeSpeed}
     `;
 
-
     close.className = 'button backButton';
     close.innerText = 'Close';
     close.onclick = () => {
-        container.classList.add( 'hidden' );
+        hideInfoWindow();
     };
 
     container.appendChild( body );
@@ -104,4 +118,31 @@ export function showInfoWindow( score: Score ) {
 
     // show the window
     container.classList.remove( 'hidden' );
+
+    // style the 'info' button
+    button.classList.add( 'selectedInfo' );
+}
+
+
+/**
+ * Hide the 'info' window.
+ */
+export function hideInfoWindow() {
+    const container = document.getElementById( 'HighScore-info' )!;
+    container.classList.add( 'hidden' );
+
+    clearCurrent();
+}
+
+
+/**
+ * Clear the current saved values (of the button/score).
+ */
+function clearCurrent() {
+    if ( CURRENT_BUTTON ) {
+        CURRENT_BUTTON.classList.remove( 'selectedInfo' );
+    }
+
+    CURRENT_BUTTON = undefined;
+    CURRENT_SCORE = undefined;
 }

@@ -3,7 +3,7 @@ import * as AppStorage from './app_storage.js';
 import * as Game from './game.js';
 import { MapName, updateCanvasDimensions } from './main.js';
 import { boolToOnOff } from './utilities.js';
-import { buildHighScoreTable } from "./high_score_menu.js";
+import { buildHighScoreTable, hideInfoWindow } from "./high_score_menu.js";
 
 
 var MAP_SELECTED: HTMLElement;
@@ -181,6 +181,7 @@ function initHighScore() {
     var back = document.getElementById( 'HighScore-back' )!;
 
     back.onclick = function () {
+        hideInfoWindow();
         open( 'mainMenu' );
     };
 }

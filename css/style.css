@@ -120,10 +120,17 @@ em
     position: absolute;
     width: 300px;
     left: 100%;
-    top: 0;
+    top: 50%;
+    transform: translate(0, -50%);
     background-color: black;
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 20px;
+    }
+
+.selectedInfo
+    {
+    color: black;
+    background-color: white;
     }
 
     /* Help Menu */
