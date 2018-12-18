@@ -463,7 +463,7 @@ function addScores() {
 
     // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
     for ( var i = 0; i < SNAKES.length; i++ ) {
-        HighScore.add( MAP_NAME, SNAKES[ i ].getNumberOfTails(), TIMER.getString() );
+        HighScore.add( MAP_NAME, SNAKES[ i ].getNumberOfTails(), TIMER.getMilliseconds() );
     }
 
     HighScore.save();

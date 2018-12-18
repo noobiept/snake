@@ -216,3 +216,11 @@ export function isNumber( char: string ) {
 export function capitalize( word: string ) {
     return word.charAt( 0 ).toUpperCase() + word.slice( 1 );
 }
+
+
+/**
+ * Convert a 'time' in milliseconds to a string in seconds.
+ */
+export function timeToString( time: number ) {
+    return ( time / 1000 ).toFixed( 1 );
+}

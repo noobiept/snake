@@ -1,4 +1,5 @@
 import Interval from './interval.js';
+import { timeToString } from "./utilities.js";
 
 
 export default class Timer {
@@ -26,7 +27,7 @@ export default class Timer {
     }
 
 
-    getCount() {
+    getMilliseconds() {
         return this.count;
     }
 
@@ -39,7 +40,7 @@ export default class Timer {
 
 
     getString() {
-        return ( this.count / 1000 ).toFixed( 1 ) + 's';
+        return timeToString( this.count );
     }
 
 

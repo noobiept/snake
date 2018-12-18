@@ -5,7 +5,7 @@ import { MapName } from './main.js';
 
 export interface Score {
     numberOfTails: number;
-    time: string;
+    time: number;   // in milliseconds
     options: Options.OptionsData;
 }
 
@@ -76,7 +76,7 @@ export function save() {
 /**
  * Add a score. Its only going to be saved it it happens to be a high-score.
  */
-export function add( mapName: MapName, numberOfTails: number, time: string ) {
+export function add( mapName: MapName, numberOfTails: number, time: number ) {
     // the snake always has 1 tail, so only consider scores above that (where you actually played the game)
     if ( numberOfTails <= 1 ) {
         return;

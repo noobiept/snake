@@ -1,6 +1,6 @@
 import { MapName } from './main.js';
 import { getMapScores, Score } from './high_score.js';
-import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff } from './utilities.js';
+import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff, timeToString } from './utilities.js';
 
 
 let CURRENT_SCORE: Score | undefined;   // associated 'score' of the current opened window
@@ -56,7 +56,7 @@ export function buildHighScoreTable( mapName: MapName ) {
 
             position.innerText = ( i + 1 ).toString();
             numberOfTails.innerText = score.numberOfTails.toString();
-            time.innerText = score.time;
+            time.innerText = timeToString( score.time ) + 's';
             info.onclick = function () {
                 showInfoWindow( score, info );
             };
@@ -98,7 +98,7 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
     const close = document.createElement( 'div' );
 
     addInfoValue( body, 'Tails: ', score.numberOfTails );
-    addInfoValue( body, 'Time: ', score.time );
+    addInfoValue( body, 'Time: ', timeToString( score.time ), 's' );
     addInfoValue( body, 'Columns: ', options.columns );
     addInfoValue( body, 'Lines: ', options.lines );
     addInfoValue( body, 'Frame: ', boolToOnOff( options.frameOn ) );
