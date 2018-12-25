@@ -125,8 +125,8 @@ function initOptions() {
     setupRangeSetting( 'doubleFoodInterval' );
 
     // setup the 'frameOn' setting (on/off setting)
-    var frame = document.getElementById( 'Options-frame' )!;
-    var frameValue = document.getElementById( 'Options-frame-value' )!;
+    var frame = document.getElementById( 'Options-Frame' )!;
+    var frameValue = document.getElementById( 'Options-Frame-Value' )!;
 
     frameValue.innerText = boolToOnOff( Options.get( 'frameOn' ) );
 
@@ -143,7 +143,7 @@ function initOptions() {
     };
 
     // setup the 'back' button
-    var back = document.getElementById( 'Options-back' )!;
+    var back = document.getElementById( 'Options-Back' )!;
 
     back.onclick = function () {
         Options.save();
