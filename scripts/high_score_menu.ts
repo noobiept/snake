@@ -11,8 +11,8 @@ let CURRENT_BUTTON: HTMLElement | undefined;   // associated 'info button' of th
  * Build the top scores table to show on the 'high-score' page.
  */
 export function buildHighScoreTable( mapName: MapName ) {
-    const title = document.getElementById( 'HighScore-title' )!;
-    const table = document.getElementById( 'HighScore-table' )!;
+    const title = document.getElementById( 'HighScore-Title' )!;
+    const table = document.getElementById( 'HighScore-Table' )!;
 
     const displayName = joinAndCapitalize( splitCamelCaseWords( mapName ) );
 
@@ -76,7 +76,7 @@ export function buildHighScoreTable( mapName: MapName ) {
  */
 function showInfoWindow( score: Score, button: HTMLElement ) {
 
-    const container = document.getElementById( 'HighScore-info' )!;
+    const container = document.getElementById( 'HighScore-Info' )!;
     const options = score.options;
 
     // close the window
@@ -120,7 +120,7 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
     container.classList.remove( 'hidden' );
 
     // style the 'info' button
-    button.classList.add( 'selectedInfo' );
+    button.classList.add( 'HighScore-selectedInfo' );
 }
 
 
@@ -128,7 +128,7 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
  * Hide the 'info' window.
  */
 export function hideInfoWindow() {
-    const container = document.getElementById( 'HighScore-info' )!;
+    const container = document.getElementById( 'HighScore-Info' )!;
     container.classList.add( 'hidden' );
 
     clearCurrent();
@@ -140,7 +140,7 @@ export function hideInfoWindow() {
  */
 function clearCurrent() {
     if ( CURRENT_BUTTON ) {
-        CURRENT_BUTTON.classList.remove( 'selectedInfo' );
+        CURRENT_BUTTON.classList.remove( 'HighScore-selectedInfo' );
     }
 
     CURRENT_BUTTON = undefined;

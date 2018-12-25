@@ -48,14 +48,14 @@ export function open( page: keyof Pages ) {
 function changeMap( element: HTMLElement, save = true ) {
     // remove previous selection
     if ( MAP_SELECTED ) {
-        MAP_SELECTED.classList.remove( 'mapSelected' );
+        MAP_SELECTED.classList.remove( 'MainMenu-mapSelected' );
     }
 
     if ( save !== false ) {
         AppStorage.setData( { 'snake_selected_map': element.getAttribute( 'data-map' ) } );
     }
 
-    element.classList.add( 'mapSelected' );
+    element.classList.add( 'MainMenu-mapSelected' );
     MAP_SELECTED = element;
 }
 
@@ -63,12 +63,12 @@ function changeMap( element: HTMLElement, save = true ) {
 function initMainMenu( mapName?: string ) {
 
     // initialize the main menu elements
-    var startGame = document.getElementById( 'MainMenu-startGame' )!;
-    var startGame_2players = document.getElementById( 'MainMenu-startGame-2players' )!;
-    var selectMap = document.getElementById( 'MainMenu-selectMap' )!;
-    var options = document.getElementById( 'MainMenu-options' )!;
-    var highScore = document.getElementById( 'MainMenu-highScore' )!;
-    var help = document.getElementById( 'MainMenu-help' )!;
+    var startGame = document.getElementById( 'MainMenu-StartGame' )!;
+    var startGame_2players = document.getElementById( 'MainMenu-StartGame-2players' )!;
+    var selectMap = document.getElementById( 'MainMenu-SelectMap' )!;
+    var options = document.getElementById( 'MainMenu-Options' )!;
+    var highScore = document.getElementById( 'MainMenu-HighScore' )!;
+    var help = document.getElementById( 'MainMenu-Help' )!;
 
     startGame.onclick = function () {
         clear();
