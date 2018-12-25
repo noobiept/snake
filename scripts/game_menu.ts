@@ -11,20 +11,20 @@ var TIMER_ELEMENT: HTMLElement;
  */
 export function init() {
     GAME_MENU = document.getElementById( 'GameMenu' )!;
-    PLAYERS_SCORE[ 0 ] = document.getElementById( 'GameMenu-player1-score' )!;
-    PLAYERS_SCORE[ 1 ] = document.getElementById( 'GameMenu-player2-score' )!;
-    TIMER_ELEMENT = document.getElementById( 'GameMenu-timer' )!;
+    PLAYERS_SCORE[ 0 ] = document.getElementById( 'GameMenu-Player1-Score' )!;
+    PLAYERS_SCORE[ 1 ] = document.getElementById( 'GameMenu-Player2-Score' )!;
+    TIMER_ELEMENT = document.getElementById( 'GameMenu-Timer' )!;
 
     // :: Pause / Resume :: //
 
-    var pauseResume = <HTMLDivElement> document.getElementById( 'GameMenu-pauseResume' );
+    var pauseResume = <HTMLDivElement> document.getElementById( 'GameMenu-PauseResume' );
     pauseResume.onclick = function () {
         togglePause( pauseResume );
     };
 
     // :: Quit :: //
 
-    var quit = <HTMLDivElement> document.getElementById( 'GameMenu-quit' );
+    var quit = <HTMLDivElement> document.getElementById( 'GameMenu-Quit' );
     quit.onclick = function () {
         // don't allow to mess with the menu when game is over
         if ( Game.isGameOver() ) {
@@ -52,7 +52,7 @@ export function show( twoPlayerMode: boolean ) {
 
 
 export function clear() {
-    const pauseResume = document.getElementById( 'GameMenu-pauseResume' )!;
+    const pauseResume = document.getElementById( 'GameMenu-PauseResume' )!;
     pauseResume.innerText = 'Pause';
 
     GAME_MENU.classList.add( 'hidden' );

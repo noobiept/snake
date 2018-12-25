@@ -178,7 +178,7 @@ function setupRangeSetting( option: Options.OptionsKey, onChange?: () => void ) 
 
 
 function initHighScore() {
-    var back = document.getElementById( 'HighScore-back' )!;
+    var back = document.getElementById( 'HighScore-Back' )!;
 
     back.onclick = function () {
         hideInfoWindow();
@@ -188,7 +188,7 @@ function initHighScore() {
 
 
 function initHelp() {
-    var back = document.getElementById( 'Help-back' )!;
+    var back = document.getElementById( 'Help-Back' )!;
 
     back.onclick = function () {
         open( 'mainMenu' );

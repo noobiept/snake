@@ -53,6 +53,11 @@ figure
     color: chartreuse;
     }
 
+.backButton
+    {
+    margin-top: 40px;
+    }
+
     /* Main Elements */
 
 #GameContent
@@ -169,11 +174,6 @@ figure
     margin: 10px;
     }
 
-.backButton
-    {
-    margin-top: 40px;
-    }
-
     /* Options Menu */
 
 #Options-Container
@@ -195,18 +195,18 @@ figure
     font-size: 26px;
     }
 
-.rangeSetting
+.Options-rangeSetting
     {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     }
 
-.rangeSetting > *
+.Options-rangeSetting > *
     {
     margin: 3px 5px;
     }
 
-.rangeInput
+.Options-rangeInput
     {
     appearance: none;
     -webkit-appearance: none;
@@ -218,12 +218,12 @@ figure
     transition: background-color 0.2s;
     }
 
-.rangeInput:hover
+.Options-rangeInput:hover
     {
     background-color: white;
     }
 
-.rangeInput::-webkit-slider-thumb
+.Options-rangeInput::-webkit-slider-thumb
     {
     appearance: none;
     -webkit-appearance: none;
@@ -236,12 +236,12 @@ figure
     transition: background-color 0.2s;
     }
 
-.rangeInput::-webkit-slider-thumb:hover
+.Options-rangeInput::-webkit-slider-thumb:hover
     {
     background-color: black;
     }
 
-.optionsValue
+.Options-value
     {
     width: 50px;
     text-align: right;
@@ -249,25 +249,25 @@ figure
 
     /* Game Menu */
 
-#GameMenu-left
+#GameMenu-Left
     {
     float: left;
     display: flex;
     flex-direction: row;
     }
 
-#GameMenu-right
-    {
-    float: right;
-    }
-
-#GameMenu-left > *
+#GameMenu-Left > *
     {
     padding: 10px;
     margin: 0;
     }
 
-#GameMenu-right > *
+#GameMenu-Right
+    {
+    float: right;
+    }
+
+#GameMenu-Right > *
     {
     display: inline-block;
     width: 100px;

@@ -34,15 +34,15 @@
             <canvas id="MainCanvas" class="hidden"></canvas>
 
             <div id="GameMenu" class="hidden">
-                <div id="GameMenu-left">
-                    <div>tails 1: <span id="GameMenu-player1-score" class="displayValue"></span></div>
-                    <div>tails 2: <span id="GameMenu-player2-score" class="displayValue"></span></div>
-                    <div>Time: <span id="GameMenu-timer" class="displayValue"></span> s</div>
+                <div id="GameMenu-Left">
+                    <div>tails 1: <span id="GameMenu-Player1-Score" class="displayValue"></span></div>
+                    <div>tails 2: <span id="GameMenu-Player2-Score" class="displayValue"></span></div>
+                    <div>Time: <span id="GameMenu-Timer" class="displayValue"></span> s</div>
                 </div>
 
-                <div id="GameMenu-right">
-                    <div id="GameMenu-pauseResume" class="button">Pause</div>
-                    <div id="GameMenu-quit" class="button">Quit</div>
+                <div id="GameMenu-Right">
+                    <div id="GameMenu-PauseResume" class="button">Pause</div>
+                    <div id="GameMenu-Quit" class="button">Quit</div>
                 </div>
             </div>
         </div>
@@ -97,15 +97,15 @@
             <div id="Options-Container">
                 <div>
                     <h1>Canvas settings</h1>
-                    <div class="rangeSetting">
+                    <div class="Options-rangeSetting">
                         <span>Columns</span>
-                        <span id="Options-columns-value" class="displayValue optionsValue"></span>
-                        <input type="range" id="Options-columns-range" class="rangeInput" min="20" max="100" step="5" />
+                        <span id="Options-columns-value" class="displayValue Options-value"></span>
+                        <input type="range" id="Options-columns-range" class="Options-rangeInput" min="20" max="100" step="5" />
                     </div>
-                    <div class="rangeSetting">
+                    <div class="Options-rangeSetting">
                         <span>Lines</span>
-                        <span id="Options-lines-value" class="displayValue optionsValue"></span>
-                        <input type="range" id="Options-lines-range" class="rangeInput" min="20" max="100" step="5" />
+                        <span id="Options-lines-value" class="displayValue Options-value"></span>
+                        <input type="range" id="Options-lines-range" class="Options-rangeInput" min="20" max="100" step="5" />
                     </div>
                     <div id="Options-frame" class="button">
                         <span>Frame: </span>
@@ -114,47 +114,47 @@
                 </div>
                 <div>
                     <h1>Snake settings</h1>
-                    <div class="rangeSetting">
+                    <div class="Options-rangeSetting">
                         <span>Snake speed</span>
                         <div>
-                            <span id="Options-snakeSpeed-value" class="displayValue optionsValue"></span> Hz
+                            <span id="Options-snakeSpeed-value" class="displayValue Options-value"></span> Hz
                         </div>
-                        <input type="range" id="Options-snakeSpeed-range" class="rangeInput" min="10" max="100" step="10" />
+                        <input type="range" id="Options-snakeSpeed-range" class="Options-rangeInput" min="10" max="100" step="10" />
                     </div>
                 </div>
                 <div>
                     <h1>Maps settings</h1>
-                    <div class="rangeSetting">
+                    <div class="Options-rangeSetting">
                         <div>
                             <img src="images/wall_help.png" />
                             <span><em>Wall</em> spawn interval</span>
                         </div>
                         <div>
-                            <span id="Options-wallInterval-value" class="displayValue optionsValue"></span> ms
+                            <span id="Options-wallInterval-value" class="displayValue Options-value"></span> ms
                         </div>
-                        <input type="range" id="Options-wallInterval-range" class="rangeInput" min="500" max="5000"
+                        <input type="range" id="Options-wallInterval-range" class="Options-rangeInput" min="500" max="5000"
                             step="500" />
                     </div>
-                    <div class="rangeSetting">
+                    <div class="Options-rangeSetting">
                         <div>
                             <img src="images/red_apple_10px.png" />
                             <span><em>Food</em> spawn interval</span>
                         </div>
                         <div>
-                            <span id="Options-foodInterval-value" class="displayValue optionsValue"></span> ms
+                            <span id="Options-foodInterval-value" class="displayValue Options-value"></span> ms
                         </div>
-                        <input type="range" id="Options-foodInterval-range" class="rangeInput" min="500" max="5000"
+                        <input type="range" id="Options-foodInterval-range" class="Options-rangeInput" min="500" max="5000"
                             step="500" />
                     </div>
-                    <div class="rangeSetting">
+                    <div class="Options-rangeSetting">
                         <div>
                             <img src="images/orange_10px.png" />
                             <span><em>Double food</em> spawn interval</span>
                         </div>
                         <div>
-                            <span id="Options-doubleFoodInterval-value" class="displayValue optionsValue"></span> ms
+                            <span id="Options-doubleFoodInterval-value" class="displayValue Options-value"></span> ms
                         </div>
-                        <input type="range" id="Options-doubleFoodInterval-range" class="rangeInput" min="500" max="5000"
+                        <input type="range" id="Options-doubleFoodInterval-range" class="Options-rangeInput" min="500" max="5000"
                             step="500" />
                     </div>
                 </div>
@@ -171,14 +171,14 @@
                 <div id="HighScore-Info" class="hidden"></div>
             </div>
 
-            <div id="HighScore-back" class="button backButton">Back</div>
+            <div id="HighScore-Back" class="button backButton">Back</div>
         </div>
 
         <div id="Help" class="hidden">
             <h2>Help</h2>
 
             <!-- have 2 help blocks per 'line' -->
-            <div id="Help-blocks">
+            <div>
                 <div class="Help-block">
                     <p id="Help-Elements">
                         <img src="images/red_apple_10px.png" alt="Food" /> <em>Food</em> : adds a tail to the snake.<br />
@@ -220,7 +220,7 @@
                 </div>
             </div>
 
-            <div id="Help-back" class="button backButton">Back</div>
+            <div id="Help-Back" class="button backButton">Back</div>
         </div>
 
         <div id="Message">Loading...</div>
