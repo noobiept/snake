@@ -120,8 +120,8 @@ function initMainMenu( mapName?: string ) {
 function initOptions() {
 
     // canvas options
-    const columns = setupRangeSetting( 'columns', 'Columns', 20, 100, 5, updateCanvasDimensions );
-    const lines = setupRangeSetting( 'lines', 'Lines', 20, 100, 5, updateCanvasDimensions );
+    const columns = setupRangeSetting( 'columns', 'Columns', 20, 100, 5, '', updateCanvasDimensions );
+    const lines = setupRangeSetting( 'lines', 'Lines', 20, 100, 5, '', updateCanvasDimensions );
     const frame = setupBooleanSetting( 'frameOn', 'Frame: ' );
 
     const canvasOptions = document.getElementById( 'Options-Canvas' )!;
@@ -130,15 +130,15 @@ function initOptions() {
     canvasOptions.appendChild( frame );
 
     // snake options
-    const speed = setupRangeSetting( 'snakeSpeed', 'Speed', 10, 100, 10 );
+    const speed = setupRangeSetting( 'snakeSpeed', 'Speed', 10, 100, 10, 'Hz' );
 
     const snakeOptions = document.getElementById( 'Options-Snake' )!;
     snakeOptions.appendChild( speed );
 
     // maps options
-    const wall = setupRangeSetting( 'wallInterval', '<img src="images/wall_help.png" /> <em>Wall</em> spawn interval', 500, 5000, 500 );
-    const food = setupRangeSetting( 'foodInterval', '<img src="images/red_apple_10px.png" /> <em>Food</em> spawn interval', 500, 5000, 500 );
-    const doubleFood = setupRangeSetting( 'doubleFoodInterval', '<img src="images/orange_10px.png" /> <em>Double food</em> spawn interval', 500, 5000, 500 );
+    const wall = setupRangeSetting( 'wallInterval', '<img src="images/wall_help.png" /> <em>Wall</em> spawn interval', 500, 5000, 500, 'ms' );
+    const food = setupRangeSetting( 'foodInterval', '<img src="images/red_apple_10px.png" /> <em>Food</em> spawn interval', 500, 5000, 500, 'ms' );
+    const doubleFood = setupRangeSetting( 'doubleFoodInterval', '<img src="images/orange_10px.png" /> <em>Double food</em> spawn interval', 500, 5000, 500, 'ms' );
 
     const mapsOptions = document.getElementById( 'Options-Maps' )!;
     mapsOptions.appendChild( wall );
@@ -158,7 +158,7 @@ function initOptions() {
 /**
  * Return a range setting component to be used to change a game setting (the number of columns, the snake speed, etc).
  */
-function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min: number, max: number, step: number, onChange?: () => void ) {
+function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min: number, max: number, step: number, displayUnit?: string, onChange?: () => void ) {
     const currentValue = Options.get( option ).toString();
 
     const setting = document.createElement( 'div' );
@@ -167,9 +167,14 @@ function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min
     const display = document.createElement( 'span' );
     display.innerHTML = displayHtml;
 
+    const valueContainer = document.createElement( 'span' );
+
     const value = document.createElement( 'span' );
     value.className = 'displayValue Options-value';
     value.innerText = currentValue;
+
+    const unit = document.createElement( 'span' );
+    unit.innerText = ` ${displayUnit || ''}`;
 
     const range = document.createElement( 'input' );
     range.type = 'range';
@@ -190,8 +195,12 @@ function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min
         }
     }
 
+    // append everything
+    valueContainer.appendChild( value );
+    valueContainer.appendChild( unit );
+
     setting.appendChild( display );
-    setting.appendChild( value );
+    setting.appendChild( valueContainer );
     setting.appendChild( range );
 
     return setting;
