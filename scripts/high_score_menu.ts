@@ -1,10 +1,24 @@
 import { MapName } from './main.js';
 import { getMapScores, Score } from './high_score.js';
 import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff, timeToString } from './utilities.js';
+import { open } from './main_menu.js';
 
 
 let CURRENT_SCORE: Score | undefined;   // associated 'score' of the current opened window
 let CURRENT_BUTTON: HTMLElement | undefined;   // associated 'info button' of the opened window (so we can add/remove style to it)
+
+
+/**
+ * Initialize the high-score menu page.
+ */
+export function initHighScore() {
+    var back = document.getElementById( 'HighScore-Back' )!;
+
+    back.onclick = function () {
+        hideInfoWindow();
+        open( 'mainMenu' );
+    };
+}
 
 
 /**
@@ -127,7 +141,7 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
 /**
  * Hide the 'info' window.
  */
-export function hideInfoWindow() {
+function hideInfoWindow() {
     const container = document.getElementById( 'HighScore-Info' )!;
     container.classList.add( 'hidden' );
 
