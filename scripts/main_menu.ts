@@ -116,13 +116,29 @@ function initMainMenu( mapName?: string ) {
 
 function initOptions() {
 
-    // setup the range settings
-    setupRangeSetting( 'columns', updateCanvasDimensions );
-    setupRangeSetting( 'lines', updateCanvasDimensions );
-    setupRangeSetting( 'snakeSpeed' );
-    setupRangeSetting( 'wallInterval' );
-    setupRangeSetting( 'foodInterval' );
-    setupRangeSetting( 'doubleFoodInterval' );
+    // canvas options
+    const columns = setupRangeSetting( 'columns', 'Columns', 20, 100, 5, updateCanvasDimensions );
+    const lines = setupRangeSetting( 'lines', 'Lines', 20, 100, 5, updateCanvasDimensions );
+
+    const canvasOptions = document.getElementById( 'Options-Canvas' )!;
+    canvasOptions.appendChild( columns );
+    canvasOptions.appendChild( lines );
+
+    // snake options
+    const speed = setupRangeSetting( 'snakeSpeed', 'Speed', 10, 100, 10 );
+
+    const snakeOptions = document.getElementById( 'Options-Snake' )!;
+    snakeOptions.appendChild( speed );
+
+    // maps options
+    const wall = setupRangeSetting( 'wallInterval', '<img src="images/wall_help.png" /> <em>Wall</em> spawn interval', 500, 5000, 500 );
+    const food = setupRangeSetting( 'foodInterval', '<img src="images/red_apple_10px.png" /> <em>Food</em> spawn interval', 500, 5000, 500 );
+    const doubleFood = setupRangeSetting( 'doubleFoodInterval', '<img src="images/orange_10px.png" /> <em>Double food</em> spawn interval', 500, 5000, 500 );
+
+    const mapsOptions = document.getElementById( 'Options-Maps' )!;
+    mapsOptions.appendChild( wall );
+    mapsOptions.appendChild( food );
+    mapsOptions.appendChild( doubleFood );
 
     // setup the 'frameOn' setting (on/off setting)
     var frame = document.getElementById( 'Options-Frame' )!;
@@ -155,25 +171,43 @@ function initOptions() {
 /**
  * Setup the UI elements of a range setting from the options page (to be used to change the number of columns, the snake speed, etc).
  */
-function setupRangeSetting( option: Options.OptionsKey, onChange?: () => void ) {
+function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min: number, max: number, step: number, onChange?: () => void ) {
     const currentValue = Options.get( option ).toString();
-    const elementValue = document.getElementById( `Options-${option}-value` ) as HTMLElement;
-    const elementRange = document.getElementById( `Options-${option}-range` ) as HTMLInputElement;
 
-    // set the initial value
-    elementValue.innerText = currentValue;
-    elementRange.value = currentValue;
+    const setting = document.createElement( 'div' );
+    setting.className = 'Options-rangeSetting';
 
-    elementRange.oninput = function () {
-        const value = elementRange.value;
+    const display = document.createElement( 'span' );
+    display.innerHTML = displayHtml;
 
-        elementValue.innerText = value;
-        Options.set( option, parseInt( value, 10 ) );
+    const value = document.createElement( 'span' );
+    value.className = 'displayValue Options-value';
+    value.innerText = currentValue;
+
+    const range = document.createElement( 'input' );
+    range.type = 'range';
+    range.className = 'Options-rangeInput';
+    range.min = min.toString();
+    range.max = max.toString();
+    range.step = step.toString();
+    range.value = currentValue;
+
+    range.oninput = function () {
+        const rangeValue = range.value;
+
+        value.innerText = rangeValue;
+        Options.set( option, parseInt( rangeValue, 10 ) );
 
         if ( onChange ) {
             onChange();
         }
-    };
+    }
+
+    setting.appendChild( display );
+    setting.appendChild( value );
+    setting.appendChild( range );
+
+    return setting;
 }
 
 
