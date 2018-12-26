@@ -13,6 +13,9 @@ export interface OptionsData {
 
 export type OptionsKey = keyof OptionsData;
 
+// only the keys that result in the specified type
+export type KeysOfType<T, TProp> = { [ P in keyof T ]: T[ P ] extends TProp ? P : never }[ keyof T ];
+
 
 const OPTIONS: OptionsData = {
     columns: 60,
