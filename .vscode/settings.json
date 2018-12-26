@@ -1,8 +1,8 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "files.exclude": {
-        "**/scripts/*.js": true,
-        "**/scripts/*.map": true,
+        "**/scripts/**/*.js": true,
+        "**/scripts/**/*.map": true,
         "**/images/*.svg": true
     },
     "editor.formatOnSave": true,

@@ -1,4 +1,4 @@
-import { Direction, Path, STAGE } from "./main.js";
+import { Direction, Path, STAGE } from "../main.js";
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 

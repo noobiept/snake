@@ -1,4 +1,4 @@
-import { getAsset } from './preload.js';
+import { getAsset } from '../other/preload.js';
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 

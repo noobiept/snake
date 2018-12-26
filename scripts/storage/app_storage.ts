@@ -1,4 +1,4 @@
-import { Dict } from './main.js';
+import { Dict } from '../main.js';
 
 
 /**

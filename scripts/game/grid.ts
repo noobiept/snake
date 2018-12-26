@@ -1,5 +1,5 @@
-import { STAGE } from './main.js';
-import { getRandomInt } from "./utilities.js";
+import { STAGE } from '../main.js';
+import { getRandomInt } from "../other/utilities.js";
 import { CollisionElements } from "./game.js";
 
 

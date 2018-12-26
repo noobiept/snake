@@ -1,6 +1,6 @@
 import * as AppStorage from './app_storage.js';
 import * as Options from './options.js';
-import { MapName } from './main.js';
+import { MapName } from '../main.js';
 
 
 export interface Score {

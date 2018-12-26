@@ -1,6 +1,6 @@
-import { MapName } from './main.js';
-import { getMapScores, Score } from './high_score.js';
-import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff, timeToString } from './utilities.js';
+import { MapName } from '../main.js';
+import { getMapScores, Score } from '../storage/high_score.js';
+import { joinAndCapitalize, splitCamelCaseWords, boolToOnOff, timeToString } from '../other/utilities.js';
 import { open } from './main_menu.js';
 
 

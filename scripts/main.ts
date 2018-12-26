@@ -1,12 +1,12 @@
-import * as AppStorage from './app_storage.js';
-import * as Options from './options.js';
-import * as MainMenu from './main_menu.js';
-import * as HighScore from './high_score.js';
-import * as GameMenu from './game_menu.js';
-import * as Game from './game.js';
-import * as Preload from './preload.js';
-import * as  Message from "./message.js";
-import { Grid } from "./grid.js";
+import * as AppStorage from './storage/app_storage.js';
+import * as Options from './storage/options.js';
+import * as MainMenu from './menu/main_menu.js';
+import * as HighScore from './storage/high_score.js';
+import * as GameMenu from './game/game_menu.js';
+import * as Game from './game/game.js';
+import * as Preload from './other/preload.js';
+import * as  Message from "./other/message.js";
+import { Grid } from "./game/grid.js";
 
 
 export enum Direction {

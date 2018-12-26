@@ -1,7 +1,7 @@
 import * as Game from './game.js';
 import Tail from "./tail.js";
 import Food from './food.js';
-import { Direction, KeyboardMapping } from './main.js';
+import { Direction, KeyboardMapping } from '../main.js';
 import { GridPosition } from "./grid.js";
 
 

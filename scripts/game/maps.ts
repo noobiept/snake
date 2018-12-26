@@ -1,10 +1,10 @@
-import * as Options from './options.js';
-import Interval from './interval.js';
+import * as Options from '../storage/options.js';
+import Interval from '../other/interval.js';
 import Snake from "./snake.js";
 import Wall from './wall.js';
-import { getRandomInt } from './utilities.js'
+import { getRandomInt } from '../other/utilities.js'
 import { GridPosition, Grid } from './grid.js';
-import { MapName, Direction } from './main.js';
+import { MapName, Direction } from '../main.js';
 
 
 interface RandomOptions {

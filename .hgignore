@@ -1,6 +1,6 @@
 syntax: glob
 release/
 node_modules/
-scripts/*.js
+scripts/**.js
 *.map
 info.txt

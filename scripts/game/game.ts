@@ -1,17 +1,17 @@
 import * as GameMenu from './game_menu.js';
-import * as Options from './options.js';
-import * as HighScore from './high_score.js';
-import * as MainMenu from './main_menu.js';
-import * as Message from './message.js';
+import * as Options from '../storage/options.js';
+import * as HighScore from '../storage/high_score.js';
+import * as MainMenu from '../menu/main_menu.js';
+import * as Message from '../other/message.js';
 import Snake from './snake.js';
 import Wall from './wall.js';
 import Food from './food.js';
 import DoubleFood from './double_food.js';
-import Timer from './timer.js';
-import Interval from './interval.js';
+import Timer from '../other/timer.js';
+import Interval from '../other/interval.js';
 import Tail from "./tail.js";
-import { MapName, Direction, STAGE } from './main.js';
-import { EVENT_KEY } from './utilities.js';
+import { MapName, Direction, STAGE } from '../main.js';
+import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType } from "./grid.js";
 import { setupWalls } from './maps.js';
 
