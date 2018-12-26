@@ -4,15 +4,48 @@ import { boolToOnOff } from './utilities.js';
 import { open } from './main_menu.js';
 
 
+interface RangeArgs {
+    option: Options.OptionsKey;
+    displayHtml: string;
+    displayUnit?: string;
+    min: number;
+    max: number;
+    step: number;
+    onChange?: () => void;
+}
+
+interface BooleanArgs {
+    option: Options.KeysOfType<Options.OptionsData, boolean>;
+    displayHtml: string;
+}
+
+
 /**
  * Initialize the 'options' page components.
  */
 export function initOptions() {
 
     // canvas options
-    const columns = setupRangeSetting( 'columns', 'Columns', 20, 100, 5, '', updateCanvasDimensions );
-    const lines = setupRangeSetting( 'lines', 'Lines', 20, 100, 5, '', updateCanvasDimensions );
-    const frame = setupBooleanSetting( 'frameOn', 'Frame: ' );
+    const columns = setupRangeSetting( {
+        option: 'columns',
+        displayHtml: 'Columns',
+        min: 20,
+        max: 100,
+        step: 5,
+        onChange: updateCanvasDimensions
+    } );
+    const lines = setupRangeSetting( {
+        option: 'lines',
+        displayHtml: 'Lines',
+        min: 20,
+        max: 100,
+        step: 5,
+        onChange: updateCanvasDimensions
+    } );
+    const frame = setupBooleanSetting( {
+        option: 'frameOn',
+        displayHtml: 'Frame: '
+    } );
 
     const canvasOptions = document.getElementById( 'Options-Canvas' )!;
     canvasOptions.appendChild( columns );
@@ -20,15 +53,43 @@ export function initOptions() {
     canvasOptions.appendChild( frame );
 
     // snake options
-    const speed = setupRangeSetting( 'snakeSpeed', 'Speed', 10, 100, 10, 'Hz' );
+    const speed = setupRangeSetting( {
+        option: 'snakeSpeed',
+        displayHtml: 'Speed',
+        displayUnit: 'Hz',
+        min: 10,
+        max: 100,
+        step: 10
+    } );
 
     const snakeOptions = document.getElementById( 'Options-Snake' )!;
     snakeOptions.appendChild( speed );
 
     // maps options
-    const wall = setupRangeSetting( 'wallInterval', '<img src="images/wall_help.png" /> <em>Wall</em> spawn interval', 500, 5000, 500, 'ms' );
-    const food = setupRangeSetting( 'foodInterval', '<img src="images/red_apple_10px.png" /> <em>Food</em> spawn interval', 500, 5000, 500, 'ms' );
-    const doubleFood = setupRangeSetting( 'doubleFoodInterval', '<img src="images/orange_10px.png" /> <em>Double food</em> spawn interval', 500, 5000, 500, 'ms' );
+    const wall = setupRangeSetting( {
+        option: 'wallInterval',
+        displayHtml: '<img src="images/wall_help.png" /> <em>Wall</em> spawn interval',
+        displayUnit: 'ms',
+        min: 500,
+        max: 5000,
+        step: 500
+    } );
+    const food = setupRangeSetting( {
+        option: 'foodInterval',
+        displayHtml: '<img src="images/red_apple_10px.png" /> <em>Food</em> spawn interval',
+        displayUnit: 'ms',
+        min: 500,
+        max: 5000,
+        step: 500
+    } );
+    const doubleFood = setupRangeSetting( {
+        option: 'doubleFoodInterval',
+        displayHtml: '<img src="images/orange_10px.png" /> <em>Double food</em> spawn interval',
+        displayUnit: 'ms',
+        min: 500,
+        max: 5000,
+        step: 500
+    } );
 
     const mapsOptions = document.getElementById( 'Options-Maps' )!;
     mapsOptions.appendChild( wall );
@@ -48,14 +109,14 @@ export function initOptions() {
 /**
  * Return a range setting component to be used to change a game setting (the number of columns, the snake speed, etc).
  */
-function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min: number, max: number, step: number, displayUnit?: string, onChange?: () => void ) {
-    const currentValue = Options.get( option ).toString();
+function setupRangeSetting( args: RangeArgs ) {
+    const currentValue = Options.get( args.option ).toString();
 
     const setting = document.createElement( 'div' );
     setting.className = 'Options-rangeSetting';
 
     const display = document.createElement( 'span' );
-    display.innerHTML = displayHtml;
+    display.innerHTML = args.displayHtml;
 
     const valueContainer = document.createElement( 'span' );
 
@@ -64,24 +125,24 @@ function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min
     value.innerText = currentValue;
 
     const unit = document.createElement( 'span' );
-    unit.innerText = ` ${displayUnit || ''}`;
+    unit.innerText = ` ${args.displayUnit || ''}`;
 
     const range = document.createElement( 'input' );
     range.type = 'range';
     range.className = 'Options-rangeInput';
-    range.min = min.toString();
-    range.max = max.toString();
-    range.step = step.toString();
+    range.min = args.min.toString();
+    range.max = args.max.toString();
+    range.step = args.step.toString();
     range.value = currentValue;
 
     range.oninput = function () {
         const rangeValue = range.value;
 
         value.innerText = rangeValue;
-        Options.set( option, parseInt( rangeValue, 10 ) );
+        Options.set( args.option, parseInt( rangeValue, 10 ) );
 
-        if ( onChange ) {
-            onChange();
+        if ( args.onChange ) {
+            args.onChange();
         }
     }
 
@@ -100,14 +161,14 @@ function setupRangeSetting( option: Options.OptionsKey, displayHtml: string, min
 /**
  * Returns a boolean setting component (to control the game frame, etc).
  */
-function setupBooleanSetting( option: Options.KeysOfType<Options.OptionsData, boolean>, displayHtml: string ) {
-    const currentValue = Options.get( option );
+function setupBooleanSetting( args: BooleanArgs ) {
+    const currentValue = Options.get( args.option );
 
     const setting = document.createElement( 'div' );
     setting.className = 'button';
 
     const display = document.createElement( 'span' );
-    display.innerHTML = displayHtml;
+    display.innerHTML = args.displayHtml;
 
     const value = document.createElement( 'span' );
     value.innerText = boolToOnOff( currentValue );
@@ -123,7 +184,7 @@ function setupBooleanSetting( option: Options.KeysOfType<Options.OptionsData, bo
             next = true;
         }
 
-        Options.set( option, next );
+        Options.set( args.option, next );
         value.innerText = boolToOnOff( next );
     }
 
