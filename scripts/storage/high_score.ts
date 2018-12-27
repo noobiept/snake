@@ -82,8 +82,9 @@ export function add( mapName: MapName, numberOfTails: number, time: number ) {
         return;
     }
 
-    var scoreArray = HIGH_SCORE[ mapName ];
+    let scoreArray = HIGH_SCORE[ mapName ];
     const options = Options.clone();
+    const intTime = Math.round( time );
 
     if ( typeof scoreArray === 'undefined' ) {
         scoreArray = [];
@@ -92,7 +93,7 @@ export function add( mapName: MapName, numberOfTails: number, time: number ) {
 
     scoreArray.push( {
         numberOfTails: numberOfTails,
-        time: time,
+        time: intTime,
         options: options
     } );
 
