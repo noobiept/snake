@@ -1,174 +1,162 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Snake Game</title>
-        <link rel="shortcut icon" type="image/png" href="images/snake16.png" />
 
-        <!-- libraries -->
-        <script type="text/javascript" src="libraries/easeljs.min.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <title>Snake Game</title>
+    <link rel="shortcut icon" type="image/png" href="images/snake16.png" />
 
-        <!-- scripts -->
-        <script type="module" src="scripts/app_storage.js"></script>
-        <script type="module" src="scripts/utilities.js"></script>
-        <script type="module" src="scripts/game_menu.js"></script>
-        <script type="module" src="scripts/main.js"></script>
-        <script type="module" src="scripts/snake.js"></script>
-        <script type="module" src="scripts/tail.js"></script>
-        <script type="module" src="scripts/food.js"></script>
-        <script type="module" src="scripts/double_food.js"></script>
-        <script type="module" src="scripts/wall.js"></script>
-        <script type="module" src="scripts/game.js"></script>
-        <script type="module" src="scripts/main_menu.js"></script>
-        <script type="module" src="scripts/options.js"></script>
-        <script type="module" src="scripts/timer.js"></script>
-        <script type="module" src="scripts/interval.js"></script>
-        <script type="module" src="scripts/message.js"></script>
-        <script type="module" src="scripts/high_score.js"></script>
+    <!-- libraries -->
+    <script type="text/javascript" src="libraries/easeljs.min.js"></script>
 
-        <!-- styling -->
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-    </head>
-    <body>
-        <div id="GameContent">
-            <canvas id="MainCanvas" class="hidden"></canvas>
+    <!-- scripts -->
+    <script type="module" src="scripts/main.js"></script>
 
-            <div id="GameMenu" class="hidden">
-                <div id="GameMenu-Left">
-                    <div>tails 1: <span id="GameMenu-Player1-Score" class="displayValue"></span></div>
-                    <div>tails 2: <span id="GameMenu-Player2-Score" class="displayValue"></span></div>
-                    <div>Time: <span id="GameMenu-Timer" class="displayValue"></span> s</div>
-                </div>
+    <!-- styling -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
 
-                <div id="GameMenu-Right">
-                    <div id="GameMenu-PauseResume" class="button">Pause</div>
-                    <div id="GameMenu-Quit" class="button">Quit</div>
-                </div>
+<body>
+    <div id="GameContent">
+        <canvas id="MainCanvas" class="hidden"></canvas>
+
+        <div id="GameMenu" class="hidden">
+            <div id="GameMenu-Left">
+                <div>tails 1: <span id="GameMenu-Player1-Score" class="displayValue"></span></div>
+                <div>tails 2: <span id="GameMenu-Player2-Score" class="displayValue"></span></div>
+                <div>Time: <span id="GameMenu-Timer" class="displayValue"></span> s</div>
+            </div>
+
+            <div id="GameMenu-Right">
+                <div id="GameMenu-PauseResume" class="button">Pause</div>
+                <div id="GameMenu-Quit" class="button">Quit</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="MainMenu" class="hidden">
+        <ul id="MainMenu-SelectMap">
+            <li data-map="empty">
+                <figure>
+                    <img src="images/map_empty.png" alt="Empty" />
+                    <figcaption>Empty</figcaption>
+                </figure>
+            </li>
+            <li data-map="random">
+                <figure>
+                    <img src="images/map_random.png" alt="Random" />
+                    <figcaption>Random</figcaption>
+                </figure>
+            </li>
+            <li data-map="randomDiagonal">
+                <figure>
+                    <img src="images/map_random_diagonals.png" alt="Random Diagonal" />
+                    <figcaption>Diagonal</figcaption>
+                </figure>
+            </li>
+            <li data-map="randomSingle">
+                <figure>
+                    <img src="images/map_random_single.png" alt="Random Single" />
+                    <figcaption>Single</figcaption>
+                </figure>
+            </li>
+            <li data-map="stairs">
+                <figure>
+                    <img src="images/map_stairs.png" alt="Stairs" />
+                    <figcaption>Stairs</figcaption>
+                </figure>
+            </li>
+            <li data-map="lines">
+                <figure>
+                    <img src="images/map_lines.png" alt="Lines" />
+                    <figcaption>Lines</figcaption>
+                </figure>
+            </li>
+        </ul>
+        <div id="MainMenu-StartGame" class="button">Start Game</div>
+        <div id="MainMenu-StartGame-2players" class="button">Start Game (2 players)</div>
+        <div id="MainMenu-Options" class="button">Options</div>
+        <div id="MainMenu-HighScore" class="button">High Score</div>
+        <div id="MainMenu-Help" class="button">Help</div>
+    </div>
+
+    <div id="Options" class="hidden">
+        <div id="Options-Container">
+            <div id="Options-Canvas">
+                <h1>Canvas settings</h1>
+            </div>
+            <div id="Options-Snake">
+                <h1>Snake settings</h1>
+            </div>
+            <div id="Options-Maps">
+                <h1>Maps settings</h1>
             </div>
         </div>
 
-        <div id="MainMenu" class="hidden">
-            <ul id="MainMenu-SelectMap">
-                <li data-map="empty">
-                    <figure>
-                        <img src="images/map_empty.png" alt="Empty" />
-                        <figcaption>Empty</figcaption>
-                    </figure>
-                </li>
-                <li data-map="random">
-                    <figure>
-                        <img src="images/map_random.png" alt="Random" />
-                        <figcaption>Random</figcaption>
-                    </figure>
-                </li>
-                <li data-map="randomDiagonal">
-                    <figure>
-                        <img src="images/map_random_diagonals.png" alt="Random Diagonal" />
-                        <figcaption>Diagonal</figcaption>
-                    </figure>
-                </li>
-                <li data-map="randomSingle">
-                    <figure>
-                        <img src="images/map_random_single.png" alt="Random Single" />
-                        <figcaption>Single</figcaption>
-                    </figure>
-                </li>
-                <li data-map="stairs">
-                    <figure>
-                        <img src="images/map_stairs.png" alt="Stairs" />
-                        <figcaption>Stairs</figcaption>
-                    </figure>
-                </li>
-                <li data-map="lines">
-                    <figure>
-                        <img src="images/map_lines.png" alt="Lines" />
-                        <figcaption>Lines</figcaption>
-                    </figure>
-                </li>
-            </ul>
-            <div id="MainMenu-StartGame" class="button">Start Game</div>
-            <div id="MainMenu-StartGame-2players" class="button">Start Game (2 players)</div>
-            <div id="MainMenu-Options" class="button">Options</div>
-            <div id="MainMenu-HighScore" class="button">High Score</div>
-            <div id="MainMenu-Help" class="button">Help</div>
+        <div id="Options-Back" class="button backButton">Back</div>
+    </div>
+
+    <div id="HighScore" class="hidden">
+        <h2 id="HighScore-Title">High Score</h2>
+
+        <div id="HighScore-Content">
+            <table id="HighScore-Table"></table>
+            <div id="HighScore-Info" class="hidden"></div>
         </div>
 
-        <div id="Options" class="hidden">
-            <div id="Options-Container">
-                <div id="Options-Canvas">
-                    <h1>Canvas settings</h1>
-                </div>
-                <div id="Options-Snake">
-                    <h1>Snake settings</h1>
-                </div>
-                <div id="Options-Maps">
-                    <h1>Maps settings</h1>
-                </div>
+        <div id="HighScore-Back" class="button backButton">Back</div>
+    </div>
+
+    <div id="Help" class="hidden">
+        <h2>Help</h2>
+
+        <!-- have 2 help blocks per 'line' -->
+        <div>
+            <div class="Help-block">
+                <p id="Help-Elements">
+                    <img src="images/red_apple_10px.png" alt="Food" /> <em>Food</em> : adds a tail to the snake.<br />
+                    <img src="images/orange_10px.png" alt="DoubleFood" /> <em>Double Food</em> : adds two tails to
+                    the snake.<br />
+                    <img src="images/wall_help.png" alt="Wall" /> <em>Wall</em> : You can't go through it.
+                </p>
+
+                <p>
+                    In two player mode, wins the player<br />
+                    which has more tails, or if the other<br />
+                    player collides against your snake.
+                </p>
             </div>
 
-            <div id="Options-Back" class="button backButton">Back</div>
-        </div>
-
-        <div id="HighScore" class="hidden">
-            <h2 id="HighScore-Title">High Score</h2>
-
-            <div id="HighScore-Content">
-                <table id="HighScore-Table"></table>
-                <div id="HighScore-Info" class="hidden"></div>
-            </div>
-
-            <div id="HighScore-Back" class="button backButton">Back</div>
-        </div>
-
-        <div id="Help" class="hidden">
-            <h2>Help</h2>
-
-            <!-- have 2 help blocks per 'line' -->
-            <div>
-                <div class="Help-block">
-                    <p id="Help-Elements">
-                        <img src="images/red_apple_10px.png" alt="Food" /> <em>Food</em> : adds a tail to the snake.<br />
-                        <img src="images/orange_10px.png" alt="DoubleFood" /> <em>Double Food</em> : adds two tails to
-                        the snake.<br />
-                        <img src="images/wall_help.png" alt="Wall" /> <em>Wall</em> : You can't go through it.
-                    </p>
-
-                    <p>
-                        In two player mode, wins the player<br />
-                        which has more tails, or if the other<br />
-                        player collides against your snake.
-                    </p>
+            <div class="Help-block">
+                <div>
+                    <h4>Player 1 keyboard (green)</h4>
+                    <ul>
+                        <li>up : <em>w</em></li>
+                        <li>down : <em>s</em></li>
+                        <li>left : <em>a</em></li>
+                        <li>right : <em>d</em></li>
+                    </ul>
                 </div>
 
-                <div class="Help-block">
-                    <div>
-                        <h4>Player 1 keyboard (green)</h4>
-                        <ul>
-                            <li>up : <em>w</em></li>
-                            <li>down : <em>s</em></li>
-                            <li>left : <em>a</em></li>
-                            <li>right : <em>d</em></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4>Player 2 keyboard (blue)</h4>
-                        <ul>
-                            <li>up : <em>up arrow</em></li>
-                            <li>down : <em>down arrow</em></li>
-                            <li>left : <em>left arrow</em></li>
-                            <li>right : <em>right arrow</em></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="Help-block">
-                    In single player mode, you can play with either the player 1 or player 2 keys.
+                <div>
+                    <h4>Player 2 keyboard (blue)</h4>
+                    <ul>
+                        <li>up : <em>up arrow</em></li>
+                        <li>down : <em>down arrow</em></li>
+                        <li>left : <em>left arrow</em></li>
+                        <li>right : <em>right arrow</em></li>
+                    </ul>
                 </div>
             </div>
-
-            <div id="Help-Back" class="button backButton">Back</div>
+            <div class="Help-block">
+                In single player mode, you can play with either the player 1 or player 2 keys.
+            </div>
         </div>
 
-        <div id="Message">Loading...</div>
-    </body>
+        <div id="Help-Back" class="button backButton">Back</div>
+    </div>
+
+    <div id="Message">Loading...</div>
+</body>
+
 </html>
