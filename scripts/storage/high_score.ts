@@ -11,7 +11,7 @@ export interface Score {
 
 // dictionary where the key is the map name and the value is an array of scores
 // has all the scores sorted descending order
-interface MapScores {
+export interface MapScores {
     [ mapName: string ]: Score[];
 }
 

@@ -51,7 +51,8 @@ function changeMap( element: HTMLElement, save = true ) {
     }
 
     if ( save !== false ) {
-        AppStorage.setData( { 'snake_selected_map': element.getAttribute( 'data-map' ) } );
+        const selected = element.getAttribute( 'data-map' );
+        AppStorage.setData( { 'snake_selected_map': selected || undefined } );
     }
 
     element.classList.add( 'MainMenu-mapSelected' );

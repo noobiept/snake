@@ -62,7 +62,7 @@ window.onload = function () {
 };
 
 
-function initApp( data: Dict ) {
+function initApp( data: AppStorage.StorageData ) {
     Options.load( data[ 'snake_options' ] );
 
     // setup the canvas
