@@ -403,44 +403,42 @@ function collisionOccurred( items: CollisionElements ) {
 }
 
 
-/*
-    When the snake hits its tails for example
-
-    arguments:
-
-        whoWon : if provided, tells which player (1 or 2) won, otherwise check the number of tails (for 2 players only)
-
+/**
+ * Game is over (happens when the snake hits its tails for example).
  */
-export function over( whoWon?: number ) {
+export function over() {
     GAME_OVER = true;
-    var text = 'Game Over<br />';
+
+    // construct the display message
+    let text = 'Game Over!<br />';
+    let score = 0;
 
     if ( TWO_PLAYER_MODE ) {
-        if ( typeof whoWon != 'undefined' ) {
-            text += 'Player ' + whoWon + ' Won!';
+
+        var player1_score = SNAKES[ 0 ].getNumberOfTails();
+        var player2_score = SNAKES[ 1 ].getNumberOfTails();
+
+        if ( player1_score > player2_score ) {
+            text += 'Player 1 Won!<br />';
+            score = player1_score;
+        }
+
+        else if ( player2_score > player1_score ) {
+            text += 'Player 2 Won!<br />';
+            score = player2_score;
         }
 
         else {
-            var player1_score = SNAKES[ 0 ].getNumberOfTails();
-            var player2_score = SNAKES[ 1 ].getNumberOfTails();
-
-            if ( player1_score > player2_score ) {
-                text += 'Player 1 Won!';
-            }
-
-            else if ( player2_score > player1_score ) {
-                text += 'Player 2 Won!';
-            }
-
-            else {
-                text += 'Draw!';
-            }
+            text += 'Draw!<br />';
+            score = player1_score;
         }
     }
 
     else {
-        text = 'Game Over<br />Score: ' + SNAKES[ 0 ].getNumberOfTails();
+        score = SNAKES[ 0 ].getNumberOfTails();
     }
+
+    text += `Score: <span class="displayValue">${score}</span>`;
 
     pause();
     addScores();
