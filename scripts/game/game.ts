@@ -2,7 +2,7 @@ import * as GameMenu from './game_menu.js';
 import * as Options from '../storage/options.js';
 import * as HighScore from '../storage/high_score.js';
 import * as MainMenu from '../menu/main_menu.js';
-import * as Message from '../other/message.js';
+import * as PopupWindow from "../other/popup_window.js";
 import Snake from './snake.js';
 import Wall from './wall.js';
 import Food from './food.js';
@@ -442,16 +442,17 @@ export function over( whoWon?: number ) {
         text = 'Game Over<br />Score: ' + SNAKES[ 0 ].getNumberOfTails();
     }
 
-    Message.show( text );
     pause();
     addScores();
 
-    window.setTimeout( function () {
-        Message.hide();
-        clear();
-        start( MAP_NAME, TWO_PLAYER_MODE );
-
-    }, 2000 );
+    PopupWindow.show( {
+        content: text,
+        closeText: 'Restart',
+        onClose: function () {
+            clear();
+            start( MAP_NAME, TWO_PLAYER_MODE );
+        }
+    } );
 };
 
 
