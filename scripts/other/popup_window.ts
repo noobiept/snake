@@ -1,37 +1,54 @@
 interface PopupWindowArgs {
     content: string;
-    closeText: string;
-    onClose: () => void;
+    buttons: { text: string; onClick: () => void }[];
 }
 
 
 /**
  * Show a popup window on the center of the screen.
  */
-export function show( args: PopupWindowArgs ) {
-    const overlay = document.createElement( 'div' );
-    overlay.className = 'popupOverlay';
+export default class PopupWindow {
 
-    const container = document.createElement( 'div' );
-    container.className = 'popupWindow';
+    private overlay: HTMLElement;
+    private container: HTMLElement;
 
-    const content = document.createElement( 'div' );
-    content.innerHTML = args.content;
+    constructor( args: PopupWindowArgs ) {
+        const overlay = document.createElement( 'div' );
+        overlay.className = 'popupOverlay';
 
-    const close = document.createElement( 'div' );
-    close.className = 'button';
-    close.innerText = args.closeText;
+        const container = document.createElement( 'div' );
+        container.className = 'popupWindow';
 
-    container.appendChild( content );
-    container.appendChild( close );
+        const content = document.createElement( 'div' );
+        content.innerHTML = args.content;
 
-    document.body.appendChild( overlay );
-    document.body.appendChild( container );
+        const buttons = document.createElement( 'div' );
+        buttons.className = 'popupButtons';
 
-    close.onclick = () => {
-        document.body.removeChild( container );
-        document.body.removeChild( overlay );
+        for ( let a = 0; a < args.buttons.length; a++ ) {
+            const buttonInfo = args.buttons[ a ];
 
-        args.onClose();
+            const button = document.createElement( 'div' );
+            button.className = 'button';
+            button.innerText = buttonInfo.text;
+            button.onclick = buttonInfo.onClick;
+
+            buttons.appendChild( button );
+        }
+
+        container.appendChild( content );
+        container.appendChild( buttons );
+
+        document.body.appendChild( overlay );
+        document.body.appendChild( container );
+
+        this.container = container;
+        this.overlay = overlay;
+    }
+
+
+    remove() {
+        document.body.removeChild( this.container );
+        document.body.removeChild( this.overlay );
     }
 }

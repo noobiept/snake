@@ -79,6 +79,13 @@ figure
     background-color: rgba(0, 0, 0, 0.5);
     }
 
+.popupButtons
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    }
+
     /* Main Elements */
 
 #GameContent

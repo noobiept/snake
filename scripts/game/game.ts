@@ -2,7 +2,6 @@ import * as GameMenu from './game_menu.js';
 import * as Options from '../storage/options.js';
 import * as HighScore from '../storage/high_score.js';
 import * as MainMenu from '../menu/main_menu.js';
-import * as PopupWindow from "../other/popup_window.js";
 import Snake from './snake.js';
 import Wall from './wall.js';
 import Food from './food.js';
@@ -10,6 +9,7 @@ import DoubleFood from './double_food.js';
 import Timer from '../other/timer.js';
 import Interval from '../other/interval.js';
 import Tail from "./tail.js";
+import PopupWindow from "../other/popup_window.js";
 import { MapName, Direction, STAGE } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType } from "./grid.js";
@@ -443,13 +443,25 @@ export function over() {
     pause();
     addScores();
 
-    PopupWindow.show( {
+    const popup = new PopupWindow( {
         content: text,
-        closeText: 'Restart',
-        onClose: function () {
-            clear();
-            start( MAP_NAME, TWO_PLAYER_MODE );
-        }
+        buttons: [
+            {
+                text: 'Restart',
+                onClick: function () {
+                    popup.remove();
+                    clear();
+                    start( MAP_NAME, TWO_PLAYER_MODE );
+                }
+            },
+            {
+                text: 'Quit',
+                onClick: function () {
+                    popup.remove();
+                    quit();
+                }
+            }
+        ]
     } );
 };
 
