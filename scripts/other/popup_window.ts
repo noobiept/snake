@@ -9,6 +9,9 @@ interface PopupWindowArgs {
  * Show a popup window on the center of the screen.
  */
 export function show( args: PopupWindowArgs ) {
+    const overlay = document.createElement( 'div' );
+    overlay.className = 'popupOverlay';
+
     const container = document.createElement( 'div' );
     container.className = 'popupWindow';
 
@@ -22,10 +25,12 @@ export function show( args: PopupWindowArgs ) {
     container.appendChild( content );
     container.appendChild( close );
 
+    document.body.appendChild( overlay );
     document.body.appendChild( container );
 
     close.onclick = () => {
         document.body.removeChild( container );
+        document.body.removeChild( overlay );
 
         args.onClose();
     }
