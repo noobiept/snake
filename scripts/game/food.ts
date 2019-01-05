@@ -10,6 +10,9 @@ interface EatenEffect {
 }
 
 
+/**
+ * The base 'Food' element that on collision with a snake gives some effects to the snake (by default it adds 1 tail).
+ */
 export default class Food implements GridItem {
     shape: createjs.Bitmap;
     position: GridPosition;

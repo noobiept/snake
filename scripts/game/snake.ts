@@ -13,9 +13,11 @@ interface SnakeArgs {
 }
 
 
+/**
+ * The snake is the element that the player controls.
+ */
 export default class Snake {
     color: string;
-
     all_tails: Tail[];
     private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
     private keyboard_mapping: KeyboardMapping;
@@ -143,11 +145,17 @@ export default class Snake {
     }
 
 
+    /**
+     * Get the number of tails that the snake currently has.
+     */
     getNumberOfTails() {
         return this.all_tails.length;
     }
 
 
+    /**
+     * Get the tail object at the given position.
+     */
     getTail( position: number ) {
         if ( position < 0 || position >= this.all_tails.length ) {
             return null;
@@ -158,18 +166,24 @@ export default class Snake {
 
 
     /**
-     * There's always at least 1 tail in the snake.
+     * Get the last tail on the snake. There's always at least 1 tail in the snake.
      */
     getLastTail() {
         return this.all_tails[ this.all_tails.length - 1 ]
     }
 
 
+    /**
+     * Get the current direction the snake is going towards.
+     */
     getDirection() {
         return this.first_tail.direction;
     }
 
 
+    /**
+     * Deal with the keyboard inputs.
+     */
     onKeyDown( keyCode: number ) {
         var keysHeld = this.keys_held;
         var keyboardMapping = this.keyboard_mapping;
@@ -204,6 +218,9 @@ export default class Snake {
     }
 
 
+    /**
+     * Deal with the keyboard inputs.
+     */
     onKeyUp( keyCode: number ) {
         var keysHeld = this.keys_held;
         var keyboardMapping = this.keyboard_mapping;

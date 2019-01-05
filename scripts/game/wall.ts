@@ -1,6 +1,9 @@
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 
+/**
+ * A wall is an element that the snake can't go through.
+ */
 export default class Wall implements GridItem {
     shape: createjs.Shape;
     position: GridPosition;
@@ -17,6 +20,9 @@ export default class Wall implements GridItem {
     }
 
 
+    /**
+     * Draw the 'Wall' shape.
+     */
     draw() {
         var wall = new createjs.Shape();
 
@@ -32,8 +38,8 @@ export default class Wall implements GridItem {
     }
 
 
-    /*
-        Change the shape's color to red, to signal that the wall as been hit
+    /**
+     * Change the shape's color to red, to signal that the wall as been hit.
      */
     asBeenHit() {
         var g = this.shape.graphics;

@@ -22,7 +22,7 @@ var HIGH_SCORE_LENGTH = 5;
 
 
 /**
- * Determine if we have a valid 'MapScores' object.
+ * Determine if we have a valid `MapScores` object.
  */
 function isMapScores( object: any ): object is MapScores {
     if ( object ) {
@@ -108,6 +108,9 @@ export function add( mapName: MapName, numberOfTails: number, time: number ) {
 }
 
 
+/**
+ * Get all the scores of the given map.
+ */
 export function getMapScores( mapName: MapName ) {
     return HIGH_SCORE[ mapName ];
 }

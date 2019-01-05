@@ -1,7 +1,7 @@
-/*
- * Keys code for the keyboard events
+/**
+ * Keys code for the keyboard events.
  */
-export var EVENT_KEY = {
+export const EVENT_KEY = {
 
     backspace: 8,
     tab: 9,
@@ -70,9 +70,9 @@ export var EVENT_KEY = {
 };
 
 
-/*
-    Checks if a x/y position is within a range around other x/y position
-*/
+/**
+ * Checks if a x/y position is within a range around other x/y position.
+ */
 export function isNextTo( x: number, y: number, targetX: number, targetY: number, range: number ) {
     // we make a 'box' with the target position and the range
     var boxLeft = targetX - range / 2;
@@ -91,6 +91,9 @@ export function isNextTo( x: number, y: number, targetX: number, targetY: number
 }
 
 
+/**
+ * Check if there's a collision between two rectangles.
+ */
 export function checkCollision( oneX: number, oneY: number, oneWidth: number, oneHeight: number, twoX: number, twoY: number, twoWidth: number, twoHeight: number ) {
     // calculate the position of the corners of the object (as a rectangle)
     // the position origin of the objects is in the center
@@ -128,8 +131,8 @@ export function getRandomFloat( min: number, max: number ) {
 }
 
 
-/*
-    If an x/y position is out of bounds, it overflows (goes to the other side of the canvas, the amount it overflows)
+/**
+ * If an x/y position is out of bounds, it overflows (goes to the other side of the canvas, the amount it overflows).
  */
 export function checkOverflowPosition( x_or_y: number, limit: number ) {
     if ( x_or_y < 0 ) {
@@ -144,6 +147,9 @@ export function checkOverflowPosition( x_or_y: number, limit: number ) {
 }
 
 
+/**
+ * Convert a boolean value to the equivalent display string.
+ */
 export function boolToOnOff( value: boolean ) {
     if ( value == true ) {
         return 'On';
@@ -156,7 +162,7 @@ export function boolToOnOff( value: boolean ) {
 
 
 /**
- * Join and capitalize the words and return the resulting string
+ * Join and capitalize the words and return the resulting string.
  */
 export function joinAndCapitalize( words: string[] ) {
     let result = '';
@@ -178,7 +184,7 @@ export function joinAndCapitalize( words: string[] ) {
 
 
 /**
- * For example 'oneTwo' into '[ 'one, 'Two' ]'.
+ * Split the string into a list with all the words. For example 'oneTwo' into '[ 'one, 'Two' ]'.
  */
 export function splitCamelCaseWords( text: string ) {
     const words = [];

@@ -3,6 +3,9 @@ import { getAsset } from '../other/preload.js';
 import { Grid, ItemType } from "./grid.js";
 
 
+/**
+ * A type of 'Food' that adds 2 tails to the snake that eats it.
+ */
 export default class DoubleFood extends Food {
 
     readonly type = ItemType.doubleFood;

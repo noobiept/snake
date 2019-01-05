@@ -1,3 +1,6 @@
+/**
+ * Show/hide a text message on the center of the screen.
+ */
 let ELEMENT: HTMLElement;
 
 

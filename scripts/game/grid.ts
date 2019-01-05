@@ -30,12 +30,17 @@ interface GridArgs {
     onCollision: ( items: CollisionElements ) => void;
 }
 
+
+/**
+ * A 2d grid that is used by the game, to keep track of all the elements that were added and its current position.
+ */
 export class Grid {
     static readonly size = 10;   // size of each grid item in pixels
     static readonly halfSize = Grid.size / 2;
 
     private grid: ( GridItem[] )[][];
     readonly args: GridArgs;
+
 
     constructor( args: GridArgs ) {
         this.args = args;
@@ -51,6 +56,10 @@ export class Grid {
         }
     }
 
+
+    /**
+     * Add an item to the grid on the given position.
+     */
     add( item: GridItem, position: GridPosition ) {
         const column = position.column;
         const line = position.line;
@@ -112,11 +121,17 @@ export class Grid {
     }
 
 
+    /**
+     * Check if the given position is empty.
+     */
     isEmpty( position: GridPosition ) {
         return this.grid[ position.column ][ position.line ].length === 0;
     }
 
 
+    /**
+     * Check if the given position is valid (if its within the grid limits).
+     */
     isValid( position: GridPosition ) {
         if ( position.column < 0 ||
             position.column >= this.args.columns ||
@@ -129,6 +144,9 @@ export class Grid {
     }
 
 
+    /**
+     * Move an item to a different position in the grid.
+     */
     move( item: GridItem, to: GridPosition ) {
         if ( !item ) {
             return;

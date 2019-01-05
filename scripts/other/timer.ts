@@ -2,6 +2,9 @@ import Interval from './interval.js';
 import { timeToString } from "./utilities.js";
 
 
+/**
+ * Counts the time that has passed since the start.
+ */
 export default class Timer {
     private count: number;
     private interval: Interval;

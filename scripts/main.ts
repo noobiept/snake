@@ -49,6 +49,9 @@ export var STAGE: createjs.Stage;
 var CANVAS: HTMLCanvasElement;
 
 
+/**
+ * Starting point of the application.
+ */
 window.onload = function () {
     Message.init();
     Message.show( 'Loading...' );
@@ -62,6 +65,9 @@ window.onload = function () {
 };
 
 
+/**
+ * Load the application with the 'data' we got from the storage.
+ */
 function initApp( data: AppStorage.StorageData ) {
     Options.load( data[ 'snake_options' ] );
 

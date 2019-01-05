@@ -49,6 +49,9 @@ const SNAKES_COLORS = [
 ];
 
 
+/**
+ * Deal with the keyboard inputs (used to control the snakes, etc).
+ */
 window.onkeydown = function ( event ) {
     var returnValue;
 
@@ -64,6 +67,9 @@ window.onkeydown = function ( event ) {
 };
 
 
+/**
+ * Deal with the keyboard inputs (used to control the snakes, etc).
+ */
 window.onkeyup = function ( event ) {
     var returnValue;
 
@@ -79,12 +85,18 @@ window.onkeyup = function ( event ) {
 };
 
 
+/**
+ * Initialize some game related functionality (the timer, ticker, etc)
+ */
 export function init() {
     TIMER = new Timer( GameMenu.updateTimer );
     createjs.Ticker.on( 'tick', tick as ( event: Object ) => void );    // casting 'event' to 'Object' to fix typing issue
 }
 
 
+/**
+ * Start a new game.
+ */
 export function start( mapName: MapName, twoPlayersMode?: boolean ) {
     if ( typeof twoPlayersMode == 'undefined' ) {
         twoPlayersMode = false;
@@ -128,6 +140,9 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 }
 
 
+/**
+ * Add the snake objects.
+ */
 function setupSnakes( twoPlayersMode: boolean ) {
     const lines = GRID.args.lines;
     const columns = GRID.args.columns;
@@ -249,6 +264,9 @@ function setupFrame() {
 }
 
 
+/**
+ * Add new 'Food' elements at a certain interval.
+ */
 function setupFoodInterval() {
     const foodInterval = Options.get( 'foodInterval' );
 
@@ -264,6 +282,9 @@ function setupFoodInterval() {
 }
 
 
+/**
+ * Add new 'DoubleFood' elements at a certain interval.
+ */
 function setupDoubleFoodInterval() {
     const doubleFoodInterval = Options.get( 'doubleFoodInterval' );
 
@@ -279,6 +300,9 @@ function setupDoubleFoodInterval() {
 }
 
 
+/**
+ * The snake is moved depending on the speed that was set on the options.
+ */
 function setupSnakeMovement() {
     const snakeSpeed = Options.get( 'snakeSpeed' );
     const snakeInterval = 1 / snakeSpeed * 1000;
@@ -493,16 +517,25 @@ export function quit() {
 }
 
 
+/**
+ * Pause the game.
+ */
 function pause() {
     PAUSE = true;
 }
 
 
+/**
+ * Resume the game.
+ */
 function resume() {
     PAUSE = false;
 }
 
 
+/**
+ * Check if the game is paused or not.
+ */
 export function isPaused() {
     return PAUSE;
 }
@@ -523,6 +556,9 @@ export function clear() {
 }
 
 
+/**
+ * Pause or resume the game.
+ */
 export function pauseResume( pauseGame: boolean ) {
     if ( pauseGame ) {
         TIMER.stop();
@@ -537,15 +573,20 @@ export function pauseResume( pauseGame: boolean ) {
 }
 
 
+/**
+ * Check if the current game has 2 players.
+ */
 export function isTwoPlayersMode() {
     return TWO_PLAYER_MODE;
 }
 
 
+/**
+ * Has the game ended (for example when a snake hits a tail, etc).
+ */
 export function isGameOver() {
     return GAME_OVER;
 }
-
 
 
 /**

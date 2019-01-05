@@ -36,6 +36,9 @@ export function init() {
 }
 
 
+/**
+ * Show the game menu.
+ */
 export function show( twoPlayerMode: boolean ) {
     var playerTwoScore = PLAYERS_SCORE[ 1 ].parentElement!;
 
@@ -51,6 +54,9 @@ export function show( twoPlayerMode: boolean ) {
 }
 
 
+/**
+ * Reset the menu and hide it.
+ */
 export function clear() {
     const pauseResume = document.getElementById( 'GameMenu-PauseResume' )!;
     pauseResume.innerText = 'Pause';
@@ -59,11 +65,17 @@ export function clear() {
 }
 
 
+/**
+ * Update the score in the game menu.
+ */
 export function updateScore( playerPosition: number, score: number ) {
     PLAYERS_SCORE[ playerPosition ].innerHTML = score.toString();
 }
 
 
+/**
+ * Update the timer value on the game menu.
+ */
 export function updateTimer( time: string ) {
     TIMER_ELEMENT.innerText = time;
 }

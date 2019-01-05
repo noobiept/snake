@@ -2,6 +2,9 @@ import { Direction, Path, STAGE } from "../main.js";
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 
+/**
+ * A snake is made of several tail elements one after the other.
+ */
 export default class Tail implements GridItem {
     readonly type = ItemType.tail;
     direction: Direction;
@@ -23,6 +26,9 @@ export default class Tail implements GridItem {
     }
 
 
+    /**
+     * Draw the 'Tail' shape.
+     */
     draw() {
         var snakeTail = new createjs.Shape();
 
@@ -40,8 +46,8 @@ export default class Tail implements GridItem {
     }
 
 
-    /*
-        Change the shape's color to red, to signal that the tail as been hit
+    /**
+     * Change the shape's color to red, to signal that the tail as been hit.
      */
     asBeenHit() {
         var g = this.shape.graphics;
@@ -51,6 +57,9 @@ export default class Tail implements GridItem {
     }
 
 
+    /**
+     * Remove the 'Tail' shape.
+     */
     remove() {
         STAGE.removeChild( this.shape );
     }

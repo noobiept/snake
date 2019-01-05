@@ -17,6 +17,9 @@ interface Pages {
 let PAGES: Pages;
 
 
+/**
+ * Initialize the main menu module. Pass along the initial selected map on the map list (otherwise the first is selected if not specified).
+ */
 export function init( mapName?: string ) {
     PAGES = {
         mainMenu: document.getElementById( 'MainMenu' )!,
@@ -44,6 +47,9 @@ export function open( page: keyof Pages ) {
 }
 
 
+/**
+ * Select a different map.
+ */
 function changeMap( element: HTMLElement, save = true ) {
     // remove previous selection
     if ( MAP_SELECTED ) {
@@ -60,6 +66,9 @@ function changeMap( element: HTMLElement, save = true ) {
 }
 
 
+/**
+ * Initialize the 'main menu' page.
+ */
 function initMainMenu( mapName?: string ) {
 
     // initialize the main menu elements
@@ -114,6 +123,9 @@ function initMainMenu( mapName?: string ) {
 }
 
 
+/**
+ * Initialize the 'help' page.
+ */
 function initHelp() {
     var back = document.getElementById( 'Help-Back' )!;
 
