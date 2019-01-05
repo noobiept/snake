@@ -148,6 +148,11 @@ figure
 
     /* High-score Menu */
 
+#HighScore-Table th
+    {
+    padding: 0 5px;
+    }
+
 #HighScore-Table td:nth-child(even):not(:last-child),
 #HighScore-Table th:nth-child(even):not(:last-child)
     {
