@@ -1,5 +1,6 @@
-import { Direction, Path, STAGE } from "../main.js";
+import { Direction, Path } from "../main.js";
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
+import { addToStage, removeFromStage } from './game.js';
 
 
 /**
@@ -40,7 +41,7 @@ export default class Tail implements GridItem {
         g.beginFill( this.color );
         g.drawRoundRect( 0, 0, Grid.size, Grid.size, 2 );
 
-        STAGE.addChild( snakeTail );
+        addToStage( snakeTail );
 
         return snakeTail;
     }
@@ -61,7 +62,7 @@ export default class Tail implements GridItem {
      * Remove the 'Tail' shape.
      */
     remove() {
-        STAGE.removeChild( this.shape );
+        removeFromStage( this.shape );
     }
 
 

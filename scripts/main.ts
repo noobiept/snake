@@ -43,10 +43,8 @@ export interface Dict {
 
 export type MapName = 'random' | 'randomDiagonal' | 'randomSingle' | 'stairs' | 'lines' | 'empty';
 
-export var STAGE: createjs.Stage;
 
-// the canvas element where the game is drawn in
-var CANVAS: HTMLCanvasElement;
+let CANVAS: HTMLCanvasElement;  // the canvas element where the game is drawn in
 
 
 /**
@@ -76,16 +74,13 @@ function initApp( data: AppStorage.StorageData ) {
 
     updateCanvasDimensions();
 
-    // setup the stage
-    STAGE = new createjs.Stage( CANVAS );
-
     // use the 'requestAnimationFrame' timing mode, and use the 'delta' values to control the game timings
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
 
     HighScore.load( data[ 'snake_high_score' ] );
     MainMenu.init( data[ 'snake_selected_map' ] );
     GameMenu.init();
-    Game.init();
+    Game.init( CANVAS );
 
     var callback;
 

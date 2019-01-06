@@ -1,6 +1,5 @@
-import { STAGE } from '../main.js';
 import { getRandomInt } from "../other/utilities.js";
-import { CollisionElements } from "./game.js";
+import { CollisionElements, addToStage, removeFromStage } from "./game.js";
 
 
 export enum ItemType {
@@ -79,7 +78,7 @@ export class Grid {
 
         item.position = position;
 
-        STAGE.addChild( shape );
+        addToStage( shape );
     }
 
 
@@ -95,7 +94,7 @@ export class Grid {
         }
 
         this.grid[ position.column ][ position.line ].splice( index, 1 );
-        STAGE.removeChild( item.shape );
+        removeFromStage( item.shape );
 
         return item;
     }

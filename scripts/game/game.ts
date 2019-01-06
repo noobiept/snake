@@ -10,7 +10,7 @@ import Timer from '../other/timer.js';
 import Interval from '../other/interval.js';
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
-import { MapName, Direction, STAGE } from '../main.js';
+import { MapName, Direction } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType } from "./grid.js";
 import { setupWalls } from './maps.js';
@@ -39,6 +39,7 @@ var TWO_PLAYER_MODE = false;
 var MAP_NAME: MapName;
 var GAME_OVER = false;
 var PAUSE = false;
+let STAGE: createjs.Stage;
 export var GRID: Grid;
 
 // the colors are positioned according to the player position as well (player 1 is green, etc)
@@ -88,9 +89,10 @@ window.onkeyup = function ( event ) {
 /**
  * Initialize some game related functionality (the timer, ticker, etc)
  */
-export function init() {
+export function init( canvas: HTMLCanvasElement ) {
     TIMER = new Timer( GameMenu.updateTimer );
     createjs.Ticker.on( 'tick', tick as ( event: Object ) => void );    // casting 'event' to 'Object' to fix typing issue
+    STAGE = new createjs.Stage( canvas );
 }
 
 
@@ -586,6 +588,22 @@ export function isTwoPlayersMode() {
  */
 export function isGameOver() {
     return GAME_OVER;
+}
+
+
+/**
+ * Add a shape to the stage (so it can be drawn).
+ */
+export function addToStage( displayObject: createjs.DisplayObject ) {
+    STAGE.addChild( displayObject );
+}
+
+
+/**
+ * Remove a shape from the stage.
+ */
+export function removeFromStage( displayObject: createjs.DisplayObject ) {
+    STAGE.removeChild( displayObject );
 }
 
 
