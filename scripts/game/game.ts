@@ -12,7 +12,7 @@ import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
 import { MapName, Direction } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
-import { Grid, GridItem, ItemType } from "./grid.js";
+import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from './maps.js';
 
 
@@ -34,13 +34,13 @@ export interface CollisionElements {
 const INTERVALS: Interval[] = [];
 const COLLISIONS: CollisionElements[] = [];
 
-var TIMER: Timer;
-var TWO_PLAYER_MODE = false;
-var MAP_NAME: MapName;
-var GAME_OVER = false;
-var PAUSE = false;
+let TIMER: Timer;
+let TWO_PLAYER_MODE = false;
+let MAP_NAME: MapName;
+let GAME_OVER = false;
+let PAUSE = false;
 let STAGE: createjs.Stage;
-export var GRID: Grid;
+let GRID: Grid;
 
 // the colors are positioned according to the player position as well (player 1 is green, etc)
 const SNAKES: Snake[] = [];
@@ -604,6 +604,14 @@ export function addToStage( displayObject: createjs.DisplayObject ) {
  */
 export function removeFromStage( displayObject: createjs.DisplayObject ) {
     STAGE.removeChild( displayObject );
+}
+
+
+/**
+ * Add an element to the grid at the given position.
+ */
+export function addToGrid( element: GridItem, position: GridPosition ) {
+    GRID.add( element, position );
 }
 
 

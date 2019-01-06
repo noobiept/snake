@@ -1,6 +1,6 @@
-import * as Game from './game.js';
 import Tail from "./tail.js";
 import Food from './food.js';
+import { addToGrid } from './game.js';
 import { Direction, KeyboardMapping } from '../main.js';
 import { GridPosition } from "./grid.js";
 
@@ -106,7 +106,7 @@ export default class Snake {
         var tail = new Tail( this.color, direction, path );
         this.all_tails.push( tail );
 
-        Game.GRID.add( tail, position );
+        addToGrid( tail, position );
 
         return tail;
     }
