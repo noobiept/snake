@@ -275,13 +275,14 @@ function setupFoodInterval() {
     const foodInterval = Options.get( 'foodInterval' );
 
     // add food interval
-    const interval = new Interval( function () {
-
-        const position = GRID.getRandomEmptyPosition();
-        const food = new Food();
-        GRID.add( food, position );
-
-    }, foodInterval );
+    const interval = new Interval( {
+        callback: function () {
+            const position = GRID.getRandomEmptyPosition();
+            const food = new Food();
+            GRID.add( food, position );
+        },
+        interval: foodInterval
+    } );
     INTERVALS.push( interval );
 }
 
@@ -293,13 +294,14 @@ function setupDoubleFoodInterval() {
     const doubleFoodInterval = Options.get( 'doubleFoodInterval' );
 
     // add double food
-    const interval = new Interval( function () {
-
-        const position = GRID.getRandomEmptyPosition();
-        const food = new DoubleFood();
-        GRID.add( food, position );
-
-    }, doubleFoodInterval );
+    const interval = new Interval( {
+        callback: function () {
+            const position = GRID.getRandomEmptyPosition();
+            const food = new DoubleFood();
+            GRID.add( food, position );
+        },
+        interval: doubleFoodInterval
+    } );
     INTERVALS.push( interval );
 }
 
@@ -310,12 +312,14 @@ function setupDoubleFoodInterval() {
 function setupBananaInterval() {
     const bananaInterval = 1000;  //HERE
 
-    const interval = new Interval( function () {
-
-        const position = GRID.getRandomEmptyPosition();
-        const food = new Banana();
-        GRID.add( food, position );
-    }, bananaInterval );
+    const interval = new Interval( {
+        callback: function () {
+            const position = GRID.getRandomEmptyPosition();
+            const food = new Banana();
+            GRID.add( food, position );
+        },
+        interval: bananaInterval
+    } );
     INTERVALS.push( interval );
 }
 
@@ -328,22 +332,25 @@ function setupSnakeMovement() {
     const snakeInterval = 1 / snakeSpeed * 1000;
 
     // setup the snake movement
-    const interval = new Interval( function () {
-        for ( let i = 0; i < SNAKES.length; i++ ) {
-            const snakeObject = SNAKES[ i ];
-            snakeObject.movementTick();
+    const interval = new Interval( {
+        callback: function () {
+            for ( let i = 0; i < SNAKES.length; i++ ) {
+                const snakeObject = SNAKES[ i ];
+                snakeObject.movementTick();
 
-            const tails = snakeObject.getAllTails();
+                const tails = snakeObject.getAllTails();
 
-            for ( let b = 0; b < tails.length; b++ ) {
-                const tail = tails[ b ];
-                tail.tick();
+                for ( let b = 0; b < tails.length; b++ ) {
+                    const tail = tails[ b ];
+                    tail.tick();
 
-                const next = tail.nextPosition();
-                GRID.move( tail, next );
+                    const next = tail.nextPosition();
+                    GRID.move( tail, next );
+                }
             }
-        }
-    }, snakeInterval );
+        },
+        interval: snakeInterval
+    } );
     INTERVALS.push( interval );
 }
 

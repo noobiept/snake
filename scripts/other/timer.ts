@@ -14,9 +14,12 @@ export default class Timer {
     constructor( timeElapsed: ( time: string ) => any ) {
         this.active = false;
         this.count = 0;
-        this.interval = new Interval( () => {
-            timeElapsed( this.getString() );
-        }, 100 );
+        this.interval = new Interval( {
+            callback: () => {
+                timeElapsed( this.getString() );
+            },
+            interval: 100
+        } );
     }
 
 

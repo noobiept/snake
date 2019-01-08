@@ -76,62 +76,65 @@ function setupRandomMap( snakes: Snake[], grid: Grid, options: RandomOptions ) {
     const minWallLines = Math.round( lines * options.length.min );
     const directions = options.directions;
 
-    const interval = new Interval( function () {
+    const interval = new Interval( {
+        callback: function () {
 
-        const directionIndex = getRandomInt( 0, directions.length - 1 );
-        const direction = directions[ directionIndex ];
+            const directionIndex = getRandomInt( 0, directions.length - 1 );
+            const direction = directions[ directionIndex ];
 
-        // don't add wall elements to close to a snake
-        const exclude = [];
-        const margin = 10;
+            // don't add wall elements to close to a snake
+            const exclude = [];
+            const margin = 10;
 
-        for ( let a = 0; a < snakes.length; a++ ) {
-            const snake = snakes[ a ];
-            const first = snake.first_tail;
-            const position = {
-                column: Math.round( first.position.column - margin / 2 ),
-                line: Math.round( first.position.line - margin / 2 )
-            };
+            for ( let a = 0; a < snakes.length; a++ ) {
+                const snake = snakes[ a ];
+                const first = snake.first_tail;
+                const position = {
+                    column: Math.round( first.position.column - margin / 2 ),
+                    line: Math.round( first.position.line - margin / 2 )
+                };
 
-            exclude.push( {
-                position: position,
-                width: margin,
-                height: margin
-            } );
-        }
+                exclude.push( {
+                    position: position,
+                    width: margin,
+                    height: margin
+                } );
+            }
 
-        const position = grid.getRandomEmptyPosition( exclude );
+            const position = grid.getRandomEmptyPosition( exclude );
 
-        let min = 0;
-        let max = 0;
+            let min = 0;
+            let max = 0;
 
-        if ( options.length.percentage ) {
-            if ( direction === Direction.north || direction === Direction.south ) {
-                min = minWallLines;
-                max = maxWallLines;
+            if ( options.length.percentage ) {
+                if ( direction === Direction.north || direction === Direction.south ) {
+                    min = minWallLines;
+                    max = maxWallLines;
+                }
+
+                else {
+                    min = minWallColumns;
+                    max = maxWallColumns;
+                }
             }
 
             else {
-                min = minWallColumns;
-                max = maxWallColumns;
+                min = options.length.min;
+                max = options.length.max;
             }
-        }
 
-        else {
-            min = options.length.min;
-            max = options.length.max;
-        }
+            let length = getRandomInt( min, max );
 
-        let length = getRandomInt( min, max );
+            // needs at a minimum to occupy one grid position
+            if ( length < 1 ) {
+                length = 1;
+            }
 
-        // needs at a minimum to occupy one grid position
-        if ( length < 1 ) {
-            length = 1;
-        }
+            wallLine( position, length, direction, grid );
 
-        wallLine( position, length, direction, grid );
-
-    }, options.spawnInterval );
+        },
+        interval: options.spawnInterval
+    } );
 
     return interval;
 }
