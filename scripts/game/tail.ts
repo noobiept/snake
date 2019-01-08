@@ -11,7 +11,7 @@ export default class Tail implements GridItem {
     direction: Direction;
     position: GridPosition;
     path: Path[];
-    shape: createjs.Shape;
+    readonly shape: createjs.Shape;
     color: string;
 
 

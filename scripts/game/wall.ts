@@ -5,7 +5,7 @@ import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
  * A wall is an element that the snake can't go through.
  */
 export default class Wall implements GridItem {
-    shape: createjs.Shape;
+    readonly shape: createjs.Shape;
     position: GridPosition;
     readonly type: ItemType = ItemType.wall;
 

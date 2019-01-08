@@ -7,9 +7,9 @@ export enum ItemType {
 }
 
 export interface GridItem {
-    shape: createjs.DisplayObject;
+    readonly shape: createjs.DisplayObject;
+    readonly type: ItemType;
     position: GridPosition;
-    type: ItemType;
 }
 
 export interface GridPosition {

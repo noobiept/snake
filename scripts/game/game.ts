@@ -315,7 +315,7 @@ function setupSnakeMovement() {
             const snakeObject = SNAKES[ i ];
             snakeObject.movementTick();
 
-            const tails = snakeObject.all_tails;
+            const tails = snakeObject.getAllTails();
 
             for ( let b = 0; b < tails.length; b++ ) {
                 const tail = tails[ b ];
@@ -334,7 +334,7 @@ function setupSnakeMovement() {
  * Update the score based on the tail size of the snake.
  */
 function updateScore( snake: Snake ) {
-    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.all_tails.length );
+    GameMenu.updateScore( SNAKES.indexOf( snake ), snake.getAllTails().length );
 }
 
 

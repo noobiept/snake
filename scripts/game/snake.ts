@@ -17,11 +17,11 @@ interface SnakeArgs {
  * The snake is the element that the player controls.
  */
 export default class Snake {
-    color: string;
-    all_tails: Tail[];
+    private color: string;
+    private all_tails: Tail[];
     private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
     private keyboard_mapping: KeyboardMapping;
-    first_tail: Tail;
+    readonly first_tail: Tail;
 
 
     constructor( args: SnakeArgs ) {
@@ -334,5 +334,13 @@ export default class Snake {
         else if ( keysHeld.down ) {
             this.changeDirection( Direction.south );
         }
+    }
+
+
+    /**
+     * Return an array with all the tails that are part of this snake.
+     */
+    getAllTails() {
+        return [ ...this.all_tails ];
     }
 }
