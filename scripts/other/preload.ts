@@ -1,6 +1,7 @@
 const ASSETS = {
     orange: './images/orange_10px.png',
-    apple: './images/red_apple_10px.png'
+    apple: './images/red_apple_10px.png',
+    banana: './images/banana_10px.png'
 }
 
 type AssetName = keyof typeof ASSETS;

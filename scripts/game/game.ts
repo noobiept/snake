@@ -14,6 +14,7 @@ import { MapName, Direction } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from './maps.js';
+import Banana from "./banana.js";
 
 
 interface TickEvent {
@@ -130,6 +131,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 
     setupFoodInterval();
     setupDoubleFoodInterval();
+    setupBananaInterval();
     setupSnakeMovement();
 
     // update the scores
@@ -298,6 +300,22 @@ function setupDoubleFoodInterval() {
         GRID.add( food, position );
 
     }, doubleFoodInterval );
+    INTERVALS.push( interval );
+}
+
+
+/**
+ * Add new 'Banana' elements at a certain interval.
+ */
+function setupBananaInterval() {
+    const bananaInterval = 1000;  //HERE
+
+    const interval = new Interval( function () {
+
+        const position = GRID.getRandomEmptyPosition();
+        const food = new Banana();
+        GRID.add( food, position );
+    }, bananaInterval );
     INTERVALS.push( interval );
 }
 

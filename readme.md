@@ -34,3 +34,7 @@ The high-score menu shows the scores of the selected map. To see the scores of t
 
 - `npm run dev` (run the typescript compiler on watch mode and a development server with the game on `http://localhost:8000/`)
 - `npm run build` (build the release version of the game to the `/release/` directory)
+
+# Images #
+
+- https://opengameart.org/content/banana
