@@ -150,6 +150,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
 function setupSnakes( twoPlayersMode: boolean ) {
     const lines = GRID.args.lines;
     const columns = GRID.args.columns;
+    const snakeSpeed = Options.get( 'snakeSpeed' );
 
     // position the snakes on opposite sides horizontally, and vertically aligned
     const midLine = Math.round( lines / 2 );
@@ -162,6 +163,7 @@ function setupSnakes( twoPlayersMode: boolean ) {
         // 1 player (on left side of canvas, moving to the right)
         const position1 = 0;
         const snake1 = new Snake( {
+            speed: snakeSpeed,
             position: {
                 column: leftColumn,
                 line: midLine
@@ -179,6 +181,7 @@ function setupSnakes( twoPlayersMode: boolean ) {
         // 2 player (on right side of canvas, moving to the left)
         const position2 = 1;
         const snake2 = new Snake( {
+            speed: snakeSpeed,
             position: {
                 column: rightColumn,
                 line: midLine
@@ -202,6 +205,7 @@ function setupSnakes( twoPlayersMode: boolean ) {
         // 1 player (on left side of canvas, moving to the right)
         const position = 0;
         const snake = new Snake( {
+            speed: snakeSpeed,
             position: {
                 column: leftColumn,
                 line: midLine
@@ -328,17 +332,19 @@ function setupBananaInterval() {
  * The snake is moved depending on the speed that was set on the options.
  */
 function setupSnakeMovement() {
-    const snakeSpeed = Options.get( 'snakeSpeed' );
-    const snakeInterval = 1 / snakeSpeed * 1000;
 
     // setup the snake movement
-    const interval = new Interval( {
-        callback: function () {
-            for ( let i = 0; i < SNAKES.length; i++ ) {
-                const snakeObject = SNAKES[ i ];
-                snakeObject.movementTick();
+    for ( let a = 0; a < SNAKES.length; a++ ) {
+        const snake = SNAKES[ a ];
+        const snakeInterval = () => {
+            return 1 / snake.getCurrentSpeed() * 1000;
+        };
 
-                const tails = snakeObject.getAllTails();
+        const interval = new Interval( {
+            callback: () => {
+                snake.movementTick();
+
+                const tails = snake.getAllTails();
 
                 for ( let b = 0; b < tails.length; b++ ) {
                     const tail = tails[ b ];
@@ -347,11 +353,11 @@ function setupSnakeMovement() {
                     const next = tail.nextPosition();
                     GRID.move( tail, next );
                 }
-            }
-        },
-        interval: snakeInterval
-    } );
-    INTERVALS.push( interval );
+            },
+            interval: snakeInterval
+        } );
+        INTERVALS.push( interval );
+    }
 }
 
 
