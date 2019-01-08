@@ -53,7 +53,7 @@ export default class Snake {
 
         // add at the end of the snake
         if ( !position ) {
-            const lastDirection = last.direction;
+            const lastDirection = last.getCurrentDirection();
             const lastPosition = last.position;
 
             if ( lastDirection === Direction.west ) {
@@ -90,17 +90,15 @@ export default class Snake {
         }
 
         if ( typeof direction === 'undefined' ) {
-            direction = last.direction;
+            direction = last.getCurrentDirection();
         }
 
         let path = [];
 
         // copy the path of the last tail
+        // this tail continues the same path as the previous last one
         if ( this.all_tails.length !== 0 ) {
-            // this tail continues the same path as the previous last one
-            // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
-            var pathJson = JSON.stringify( last.path );
-            path = JSON.parse( pathJson );
+            path = last.clonePath();
         }
 
         var tail = new Tail( this.color, direction, path );
@@ -177,7 +175,7 @@ export default class Snake {
      * Get the current direction the snake is going towards.
      */
     getDirection() {
-        return this.first_tail.direction;
+        return this.first_tail.getCurrentDirection();
     }
 
 

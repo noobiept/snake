@@ -8,11 +8,11 @@ import { addToStage, removeFromStage } from './game.js';
  */
 export default class Tail implements GridItem {
     readonly type = ItemType.tail;
-    direction: Direction;
+    private direction: Direction;
     position: GridPosition;
-    path: Path[];
+    private path: Path[];
     readonly shape: createjs.Shape;
-    color: string;
+    readonly color: string;
 
 
     constructor( color: string, direction: Direction, path: Path[] ) {
@@ -108,6 +108,23 @@ export default class Tail implements GridItem {
             default:
                 throw Error( "Invalid 'tail' direction." );
         }
+    }
+
+
+    /**
+     * Return a copy of the current path that is set for this tail (deep clone).
+     */
+    clonePath() {
+        // using JSON here to do a copy of the array of objects (we can't just copy the references for the object)
+        return JSON.parse( JSON.stringify( this.path ) );
+    }
+
+
+    /**
+     * Return the direction this tail is currently going towards.
+     */
+    getCurrentDirection() {
+        return this.direction;
     }
 
 
