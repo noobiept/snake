@@ -337,7 +337,7 @@ function setupSnakeMovement() {
     for ( let a = 0; a < SNAKES.length; a++ ) {
         const snake = SNAKES[ a ];
         const snakeInterval = () => {
-            return 1 / snake.getCurrentSpeed() * 1000;
+            return snake.getMovementInterval();
         };
 
         const interval = new Interval( {

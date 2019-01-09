@@ -18,7 +18,8 @@ interface SnakeArgs {
  * The snake is the element that the player controls.
  */
 export default class Snake {
-    private speed: number;
+    private speed: number = 0;
+    private interval: number = 0;
     private color: string;
     private all_tails: Tail[];
     private keys_held: { left: boolean; right: boolean; up: boolean; down: boolean };
@@ -29,7 +30,8 @@ export default class Snake {
     constructor( args: SnakeArgs ) {
         this.all_tails = [];
         this.color = args.color;
-        this.speed = args.speed;
+
+        this.setSpeed( args.speed );
 
         // keys being pressed/held
         this.keys_held = {
@@ -183,10 +185,19 @@ export default class Snake {
 
 
     /**
-     * Return the current snake speed.
+     * Change the snake speed.
      */
-    getCurrentSpeed() {
-        return this.speed;
+    setSpeed( speed: number ) {
+        this.speed = speed;
+        this.interval = 1 / this.speed * 1000;
+    }
+
+
+    /**
+     * Return the time interval between move updates, so we can mantain the desired snake speed.
+     */
+    getMovementInterval() {
+        return this.interval;
     }
 
 
