@@ -5,17 +5,16 @@ import * as MainMenu from '../menu/main_menu.js';
 import Snake from './snake.js';
 import Wall from './wall.js';
 import Food from './food.js';
-import DoubleFood from './double_food.js';
 import Timer from '../other/timer.js';
 import Interval from '../other/interval.js';
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
-import Banana from "./banana.js";
 import Timeout, { TimeoutArgs } from "../other/timeout.js";
 import { MapName, Direction } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from './maps.js';
+import { Apple, Orange, Banana } from './all_foods.js';
 
 
 interface TickEvent {
@@ -280,11 +279,11 @@ function setupFrame() {
 function setupAppleInterval() {
     const appleInterval = Options.get( 'appleInterval' );
 
-    // add food interval
+    // add apple interval
     const interval = new Interval( {
         callback: function () {
             const position = GRID.getRandomEmptyPosition();
-            const food = new Food();
+            const food = new Apple();
             GRID.add( food, position );
         },
         interval: appleInterval
@@ -299,11 +298,11 @@ function setupAppleInterval() {
 function setupOrangeInterval() {
     const orangeInterval = Options.get( 'orangeInterval' );
 
-    // add double food
+    // add orange interval
     const interval = new Interval( {
         callback: function () {
             const position = GRID.getRandomEmptyPosition();
-            const food = new DoubleFood();
+            const food = new Orange();
             GRID.add( food, position );
         },
         interval: orangeInterval
@@ -430,14 +429,6 @@ function dealWithCollision( items: CollisionElements ) {
 
     else if ( typeA === ItemType.food && typeB === ItemType.tail ) {
         tailFoodCollision( b as Tail, a as Food );
-    }
-
-    else if ( typeA === ItemType.tail && typeB === ItemType.doubleFood ) {
-        tailFoodCollision( a as Tail, b as DoubleFood );
-    }
-
-    else if ( typeA === ItemType.doubleFood && typeB === ItemType.tail ) {
-        tailFoodCollision( b as Tail, a as DoubleFood );
     }
 
     else if ( typeA === ItemType.tail && typeB === ItemType.tail ) {

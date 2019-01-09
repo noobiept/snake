@@ -4,7 +4,7 @@ const ASSETS = {
     banana: './images/banana_10px.png'
 }
 
-type AssetName = keyof typeof ASSETS;
+export type AssetName = keyof typeof ASSETS;
 
 interface Loaded {
     [ key: string ]: HTMLImageElement;

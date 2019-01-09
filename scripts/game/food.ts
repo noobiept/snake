@@ -1,4 +1,4 @@
-import { getAsset } from '../other/preload.js';
+import { getAsset, AssetName } from '../other/preload.js';
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
 
 
@@ -14,18 +14,25 @@ interface EatenEffect {
 }
 
 
+interface FoodArgs {
+    assetName: AssetName;
+    eaten: EatenEffect;
+}
+
+
 /**
  * The base 'Food' element that on collision with a snake gives some effects to the snake (by default it adds 1 tail).
  */
-export default class Food implements GridItem {
+export default abstract class Food implements GridItem {
     readonly shape: createjs.Bitmap;
     position: GridPosition;
     readonly type: ItemType = ItemType.food;
-    readonly eaten: EatenEffect = { tails: 1 };
+    readonly eaten: EatenEffect;
 
 
-    constructor() {
-        this.shape = this.draw();
+    constructor( args: FoodArgs ) {
+        this.shape = this.draw( args.assetName );
+        this.eaten = args.eaten;
         this.position = {
             column: 0,
             line: 0
@@ -33,8 +40,8 @@ export default class Food implements GridItem {
     }
 
 
-    draw() {
-        var food = new createjs.Bitmap( getAsset( 'apple' ) );
+    draw( assetName: AssetName ) {
+        var food = new createjs.Bitmap( getAsset( assetName ) );
 
         food.regX = Grid.halfSize;
         food.regY = Grid.halfSize;
