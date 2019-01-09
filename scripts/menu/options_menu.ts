@@ -75,16 +75,16 @@ export function initOptions() {
         step: 500
     } );
     const food = setupRangeSetting( {
-        option: 'foodInterval',
-        displayHtml: '<img src="images/red_apple_10px.png" /> <em>Food</em> spawn interval',
+        option: 'appleInterval',
+        displayHtml: '<img src="images/red_apple_10px.png" /> <em>Apple</em> spawn interval',
         displayUnit: 'ms',
         min: 500,
         max: 5000,
         step: 500
     } );
     const doubleFood = setupRangeSetting( {
-        option: 'doubleFoodInterval',
-        displayHtml: '<img src="images/orange_10px.png" /> <em>Double food</em> spawn interval',
+        option: 'orangeInterval',
+        displayHtml: '<img src="images/orange_10px.png" /> <em>Orange</em> spawn interval',
         displayUnit: 'ms',
         min: 500,
         max: 5000,

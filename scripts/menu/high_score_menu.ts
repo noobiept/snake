@@ -116,8 +116,8 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
     addInfoValue( body, 'Columns: ', options.columns );
     addInfoValue( body, 'Lines: ', options.lines );
     addInfoValue( body, 'Frame: ', boolToOnOff( options.frameOn ) );
-    addInfoValue( body, 'Food interval: ', options.foodInterval, 'ms' );
-    addInfoValue( body, 'Double food interval: ', options.doubleFoodInterval, 'ms' );
+    addInfoValue( body, 'Apple interval: ', options.appleInterval, 'ms' );
+    addInfoValue( body, 'Orange interval: ', options.orangeInterval, 'ms' );
     addInfoValue( body, 'Wall interval: ', options.wallInterval, 'ms' );
     addInfoValue( body, 'Snake speed: ', options.snakeSpeed, 'Hz' );
 

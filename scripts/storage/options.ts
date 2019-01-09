@@ -6,8 +6,8 @@ export interface OptionsData {
     lines: number;
     frameOn: boolean;
     wallInterval: number;   // the intervals are in milliseconds
-    foodInterval: number;
-    doubleFoodInterval: number;
+    appleInterval: number;
+    orangeInterval: number;
     snakeSpeed: number; // is in Hz (movement frequency)
 }
 
@@ -22,8 +22,8 @@ const OPTIONS: OptionsData = {
     lines: 40,
     frameOn: false,
     wallInterval: 4000,
-    foodInterval: 1000,
-    doubleFoodInterval: 5000,
+    appleInterval: 1000,
+    orangeInterval: 5000,
     snakeSpeed: 20
 };
 
@@ -50,12 +50,12 @@ export function load( options?: OptionsData ) {
             OPTIONS.wallInterval = options.wallInterval;
         }
 
-        if ( Number.isInteger( options.foodInterval ) ) {
-            OPTIONS.foodInterval = options.foodInterval;
+        if ( Number.isInteger( options.appleInterval ) ) {
+            OPTIONS.appleInterval = options.appleInterval;
         }
 
-        if ( Number.isInteger( options.doubleFoodInterval ) ) {
-            OPTIONS.doubleFoodInterval = options.doubleFoodInterval;
+        if ( Number.isInteger( options.orangeInterval ) ) {
+            OPTIONS.orangeInterval = options.orangeInterval;
         }
 
         if ( Number.isInteger( options.snakeSpeed ) ) {

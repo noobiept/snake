@@ -131,8 +131,8 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         INTERVALS.push( interval );
     }
 
-    setupFoodInterval();
-    setupDoubleFoodInterval();
+    setupAppleInterval();
+    setupOrangeInterval();
     setupBananaInterval();
     setupSnakeMovement();
 
@@ -275,10 +275,10 @@ function setupFrame() {
 
 
 /**
- * Add new 'Food' elements at a certain interval.
+ * Add new 'Apple' elements at a certain interval.
  */
-function setupFoodInterval() {
-    const foodInterval = Options.get( 'foodInterval' );
+function setupAppleInterval() {
+    const appleInterval = Options.get( 'appleInterval' );
 
     // add food interval
     const interval = new Interval( {
@@ -287,17 +287,17 @@ function setupFoodInterval() {
             const food = new Food();
             GRID.add( food, position );
         },
-        interval: foodInterval
+        interval: appleInterval
     } );
     INTERVALS.push( interval );
 }
 
 
 /**
- * Add new 'DoubleFood' elements at a certain interval.
+ * Add new 'Orange' elements at a certain interval.
  */
-function setupDoubleFoodInterval() {
-    const doubleFoodInterval = Options.get( 'doubleFoodInterval' );
+function setupOrangeInterval() {
+    const orangeInterval = Options.get( 'orangeInterval' );
 
     // add double food
     const interval = new Interval( {
@@ -306,7 +306,7 @@ function setupDoubleFoodInterval() {
             const food = new DoubleFood();
             GRID.add( food, position );
         },
-        interval: doubleFoodInterval
+        interval: orangeInterval
     } );
     INTERVALS.push( interval );
 }
