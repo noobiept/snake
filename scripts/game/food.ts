@@ -7,6 +7,10 @@ import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
  */
 interface EatenEffect {
     tails: number;  // number of tails added
+    speed?: {
+        multiplier: number; // multiply the base speed by this factor
+        duration: number;   // reset the increase after a certain time
+    };
 }
 
 

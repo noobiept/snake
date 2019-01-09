@@ -6,7 +6,13 @@ import { Grid, ItemType } from './grid.js';
 export default class Banana extends Food {
 
     readonly type = ItemType.food;
-    readonly eaten = { tails: 1 };
+    readonly eaten = {
+        tails: 1,
+        speed: {
+            multiplier: 2,
+            duration: 2000
+        }
+    };
 
 
     draw() {

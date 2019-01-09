@@ -1,6 +1,6 @@
 import Tail from "./tail.js";
 import Food from './food.js';
-import { addToGrid } from './game.js';
+import { addToGrid, addTimeout } from './game.js';
 import { Direction, KeyboardMapping } from '../main.js';
 import { GridPosition } from "./grid.js";
 
@@ -284,6 +284,20 @@ export default class Snake {
         // add more tails
         for ( let a = 0; a < effects.tails; a++ ) {
             this.addTail();
+        }
+
+        // change the speed
+        const speed = effects.speed;
+
+        if ( speed ) {
+            this.setSpeed( this.speed * speed.multiplier );
+
+            addTimeout( {
+                callback: () => {
+                    this.setSpeed( this.speed / speed.multiplier )
+                },
+                duration: speed.duration
+            } );
         }
     }
 
