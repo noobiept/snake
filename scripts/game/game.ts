@@ -10,11 +10,12 @@ import Timer from '../other/timer.js';
 import Interval from '../other/interval.js';
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
+import Banana from "./banana.js";
+import Timeout, { TimeoutArgs } from "../other/timeout.js";
 import { MapName, Direction } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from './maps.js';
-import Banana from "./banana.js";
 
 
 interface TickEvent {
@@ -32,6 +33,7 @@ export interface CollisionElements {
 }
 
 
+const TIMEOUTS: Timeout[] = [];
 const INTERVALS: Interval[] = [];
 const COLLISIONS: CollisionElements[] = [];
 
@@ -578,6 +580,7 @@ export function isPaused() {
  * Clear the game data.
  */
 export function clear() {
+    TIMEOUTS.length = 0;
     INTERVALS.length = 0;
     COLLISIONS.length = 0;
     SNAKES.length = 0;
@@ -647,6 +650,15 @@ export function addToGrid( element: GridItem, position: GridPosition ) {
 
 
 /**
+ * Add a new timeout to the game loop (so its able to count the time).
+ */
+export function addTimeout( args: TimeoutArgs ) {
+    const timeout = new Timeout( args );
+    TIMEOUTS.push( timeout );
+}
+
+
+/**
  * Update the game (gets called at every tick).
  */
 function tick( event: TickEvent ) {
@@ -655,6 +667,16 @@ function tick( event: TickEvent ) {
     }
 
     const delta = event.delta;  // in milliseconds
+
+    // run all the timeouts
+    for ( let a = TIMEOUTS.length - 1; a >= 0; a-- ) {
+        const timeout = TIMEOUTS[ a ];
+        const over = timeout.tick( delta );
+
+        if ( over ) {
+            TIMEOUTS.splice( a, 1 );
+        }
+    }
 
     // run all the intervals (spawn of food, tail movement, etc)
     for ( let a = 0; a < INTERVALS.length; a++ ) {
