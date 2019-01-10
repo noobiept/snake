@@ -3,7 +3,7 @@ import { CollisionElements, addToStage, removeFromStage } from "./game.js";
 
 
 export enum ItemType {
-    tail, food, doubleFood, wall
+    tail, food, wall
 }
 
 export interface GridItem {
