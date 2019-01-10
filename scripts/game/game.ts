@@ -457,6 +457,10 @@ function collisionOccurred( items: CollisionElements ) {
  * Game is over (happens when the snake hits its tails for example).
  */
 export function over() {
+    if ( GAME_OVER ) {
+        return;
+    }
+
     GAME_OVER = true;
 
     // construct the display message
