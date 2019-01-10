@@ -118,6 +118,7 @@ function showInfoWindow( score: Score, button: HTMLElement ) {
     addInfoValue( body, 'Frame: ', boolToOnOff( options.frameOn ) );
     addInfoValue( body, 'Apple interval: ', options.appleInterval, 'ms' );
     addInfoValue( body, 'Orange interval: ', options.orangeInterval, 'ms' );
+    addInfoValue( body, 'Banana interval: ', options.bananaInterval, 'ms' );
     addInfoValue( body, 'Wall interval: ', options.wallInterval, 'ms' );
     addInfoValue( body, 'Snake speed: ', options.snakeSpeed, 'Hz' );
 

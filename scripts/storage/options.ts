@@ -8,6 +8,7 @@ export interface OptionsData {
     wallInterval: number;   // the intervals are in milliseconds
     appleInterval: number;
     orangeInterval: number;
+    bananaInterval: number;
     snakeSpeed: number; // is in Hz (movement frequency)
 }
 
@@ -24,6 +25,7 @@ const OPTIONS: OptionsData = {
     wallInterval: 4000,
     appleInterval: 1000,
     orangeInterval: 5000,
+    bananaInterval: 4000,
     snakeSpeed: 20
 };
 

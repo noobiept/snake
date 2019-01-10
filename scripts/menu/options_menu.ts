@@ -74,7 +74,7 @@ export function initOptions() {
         max: 5000,
         step: 500
     } );
-    const food = setupRangeSetting( {
+    const apple = setupRangeSetting( {
         option: 'appleInterval',
         displayHtml: '<img src="images/red_apple_10px.png" /> <em>Apple</em> spawn interval',
         displayUnit: 'ms',
@@ -82,9 +82,17 @@ export function initOptions() {
         max: 5000,
         step: 500
     } );
-    const doubleFood = setupRangeSetting( {
+    const orange = setupRangeSetting( {
         option: 'orangeInterval',
         displayHtml: '<img src="images/orange_10px.png" /> <em>Orange</em> spawn interval',
+        displayUnit: 'ms',
+        min: 500,
+        max: 5000,
+        step: 500
+    } );
+    const banana = setupRangeSetting( {
+        option: 'bananaInterval',
+        displayHtml: '<img src="images/banana_10px.png" /> <em>Banana</em> spawn interval',
         displayUnit: 'ms',
         min: 500,
         max: 5000,
@@ -93,8 +101,9 @@ export function initOptions() {
 
     const mapsOptions = document.getElementById( 'Options-Maps' )!;
     mapsOptions.appendChild( wall );
-    mapsOptions.appendChild( food );
-    mapsOptions.appendChild( doubleFood );
+    mapsOptions.appendChild( apple );
+    mapsOptions.appendChild( orange );
+    mapsOptions.appendChild( banana );
 
     // setup the 'back' button
     var back = document.getElementById( 'Options-Back' )!;

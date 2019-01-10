@@ -315,7 +315,7 @@ function setupOrangeInterval() {
  * Add new 'Banana' elements at a certain interval.
  */
 function setupBananaInterval() {
-    const bananaInterval = 1000;  //HERE
+    const bananaInterval = Options.get( 'bananaInterval' );
 
     const interval = new Interval( {
         callback: function () {
