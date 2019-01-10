@@ -418,6 +418,11 @@ function tailWallCollision( tail: Tail, wall: Wall ) {
  * Need to first identify the type and then call the appropriate function.
  */
 function dealWithCollision( items: CollisionElements ) {
+
+    if ( GAME_OVER ) {
+        return;
+    }
+
     const a = items.a;
     const b = items.b;
     const typeA = a.type;
