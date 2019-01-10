@@ -215,12 +215,6 @@ figure
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: center;
-    }
-
-#Options-Container > div
-    {
-    height: 150px;
     }
 
 #Options-Container h1
