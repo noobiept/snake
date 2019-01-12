@@ -60,6 +60,10 @@ export function load( options?: OptionsData ) {
             OPTIONS.orangeInterval = options.orangeInterval;
         }
 
+        if ( Number.isInteger( options.bananaInterval ) ) {
+            OPTIONS.bananaInterval = options.bananaInterval;
+        }
+
         if ( Number.isInteger( options.snakeSpeed ) ) {
             OPTIONS.snakeSpeed = options.snakeSpeed;
         }
