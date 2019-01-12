@@ -67,7 +67,7 @@ export class Grid {
             line >= this.args.lines ||
             column < 0 ||
             line < 0 ) {
-            return;
+            throw new Error( "Invalid grid position." );
         }
 
         this.grid[ column ][ line ].push( item );
@@ -125,6 +125,39 @@ export class Grid {
      */
     isEmpty( position: GridPosition ) {
         return this.grid[ position.column ][ position.line ].length === 0;
+    }
+
+
+    /**
+     * Check if the given position is within the grid, and if it isn't then return the appropriate position.
+     * This can happen when we're adding new tails at the end of the snake that end up outside of the grid (need to move them to the other side).
+     */
+    getValidPosition( position: GridPosition ) {
+        let column = position.column;
+        let line = position.line;
+        const columnsLength = this.args.columns;
+        const linesLength = this.args.lines;
+
+        if ( column < 0 ) {
+            column = columnsLength - Math.abs( column );
+        }
+
+        else if ( column >= columnsLength ) {
+            column = column - columnsLength;
+        }
+
+        if ( line < 0 ) {
+            line = linesLength - Math.abs( line );
+        }
+
+        else if ( line >= linesLength ) {
+            line = line - linesLength;
+        }
+
+        return {
+            column: column,
+            line: line
+        };
     }
 
 

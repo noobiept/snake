@@ -57,7 +57,7 @@ export default class Snake {
         const last = this.getLastTail();
 
         // add at the end of the snake
-        if ( !position ) {
+        if ( typeof position === 'undefined' ) {
             const lastDirection = last.getCurrentDirection();
             const lastPosition = last.position;
 

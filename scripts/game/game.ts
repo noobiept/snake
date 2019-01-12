@@ -643,8 +643,11 @@ export function removeFromStage( displayObject: createjs.DisplayObject ) {
 
 /**
  * Add an element to the grid at the given position.
+ * The desired position might not be where it ends up being placed (when trying to add in a position outside of the grid).
  */
-export function addToGrid( element: GridItem, position: GridPosition ) {
+export function addToGrid( element: GridItem, desiredPosition: GridPosition ) {
+    const position = GRID.getValidPosition( desiredPosition );
+
     GRID.add( element, position );
 }
 
