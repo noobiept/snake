@@ -28,7 +28,7 @@ export class Banana extends Food {
             eaten: {
                 tails: 1,
                 speed: {
-                    multiplier: 2,
+                    multiplier: 1.5,
                     duration: 2000
                 }
             }
