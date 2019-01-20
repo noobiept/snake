@@ -517,7 +517,7 @@ export function over() {
                 text: 'Quit',
                 onClick: function () {
                     popup.remove();
-                    quit();
+                    quit( false );  // scores were already saved above
                 }
             }
         ]
@@ -544,8 +544,10 @@ function addScores() {
  * Exit the game immediately.
  * The scores are still saved.
  */
-export function quit() {
-    addScores();
+export function quit( saveScores = true ) {
+    if ( saveScores ) {
+        addScores();
+    }
 
     clear();
     MainMenu.open( 'mainMenu' );
