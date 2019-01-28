@@ -41,7 +41,7 @@ module.exports = function ( grunt ) {
                     'css/**',
                     'images/*.png',
                     'libraries/**',
-                    'scripts/*.js',
+                    'scripts/**/*.js',
                     'index.html'
                 ],
                 dest: dest
