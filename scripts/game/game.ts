@@ -10,7 +10,7 @@ import Interval from '../other/interval.js';
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
 import Timeout, { TimeoutArgs } from "../other/timeout.js";
-import { MapName, Direction } from '../main.js';
+import { MapName, Direction, showHideCanvas } from '../main.js';
 import { EVENT_KEY } from '../other/utilities.js';
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from './maps.js';
@@ -141,6 +141,7 @@ export function start( mapName: MapName, twoPlayersMode?: boolean ) {
         updateScore( snake );
     }
 
+    showHideCanvas( true );
     GameMenu.show( TWO_PLAYER_MODE );
 }
 
@@ -550,6 +551,7 @@ export function quit( saveScores = true ) {
     }
 
     clear();
+    showHideCanvas( false );
     MainMenu.open( 'mainMenu' );
 }
 

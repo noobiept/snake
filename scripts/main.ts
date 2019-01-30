@@ -58,7 +58,7 @@ window.onload = function () {
         initApp( data );
 
         Message.hide();
-        showCanvas();
+        showHideCanvas( false );
     } );
 };
 
@@ -111,10 +111,16 @@ export function updateCanvasDimensions() {
 
 
 /**
- * Show the canvas element.
+ * Show/hide the canvas element.
  */
-function showCanvas() {
+export function showHideCanvas( show: boolean ) {
     if ( CANVAS ) {
-        CANVAS.classList.remove( 'hidden' );
+        if ( show ) {
+            CANVAS.classList.remove( 'hidden' );
+        }
+
+        else {
+            CANVAS.classList.add( 'hidden' );
+        }
     }
 }
