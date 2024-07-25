@@ -1,6 +1,0 @@
-syntax: glob
-release/
-node_modules/
-scripts/**.js
-*.map
-info.txt
