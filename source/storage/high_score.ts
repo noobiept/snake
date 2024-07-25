@@ -14,15 +14,15 @@ export interface MapScores {
     [mapName: string]: Score[];
 }
 
-var HIGH_SCORE: MapScores = {};
+let HIGH_SCORE: MapScores = {};
 
 // number of scores to save (just save the best ones)
-var HIGH_SCORE_LENGTH = 5;
+const HIGH_SCORE_LENGTH = 5;
 
 /**
  * Determine if we have a valid `MapScores` object.
  */
-function isMapScores(object: any): object is MapScores {
+function isMapScores(object: unknown): object is MapScores {
     if (object) {
         const keys = Object.keys(object);
 
@@ -39,9 +39,12 @@ function isMapScores(object: any): object is MapScores {
 
                 if (
                     !(score instanceof Object) ||
-                    !score.hasOwnProperty("numberOfTails") ||
-                    !score.hasOwnProperty("time") ||
-                    !score.hasOwnProperty("options")
+                    !Object.prototype.hasOwnProperty.call(
+                        score,
+                        "numberOfTails"
+                    ) ||
+                    !Object.prototype.hasOwnProperty.call(score, "time") ||
+                    !Object.prototype.hasOwnProperty.call(score, "options")
                 ) {
                     return false;
                 }
@@ -57,7 +60,7 @@ function isMapScores(object: any): object is MapScores {
 /**
  * Load the scores from local storage.
  */
-export function load(score?: any) {
+export function load(score?: MapScores) {
     if (isMapScores(score)) {
         HIGH_SCORE = score;
     }

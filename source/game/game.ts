@@ -17,7 +17,7 @@ import { setupWalls } from "./maps.js";
 import { Apple, Orange, Banana } from "./all_foods.js";
 
 interface TickEvent {
-    target: Object;
+    target: object;
     type: string;
     paused: boolean;
     delta: number; // time elapsed in ms since the last tick
@@ -50,10 +50,8 @@ const SNAKES_COLORS = ["green", "dodgerblue"];
  * Deal with the keyboard inputs (used to control the snakes, etc).
  */
 window.onkeydown = function (event) {
-    var returnValue;
-
-    for (var i = 0; i < SNAKES.length; i++) {
-        returnValue = SNAKES[i].onKeyDown(event.keyCode);
+    for (let i = 0; i < SNAKES.length; i++) {
+        const returnValue = SNAKES[i].onKeyDown(event.keyCode);
 
         if (!returnValue) {
             return returnValue;
@@ -67,10 +65,8 @@ window.onkeydown = function (event) {
  * Deal with the keyboard inputs (used to control the snakes, etc).
  */
 window.onkeyup = function (event) {
-    var returnValue;
-
-    for (var i = 0; i < SNAKES.length; i++) {
-        returnValue = SNAKES[i].onKeyUp(event.keyCode);
+    for (let i = 0; i < SNAKES.length; i++) {
+        const returnValue = SNAKES[i].onKeyUp(event.keyCode);
 
         if (!returnValue) {
             return returnValue;
@@ -85,7 +81,7 @@ window.onkeyup = function (event) {
  */
 export function init(canvas: HTMLCanvasElement) {
     TIMER = new Timer(GameMenu.updateTimer);
-    createjs.Ticker.on("tick", tick as (event: Object) => void); // casting 'event' to 'Object' to fix typing issue
+    createjs.Ticker.on("tick", tick as (event: object) => void); // casting 'event' to 'Object' to fix typing issue
     STAGE = new createjs.Stage(canvas);
 }
 
@@ -440,8 +436,8 @@ export function over() {
     let score = 0;
 
     if (TWO_PLAYER_MODE) {
-        var player1_score = SNAKES[0].getNumberOfTails();
-        var player2_score = SNAKES[1].getNumberOfTails();
+        const player1_score = SNAKES[0].getNumberOfTails();
+        const player2_score = SNAKES[1].getNumberOfTails();
 
         if (player1_score > player2_score) {
             text += "Player 1 Won!<br />";
@@ -491,7 +487,7 @@ function addScores() {
     TIMER.stop();
 
     // add the scores from all the snakes (the high-score is an overall score (doesn't matter which player did it))
-    for (var i = 0; i < SNAKES.length; i++) {
+    for (let i = 0; i < SNAKES.length; i++) {
         HighScore.add(
             MAP_NAME,
             SNAKES[i].getNumberOfTails(),

@@ -1,4 +1,4 @@
-import { getRandomInt } from "../other/utilities.js";
+import { getRandomInt } from "@drk4/utilities";
 import { CollisionElements, addToStage, removeFromStage } from "./game.js";
 
 export enum ItemType {

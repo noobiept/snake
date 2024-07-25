@@ -15,7 +15,7 @@ let CURRENT_BUTTON: HTMLElement | undefined; // associated 'info button' of the 
  * Initialize the high-score menu page.
  */
 export function initHighScore() {
-    var back = document.getElementById("HighScore-Back")!;
+    const back = document.getElementById("HighScore-Back")!;
 
     back.onclick = function () {
         hideInfoWindow();
@@ -36,19 +36,17 @@ export function buildHighScoreTable(mapName: MapName) {
     title.innerHTML = `High score (${displayName})`;
 
     // data
-    var allScores = getMapScores(mapName);
+    const allScores = getMapScores(mapName);
 
     if (!allScores || allScores.length === 0) {
         table.innerHTML = "No score yet.";
     } else {
         // header
-        var tableRow = document.createElement("tr");
+        const tableRow = document.createElement("tr");
+        const header = ["Position", "Number Of Tails", "Time"];
 
-        var header = ["Position", "Number Of Tails", "Time"];
-        var tableHeader;
-
-        for (var i = 0; i < header.length; i++) {
-            tableHeader = document.createElement("th");
+        for (let i = 0; i < header.length; i++) {
+            const tableHeader = document.createElement("th");
 
             tableHeader.innerText = header[i];
             tableRow.appendChild(tableHeader);
@@ -56,7 +54,7 @@ export function buildHighScoreTable(mapName: MapName) {
 
         table.appendChild(tableRow);
 
-        for (i = 0; i < allScores.length; i++) {
+        for (let i = 0; i < allScores.length; i++) {
             const score = allScores[i];
 
             const tableRow = document.createElement("tr");
@@ -164,7 +162,7 @@ function clearCurrent() {
 function addInfoValue(
     container: HTMLElement,
     text: string,
-    value: any,
+    value: string | number,
     unit?: string
 ) {
     const textElement = document.createElement("div");

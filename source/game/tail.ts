@@ -28,12 +28,12 @@ export default class Tail implements GridItem {
      * Draw the 'Tail' shape.
      */
     draw() {
-        var snakeTail = new createjs.Shape();
+        const snakeTail = new createjs.Shape();
 
         snakeTail.regX = Grid.halfSize;
         snakeTail.regY = Grid.halfSize;
 
-        var g = snakeTail.graphics;
+        const g = snakeTail.graphics;
 
         g.beginFill(this.color);
         g.drawRoundRect(0, 0, Grid.size, Grid.size, 2);
@@ -47,7 +47,7 @@ export default class Tail implements GridItem {
      * Change the shape's color to red, to signal that the tail as been hit.
      */
     asBeenHit() {
-        var g = this.shape.graphics;
+        const g = this.shape.graphics;
 
         g.beginFill("red");
         g.drawRoundRect(0, 0, Grid.size, Grid.size, 2);
@@ -123,7 +123,7 @@ export default class Tail implements GridItem {
      */
     tick() {
         // have to check if this tail needs to change direction or not
-        var direction = this.direction;
+        let direction = this.direction;
 
         if (this.path.length !== 0) {
             const checkpoint = this.path[0];

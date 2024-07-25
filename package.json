@@ -18,6 +18,7 @@
         "test:w": "vitest"
     },
     "dependencies": {
+        "@drk4/utilities": "^6.2.1",
         "easeljs": "^1.0.2"
     },
     "devDependencies": {

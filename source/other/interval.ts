@@ -7,7 +7,7 @@ interface IntervalArgs {
  * Use to run some code at a certain interval. It counts based on the given 'delta' time (time that passes between ticks).
  */
 export default class Interval {
-    private callback: () => any;
+    private callback: () => void;
     private target: number | (() => number);
     private count: number;
 

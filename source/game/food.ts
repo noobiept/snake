@@ -36,7 +36,7 @@ export default abstract class Food implements GridItem {
     }
 
     draw(assetName: AssetName) {
-        var food = new createjs.Bitmap(getAsset(assetName));
+        const food = new createjs.Bitmap(getAsset(assetName));
 
         food.regX = Grid.halfSize;
         food.regY = Grid.halfSize;

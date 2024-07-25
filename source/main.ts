@@ -37,7 +37,7 @@ export interface KeyboardMapping {
 }
 
 export interface Dict {
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 export type MapName =
@@ -92,7 +92,7 @@ function initApp(data: AppStorage.StorageData) {
     GameMenu.init();
     Game.init(CANVAS);
 
-    var callback;
+    let callback;
 
     // on the first run of the program, show the help page
     if (!data["snake_has_run_before"]) {

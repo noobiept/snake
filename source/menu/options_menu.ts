@@ -107,7 +107,7 @@ export function initOptions() {
     mapsOptions.appendChild(banana);
 
     // setup the 'back' button
-    var back = document.getElementById("Options-Back")!;
+    const back = document.getElementById("Options-Back")!;
 
     back.onclick = function () {
         Options.save();

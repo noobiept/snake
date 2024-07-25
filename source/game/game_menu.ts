@@ -1,8 +1,8 @@
 import * as Game from "./game.js";
 
-var GAME_MENU: HTMLElement;
-var PLAYERS_SCORE: HTMLElement[] = [];
-var TIMER_ELEMENT: HTMLElement;
+let GAME_MENU: HTMLElement;
+const PLAYERS_SCORE: HTMLElement[] = [];
+let TIMER_ELEMENT: HTMLElement;
 
 /**
  * Initialize the game menu.
@@ -15,7 +15,7 @@ export function init() {
 
     // :: Pause / Resume :: //
 
-    var pauseResume = <HTMLDivElement>(
+    const pauseResume = <HTMLDivElement>(
         document.getElementById("GameMenu-PauseResume")
     );
     pauseResume.onclick = function () {
@@ -24,7 +24,7 @@ export function init() {
 
     // :: Quit :: //
 
-    var quit = <HTMLDivElement>document.getElementById("GameMenu-Quit");
+    const quit = <HTMLDivElement>document.getElementById("GameMenu-Quit");
     quit.onclick = function () {
         // don't allow to mess with the menu when game is over
         if (Game.isGameOver()) {
@@ -39,7 +39,7 @@ export function init() {
  * Show the game menu.
  */
 export function show(twoPlayerMode: boolean) {
-    var playerTwoScore = PLAYERS_SCORE[1].parentElement!;
+    const playerTwoScore = PLAYERS_SCORE[1].parentElement!;
 
     if (twoPlayerMode) {
         playerTwoScore.classList.remove("hidden");

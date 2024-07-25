@@ -4,7 +4,7 @@ import { MapName } from "../main.js";
 import { buildHighScoreTable, initHighScore } from "./high_score_menu.js";
 import { initOptions } from "./options_menu.js";
 
-var MAP_SELECTED: HTMLElement;
+let MAP_SELECTED: HTMLElement;
 
 interface Pages {
     mainMenu: HTMLElement;
@@ -66,14 +66,14 @@ function changeMap(element: HTMLElement, save = true) {
  */
 function initMainMenu(mapName?: string) {
     // initialize the main menu elements
-    var startGame = document.getElementById("MainMenu-StartGame")!;
-    var startGame_2players = document.getElementById(
+    const startGame = document.getElementById("MainMenu-StartGame")!;
+    const startGame_2players = document.getElementById(
         "MainMenu-StartGame-2players"
     )!;
-    var selectMap = document.getElementById("MainMenu-SelectMap")!;
-    var options = document.getElementById("MainMenu-Options")!;
-    var highScore = document.getElementById("MainMenu-HighScore")!;
-    var help = document.getElementById("MainMenu-Help")!;
+    const selectMap = document.getElementById("MainMenu-SelectMap")!;
+    const options = document.getElementById("MainMenu-Options")!;
+    const highScore = document.getElementById("MainMenu-HighScore")!;
+    const help = document.getElementById("MainMenu-Help")!;
 
     startGame.onclick = function () {
         clear();
@@ -87,9 +87,9 @@ function initMainMenu(mapName?: string) {
 
     // set the click event on all the map elements (to change to that map)
     for (let a = 0; a < selectMap.children.length; a++) {
-        let map = <HTMLElement>selectMap.children[a];
+        const map = <HTMLElement>selectMap.children[a];
 
-        map.onclick = function (event) {
+        map.onclick = function () {
             changeMap(map);
         };
     }
@@ -127,7 +127,7 @@ function initMainMenu(mapName?: string) {
  * Initialize the 'help' page.
  */
 function initHelp() {
-    var back = document.getElementById("Help-Back")!;
+    const back = document.getElementById("Help-Back")!;
 
     back.onclick = function () {
         open("mainMenu");

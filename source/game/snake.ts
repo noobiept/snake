@@ -99,7 +99,7 @@ export default class Snake {
             path = last.clonePath();
         }
 
-        var tail = new Tail(this.color, direction, path);
+        const tail = new Tail(this.color, direction, path);
         this.all_tails.push(tail);
 
         addToGrid(tail, position);
@@ -111,7 +111,7 @@ export default class Snake {
      * Change the direction of the snake (at the current x/y position).
      */
     changeDirection(newDirection: Direction) {
-        var currentDirection = this.getDirection();
+        const currentDirection = this.getDirection();
 
         // already going that way
         if (currentDirection == newDirection) {
@@ -135,7 +135,7 @@ export default class Snake {
         const position = this.first_tail.position;
         const numberOfTails = this.all_tails.length;
 
-        for (var i = 0; i < numberOfTails; i++) {
+        for (let i = 0; i < numberOfTails; i++) {
             const tail = this.all_tails[i];
 
             tail.addNewDirection({
@@ -196,8 +196,8 @@ export default class Snake {
      * Deal with the keyboard inputs.
      */
     onKeyDown(keyCode: number) {
-        var keysHeld = this.keys_held;
-        var keyboardMapping = this.keyboard_mapping;
+        const keysHeld = this.keys_held;
+        const keyboardMapping = this.keyboard_mapping;
 
         switch (keyCode) {
             case keyboardMapping.left:
@@ -228,8 +228,8 @@ export default class Snake {
      * Deal with the keyboard inputs.
      */
     onKeyUp(keyCode: number) {
-        var keysHeld = this.keys_held;
-        var keyboardMapping = this.keyboard_mapping;
+        const keysHeld = this.keys_held;
+        const keyboardMapping = this.keyboard_mapping;
 
         switch (keyCode) {
             case keyboardMapping.left:
@@ -286,8 +286,8 @@ export default class Snake {
      * Deal with the snake's movement at every tick (based on the player's inputs).
      */
     movementTick() {
-        var keysHeld = this.keys_held;
-        var direction = this.getDirection();
+        const keysHeld = this.keys_held;
+        const direction = this.getDirection();
 
         if (keysHeld.left) {
             if (keysHeld.down) {

@@ -21,12 +21,12 @@ export default class Wall implements GridItem {
      * Draw the 'Wall' shape.
      */
     draw() {
-        var wall = new createjs.Shape();
+        const wall = new createjs.Shape();
 
         wall.regX = Grid.halfSize;
         wall.regY = Grid.halfSize;
 
-        var g = wall.graphics;
+        const g = wall.graphics;
 
         g.beginFill("white");
         g.drawRoundRect(0, 0, Grid.size, Grid.size, 2);
@@ -38,7 +38,7 @@ export default class Wall implements GridItem {
      * Change the shape's color to red, to signal that the wall as been hit.
      */
     asBeenHit() {
-        var g = this.shape.graphics;
+        const g = this.shape.graphics;
 
         g.beginFill("red");
         g.drawRoundRect(0, 0, Grid.size, Grid.size, 2);

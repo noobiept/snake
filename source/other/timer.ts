@@ -9,7 +9,7 @@ export default class Timer {
     private interval: Interval;
     private active: boolean;
 
-    constructor(timeElapsed: (time: string) => any) {
+    constructor(timeElapsed: (time: string) => void) {
         this.active = false;
         this.count = 0;
         this.interval = new Interval({

@@ -78,68 +78,17 @@ export function isNextTo(
     range: number
 ) {
     // we make a 'box' with the target position and the range
-    var boxLeft = targetX - range / 2;
-    var boxRight = targetX + range / 2;
+    const boxLeft = targetX - range / 2;
+    const boxRight = targetX + range / 2;
 
-    var boxTop = targetY - range / 2;
-    var boxBottom = targetY + range / 2;
+    const boxTop = targetY - range / 2;
+    const boxBottom = targetY + range / 2;
 
     if (x >= boxLeft && x <= boxRight && y >= boxTop && y <= boxBottom) {
         return true;
     } else {
         return false;
     }
-}
-
-/**
- * Check if there's a collision between two rectangles.
- */
-export function checkCollision(
-    oneX: number,
-    oneY: number,
-    oneWidth: number,
-    oneHeight: number,
-    twoX: number,
-    twoY: number,
-    twoWidth: number,
-    twoHeight: number
-) {
-    // calculate the position of the corners of the object (as a rectangle)
-    // the position origin of the objects is in the center
-    var oneLeft = oneX - oneWidth / 2;
-    var oneRight = oneX + oneWidth / 2;
-    var oneTop = oneY - oneHeight / 2;
-    var oneBottom = oneY + oneHeight / 2;
-
-    var twoLeft = twoX - twoWidth / 2;
-    var twoRight = twoX + twoWidth / 2;
-    var twoTop = twoY - twoHeight / 2;
-    var twoBottom = twoY + twoHeight / 2;
-
-    if (
-        oneRight >= twoLeft &&
-        oneLeft <= twoRight &&
-        oneTop <= twoBottom &&
-        oneBottom >= twoTop
-    ) {
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * Returns a random integer in the given range (inclusive).
- */
-export function getRandomInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-/**
- * Returns a random float in the given range (inclusive).
- */
-export function getRandomFloat(min: number, max: number) {
-    return Math.random() * (max - min) + min;
 }
 
 /**
