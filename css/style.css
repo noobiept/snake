@@ -1,7 +1,6 @@
-    /* Basic Elements */
+/* Basic Elements */
 
-body
-    {
+body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,53 +11,45 @@ body
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    }
+}
 
-em
-    {
+em {
     color: antiquewhite;
-    }
+}
 
-figure
-    {
+figure {
     margin: 2px;
-    }
+}
 
-    /* General Classes */
+/* General Classes */
 
-.hidden
-    {
+.hidden {
     display: none !important;
-    }
+}
 
-.button
-    {
+.button {
     cursor: pointer;
     color: white;
     text-shadow: rgba(0, 0, 255, 0.7) 3px 0 2px;
     transition: text-shadow 0.2s linear;
     padding: 0 30px;
     margin: 10px 0;
-    }
+}
 
-.button:hover
-    {
+.button:hover {
     text-shadow: blue 3px 0;
-    }
+}
 
-.displayValue
-    {
+.displayValue {
     display: inline-block;
     color: chartreuse;
-    }
+}
 
-.backButton
-    {
+.backButton {
     margin-top: 40px;
-    }
+}
 
-.popupWindow
-    {
+.popupWindow {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -66,94 +57,84 @@ figure
     background-color: black;
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 20px;
-    }
+}
 
-.popupOverlay
-    {
+.popupOverlay {
     position: fixed;
     left: 0;
     top: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    }
+}
 
-.popupButtons
-    {
+.popupButtons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    }
+}
 
-    /* Main Elements */
+/* Main Elements */
 
-#GameContent
-    {
+#GameContent {
     position: relative;
-    }
+}
 
-#MainCanvas
-    {
+#MainCanvas {
     border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+}
 
-#Message
-    {
+#Message {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.4em;
     text-shadow: blue 2px 0;
-    }
+}
 
-    /* Main Menus */
+/* Main Menus */
 
-#MainMenu, #Options, #HighScore, #Help
-    {
+#MainMenu,
+#Options,
+#HighScore,
+#Help {
     position: absolute; /* position the elements on the center of the window (both horizontally and vertically) */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    }
+}
 
-#MainMenu-SelectMap
-    {
+#MainMenu-SelectMap {
     padding: 0;
-    }
+}
 
-#MainMenu-SelectMap li
-    {
+#MainMenu-SelectMap li {
     display: inline-block;
     cursor: pointer;
-    }
+}
 
-.MainMenu-mapSelected
-    {
+.MainMenu-mapSelected {
     background-color: white;
     color: black;
-    }
+}
 
-    /* High-score Menu */
+/* High-score Menu */
 
-#HighScore-Table th
-    {
+#HighScore-Table th {
     padding: 0 5px;
-    }
+}
 
 #HighScore-Table td:nth-child(even):not(:last-child),
-#HighScore-Table th:nth-child(even):not(:last-child)
-    {
+#HighScore-Table th:nth-child(even):not(:last-child) {
     background-color: rgb(50, 50, 50);
-    }
+}
 
-#HighScore-Content
-    {
+#HighScore-Content {
     position: relative;
-    }
+}
 
-#HighScore-Info
-    {
+#HighScore-Info {
     position: absolute;
     width: 300px;
     left: 100%;
@@ -162,67 +143,57 @@ figure
     background-color: black;
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 20px;
-    }
+}
 
-.HighScore-selectedInfo
-    {
+.HighScore-selectedInfo {
     color: black;
     background-color: white;
     text-shadow: rgba(100, 100, 255, 0.7) 3px 0 2px;
-    }
+}
 
-.HighScore-selectedInfo:hover
-    {
+.HighScore-selectedInfo:hover {
     text-shadow: rgba(0, 0, 255, 0.7) 3px 0 2px;
-    }
+}
 
-    /* Help Menu */
+/* Help Menu */
 
-#Help ul
-    {
+#Help ul {
     list-style-type: none;
     text-align: left;
-    }
+}
 
-#Help-Elements
-    {
+#Help-Elements {
     text-align: left;
-    }
+}
 
-.Help-block > *
-    {
+.Help-block > * {
     display: inline-block;
     margin: 10px;
-    }
+}
 
-    /* Options Menu */
+/* Options Menu */
 
-#Options-Container
-    {
+#Options-Container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    }
+}
 
-#Options-Container h1
-    {
+#Options-Container h1 {
     font-size: 26px;
-    }
+}
 
-.Options-rangeSetting
-    {
+.Options-rangeSetting {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    }
+}
 
-.Options-rangeSetting > *
-    {
+.Options-rangeSetting > * {
     margin: 3px 5px;
-    }
+}
 
-.Options-rangeInput
-    {
+.Options-rangeInput {
     appearance: none;
     -webkit-appearance: none;
     outline: none;
@@ -231,15 +202,13 @@ figure
     border-radius: 5px;
     background-color: rgb(230, 230, 230);
     transition: background-color 0.2s;
-    }
+}
 
-.Options-rangeInput:hover
-    {
+.Options-rangeInput:hover {
     background-color: white;
-    }
+}
 
-.Options-rangeInput::-webkit-slider-thumb
-    {
+.Options-rangeInput::-webkit-slider-thumb {
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
@@ -249,23 +218,20 @@ figure
     border: 1px solid white;
     background-color: rgb(20, 20, 20);
     transition: background-color 0.2s;
-    }
+}
 
-.Options-rangeInput::-webkit-slider-thumb:hover
-    {
+.Options-rangeInput::-webkit-slider-thumb:hover {
     background-color: black;
-    }
+}
 
-.Options-value
-    {
+.Options-value {
     width: 50px;
     text-align: right;
-    }
+}
 
-    /* Game Menu */
+/* Game Menu */
 
-#GameMenu
-    {
+#GameMenu {
     position: absolute; /* position below the canvas at the bottom/right corner */
     bottom: 0;
     right: 0;
@@ -274,25 +240,23 @@ figure
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    }
+}
 
-#GameMenu-Left, #GameMenu-Right
-    {
+#GameMenu-Left,
+#GameMenu-Right {
     display: flex;
     flex-direction: row;
-    }
+}
 
-#GameMenu-Left > *
-    {
+#GameMenu-Left > * {
     padding: 0;
     margin: 0;
     padding-right: 10px;
-    }
+}
 
-#GameMenu-Right > *
-    {
+#GameMenu-Right > * {
     padding: 0;
     margin: 0;
     padding-left: 10px;
     width: 80px;
-    }
+}

@@ -3,17 +3,15 @@
  */
 let ELEMENT: HTMLElement;
 
-
 export function init() {
-    ELEMENT = document.getElementById( 'Message' )!;
+    ELEMENT = document.getElementById("Message")!;
 }
 
-
-export function show( text: string ) {
+export function show(text: string) {
     ELEMENT.innerHTML = text;
-    ELEMENT.classList.remove( 'hidden' );
+    ELEMENT.classList.remove("hidden");
 }
 
 export function hide() {
-    ELEMENT.classList.add( 'hidden' );
+    ELEMENT.classList.add("hidden");
 }

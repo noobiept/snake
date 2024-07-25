@@ -1,11 +1,10 @@
-import * as AppStorage from './app_storage.js';
-
+import * as AppStorage from "./app_storage.js";
 
 export interface OptionsData {
     columns: number;
     lines: number;
     frameOn: boolean;
-    wallInterval: number;   // the intervals are in milliseconds
+    wallInterval: number; // the intervals are in milliseconds
     appleInterval: number;
     orangeInterval: number;
     bananaInterval: number;
@@ -15,8 +14,9 @@ export interface OptionsData {
 export type OptionsKey = keyof OptionsData;
 
 // only the keys that result in the specified type
-export type KeysOfType<T, TProp> = { [ P in keyof T ]: T[ P ] extends TProp ? P : never }[ keyof T ];
-
+export type KeysOfType<T, TProp> = {
+    [P in keyof T]: T[P] extends TProp ? P : never;
+}[keyof T];
 
 const OPTIONS: OptionsData = {
     columns: 60,
@@ -26,78 +26,75 @@ const OPTIONS: OptionsData = {
     appleInterval: 1000,
     orangeInterval: 5000,
     bananaInterval: 4000,
-    snakeSpeed: 20
+    snakeSpeed: 20,
 };
-
 
 /**
  * Validate and load the given options (if not valid then it uses the default values).
  */
-export function load( options?: OptionsData ) {
-    if ( options ) {
-
-        if ( Number.isInteger( options.columns ) ) {
+export function load(options?: OptionsData) {
+    if (options) {
+        if (Number.isInteger(options.columns)) {
             OPTIONS.columns = options.columns;
         }
 
-        if ( Number.isInteger( options.lines ) ) {
+        if (Number.isInteger(options.lines)) {
             OPTIONS.lines = options.lines;
         }
 
-        if ( typeof options.frameOn === 'boolean' ) {
+        if (typeof options.frameOn === "boolean") {
             OPTIONS.frameOn = options.frameOn;
         }
 
-        if ( Number.isInteger( options.wallInterval ) ) {
+        if (Number.isInteger(options.wallInterval)) {
             OPTIONS.wallInterval = options.wallInterval;
         }
 
-        if ( Number.isInteger( options.appleInterval ) ) {
+        if (Number.isInteger(options.appleInterval)) {
             OPTIONS.appleInterval = options.appleInterval;
         }
 
-        if ( Number.isInteger( options.orangeInterval ) ) {
+        if (Number.isInteger(options.orangeInterval)) {
             OPTIONS.orangeInterval = options.orangeInterval;
         }
 
-        if ( Number.isInteger( options.bananaInterval ) ) {
+        if (Number.isInteger(options.bananaInterval)) {
             OPTIONS.bananaInterval = options.bananaInterval;
         }
 
-        if ( Number.isInteger( options.snakeSpeed ) ) {
+        if (Number.isInteger(options.snakeSpeed)) {
             OPTIONS.snakeSpeed = options.snakeSpeed;
         }
     }
 }
 
-
 /**
  * Save to local storage the current options values.
  */
 export function save() {
-    AppStorage.setData( { snake_options: OPTIONS } );
+    AppStorage.setData({ snake_options: OPTIONS });
 }
-
 
 /**
  * Get the current value of the given option.
  */
-export function get<Key extends OptionsKey>( option: Key ) {
-    return OPTIONS[ option ];
+export function get<Key extends OptionsKey>(option: Key) {
+    return OPTIONS[option];
 }
-
 
 /**
  * Set a new value to the given option.
  */
-export function set<Key extends OptionsKey>( option: Key, value: OptionsData[ Key ] ) {
-    OPTIONS[ option ] = value;
+export function set<Key extends OptionsKey>(
+    option: Key,
+    value: OptionsData[Key]
+) {
+    OPTIONS[option] = value;
 }
-
 
 /**
  * Get a new object with the current options values.
  */
 export function clone() {
-    return Object.assign( {}, OPTIONS );
+    return Object.assign({}, OPTIONS);
 }

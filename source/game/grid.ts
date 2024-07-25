@@ -1,9 +1,10 @@
 import { getRandomInt } from "../other/utilities.js";
 import { CollisionElements, addToStage, removeFromStage } from "./game.js";
 
-
 export enum ItemType {
-    tail, food, wall
+    tail,
+    food,
+    wall,
 }
 
 export interface GridItem {
@@ -19,58 +20,57 @@ export interface GridPosition {
 
 export interface GridRectangle {
     position: GridPosition;
-    width: number;  // in number of grid positions
+    width: number; // in number of grid positions
     height: number;
 }
 
 interface GridArgs {
     columns: number;
     lines: number;
-    onCollision: ( items: CollisionElements ) => void;
+    onCollision: (items: CollisionElements) => void;
 }
-
 
 /**
  * A 2d grid that is used by the game, to keep track of all the elements that were added and its current position.
  */
 export class Grid {
-    static readonly size = 10;   // size of each grid item in pixels
+    static readonly size = 10; // size of each grid item in pixels
     static readonly halfSize = Grid.size / 2;
 
-    private grid: ( GridItem[] )[][];
+    private grid: GridItem[][][];
     readonly args: GridArgs;
 
-
-    constructor( args: GridArgs ) {
+    constructor(args: GridArgs) {
         this.args = args;
         this.grid = [];
 
         // initialize the 'grid' array
-        for ( let column = 0; column < args.columns; column++ ) {
-            this.grid[ column ] = [];
+        for (let column = 0; column < args.columns; column++) {
+            this.grid[column] = [];
 
-            for ( let line = 0; line < args.lines; line++ ) {
-                this.grid[ column ][ line ] = [];
+            for (let line = 0; line < args.lines; line++) {
+                this.grid[column][line] = [];
             }
         }
     }
 
-
     /**
      * Add an item to the grid on the given position.
      */
-    add( item: GridItem, position: GridPosition ) {
+    add(item: GridItem, position: GridPosition) {
         const column = position.column;
         const line = position.line;
 
-        if ( column >= this.args.columns ||
+        if (
+            column >= this.args.columns ||
             line >= this.args.lines ||
             column < 0 ||
-            line < 0 ) {
-            throw new Error( "Invalid grid position." );
+            line < 0
+        ) {
+            throw new Error("Invalid grid position.");
         }
 
-        this.grid[ column ][ line ].push( item );
+        this.grid[column][line].push(item);
 
         const shape = item.shape;
         shape.x = column * Grid.size + Grid.halfSize;
@@ -78,109 +78,100 @@ export class Grid {
 
         item.position = position;
 
-        addToStage( shape );
+        addToStage(shape);
     }
-
 
     /**
      * Remove the item from the grid.
      */
-    remove( item: GridItem ) {
+    remove(item: GridItem) {
         const position = item.position;
 
-        const index = this.grid[ position.column ][ position.line ].indexOf( item );
-        if ( index < 0 ) {
-            throw Error( 'Item not in the correct position.' )
+        const index = this.grid[position.column][position.line].indexOf(item);
+        if (index < 0) {
+            throw Error("Item not in the correct position.");
         }
 
-        this.grid[ position.column ][ position.line ].splice( index, 1 );
-        removeFromStage( item.shape );
+        this.grid[position.column][position.line].splice(index, 1);
+        removeFromStage(item.shape);
 
         return item;
     }
-
 
     /**
      * Remove all the items from the grid.
      */
     removeAll() {
-        for ( let column = 0; column < this.grid.length; column++ ) {
-            const columns = this.grid[ column ];
+        for (let column = 0; column < this.grid.length; column++) {
+            const columns = this.grid[column];
 
-            for ( let line = 0; line < columns.length; line++ ) {
+            for (let line = 0; line < columns.length; line++) {
+                const lines = columns[line];
 
-                const lines = columns[ line ];
-
-                for ( let a = lines.length - 1; a >= 0; a-- ) {
-                    const item = lines[ a ];
-                    this.remove( item );
+                for (let a = lines.length - 1; a >= 0; a--) {
+                    const item = lines[a];
+                    this.remove(item);
                 }
             }
         }
     }
 
-
     /**
      * Check if the given position is empty.
      */
-    isEmpty( position: GridPosition ) {
-        return this.grid[ position.column ][ position.line ].length === 0;
+    isEmpty(position: GridPosition) {
+        return this.grid[position.column][position.line].length === 0;
     }
-
 
     /**
      * Check if the given position is within the grid, and if it isn't then return the appropriate position.
      * This can happen when we're adding new tails at the end of the snake that end up outside of the grid (need to move them to the other side).
      */
-    getValidPosition( position: GridPosition ) {
+    getValidPosition(position: GridPosition) {
         let column = position.column;
         let line = position.line;
         const columnsLength = this.args.columns;
         const linesLength = this.args.lines;
 
-        if ( column < 0 ) {
-            column = columnsLength - Math.abs( column );
-        }
-
-        else if ( column >= columnsLength ) {
+        if (column < 0) {
+            column = columnsLength - Math.abs(column);
+        } else if (column >= columnsLength) {
             column = column - columnsLength;
         }
 
-        if ( line < 0 ) {
-            line = linesLength - Math.abs( line );
-        }
-
-        else if ( line >= linesLength ) {
+        if (line < 0) {
+            line = linesLength - Math.abs(line);
+        } else if (line >= linesLength) {
             line = line - linesLength;
         }
 
         return {
             column: column,
-            line: line
+            line: line,
         };
     }
-
 
     /**
      * Check if the given position is valid (if its within the grid limits).
      */
-    isValid( position: GridPosition ) {
-        if ( position.column < 0 ||
+    isValid(position: GridPosition) {
+        if (
+            position.column < 0 ||
             position.column >= this.args.columns ||
             position.line < 0 ||
-            position.line >= this.args.lines ) {
+            position.line >= this.args.lines
+        ) {
             return false;
         }
 
         return true;
     }
 
-
     /**
      * Move an item to a different position in the grid.
      */
-    move( item: GridItem, to: GridPosition ) {
-        if ( !item ) {
+    move(item: GridItem, to: GridPosition) {
+        if (!item) {
             return;
         }
 
@@ -188,46 +179,42 @@ export class Grid {
         const lines = this.args.lines;
 
         // deal with the edges of the grid (move to the other border when trying to go outside of the grid)
-        if ( to.column >= columns ) {
+        if (to.column >= columns) {
             to.column = 0;
-        }
-
-        else if ( to.column < 0 ) {
+        } else if (to.column < 0) {
             to.column = columns - 1;
         }
 
-        if ( to.line >= lines ) {
+        if (to.line >= lines) {
             to.line = 0;
-        }
-
-        else if ( to.line < 0 ) {
+        } else if (to.line < 0) {
             to.line = lines - 1;
         }
 
-        const existingItems = this.grid[ to.column ][ to.line ];
+        const existingItems = this.grid[to.column][to.line];
 
         // a collision happened between the item and other items on the destination position
-        if ( existingItems.length > 0 ) {
-            for ( let a = 0; a < existingItems.length; a++ ) {
-                const otherItem = existingItems[ a ];
-                this.args.onCollision( {
+        if (existingItems.length > 0) {
+            for (let a = 0; a < existingItems.length; a++) {
+                const otherItem = existingItems[a];
+                this.args.onCollision({
                     a: item,
-                    b: otherItem
-                } );
+                    b: otherItem,
+                });
             }
         }
 
         // remove from the previous position
         const from = item.position;
-        const index = this.grid[ from.column ][ from.line ].indexOf( item );
-        if ( index < 0 ) {
-            throw Error( 'Item not in the correct position.' );
+        const index = this.grid[from.column][from.line].indexOf(item);
+        if (index < 0) {
+            throw Error("Item not in the correct position.");
         }
 
-        this.grid[ from.column ][ from.line ].splice( index, 1 );
+        this.grid[from.column][from.line].splice(index, 1);
 
         // add to the new position
-        this.grid[ to.column ][ to.line ].push( item );
+        this.grid[to.column][to.line].push(item);
 
         // update the position of the item
         item.shape.x = to.column * Grid.size + Grid.halfSize;
@@ -235,65 +222,68 @@ export class Grid {
         item.position = to;
     }
 
-
     /**
      * Get a random position in the grid that doesn't have any item in there yet.
      * You can optionally exclude certain areas from the search.
      */
-    getRandomEmptyPosition( excludeRectangles?: GridRectangle[] ) {
+    getRandomEmptyPosition(excludeRectangles?: GridRectangle[]) {
         const emptyPositions = [];
         const grid = this.grid;
         const columns = this.args.columns;
         const lines = this.args.lines;
 
-        for ( let column = 0; column < columns; column++ ) {
-            for ( let line = 0; line < lines; line++ ) {
-                const items = grid[ column ][ line ];
+        for (let column = 0; column < columns; column++) {
+            for (let line = 0; line < lines; line++) {
+                const items = grid[column][line];
 
-                if ( items.length === 0 ) {
+                if (items.length === 0) {
                     const position = { column: column, line: line };
 
-                    if ( !positionInRectangles( position, excludeRectangles ) ) {
-                        emptyPositions.push( {
+                    if (!positionInRectangles(position, excludeRectangles)) {
+                        emptyPositions.push({
                             column: column,
-                            line: line
-                        } );
+                            line: line,
+                        });
                     }
                 }
             }
         }
 
         // there's no empty positions anymore, just put in a random occupied position instead
-        if ( emptyPositions.length === 0 ) {
+        if (emptyPositions.length === 0) {
             return {
-                column: getRandomInt( 0, columns ),
-                line: getRandomInt( 0, lines )
+                column: getRandomInt(0, columns),
+                line: getRandomInt(0, lines),
             };
-        }
-
-        else {
-            const index = getRandomInt( 0, emptyPositions.length - 1 );
-            return emptyPositions[ index ];
+        } else {
+            const index = getRandomInt(0, emptyPositions.length - 1);
+            return emptyPositions[index];
         }
     }
 }
 
-
 /**
  * Check if a position is within any of the given rectangles.
  */
-function positionInRectangles( position: GridPosition, rectangles?: GridRectangle[] ) {
-    if ( !rectangles ) {
+function positionInRectangles(
+    position: GridPosition,
+    rectangles?: GridRectangle[]
+) {
+    if (!rectangles) {
         return false;
     }
 
-    for ( let a = 0; a < rectangles.length; a++ ) {
-        const rect = rectangles[ a ];
+    for (let a = 0; a < rectangles.length; a++) {
+        const rect = rectangles[a];
 
-        if ( !( position.column < rect.position.column ||
-            position.column > rect.position.column + rect.width ||
-            position.line < rect.position.line ||
-            position.line > rect.position.line + rect.height ) ) {
+        if (
+            !(
+                position.column < rect.position.column ||
+                position.column > rect.position.column + rect.width ||
+                position.line < rect.position.line ||
+                position.line > rect.position.line + rect.height
+            )
+        ) {
             return true;
         }
     }

@@ -1,13 +1,12 @@
-import * as AppStorage from './storage/app_storage.js';
-import * as Options from './storage/options.js';
-import * as MainMenu from './menu/main_menu.js';
-import * as HighScore from './storage/high_score.js';
-import * as GameMenu from './game/game_menu.js';
-import * as Game from './game/game.js';
-import * as Preload from './other/preload.js';
-import * as  Message from "./other/message.js";
+import * as AppStorage from "./storage/app_storage.js";
+import * as Options from "./storage/options.js";
+import * as MainMenu from "./menu/main_menu.js";
+import * as HighScore from "./storage/high_score.js";
+import * as GameMenu from "./game/game_menu.js";
+import * as Game from "./game/game.js";
+import * as Preload from "./other/preload.js";
+import * as Message from "./other/message.js";
 import { Grid } from "./game/grid.js";
-
 
 export enum Direction {
     west,
@@ -17,7 +16,7 @@ export enum Direction {
     northWest,
     northEast,
     southWest,
-    southEast
+    southEast,
 }
 
 export interface Path {
@@ -38,89 +37,98 @@ export interface KeyboardMapping {
 }
 
 export interface Dict {
-    [ key: string ]: any;
+    [key: string]: any;
 }
 
-export type MapName = 'random' | 'randomDiagonal' | 'randomSingle' | 'stairs' | 'lines' | 'empty';
+export type MapName =
+    | "random"
+    | "randomDiagonal"
+    | "randomSingle"
+    | "stairs"
+    | "lines"
+    | "empty";
 
-
-let CANVAS: HTMLCanvasElement;  // the canvas element where the game is drawn in
-
+let CANVAS: HTMLCanvasElement; // the canvas element where the game is drawn in
 
 /**
  * Starting point of the application.
  */
 window.onload = function () {
     Message.init();
-    Message.show( 'Loading...' );
+    Message.show("Loading...");
 
-    AppStorage.getData( [ 'snake_high_score', 'snake_options', 'snake_has_run_before', 'snake_selected_map' ], function ( data ) {
-        initApp( data );
+    AppStorage.getData(
+        [
+            "snake_high_score",
+            "snake_options",
+            "snake_has_run_before",
+            "snake_selected_map",
+        ],
+        function (data) {
+            initApp(data);
 
-        Message.hide();
-        showHideCanvas( false );
-    } );
+            Message.hide();
+            showHideCanvas(false);
+        }
+    );
 };
-
 
 /**
  * Load the application with the 'data' we got from the storage.
  */
-function initApp( data: AppStorage.StorageData ) {
-    Options.load( data[ 'snake_options' ] );
+function initApp(data: AppStorage.StorageData) {
+    Options.load(data["snake_options"]);
 
     // setup the canvas
-    CANVAS = <HTMLCanvasElement> document.querySelector( '#MainCanvas' );
+    CANVAS = <HTMLCanvasElement>document.querySelector("#MainCanvas");
 
     updateCanvasDimensions();
 
     // use the 'requestAnimationFrame' timing mode, and use the 'delta' values to control the game timings
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
 
-    HighScore.load( data[ 'snake_high_score' ] );
-    MainMenu.init( data[ 'snake_selected_map' ] );
+    HighScore.load(data["snake_high_score"]);
+    MainMenu.init(data["snake_selected_map"]);
     GameMenu.init();
-    Game.init( CANVAS );
+    Game.init(CANVAS);
 
     var callback;
 
     // on the first run of the program, show the help page
-    if ( !data[ 'snake_has_run_before' ] ) {
-        AppStorage.setData( { snake_has_run_before: true } );
-        callback = () => { MainMenu.open( 'help' ) };
+    if (!data["snake_has_run_before"]) {
+        AppStorage.setData({ snake_has_run_before: true });
+        callback = () => {
+            MainMenu.open("help");
+        };
+    } else {
+        callback = () => {
+            MainMenu.open("mainMenu");
+        };
     }
 
-    else {
-        callback = () => { MainMenu.open( 'mainMenu' ) };
-    }
-
-    Preload.init( callback );
+    Preload.init(callback);
 }
-
 
 /**
  * Change the width/height of the canvas element where the game is drawn. The size is based on the number of columns/lines being used in the game.
  */
 export function updateCanvasDimensions() {
-    const columns = Options.get( 'columns' );
-    const lines = Options.get( 'lines' );
+    const columns = Options.get("columns");
+    const lines = Options.get("lines");
 
     CANVAS.width = columns * Grid.size;
     CANVAS.height = lines * Grid.size;
 }
 
-
 /**
  * Show/hide the canvas element.
  */
-export function showHideCanvas( show: boolean ) {
-    if ( CANVAS ) {
-        if ( show ) {
-            CANVAS.classList.remove( 'hidden' );
-        }
-
-        else {
-            CANVAS.classList.add( 'hidden' );
+export function showHideCanvas(show: boolean) {
+    if (CANVAS) {
+        if (show) {
+            CANVAS.classList.remove("hidden");
+        } else {
+            CANVAS.classList.add("hidden");
         }
     }
 }

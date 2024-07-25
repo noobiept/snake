@@ -1,6 +1,5 @@
-import Interval from './interval.js';
+import Interval from "./interval.js";
 import { timeToString } from "./utilities.js";
-
 
 /**
  * Counts the time that has passed since the start.
@@ -10,33 +9,28 @@ export default class Timer {
     private interval: Interval;
     private active: boolean;
 
-
-    constructor( timeElapsed: ( time: string ) => any ) {
+    constructor(timeElapsed: (time: string) => any) {
         this.active = false;
         this.count = 0;
-        this.interval = new Interval( {
+        this.interval = new Interval({
             callback: () => {
-                timeElapsed( this.getString() );
+                timeElapsed(this.getString());
             },
-            interval: 100
-        } );
+            interval: 100,
+        });
     }
-
 
     start() {
         this.active = true;
     }
 
-
     stop() {
         this.active = false;
     }
 
-
     getMilliseconds() {
         return this.count;
     }
-
 
     restart() {
         this.count = 0;
@@ -44,16 +38,14 @@ export default class Timer {
         this.interval.reset();
     }
 
-
     getString() {
-        return timeToString( this.count );
+        return timeToString(this.count);
     }
 
-
-    tick( delta: number ) {
-        if ( this.active ) {
+    tick(delta: number) {
+        if (this.active) {
             this.count += delta;
-            this.interval.tick( delta );
+            this.interval.tick(delta);
         }
     }
 }
