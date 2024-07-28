@@ -11,7 +11,6 @@ import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
 import Timeout, { TimeoutArgs } from "../other/timeout.js";
 import { MapName, Direction, showHideCanvas } from "../main.js";
-import { EVENT_KEY } from "../other/utilities.js";
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from "./maps.js";
 import { Apple, Orange, Banana } from "./all_foods.js";
@@ -51,7 +50,7 @@ const SNAKES_COLORS = ["green", "dodgerblue"];
  */
 window.onkeydown = function (event) {
     for (let i = 0; i < SNAKES.length; i++) {
-        const returnValue = SNAKES[i].onKeyDown(event.keyCode);
+        const returnValue = SNAKES[i].onKeyDown(event.code);
 
         if (!returnValue) {
             return returnValue;
@@ -66,7 +65,7 @@ window.onkeydown = function (event) {
  */
 window.onkeyup = function (event) {
     for (let i = 0; i < SNAKES.length; i++) {
-        const returnValue = SNAKES[i].onKeyUp(event.keyCode);
+        const returnValue = SNAKES[i].onKeyUp(event.code);
 
         if (!returnValue) {
             return returnValue;
@@ -159,10 +158,10 @@ function setupSnakes(twoPlayersMode: boolean) {
             startingDirection: Direction.east,
             color: SNAKES_COLORS[position1],
             keyboardMapping: {
-                left: EVENT_KEY.a,
-                right: EVENT_KEY.d,
-                up: EVENT_KEY.w,
-                down: EVENT_KEY.s,
+                left: "KeyA",
+                right: "KeyD",
+                up: "KeyW",
+                down: "KeyS",
             },
         });
 
@@ -177,10 +176,10 @@ function setupSnakes(twoPlayersMode: boolean) {
             startingDirection: Direction.west,
             color: SNAKES_COLORS[position2],
             keyboardMapping: {
-                left: EVENT_KEY.leftArrow,
-                right: EVENT_KEY.rightArrow,
-                up: EVENT_KEY.upArrow,
-                down: EVENT_KEY.downArrow,
+                left: "ArrowLeft",
+                right: "ArrowRight",
+                up: "ArrowUp",
+                down: "ArrowDown",
             },
         });
 
@@ -201,14 +200,14 @@ function setupSnakes(twoPlayersMode: boolean) {
             startingDirection: Direction.east,
             color: SNAKES_COLORS[position],
             keyboardMapping: {
-                left: EVENT_KEY.a,
-                left2: EVENT_KEY.leftArrow,
-                right: EVENT_KEY.d,
-                right2: EVENT_KEY.rightArrow,
-                up: EVENT_KEY.w,
-                up2: EVENT_KEY.upArrow,
-                down: EVENT_KEY.s,
-                down2: EVENT_KEY.downArrow,
+                left: "KeyA",
+                left2: "ArrowLeft",
+                right: "KeyD",
+                right2: "ArrowRight",
+                up: "KeyW",
+                up2: "ArrowUp",
+                down: "KeyS",
+                down2: "ArrowDown",
             },
         });
 

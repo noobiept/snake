@@ -26,14 +26,14 @@ export interface Path {
 }
 
 export interface KeyboardMapping {
-    left: number;
-    left2?: number;
-    right: number;
-    right2?: number;
-    up: number;
-    up2?: number;
-    down: number;
-    down2?: number;
+    left: string;
+    left2?: string;
+    right: string;
+    right2?: string;
+    up: string;
+    up2?: string;
+    down: string;
+    down2?: string;
 }
 
 export interface Dict {

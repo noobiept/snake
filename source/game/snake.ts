@@ -186,7 +186,7 @@ export default class Snake {
     }
 
     /**
-     * Return the time interval between move updates, so we can mantain the desired snake speed.
+     * Return the time interval between move updates, so we can maintain the desired snake speed.
      */
     getMovementInterval() {
         return this.interval;
@@ -195,7 +195,7 @@ export default class Snake {
     /**
      * Deal with the keyboard inputs.
      */
-    onKeyDown(keyCode: number) {
+    onKeyDown(keyCode: string) {
         const keysHeld = this.keys_held;
         const keyboardMapping = this.keyboard_mapping;
 
@@ -227,7 +227,7 @@ export default class Snake {
     /**
      * Deal with the keyboard inputs.
      */
-    onKeyUp(keyCode: number) {
+    onKeyUp(keyCode: string) {
         const keysHeld = this.keys_held;
         const keyboardMapping = this.keyboard_mapping;
 

@@ -1,16 +1,8 @@
-// Place your settings in this file to overwrite default and user settings.
 {
     "files.exclude": {
-        "**/scripts/**/*.js": true,
-        "**/scripts/**/*.map": true,
+        "**/source/**/*.js": true,
+        "**/source/**/*.map": true,
         "**/images/*.svg": true
     },
     "editor.formatOnSave": true,
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-    "typescript.format.insertSpaceAfterTypeAssertion": true,
-    "typescript.preferences.quoteStyle": "double",
-    "files.eol": "\n",
-    "files.insertFinalNewline": true,
-    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
