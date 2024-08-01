@@ -2,7 +2,7 @@ import { Direction, Path } from "../types.js";
 import { Grid } from "./grid.js";
 import { ItemType, type GridItem, type GridPosition } from "./grid.types.js";
 
-export type TailArgs = {
+type TailArgs = {
     color: string;
     direction: Direction;
     path: Path[];

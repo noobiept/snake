@@ -11,7 +11,7 @@ import type { Score } from "../storage/storage.types.js";
 let CURRENT_SCORE: Score | undefined; // associated 'score' of the current opened window
 let CURRENT_BUTTON: HTMLElement | undefined; // associated 'info button' of the opened window (so we can add/remove style to it)
 
-export type HighScoreMenuInitArgs = {
+type HighScoreMenuInitArgs = {
     onBack: () => void;
 };
 

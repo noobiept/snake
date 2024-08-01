@@ -22,7 +22,7 @@ interface BooleanArgs {
     displayHtml: string;
 }
 
-export type InitOptionsArgs = {
+type InitOptionsArgs = {
     onBack: () => void;
 };
 

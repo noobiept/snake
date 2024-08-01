@@ -18,5 +18,6 @@ jobs:
             - run: npm run format:check
             - run: npm run lint
             - run: npm run lint:dependencies
+            - run: npm run lint:unused
             - run: npm run test
             - run: npm run build
