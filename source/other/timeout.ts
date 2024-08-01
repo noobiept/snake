@@ -6,7 +6,7 @@ export interface TimeoutArgs {
 /**
  * Call the given 'callback' function after a certain time has passed.
  */
-export default class Timeout {
+export class Timeout {
     private callback: () => void;
     private duration: number;
     private count: number;

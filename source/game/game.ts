@@ -1,6 +1,7 @@
 import * as GameMenu from "./game_menu.js";
 import * as Options from "../storage/options.js";
 import * as HighScore from "../storage/high_score.js";
+import * as AllTimeouts from "./all_timeouts.js";
 import Snake from "./snake.js";
 import Wall from "./wall.js";
 import Food from "./food.js";
@@ -8,20 +9,19 @@ import Timer from "../other/timer.js";
 import Interval from "../other/interval.js";
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
-import Timeout, { TimeoutArgs } from "../other/timeout.js";
 import { Grid } from "./grid.js";
 import { setupWalls } from "./maps.js";
 import { Apple, Orange, Banana } from "./all_foods.js";
 import { showHideCanvas } from "./canvas.js";
 import { Direction, type MapName } from "../types.js";
-import type {
-    CollisionElements,
-    GameInitArgs,
-    TickEvent,
-} from "./game.types.js";
-import { ItemType, type GridItem, type GridPosition } from "./grid.types.js";
+import type { GameInitArgs, TickEvent } from "./game.types.js";
+import {
+    ItemType,
+    type CollisionElements,
+    type GridItem,
+    type GridPosition,
+} from "./grid.types.js";
 
-const TIMEOUTS: Timeout[] = [];
 const INTERVALS: Interval[] = [];
 const COLLISIONS: CollisionElements[] = [];
 
@@ -185,6 +185,7 @@ function setupSnakes(twoPlayersMode: boolean) {
             },
             onAdd: addToStage,
             onRemove: removeFromStage,
+            onTailAdd: addToGrid,
         });
 
         // 2 player (on right side of canvas, moving to the left)
@@ -205,6 +206,7 @@ function setupSnakes(twoPlayersMode: boolean) {
             },
             onAdd: addToStage,
             onRemove: removeFromStage,
+            onTailAdd: addToGrid,
         });
 
         SNAKES.push(snake1);
@@ -235,6 +237,7 @@ function setupSnakes(twoPlayersMode: boolean) {
             },
             onAdd: addToStage,
             onRemove: removeFromStage,
+            onTailAdd: addToGrid,
         });
 
         SNAKES.push(snake);
@@ -562,7 +565,7 @@ export function isPaused() {
  * Clear the game data.
  */
 export function clear() {
-    TIMEOUTS.length = 0;
+    AllTimeouts.clear();
     INTERVALS.length = 0;
     COLLISIONS.length = 0;
     SNAKES.length = 0;
@@ -628,14 +631,6 @@ export function addToGrid(element: GridItem, desiredPosition: GridPosition) {
 }
 
 /**
- * Add a new timeout to the game loop (so its able to count the time).
- */
-export function addTimeout(args: TimeoutArgs) {
-    const timeout = new Timeout(args);
-    TIMEOUTS.push(timeout);
-}
-
-/**
  * Update the game (gets called at every tick).
  */
 function tick(event: TickEvent) {
@@ -646,14 +641,7 @@ function tick(event: TickEvent) {
     const delta = event.delta; // in milliseconds
 
     // run all the timeouts
-    for (let a = TIMEOUTS.length - 1; a >= 0; a--) {
-        const timeout = TIMEOUTS[a];
-        const over = timeout.tick(delta);
-
-        if (over) {
-            TIMEOUTS.splice(a, 1);
-        }
-    }
+    AllTimeouts.tick(delta);
 
     // run all the intervals (spawn of food, tail movement, etc)
     for (let a = 0; a < INTERVALS.length; a++) {

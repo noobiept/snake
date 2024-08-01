@@ -1,10 +1,3 @@
-import type { GridItem } from "./grid.types";
-
-export interface CollisionElements {
-    a: GridItem;
-    b: GridItem;
-}
-
 export type GameInitArgs = {
     canvas: HTMLCanvasElement;
     onQuit: () => void;

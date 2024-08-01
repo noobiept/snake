@@ -1,5 +1,3 @@
-import type { CollisionElements } from "./game.types";
-
 export enum ItemType {
     tail,
     food,
@@ -21,6 +19,11 @@ export interface GridRectangle {
     position: GridPosition;
     width: number; // in number of grid positions
     height: number;
+}
+
+export interface CollisionElements {
+    a: GridItem;
+    b: GridItem;
 }
 
 export interface GridArgs {
