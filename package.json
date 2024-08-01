@@ -16,7 +16,8 @@
         "lint:dependencies": "dpdm --exit-code circular:1 source/main.ts",
         "lint:unused": "ts-unused-exports tsconfig.json",
         "test": "vitest run --coverage",
-        "test:w": "vitest"
+        "test:w": "vitest",
+        "test:ui": "vitest --ui --coverage"
     },
     "dependencies": {
         "@drk4/utilities": "^6.2.1",
@@ -27,6 +28,7 @@
         "@types/createjs": "^0.0.32",
         "@types/node": "^20.14.10",
         "@vitest/coverage-v8": "^2.0.2",
+        "@vitest/ui": "^2.0.5",
         "dpdm": "^3.14.0",
         "eslint": "^8.57.0",
         "globals": "^15.8.0",
