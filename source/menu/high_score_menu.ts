@@ -1,12 +1,12 @@
-import { getMapScores } from "../storage/high_score.js";
+import { getMapScores } from "../storage/high_score";
 import {
     joinAndCapitalize,
     splitCamelCaseWords,
     boolToOnOff,
     timeToString,
-} from "../other/utilities.js";
-import type { MapName } from "../types.js";
-import type { Score } from "../storage/storage.types.js";
+} from "../other/utilities";
+import type { MapName } from "../types";
+import type { Score } from "../storage/storage.types";
 
 let CURRENT_SCORE: Score | undefined; // associated 'score' of the current opened window
 let CURRENT_BUTTON: HTMLElement | undefined; // associated 'info button' of the opened window (so we can add/remove style to it)

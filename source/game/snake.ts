@@ -1,8 +1,8 @@
-import Tail from "./tail.js";
-import Food from "./food.js";
-import { Direction, KeyboardMapping } from "../types.js";
-import type { GridItem, GridPosition } from "./grid.types.js";
-import { addTimeout } from "./all_timeouts.js";
+import Tail from "./tail";
+import Food from "./food";
+import { Direction, KeyboardMapping } from "../types";
+import type { GridItem, GridPosition } from "./grid.types";
+import { addTimeout } from "./all_timeouts";
 
 interface SnakeArgs {
     speed: number;

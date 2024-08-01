@@ -4,7 +4,7 @@ import type {
     GridItem,
     GridPosition,
     GridRectangle,
-} from "./grid.types.js";
+} from "./grid.types";
 
 /**
  * A 2d grid that is used by the game, to keep track of all the elements that were added and its current position.

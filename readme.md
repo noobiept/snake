@@ -1,7 +1,6 @@
-# Links
+# Try It
 
 -   [http://nbpt.eu/games/snake/](http://nbpt.eu/games/snake/)
--   [chrome store](https://chrome.google.com/webstore/detail/snake-game/pihfccclbpikjeecdehncecpmkggndjn)
 
 # Brief Description
 

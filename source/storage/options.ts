@@ -1,5 +1,5 @@
-import * as AppStorage from "./app_storage.js";
-import type { OptionsData, OptionsKey } from "./storage.types.js";
+import * as AppStorage from "./app_storage";
+import type { OptionsData, OptionsKey } from "./storage.types";
 
 const OPTIONS: OptionsData = {
     columns: 60,

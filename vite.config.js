@@ -7,6 +7,9 @@ export default defineConfig({
     build: {
         outDir: `release/${packageJson.name} ${packageJson.version}`,
     },
+    server: {
+        port: 8000,
+    },
     test: {
         include: ["source/**/*.test.ts"],
         coverage: {

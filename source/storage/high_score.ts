@@ -1,7 +1,7 @@
-import type { MapName } from "../types.js";
-import * as AppStorage from "./app_storage.js";
-import * as Options from "./options.js";
-import type { MapScores } from "./storage.types.js";
+import type { MapName } from "../types";
+import * as AppStorage from "./app_storage";
+import * as Options from "./options";
+import type { MapScores } from "./storage.types";
 
 let HIGH_SCORE: MapScores = {};
 

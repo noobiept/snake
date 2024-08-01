@@ -1,5 +1,5 @@
-import Interval from "./interval.js";
-import { timeToString } from "./utilities.js";
+import Interval from "./interval";
+import { timeToString } from "./utilities";
 
 /**
  * Counts the time that has passed since the start.

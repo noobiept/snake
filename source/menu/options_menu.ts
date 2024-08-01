@@ -1,11 +1,11 @@
-import * as Options from "../storage/options.js";
-import { boolToOnOff } from "../other/utilities.js";
-import { updateCanvasDimensions } from "../game/canvas.js";
+import * as Options from "../storage/options";
+import { boolToOnOff } from "../other/utilities";
+import { updateCanvasDimensions } from "../game/canvas";
 import type {
     KeysOfType,
     OptionsData,
     OptionsKey,
-} from "../storage/storage.types.js";
+} from "../storage/storage.types";
 
 interface RangeArgs {
     option: OptionsKey;

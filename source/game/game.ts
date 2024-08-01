@@ -1,26 +1,26 @@
-import * as GameMenu from "./game_menu.js";
-import * as Options from "../storage/options.js";
-import * as HighScore from "../storage/high_score.js";
-import * as AllTimeouts from "./all_timeouts.js";
-import Snake from "./snake.js";
-import Wall from "./wall.js";
-import Food from "./food.js";
-import Timer from "../other/timer.js";
-import Interval from "../other/interval.js";
-import Tail from "./tail.js";
-import PopupWindow from "../other/popup_window.js";
-import { Grid } from "./grid.js";
-import { setupWalls } from "./maps.js";
-import { Apple, Orange, Banana } from "./all_foods.js";
-import { showHideCanvas } from "./canvas.js";
-import { Direction, type MapName } from "../types.js";
-import type { GameInitArgs, TickEvent } from "./game.types.js";
+import * as GameMenu from "./game_menu";
+import * as Options from "../storage/options";
+import * as HighScore from "../storage/high_score";
+import * as AllTimeouts from "./all_timeouts";
+import Snake from "./snake";
+import Wall from "./wall";
+import Food from "./food";
+import Timer from "../other/timer";
+import Interval from "../other/interval";
+import Tail from "./tail";
+import PopupWindow from "../other/popup_window";
+import { Grid } from "./grid";
+import { setupWalls } from "./maps";
+import { Apple, Orange, Banana } from "./all_foods";
+import { showHideCanvas } from "./canvas";
+import { Direction, type MapName } from "../types";
+import type { GameInitArgs, TickEvent } from "./game.types";
 import {
     ItemType,
     type CollisionElements,
     type GridItem,
     type GridPosition,
-} from "./grid.types.js";
+} from "./grid.types";
 
 const INTERVALS: Interval[] = [];
 const COLLISIONS: CollisionElements[] = [];
