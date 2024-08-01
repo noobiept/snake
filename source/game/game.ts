@@ -1,7 +1,6 @@
 import * as GameMenu from "./game_menu.js";
 import * as Options from "../storage/options.js";
 import * as HighScore from "../storage/high_score.js";
-import * as MainMenu from "../menu/main_menu.js";
 import Snake from "./snake.js";
 import Wall from "./wall.js";
 import Food from "./food.js";
@@ -10,25 +9,17 @@ import Interval from "../other/interval.js";
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
 import Timeout, { TimeoutArgs } from "../other/timeout.js";
-import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
+import { Grid } from "./grid.js";
 import { setupWalls } from "./maps.js";
 import { Apple, Orange, Banana } from "./all_foods.js";
 import { showHideCanvas } from "./canvas.js";
 import { Direction, type MapName } from "../types.js";
-
-interface TickEvent {
-    target: object;
-    type: string;
-    paused: boolean;
-    delta: number; // time elapsed in ms since the last tick
-    time: number; // total time in ms since 'Ticker' was initialized
-    runTime: number;
-}
-
-export interface CollisionElements {
-    a: GridItem;
-    b: GridItem;
-}
+import type {
+    CollisionElements,
+    GameInitArgs,
+    TickEvent,
+} from "./game.types.js";
+import { ItemType, type GridItem, type GridPosition } from "./grid.types.js";
 
 const TIMEOUTS: Timeout[] = [];
 const INTERVALS: Interval[] = [];
@@ -41,6 +32,7 @@ let GAME_OVER = false;
 let PAUSE = false;
 let STAGE: createjs.Stage;
 let GRID: Grid;
+let ON_QUIT: () => void;
 
 // the colors are positioned according to the player position as well (player 1 is green, etc)
 const SNAKES: Snake[] = [];
@@ -79,7 +71,7 @@ window.onkeyup = function (event) {
 /**
  * Initialize some game related functionality (the timer, ticker, etc)
  */
-export function init(canvas: HTMLCanvasElement) {
+export function init({ canvas, onQuit }: GameInitArgs) {
     GameMenu.init({
         onQuit: () => {
             // don't allow to mess with the menu when game is over
@@ -107,6 +99,7 @@ export function init(canvas: HTMLCanvasElement) {
     TIMER = new Timer(GameMenu.updateTimer);
     createjs.Ticker.on("tick", tick as (event: object) => void); // casting 'event' to 'Object' to fix typing issue
     STAGE = new createjs.Stage(canvas);
+    ON_QUIT = onQuit;
 }
 
 /**
@@ -541,7 +534,7 @@ export function quit(saveScores = true) {
 
     clear();
     showHideCanvas(false);
-    MainMenu.open("mainMenu");
+    ON_QUIT?.();
 }
 
 /**

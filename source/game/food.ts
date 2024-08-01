@@ -1,5 +1,6 @@
 import { getAsset, AssetName } from "../other/preload.js";
-import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
+import { Grid } from "./grid.js";
+import { GridItem, GridPosition, ItemType } from "./grid.types.js";
 
 /**
  * If the food is eaten by a snake, what are the effects.

@@ -1,4 +1,5 @@
-import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
+import { Grid } from "./grid.js";
+import { GridItem, GridPosition, ItemType } from "./grid.types.js";
 
 /**
  * A wall is an element that the snake can't go through.

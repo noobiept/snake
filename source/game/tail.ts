@@ -1,5 +1,6 @@
 import { Direction, Path } from "../types.js";
-import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
+import { Grid } from "./grid.js";
+import { ItemType, type GridItem, type GridPosition } from "./grid.types.js";
 
 export type TailArgs = {
     color: string;

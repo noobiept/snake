@@ -47,7 +47,7 @@ function initApp(data: AppStorage.StorageData) {
     HighScore.load(data["snake_high_score"]);
     MainMenu.init(data["snake_selected_map"]);
 
-    Game.init(canvas);
+    Game.init({ canvas, onQuit: () => MainMenu.open("mainMenu") });
 
     let callback;
 

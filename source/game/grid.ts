@@ -1,36 +1,10 @@
 import { getRandomInt } from "@drk4/utilities";
-import { CollisionElements } from "./game.js";
-
-export enum ItemType {
-    tail,
-    food,
-    wall,
-}
-
-export interface GridItem {
-    readonly shape: createjs.DisplayObject;
-    readonly type: ItemType;
-    position: GridPosition;
-}
-
-export interface GridPosition {
-    column: number;
-    line: number;
-}
-
-export interface GridRectangle {
-    position: GridPosition;
-    width: number; // in number of grid positions
-    height: number;
-}
-
-interface GridArgs {
-    columns: number;
-    lines: number;
-    onCollision: (items: CollisionElements) => void;
-    onAdd: (item: GridItem) => void;
-    onRemove: (item: GridItem) => void;
-}
+import type {
+    GridArgs,
+    GridItem,
+    GridPosition,
+    GridRectangle,
+} from "./grid.types.js";
 
 /**
  * A 2d grid that is used by the game, to keep track of all the elements that were added and its current position.
