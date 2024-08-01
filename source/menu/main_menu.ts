@@ -1,8 +1,8 @@
 import * as AppStorage from "../storage/app_storage.js";
 import * as Game from "../game/game.js";
-import { MapName } from "../main.js";
 import { buildHighScoreTable, initHighScore } from "./high_score_menu.js";
 import { initOptions } from "./options_menu.js";
+import type { MapName } from "../types.js";
 
 let MAP_SELECTED: HTMLElement;
 

@@ -10,11 +10,11 @@ import Interval from "../other/interval.js";
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
 import Timeout, { TimeoutArgs } from "../other/timeout.js";
-import { MapName, Direction } from "../main.js";
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from "./maps.js";
 import { Apple, Orange, Banana } from "./all_foods.js";
 import { showHideCanvas } from "./canvas.js";
+import { Direction, type MapName } from "../types.js";
 
 interface TickEvent {
     target: object;
@@ -107,6 +107,8 @@ export function start(mapName: MapName, twoPlayersMode?: boolean) {
         columns: columns,
         lines: lines,
         onCollision: collisionOccurred,
+        onAdd: addToStage,
+        onRemove: removeFromStage,
     });
 
     setupSnakes(twoPlayersMode);
@@ -164,6 +166,8 @@ function setupSnakes(twoPlayersMode: boolean) {
                 up: "KeyW",
                 down: "KeyS",
             },
+            onAdd: addToStage,
+            onRemove: removeFromStage,
         });
 
         // 2 player (on right side of canvas, moving to the left)
@@ -182,6 +186,8 @@ function setupSnakes(twoPlayersMode: boolean) {
                 up: "ArrowUp",
                 down: "ArrowDown",
             },
+            onAdd: addToStage,
+            onRemove: removeFromStage,
         });
 
         SNAKES.push(snake1);
@@ -210,6 +216,8 @@ function setupSnakes(twoPlayersMode: boolean) {
                 down: "KeyS",
                 down2: "ArrowDown",
             },
+            onAdd: addToStage,
+            onRemove: removeFromStage,
         });
 
         SNAKES.push(snake);
@@ -581,15 +589,15 @@ export function isGameOver() {
 /**
  * Add a shape to the stage (so it can be drawn).
  */
-export function addToStage(displayObject: createjs.DisplayObject) {
-    STAGE.addChild(displayObject);
+function addToStage(item: GridItem) {
+    STAGE.addChild(item.shape);
 }
 
 /**
  * Remove a shape from the stage.
  */
-export function removeFromStage(displayObject: createjs.DisplayObject) {
-    STAGE.removeChild(displayObject);
+function removeFromStage(item: GridItem) {
+    STAGE.removeChild(item.shape);
 }
 
 /**

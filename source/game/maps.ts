@@ -3,8 +3,8 @@ import Interval from "../other/interval.js";
 import Snake from "./snake.js";
 import Wall from "./wall.js";
 import { GridPosition, Grid } from "./grid.js";
-import { MapName, Direction } from "../main.js";
 import { getRandomInt } from "@drk4/utilities";
+import { Direction, type MapName } from "../types.js";
 
 interface RandomOptions {
     directions: Direction[]; // Randomly select a position from the given list each time.

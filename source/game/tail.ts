@@ -1,6 +1,13 @@
-import { Direction, Path } from "../main.js";
+import { Direction, Path } from "../types.js";
 import { Grid, GridItem, GridPosition, ItemType } from "./grid.js";
-import { addToStage, removeFromStage } from "./game.js";
+
+export type TailArgs = {
+    color: string;
+    direction: Direction;
+    path: Path[];
+    onAdd: (item: GridItem) => void;
+    onRemove: (item: GridItem) => void;
+};
 
 /**
  * A snake is made of several tail elements one after the other.
@@ -10,10 +17,11 @@ export default class Tail implements GridItem {
     private direction: Direction;
     position: GridPosition;
     private path: Path[];
+    private onRemove: (item: GridItem) => void;
     readonly shape: createjs.Shape;
     readonly color: string;
 
-    constructor(color: string, direction: Direction, path: Path[]) {
+    constructor({ color, path, direction, onAdd, onRemove }: TailArgs) {
         this.color = color;
         this.path = path;
         this.direction = direction;
@@ -22,6 +30,9 @@ export default class Tail implements GridItem {
             line: 0,
         };
         this.shape = this.draw();
+        this.onRemove = onRemove;
+
+        onAdd(this);
     }
 
     /**
@@ -37,8 +48,6 @@ export default class Tail implements GridItem {
 
         g.beginFill(this.color);
         g.drawRoundRect(0, 0, Grid.size, Grid.size, 2);
-
-        addToStage(snakeTail);
 
         return snakeTail;
     }
@@ -57,7 +66,7 @@ export default class Tail implements GridItem {
      * Remove the 'Tail' shape.
      */
     remove() {
-        removeFromStage(this.shape);
+        this.onRemove(this);
     }
 
     /**

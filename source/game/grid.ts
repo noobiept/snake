@@ -1,5 +1,5 @@
 import { getRandomInt } from "@drk4/utilities";
-import { CollisionElements, addToStage, removeFromStage } from "./game.js";
+import { CollisionElements } from "./game.js";
 
 export enum ItemType {
     tail,
@@ -28,6 +28,8 @@ interface GridArgs {
     columns: number;
     lines: number;
     onCollision: (items: CollisionElements) => void;
+    onAdd: (item: GridItem) => void;
+    onRemove: (item: GridItem) => void;
 }
 
 /**
@@ -77,8 +79,7 @@ export class Grid {
         shape.y = line * Grid.size + Grid.halfSize;
 
         item.position = position;
-
-        addToStage(shape);
+        this.args.onAdd(item);
     }
 
     /**
@@ -93,7 +94,7 @@ export class Grid {
         }
 
         this.grid[position.column][position.line].splice(index, 1);
-        removeFromStage(item.shape);
+        this.args.onRemove(item);
 
         return item;
     }

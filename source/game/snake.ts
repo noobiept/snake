@@ -1,8 +1,8 @@
 import Tail from "./tail.js";
 import Food from "./food.js";
 import { addToGrid, addTimeout } from "./game.js";
-import { Direction, KeyboardMapping } from "../main.js";
-import { GridPosition } from "./grid.js";
+import { GridPosition, type GridItem } from "./grid.js";
+import { Direction, KeyboardMapping } from "../types.js";
 
 interface SnakeArgs {
     speed: number;
@@ -10,6 +10,8 @@ interface SnakeArgs {
     startingDirection: Direction;
     color: string;
     keyboardMapping: KeyboardMapping;
+    onAdd: (item: GridItem) => void;
+    onRemove: (item: GridItem) => void;
 }
 
 /**
@@ -28,10 +30,14 @@ export default class Snake {
     };
     private keyboard_mapping: KeyboardMapping;
     readonly first_tail: Tail;
+    private on_add: (item: GridItem) => void;
+    private on_remove: (item: GridItem) => void;
 
     constructor(args: SnakeArgs) {
         this.all_tails = [];
         this.color = args.color;
+        this.on_add = args.onAdd;
+        this.on_remove = args.onRemove;
 
         this.setSpeed(args.speed);
 
@@ -99,7 +105,13 @@ export default class Snake {
             path = last.clonePath();
         }
 
-        const tail = new Tail(this.color, direction, path);
+        const tail = new Tail({
+            color: this.color,
+            direction,
+            path,
+            onAdd: this.on_add,
+            onRemove: this.on_remove,
+        });
         this.all_tails.push(tail);
 
         addToGrid(tail, position);

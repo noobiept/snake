@@ -1,6 +1,6 @@
+import type { MapName } from "../types.js";
 import * as AppStorage from "./app_storage.js";
 import * as Options from "./options.js";
-import { MapName } from "../main.js";
 
 export interface Score {
     numberOfTails: number;
