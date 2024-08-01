@@ -10,10 +10,11 @@ import Interval from "../other/interval.js";
 import Tail from "./tail.js";
 import PopupWindow from "../other/popup_window.js";
 import Timeout, { TimeoutArgs } from "../other/timeout.js";
-import { MapName, Direction, showHideCanvas } from "../main.js";
+import { MapName, Direction } from "../main.js";
 import { Grid, GridItem, ItemType, GridPosition } from "./grid.js";
 import { setupWalls } from "./maps.js";
 import { Apple, Orange, Banana } from "./all_foods.js";
+import { showHideCanvas } from "./canvas.js";
 
 interface TickEvent {
     target: object;

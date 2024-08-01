@@ -22,8 +22,9 @@ const HIGH_SCORE_LENGTH = 5;
 /**
  * Determine if we have a valid `MapScores` object.
  */
-function isMapScores(object: unknown): object is MapScores {
-    if (object) {
+function isMapScores(arg: unknown): arg is MapScores {
+    if (arg && typeof arg === "object") {
+        const object = arg as Record<string, unknown>;
         const keys = Object.keys(object);
 
         for (let a = 0; a < keys.length; a++) {
@@ -60,7 +61,7 @@ function isMapScores(object: unknown): object is MapScores {
 /**
  * Load the scores from local storage.
  */
-export function load(score?: MapScores) {
+export function load(score?: unknown) {
     if (isMapScores(score)) {
         HIGH_SCORE = score;
     }

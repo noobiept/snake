@@ -1,7 +1,7 @@
 import * as Options from "../storage/options.js";
-import { updateCanvasDimensions } from "../main.js";
 import { boolToOnOff } from "../other/utilities.js";
 import { open } from "./main_menu.js";
+import { updateCanvasDimensions } from "../game/canvas.js";
 
 interface RangeArgs {
     option: Options.OptionsKey;

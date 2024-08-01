@@ -287,4 +287,6 @@ function positionInRectangles(
             return true;
         }
     }
+
+    return false;
 }

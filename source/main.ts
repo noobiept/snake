@@ -6,7 +6,7 @@ import * as GameMenu from "./game/game_menu.js";
 import * as Game from "./game/game.js";
 import * as Preload from "./other/preload.js";
 import * as Message from "./other/message.js";
-import { Grid } from "./game/grid.js";
+import * as Canvas from "./game/canvas.js";
 
 export enum Direction {
     west,
@@ -48,8 +48,6 @@ export type MapName =
     | "lines"
     | "empty";
 
-let CANVAS: HTMLCanvasElement; // the canvas element where the game is drawn in
-
 /**
  * Starting point of the application.
  */
@@ -68,7 +66,7 @@ window.onload = function () {
             initApp(data);
 
             Message.hide();
-            showHideCanvas(false);
+            Canvas.showHideCanvas(false);
         }
     );
 };
@@ -80,9 +78,9 @@ function initApp(data: AppStorage.StorageData) {
     Options.load(data["snake_options"]);
 
     // setup the canvas
-    CANVAS = <HTMLCanvasElement>document.querySelector("#MainCanvas");
+    const canvas = Canvas.init();
 
-    updateCanvasDimensions();
+    Canvas.updateCanvasDimensions();
 
     // use the 'requestAnimationFrame' timing mode, and use the 'delta' values to control the game timings
     createjs.Ticker.timingMode = createjs.Ticker.RAF;
@@ -90,7 +88,7 @@ function initApp(data: AppStorage.StorageData) {
     HighScore.load(data["snake_high_score"]);
     MainMenu.init(data["snake_selected_map"]);
     GameMenu.init();
-    Game.init(CANVAS);
+    Game.init(canvas);
 
     let callback;
 
@@ -107,28 +105,4 @@ function initApp(data: AppStorage.StorageData) {
     }
 
     Preload.init(callback);
-}
-
-/**
- * Change the width/height of the canvas element where the game is drawn. The size is based on the number of columns/lines being used in the game.
- */
-export function updateCanvasDimensions() {
-    const columns = Options.get("columns");
-    const lines = Options.get("lines");
-
-    CANVAS.width = columns * Grid.size;
-    CANVAS.height = lines * Grid.size;
-}
-
-/**
- * Show/hide the canvas element.
- */
-export function showHideCanvas(show: boolean) {
-    if (CANVAS) {
-        if (show) {
-            CANVAS.classList.remove("hidden");
-        } else {
-            CANVAS.classList.add("hidden");
-        }
-    }
 }

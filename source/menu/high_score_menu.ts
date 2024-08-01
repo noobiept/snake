@@ -170,7 +170,7 @@ function addInfoValue(
 
     const valueElement = document.createElement("span");
     valueElement.className = "displayValue";
-    valueElement.innerText = value;
+    valueElement.innerText = value.toString();
 
     const unitElement = document.createElement("span");
     if (unit) {

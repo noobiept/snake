@@ -1,5 +1,5 @@
 import { Dict } from "../main.js";
-import { OptionsData } from "./options.js";
+import type { OptionsData } from "./options.js";
 import { MapScores } from "./high_score.js";
 
 // what gets saved/loaded to/from local storage
