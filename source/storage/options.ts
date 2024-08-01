@@ -1,22 +1,5 @@
 import * as AppStorage from "./app_storage.js";
-
-export interface OptionsData {
-    columns: number;
-    lines: number;
-    frameOn: boolean;
-    wallInterval: number; // the intervals are in milliseconds
-    appleInterval: number;
-    orangeInterval: number;
-    bananaInterval: number;
-    snakeSpeed: number; // is in Hz (movement frequency)
-}
-
-export type OptionsKey = keyof OptionsData;
-
-// only the keys that result in the specified type
-export type KeysOfType<T, TProp> = {
-    [P in keyof T]: T[P] extends TProp ? P : never;
-}[keyof T];
+import type { OptionsData, OptionsKey } from "./storage.types.js";
 
 const OPTIONS: OptionsData = {
     columns: 60,

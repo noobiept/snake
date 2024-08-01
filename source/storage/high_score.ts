@@ -1,18 +1,7 @@
 import type { MapName } from "../types.js";
 import * as AppStorage from "./app_storage.js";
 import * as Options from "./options.js";
-
-export interface Score {
-    numberOfTails: number;
-    time: number; // in milliseconds
-    options: Options.OptionsData;
-}
-
-// dictionary where the key is the map name and the value is an array of scores
-// has all the scores sorted descending order
-export interface MapScores {
-    [mapName: string]: Score[];
-}
+import type { MapScores } from "./storage.types.js";
 
 let HIGH_SCORE: MapScores = {};
 

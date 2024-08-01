@@ -1,10 +1,14 @@
 import * as Options from "../storage/options.js";
 import { boolToOnOff } from "../other/utilities.js";
-import { open } from "./main_menu.js";
 import { updateCanvasDimensions } from "../game/canvas.js";
+import type {
+    KeysOfType,
+    OptionsData,
+    OptionsKey,
+} from "../storage/storage.types.js";
 
 interface RangeArgs {
-    option: Options.OptionsKey;
+    option: OptionsKey;
     displayHtml: string;
     displayUnit?: string;
     min: number;
@@ -14,14 +18,18 @@ interface RangeArgs {
 }
 
 interface BooleanArgs {
-    option: Options.KeysOfType<Options.OptionsData, boolean>;
+    option: KeysOfType<OptionsData, boolean>;
     displayHtml: string;
 }
+
+export type InitOptionsArgs = {
+    onBack: () => void;
+};
 
 /**
  * Initialize the 'options' page components.
  */
-export function initOptions() {
+export function initOptions({ onBack }: InitOptionsArgs) {
     // canvas options
     const columns = setupRangeSetting({
         option: "columns",
@@ -111,7 +119,7 @@ export function initOptions() {
 
     back.onclick = function () {
         Options.save();
-        open("mainMenu");
+        onBack();
     };
 }
 

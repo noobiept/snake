@@ -1,6 +1,5 @@
-import type { OptionsData } from "./options.js";
-import { MapScores } from "./high_score.js";
 import type { Dict } from "../types.js";
+import type { MapScores, OptionsData } from "./storage.types.js";
 
 // what gets saved/loaded to/from local storage
 export interface StorageData {

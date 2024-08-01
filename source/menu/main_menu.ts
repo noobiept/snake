@@ -27,7 +27,9 @@ export function init(mapName?: string) {
     };
 
     initMainMenu(mapName);
-    initOptions();
+    initOptions({
+        onBack: () => open("mainMenu"),
+    });
     initHighScore();
     initHelp();
 }

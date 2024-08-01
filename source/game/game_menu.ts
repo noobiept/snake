@@ -1,13 +1,16 @@
-import * as Game from "./game.js";
-
 let GAME_MENU: HTMLElement;
 const PLAYERS_SCORE: HTMLElement[] = [];
 let TIMER_ELEMENT: HTMLElement;
 
+export type GameMenuInitArgs = {
+    onQuit: () => void;
+    togglePause: () => boolean;
+};
+
 /**
  * Initialize the game menu.
  */
-export function init() {
+export function init({ onQuit, togglePause }: GameMenuInitArgs) {
     GAME_MENU = document.getElementById("GameMenu")!;
     PLAYERS_SCORE[0] = document.getElementById("GameMenu-Player1-Score")!;
     PLAYERS_SCORE[1] = document.getElementById("GameMenu-Player2-Score")!;
@@ -19,20 +22,18 @@ export function init() {
         document.getElementById("GameMenu-PauseResume")
     );
     pauseResume.onclick = function () {
-        togglePause(pauseResume);
+        const paused = togglePause();
+        if (paused) {
+            pauseResume.innerText = "Resume";
+        } else {
+            pauseResume.innerText = "Pause";
+        }
     };
 
     // :: Quit :: //
 
     const quit = <HTMLDivElement>document.getElementById("GameMenu-Quit");
-    quit.onclick = function () {
-        // don't allow to mess with the menu when game is over
-        if (Game.isGameOver()) {
-            return;
-        }
-
-        Game.quit();
-    };
+    quit.onclick = onQuit;
 }
 
 /**
@@ -72,23 +73,4 @@ export function updateScore(playerPosition: number, score: number) {
  */
 export function updateTimer(time: string) {
     TIMER_ELEMENT.innerText = time;
-}
-
-/**
- * Pause/resume the game.
- */
-function togglePause(htmlElement: HTMLElement) {
-    // don't allow to mess with the menu when game is over
-    if (Game.isGameOver()) {
-        return;
-    }
-
-    const paused = !Game.isPaused();
-    if (paused) {
-        htmlElement.innerText = "Resume";
-    } else {
-        htmlElement.innerText = "Pause";
-    }
-
-    Game.pauseResume(paused);
 }

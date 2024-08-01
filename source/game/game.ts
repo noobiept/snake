@@ -80,6 +80,30 @@ window.onkeyup = function (event) {
  * Initialize some game related functionality (the timer, ticker, etc)
  */
 export function init(canvas: HTMLCanvasElement) {
+    GameMenu.init({
+        onQuit: () => {
+            // don't allow to mess with the menu when game is over
+            if (isGameOver()) {
+                return;
+            }
+
+            quit();
+        },
+        togglePause: () => {
+            const currentState = isPaused();
+
+            // don't allow to mess with the menu when game is over
+            if (isGameOver()) {
+                return currentState;
+            }
+
+            const nextState = !currentState;
+            pauseResume(nextState);
+
+            return nextState;
+        },
+    });
+
     TIMER = new Timer(GameMenu.updateTimer);
     createjs.Ticker.on("tick", tick as (event: object) => void); // casting 'event' to 'Object' to fix typing issue
     STAGE = new createjs.Stage(canvas);
@@ -194,7 +218,7 @@ function setupSnakes(twoPlayersMode: boolean) {
         SNAKES.push(snake2);
     }
 
-    // player 1 : wasd or arrow keys
+    // player 1 : 'wasd' or arrow keys
     else {
         // 1 player (on left side of canvas, moving to the right)
         const position = 0;
