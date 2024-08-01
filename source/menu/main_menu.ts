@@ -26,11 +26,15 @@ export function init(mapName?: string) {
         help: document.getElementById("Help")!,
     };
 
+    const openMainMenu = () => open("mainMenu");
+
     initMainMenu(mapName);
     initOptions({
-        onBack: () => open("mainMenu"),
+        onBack: openMainMenu,
     });
-    initHighScore();
+    initHighScore({
+        onBack: openMainMenu,
+    });
     initHelp();
 }
 

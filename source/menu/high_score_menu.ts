@@ -5,22 +5,25 @@ import {
     boolToOnOff,
     timeToString,
 } from "../other/utilities.js";
-import { open } from "./main_menu.js";
 import type { MapName } from "../types.js";
 import type { Score } from "../storage/storage.types.js";
 
 let CURRENT_SCORE: Score | undefined; // associated 'score' of the current opened window
 let CURRENT_BUTTON: HTMLElement | undefined; // associated 'info button' of the opened window (so we can add/remove style to it)
 
+export type HighScoreMenuInitArgs = {
+    onBack: () => void;
+};
+
 /**
  * Initialize the high-score menu page.
  */
-export function initHighScore() {
+export function initHighScore({ onBack }: HighScoreMenuInitArgs) {
     const back = document.getElementById("HighScore-Back")!;
 
     back.onclick = function () {
         hideInfoWindow();
-        open("mainMenu");
+        onBack();
     };
 }
 
