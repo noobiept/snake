@@ -7,6 +7,8 @@ import * as Preload from "./other/preload";
 import * as Message from "./other/message";
 import * as Canvas from "./game/canvas";
 
+import "../css/style.css";
+
 /**
  * Starting point of the application.
  */
