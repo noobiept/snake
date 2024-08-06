@@ -1,9 +1,9 @@
+import { Preload } from "@drk4/utilities";
 import * as AppStorage from "./storage/app_storage";
 import * as Options from "./storage/options";
 import * as MainMenu from "./menu/main_menu";
 import * as HighScore from "./storage/high_score";
 import * as Game from "./game/game";
-import * as Preload from "./other/preload";
 import * as Message from "./other/message";
 import * as Canvas from "./game/canvas";
 
@@ -65,5 +65,14 @@ function initApp(data: AppStorage.StorageData) {
         };
     }
 
-    Preload.init(callback);
+    const manifest = [
+        { id: "orange", path: "./images/orange_10px.png" },
+        { id: "apple", path: "./images/red_apple_10px.png" },
+        { id: "banana", path: "./images/banana_10px.png" },
+    ];
+    const preload = new Preload({
+        saveGlobal: true,
+    });
+    preload.addEventListener("complete", callback);
+    preload.loadManifest(manifest);
 }

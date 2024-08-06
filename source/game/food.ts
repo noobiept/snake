@@ -1,6 +1,7 @@
-import { getAsset, AssetName } from "../other/preload";
+import { Preload } from "@drk4/utilities";
 import { Grid } from "./grid";
 import { GridItem, GridPosition, ItemType } from "./grid.types";
+import type { AssetName } from "../types";
 
 /**
  * If the food is eaten by a snake, what are the effects.
@@ -37,7 +38,7 @@ export default abstract class Food implements GridItem {
     }
 
     draw(assetName: AssetName) {
-        const food = new createjs.Bitmap(getAsset(assetName));
+        const food = new createjs.Bitmap(Preload.get(assetName));
 
         food.regX = Grid.halfSize;
         food.regY = Grid.halfSize;

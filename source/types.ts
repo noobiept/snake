@@ -37,3 +37,5 @@ export type MapName =
     | "stairs"
     | "lines"
     | "empty";
+
+export type AssetName = "orange" | "apple" | "banana";
